@@ -1,0 +1,64 @@
+<Panel ux:Class="MyPicker">
+	<object ux:Property="Data" />
+	<string ux:Property="Selected" />
+
+	<JavaScript>
+		var srcData = this.Data.inner();
+
+		var datas = srcData.map(function(data) {
+			return {
+				data: data,
+				name: data
+			}
+		});
+		
+		module.exports = {
+			datas
+		};
+	</JavaScript>
+
+	<Panel ux:InnerClass="SpinnerPanel" ux:Name="spinnerPanel" Width="100%"  Alignment="Center">
+		<Selectable Value="{data}" />
+		<EnteringAnimation Scale="0.25">
+			<Move RelativeTo="Size" KeyframeInterpolation="CatmullRom">
+				<Keyframe Y="-1.5" Time="0.25" />
+				<Keyframe Y="-2.3" Time="0.5" />
+				<Keyframe Y="-2.9" Time="0.75" />
+				<Keyframe Y="-4.5" Time="1" />
+			</Move>
+
+			<Change spinnerPanel.Opacity="0" Duration="0.75" Easing="QuadraticInOut" />
+			<Change label.TextColor="#FFF" Duration="0.2" Easing="QuadraticInOut" />
+			<Change label.FontSize="20" Duration="0.2" Easing="Linear" />
+			<Scale Factor="0.1" Duration="1" />
+		</EnteringAnimation>
+		<ExitingAnimation Scale="0.25">
+			<Move RelativeTo="Size" KeyframeInterpolation="CatmullRom">
+				<Keyframe Y="1.5" Time="0.25" />
+				<Keyframe Y="2.3" Time="0.5" />
+				<Keyframe Y="2.9" Time="0.75" />
+				<Keyframe Y="4.5" Time="1" />
+			</Move>
+			<Change spinnerPanel.Opacity="0" Duration="0.75" Easing="QuadraticInOut" />
+			<Change label.TextColor="#FFF" Duration="0.2" Easing="QuadraticInOut" />
+			<Change label.FontSize="20" Duration="0.2" Easing="Linear" />
+			<Scale Factor="0.1" Duration="1" />
+		</ExitingAnimation>
+
+		<Text ux:Name="label" Alignment="Center" TextTruncation="None" Value="{data}" FontSize="{margin}*2" />
+		<Panel Width="100%" Height="120%" />
+
+		<WhileActive>
+			<ToggleSelection />
+		</WhileActive>
+	</Panel>
+
+	<Panel Height="100%" Color="#ddd">
+		<PageControl Width="50%" Orientation="Vertical" InactiveState="Unchanged" Transition="None" Active="{Property Selected}">
+			<Selection Value="{Property Selected}" MaxCount="1" MinCount="1" />
+			<Each Items="{datas}" Defer="Deferred">
+				<SpinnerPanel Name="{name}" />
+			</Each>
+		</PageControl>
+	</Panel>
+</Panel>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:background="#fff">
+  <TextView android:text="인증서 가져오기" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"
+  android:background="#369"
+  android:textColor="#fff"
+  android:gravity="center"/>
+  <LinearLayout android:id="@+id/LinearLayout01" 
+  android:layout_width="wrap_content" 
+  android:layout_height="wrap_content"
+  android:orientation="horizontal">
+	  <TextView android:text="비밀번호 변경  :" 
+	  android:layout_width="fill_parent" 
+	  android:layout_height="wrap_content"
+	  android:textColor="#000"/>
+	  <CheckBox android:id="@+id/import_CheckBox" 
+	  android:layout_width="wrap_content" 
+	  android:layout_height="wrap_content"/>
+  </LinearLayout>
+  <TextView android:text="현재 비밀번호 :" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"
+  android:textColor="#000"/>
+  <EditText android:text="" 
+  android:id="@+id/import_cur_inputpasswd" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"/>
+  <TextView android:text="새 비밀번호 :" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"
+  android:textColor="#000"/>
+  <EditText android:text="" 
+  android:id="@+id/import_new_inputpasswd1" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"/>
+  <TextView android:text="새 비밀번호 확인 :" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"
+  android:textColor="#000"/>
+  <EditText android:text="" 
+  android:id="@+id/import_new_inputpasswd2" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"/>
+  <Button android:text="확인" 
+  android:id="@+id/import_inputpasswd_submit" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

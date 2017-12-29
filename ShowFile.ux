@@ -1,0 +1,74 @@
+<Page ux:Class="ShowFile">
+	<Router ux:Dependency="router"/>
+
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+
+		// 이미지를 보여주는데 필요한 변수 및 함수
+		function File(resource) {
+			this.index = resource - 1;
+			this.resource = "Evidence/Ex" + resource + ".jpg";
+		}
+
+		files = Observable();
+		for (i = 1; i < 11; i++) {
+			files.add(new File(i));
+		}
+
+		function goDetailFile(arg) {
+			router.push("DetailFile", {index: arg.data.index, resource: arg.data.resource});
+		}
+
+		module.exports = {
+			files, goDetailFile
+		};
+	</JavaScript>
+
+	<!-- 증빙자료모음 화면 -->
+	<DockPanel Color="White">
+		<Panel Dock="Top">
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked>
+						<Callback Handler="{goBackToPrevious}" />
+					</Clicked>
+				</Image>
+
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+				<Image File="Images/btn_home.png">
+					<Clicked>
+						<Callback Handler="{goMainPageFromAnywhere}" />
+					</Clicked>
+				</Image>
+			</Grid>
+
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
+		</Panel>
+
+		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="증빙보기" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+
+			<Rectangle Width="100%" Height="1" Color="#3E66C5" />
+		</Grid>
+
+		<ScrollView SnapMaxTransform="false" SnapMinTransform="false">
+			<Grid ColumnCount="3" CellSpacing="2" Color="#FFF">
+
+				<Each Items="{files}" Defer="Deferred">
+					<Panel Background="#eee">
+						<Tapped>
+							<Callback Handler="{goDetailFile}" />
+						</Tapped>
+						<Image ux:Name="picture" StretchMode="UniformToFill" File="{resource}" />
+					</Panel>
+				</Each>
+			</Grid>
+		</ScrollView>
+	</DockPanel>
+</Page>

@@ -1,0 +1,1048 @@
+<Page ux:Class="QnA">
+	<Router ux:Dependency="router"/>
+		<WhileActive>
+			<Callback Handler="{getQnAList}" />
+			<!-- <Callback Handler="{detailDataClear}" /> -->
+		</WhileActive>	
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+
+		var type = Observable("제목", "내용");
+		var selectedType = Observable("제목");
+
+		pickerOn = Observable(false);
+
+		function pickerUp() {
+			pickerOn.value = true;
+		}
+
+		function pickerDown() {
+			pickerOn.value = false;
+		}
+
+		function selectedTypes(){
+			selectedType.value = "제목";
+			searchText.clear();
+		}
+
+		function pageCountInit(){
+			pageCount.value = 1;
+		}
+
+
+		var pageCount = Observable(1);
+		var totalPage = Observable();
+		var searchText = Observable();
+		var globalSearch ;
+
+		var qnas = Observable();
+		var qnaDetailValue = Observable(); 
+		var qnaFileValue = Observable();
+		var qnaIsCorrect = Observable();
+
+		function detailDataClear(){
+			console.log("문의하기 디테일 " + JSON.stringify(qnaDetailValue.value));
+			console.log("호출 되나!!!??");
+			//detail값 초기화
+			qnaDetailValue.value.area.value = "";
+			qnaDetailValue.value.bodComYn.value = "";
+			qnaDetailValue.value.bodFromClss.value = "";
+			qnaDetailValue.value.commSeq.value = "";
+			qnaDetailValue.value.cont.value = "";
+			qnaDetailValue.value.inqAdmCnt.value = "";
+			qnaDetailValue.value.inqUsrCnt.value = "";
+			qnaDetailValue.value.qaReplyYn.value = "";
+			qnaDetailValue.value.regDate.value = "";
+			qnaDetailValue.value.regDate1.value = "";
+			qnaDetailValue.value.regDate2.value = "";
+			qnaDetailValue.value.regId.value = "";
+			qnaDetailValue.value.replyDepth.value = "";
+			qnaDetailValue.value.replyRef.value = "";
+			qnaDetailValue.value.replySortkey.value = "";
+			qnaDetailValue.value.reqYn.value = "";
+			qnaDetailValue.value.siteClssSnd.value = "";
+			qnaDetailValue.value.title.value = "";
+			qnaDetailValue.value.writeHost.value = "";
+			qnaDetailValue.value.writerNm.value = "";
+			qnaDetailValue.value.writerOrg.value = "";
+
+			//detail 파일 값 초기화
+
+			// qnaFileValue.value.fileStoreDir.value = "";
+			qnaFileValue.value.commClss.value = "";
+			qnaFileValue.value.commSeq.value = "";
+			qnaFileValue.value.fileNm.value = "";
+			qnaFileValue.value.fileBlob.value = "";
+			qnaFileValue.value.fileStoreNm.value = "";
+			qnaFileValue.value.fileSize.value = "";
+			qnaFileValue.value.fileSeq.value = "";
+		}		
+
+		//더 보기 클릭 시 호출
+		function nextPage(){
+			console.log("nextPage");
+			if(pageCount.value == totalPage.value){
+				console.log("최대 페이지까지 생성되었습니다.");
+			}else{
+			pageCount.value = pageCount.value + 1;
+			getQnANextPage(pageCount);
+			}
+		}
+
+		//http://112.218.172.44:52102 외부
+		//http://192.168.10.210 내부
+		//검색 기능 지금 제대로 안되는것 같다.
+		function searchContent(){
+			//조회시 AREA 값은 GVAREACODE 값과 동일 하다. 나중에 서버에서 데이터 받아올 경우 그렇게 세팅 해야 한다.
+			pageCount.value = 1;
+			var sCombo;
+			if(selectedType.value=="제목"){
+				sCombo = "head";
+			}else if (selectedType.value=="내용"){
+				sCombo = "main";
+			}
+
+			if(searchText.value==null){
+				searchText.value = "";
+				sCombo = "head";
+			}
+
+			qnas.clear();
+
+			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsSearch = '{"AREA":"11110","commClss":"Q","fCombo":"ALL","page":"1","sch_txt":"'+searchText.value+'","combo":"'+sCombo+'"}';
+			console.log("===========================================");
+			console.log("searchContent ds Search : " + dsSearch);
+
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+
+			fetch("http://112.218.172.44:52102/acusr/cmt/qnaList.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var searchResponseData = JSON.stringify(response);
+						// console.log("2017.12.21 response : "+ JSON.stringify(response));
+						var searchResponseBody = JSON.parse(response._bodyInit);
+						// console.log("earchResponseBody : "+ JSON.stringify(searchResponseBody));
+						// console.log("=================================================================");
+						var searchResponseList = searchResponseBody.ds_qna[1];
+						console.log("searchResponseList : "+ JSON.stringify(searchResponseList));
+		
+						// console.log("==============================");
+						// console.log("searchResponseList.length : "+ searchResponseList.length);
+						
+
+						console.log(qnas.value);
+
+						for (var i = 0; i < searchResponseList.length; i++) {
+							console.log("searchResponseList i : "+ JSON.stringify(searchResponseList[i]));
+							qnas.add(new qnaList(searchResponseList[i]));
+						}
+
+						console.log("qnas : " + JSON.stringify(qnas.value));
+
+						// 첫 호출 시 에러나면 여길 잘봐야 한다. 객체 형태로 안가져오고 무조건 하나만 가져온다고 생각하여 아래와 같이 소스 구성
+						var count = searchResponseBody.ds_cnt[1];
+						//들어오는 개수 계산하여 총 페이지 수 도출
+						var objCount = parseInt(count[0].CNT);
+						var preCnt = parseInt(objCount/5)
+						var nextCnt = parseInt(objCount%5)
+						if(nextCnt>0){
+							preCnt = preCnt +1;
+						}
+						totalPage.value = preCnt;
+						console.log("totalPage : " + JSON.stringify(totalPage.value));
+
+						// searchText.clear();
+
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			        }).catch(function(err) {
+
+			        });
+		}
+		//qnaList 널 체크
+		function qna(qna){
+
+			if(qna.COMM_CLSS!=null){
+				this.commClss = qna.COMM_CLSS;
+			}else{
+				this.commClss = "";
+			}
+
+			if(qna.COMM_SEQ!=null){
+				this.commSeq = qna.COMM_SEQ;
+			}else{
+				this.commSeq = "";
+			}
+
+			if(qna.IDX!=null){
+				this.idx = qna.IDX;
+			}else{
+				this.idx = "";
+			}
+
+			if(qna.INQ_ADM_CNT!=null){
+				this.inqAdmCnt = qna.INQ_ADM_CNT;
+			}else{
+				this.inqAdmCnt = "";
+			}
+
+			if(qna.INQ_USR_CNT!=null){
+				this.inqUsrCnt = qna.INQ_USR_CNT;
+			}else{
+				this.inqUsrCnt = "";
+			}
+
+			if(qna.QA_REPLY_YN!=null){
+				this.qaReplyYN = qna.QA_REPLY_YN;
+			}else{
+				this.qaReplyYn = "";
+			}
+
+			if(qna.REGDATE!=null){
+				this.regDate = qna.REGDATE;
+			}else{
+				this.regDate = "";
+			}
+
+			if(qna.REGDATE1!=null){
+				this.regDate1 = qna.REGDATE1;
+			}else{
+				this.regDate1 = "";
+			}
+
+			if(qna.REGDATE2!=null){
+				this.regDate2 = qna.REGDATE2;
+			}else{
+				this.regDate2 = "";
+			}
+
+			if(qna.REPLY_DEPTH!=null){
+				this.replyDepth = qna.REPLY_DEPTH;
+			}else{
+				this.replyDepth = "";
+			}
+
+			if(qna.REPLY_REF!=null){
+				this.replyRef = qna.REPLY_REF;
+			}else{
+				this.replyRef = "";
+			}
+
+			if(qna.REQ_YN!=null){
+				this.reqYn = qna.REQ_YN;
+			}else{
+				this.reqYn = "";
+			}
+			//수정필요
+			if(this.reqYn =="처리완료"){
+				this.complete = true;
+			}else if(this.reqYn=="처리중"){
+				this.complete = false;
+			}
+
+			if(qna.SITE_CLSS_SND!=null){
+				this.siteClssSnd = qna.SITE_CLSS_SND;
+			}else{
+				this.siteClssSnd = "";
+			}
+
+			if(qna.TITLE!=null){
+				this.title = qna.TITLE;
+			}else{
+				this.title = "";
+			}
+
+			if(qna.WRITER_NM!=null){
+				this.writerNm = qna.WRITER_NM;
+			}else{
+				this.writerNm = "";
+			}
+
+			if(qna.WRITER_ORG!=null){
+				this.writerOrg = qna.WRITER_ORG;
+			}else{
+				this.writerOrg = "";
+			}
+		}
+
+		//http://112.218.172.44:52102 외부
+		//http://192.168.10.210 내부
+		//처음 데이터 가져오기
+		function getQnAList(){
+			console.log("getQnAList first function Call ");
+			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsSearch = '{"AREA":"11110","commClss":"Q","page":"1","sch_txt":"","sCombo":"head"}';
+			globalSearch = JSON.parse(dsSearch);
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+			qnas.clear();
+
+			fetch("http://112.218.172.44:52102/acusr/cmt/qnaList.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+
+						var responseBody = JSON.parse(response._bodyInit);
+						// console.log("2017.12.21 responseBody : "+ JSON.stringify(responseBody));
+						// console.log("=================================================================");
+						var responseList = responseBody.ds_qna[1];
+						console.log("2017.12.21 responseList : "+ JSON.stringify(responseList));
+
+		
+						// console.log("==============================");
+						// console.log("responseList.length : "+ responseList.length);
+						// 무조건 본래 있는 곳으로 돌아올시 초기
+						
+						for (var i = 0; i < responseList.length; i++) {
+							qnas.add(new qna(responseList[i]));
+						}
+
+						var count = responseBody.ds_cnt[1];
+						//들어오는 개수 계산하여 총 페이지 수 도출
+						console.log("count : " + count[0].CNT);
+						var objCount = parseInt(count[0].CNT);
+						var preCnt = parseInt(objCount/5)
+						var nextCnt = parseInt(objCount%5)
+						if(nextCnt>0){
+							preCnt = preCnt +1;
+						}
+						totalPage.value = preCnt;
+						console.log("totalPage : " + JSON.stringify(totalPage.value));
+
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			        }).catch(function(err) {
+
+			        });
+		}
+
+		//http://112.218.172.44:52102 외부
+		//http://192.168.10.210 내부
+		//다음페이지 넘기기
+		function getQnANextPage(page){
+
+			var sCombo;
+
+			if(selectedType.value=="제목"){
+				sCombo = "head";
+			}else if (selectedType.value=="내용"){
+				sCombo = "main";
+			}
+
+			if(searchText.value==null){
+				searchText.value = "";
+				sCombo = "head";
+			}			
+			console.log("NextPage function Call ");
+			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsSearch = '{"AREA":"11110","commClss":"Q","page":"'+page.value+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+			console.log("nextPage Call ! : " + dsSearch);
+			fetch("http://112.218.172.44:52102/acusr/cmt/qnaList.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+
+						var responseBody = JSON.parse(response._bodyInit);
+						console.log("2017.12.21 responseBody : "+ JSON.stringify(responseBody));
+						// console.log("=================================================================");
+						var responseList = responseBody.ds_qna[1];
+						console.log("2017.12.21 responseList : "+ JSON.stringify(responseList));
+
+						for (var i = 0; i < responseList.length; i++) {
+							qnas.add(new qna(responseList[i]));
+						}
+
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			        }).catch(function(err) {
+
+			        });
+		}
+
+		//클릭한 목록의 값을 가져오고 디테일값을 호출 한다.
+		function getClickListValue(value){
+			var qnaData = value.data;
+			console.log("qnaData : "+JSON.stringify(qnaData));
+			getDetailQnA(qnaData);
+		}
+
+		//http://112.218.172.44:52102 외부
+		//http://192.168.10.210 내부
+		// 수정 페이지 호출 
+		function getDetailQnA(qnaData){
+			console.log("qnaData : "+qnaData);
+			console.log("DetailValue function Call ");
+			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsSearch = '{"combo":"head","commClss":"Q","commSeq":"'+JSON.stringify(qnaData.commSeq)+'","sch_txt":""}';
+		
+			console.log("dsSearch : " + dsSearch);
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+
+			fetch("http://112.218.172.44:52102/acusr/cmt/qnaListDtl.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+						// console.log("2017.12.21 responseBody : "+ JSON.stringify(responseData));
+						var detailBody = JSON.parse(response._bodyInit);
+						var qnaDetails = detailBody.ds_qna_dtl[1];
+						// console.log("qnaDetail : "+ JSON.stringify(qnaDetails));
+						
+						qnaDetailValue.clear();
+
+						for (var i = 0; i < qnaDetail.length; i++) {
+							qnaDetailValue.add(new qnaDetail(qnaDetails[i]));
+						}
+
+						//수정 가능한 값 판단.
+
+						console.log("=============================");
+						var correct = qnaDetailValue.value.replyDepth;
+						console.log("correct : "+ correct);
+						if(correct.value == 0){
+							qnaIsCorrect.value = true;
+						}else{
+							qnaIsCorrect.value = false;
+						}
+						console.log("=============================");
+						console.log("qnaIsCorrect : "+qnaIsCorrect.value);
+						console.log("=============================");
+
+						console.log("qnaDetailValue : " + JSON.stringify(qnaDetailValue));
+
+						qnaFileValue.clear();
+
+						var qnaFiles = responseBody.ds_filelist[1];
+						console.log(JSON.stringify(qnaFiles));
+							for(var i = 0; i< qnaFiles.length; i++){
+								qnaFileValue.add(new qnaDetailFile(qnaFiles[i]));
+							}
+						console.log(JSON.stringify(qnaFileValue.value));
+
+			            return response.json();
+			        }).then(function(jsonData) {
+			            // var data = jsonData.results[0];
+			        }).catch(function(err) {
+
+			        });
+		}
+
+		// function qnaDetail(qnaDetail){
+		// 	if(qnaDetail.AREA!=null){
+		// 		this.area = qnaDetail.AREA;
+		// 	}else{
+		// 		this.area = "";
+		// 	}
+		// 	if(qnaDetail.BOD_COM_YN!=null){
+		// 		this.bodComYn = qnaDetail.BOD_COM_YN;
+		// 	}else{
+		// 		this.bodComYn = "";
+		// 	}
+		// 	if(qnaDetail.BOD_FORM_CLSS!=null){
+		// 		this.bodFromClss = qnaDetail.BOD_FORM_CLSS;
+		// 	}else{
+		// 		this.bodFromClss = "";
+		// 	}
+		// 	if(qnaDetail.COMM_SEQ!=null){
+		// 		this.commSeq = qnaDetail.COMM_SEQ;
+		// 	}else{
+		// 		this.commSeq = "";
+		// 	}
+		// 	if(qnaDetail.CONT!=null){
+		// 		this.cont = qnaDetail.CONT;
+		// 	}else{	
+		// 		this.cont = "";
+		// 	}
+		// 	if(qnaDetail.INQ_ADM_CNT!=null){
+		// 		this.inqAdmCnt = qnaDetail.INQ_ADM_CNT;
+		// 	}else{
+		// 		this.inqAdmCnt = "";
+		// 	}
+		// 	if(qnaDetail.INQ_USR_CNT!=null){
+		// 		this.inqUsrCnt = qnaDetail.INQ_USR_CNT;
+		// 	}else{
+		// 		this.inqUsrCnt = "";
+		// 	}
+		// 	if(qnaDetail.QA_REPLY_YN!=null){
+		// 		this.qaReplyYn = qnaDetail.QA_REPLY_YN;
+		// 	}else{
+		// 		this.qaReplyYn = "";
+		// 	}
+		// 	if(qnaDetail.REGDATE!=null){
+		// 		this.regDate = qnaDetail.REGDATE;
+		// 	}else{
+		// 		this.regDate = "";
+		// 	}
+		// 	if(qnaDetail.REGDATE1!=null){
+		// 		this.regDate1 = qnaDetail.REGDATE1;
+		// 	}else{
+		// 		this.regDate1 = "";
+		// 	}
+		// 	if(qnaDetail.REGDATE2!=null){
+		// 		this.regDate2 = qnaDetail.REGDATE1;
+		// 	}else{
+		// 		this.regDate2 = "";
+		// 	}
+		// 	if(qnaDetail.REGID!=null){
+		// 		this.regId = qnaDetail.REGID;
+		// 	}else{
+		// 		this.regId = "";
+		// 	}
+		// 	if(qnaDetail.REPLY_DEPTH!=null){
+		// 		this.replyDepth = qnaDetail.REPLY_DEPTH;
+		// 	}else{
+		// 		this.replyDepth = "";
+		// 	}
+		// 	if(qnaDetail.REPLY_REF!=null){
+		// 		this.replyRef = qnaDetail.REPLY_REF;
+		// 	}else{
+		// 		this.replyRef = "";
+		// 	}
+		// 	if(qnaDetail.REPLY_SORTKEY!=null){
+		// 		this.replySortkey = qnaDetail.REPLY_SORTKEY;
+		// 	}else{
+		// 		this.replySortkey = "";
+		// 	}
+		// 	if(qnaDetail.REQ_YN!=null){
+		// 		this.reqYn = qnaDetail.REQ_YN;
+		// 	}else{
+		// 		this.reqYn = "";
+		// 	}
+		// 	if(qnaDetail.SITE_CLSS_SND!=null){
+		// 		this.siteClssSnd = qnaDetail.SITE_CLSS_SND;
+		// 	}else{
+		// 		this.siteClssSnd = "";
+		// 	}
+		// 	if(qnaDetail.TITLE!=null){
+		// 		this.title = qnaDetail.TITLE;
+		// 	}else{
+		// 		this.title = "";
+		// 	}
+		// 	if(qnaDetail.WRITE_HOST!=null){
+		// 		this.writeHost = qnaDetail.WRITE_HOST;
+		// 	}else{
+		// 		this.writeHost = "";
+		// 	}
+		// 	if(qnaDetail.WRITER_NM!=null){
+		// 		this.writerNm = qnaDetail.WRITER_NM;
+		// 	}else{
+		// 		this.writerNm = "";
+		// 	}
+		// 	if(qnaDetail.WRITER_ORG!=null){
+		// 		this.writerOrg = qnaDetail.WRITER_ORG;
+		// 	}else{
+		// 		this.writerOrg = "";
+		// 	}
+		// }
+
+		function qnaDetail(qnaDetail){
+			if(qnaDetail.AREA!=null){
+				this.area = Observable(qnaDetail.AREA);
+			}else{
+				this.area = Observable();
+			}
+			if(qnaDetail.BOD_COM_YN!=null){
+				this.bodComYn = Observable(qnaDetail.BOD_COM_YN);
+			}else{
+				this.bodComYn = Observable();
+			}
+			if(qnaDetail.BOD_FORM_CLSS!=null){
+				this.bodFromClss = Observable(qnaDetail.BOD_FORM_CLSS);
+			}else{
+				this.bodFromClss = Observable();
+			}
+			if(qnaDetail.COMM_SEQ!=null){
+				this.commSeq = Observable(qnaDetail.COMM_SEQ);
+			}else{
+				this.commSeq = Observable();
+			}
+			if(qnaDetail.CONT!=null){
+				this.cont = Observable(qnaDetail.CONT);
+			}else{	
+				this.cont = Observable();
+			}
+			if(qnaDetail.INQ_ADM_CNT!=null){
+				this.inqAdmCnt = Observable(qnaDetail.INQ_ADM_CNT);
+			}else{
+				this.inqAdmCnt = Observable();
+			}
+			if(qnaDetail.INQ_USR_CNT!=null){
+				this.inqUsrCnt = Observable(qnaDetail.INQ_USR_CNT);
+			}else{
+				this.inqUsrCnt = Observable();
+			}
+			if(qnaDetail.QA_REPLY_YN!=null){
+				this.qaReplyYn = Observable(qnaDetail.QA_REPLY_YN);
+			}else{
+				this.qaReplyYn = Observable();
+			}
+			if(qnaDetail.REGDATE!=null){
+				this.regDate = Observable(qnaDetail.REGDATE);
+			}else{
+				this.regDate = Observable();
+			}
+			if(qnaDetail.REGDATE1!=null){
+				this.regDate1 = Observable(qnaDetail.REGDATE1);
+			}else{
+				this.regDate1 = Observable();
+			}
+			if(qnaDetail.REGDATE2!=null){
+				this.regDate2 = Observable(qnaDetail.REGDATE1);
+			}else{
+				this.regDate2 = Observable();
+			}
+			if(qnaDetail.REGID!=null){
+				this.regId = Observable(qnaDetail.REGID);
+			}else{
+				this.regId = Observable();
+			}
+			if(qnaDetail.REPLY_DEPTH!=null){
+				this.replyDepth = Observable(qnaDetail.REPLY_DEPTH);
+			}else{
+				this.replyDepth = Observable();
+			}
+			if(qnaDetail.REPLY_REF!=null){
+				this.replyRef = Observable(qnaDetail.REPLY_REF);
+			}else{
+				this.replyRef = Observable();
+			}
+			if(qnaDetail.REPLY_SORTKEY!=null){
+				this.replySortkey = Observable(qnaDetail.REPLY_SORTKEY);
+			}else{
+				this.replySortkey = Observable();
+			}
+			if(qnaDetail.REQ_YN!=null){
+				this.reqYn = Observable(qnaDetail.REQ_YN);
+			}else{
+				this.reqYn = Observable();
+			}
+			if(qnaDetail.SITE_CLSS_SND!=null){
+				this.siteClssSnd = Observable(qnaDetail.SITE_CLSS_SND);
+			}else{
+				this.siteClssSnd = Observable();
+			}
+			if(qnaDetail.TITLE!=null){
+				this.title = Observable(qnaDetail.TITLE);
+			}else{
+				this.title = Observable();
+			}
+			if(qnaDetail.WRITE_HOST!=null){
+				this.writeHost = Observable(qnaDetail.WRITE_HOST);
+			}else{
+				this.writeHost = Observable();
+			}
+			if(qnaDetail.WRITER_NM!=null){
+				this.writerNm = Observable(qnaDetail.WRITER_NM);
+			}else{
+				this.writerNm = Observable();
+			}
+			if(qnaDetail.WRITER_ORG!=null){
+				this.writerOrg = Observable(qnaDetail.WRITER_ORG);
+			}else{
+				this.writerOrg = Observable();
+			}
+		}
+		//qna 디테일 파일 값
+		function qnaDetailFile(qnaDetailFile){
+			if(qnaDetailFile.FILE_STORE_DIR!=null){
+				this.fileStoreDir = Observable(qnaDetailFile.FILE_STORE_DIR);
+			}else{
+				this.fileStoreDir = Observable();
+			}
+
+			if(qnaDetailFile.COMM_CLSS!=null){
+				this.commClss = Observable(qnaDetailFile.COMM_CLSS);
+			}else{
+				this.commClss = Observable();
+			}
+
+			if(qnaDetailFile.COMM_SEQ!=null){
+				this.commSeq = Observable(qnaDetailFile.COMM_SEQ);
+			}else{
+				this.commSeq = Observable();
+			}
+
+			if(qnaDetailFile.FILE_NM!=null){
+				this.hasFile = true;
+				this.fileNm = Observable(qnaDetailFile.FILE_NM);
+			}else{
+				this.fileNm = Observable();
+			}
+
+			if(qnaDetailFile.FILE_BLOB!=null){
+				this.fileBlob = Observable(qnaDetailFile.FILE_BLOB);
+			}else{
+				this.fileBlob = Observable();
+			}
+
+			if(qnaDetailFile.FILE_STORE_NM!=null){
+				this.fileStoreNm = Observable(qnaDetailFile.FILE_STORE_NM);
+			}else{
+				this.fileStoreNm = Observable();
+			}
+
+			if(qnaDetailFile.FILE_SIZE!=null){
+				this.fileSize = Observable(qnaDetailFile.FILE_SIZE);
+			}else{
+				this.fileSize = Observable();
+			}
+
+			if(qnaDetailFile.FILE_SEQ!=null){
+				this.fileSeq = Observable(qnaDetailFile.FILE_SEQ);
+			}else{
+				this.fileSeq = Observable();
+			}
+			console.log("파일 생성 완료!");
+		}
+
+		function sendData(){
+			if(qnaDetailValue.value.commSeq!=null){
+				console.log("commSeq 있음");
+			}else{
+				console.log("commSeq 없음");
+			}
+		}
+
+		module.exports = {
+			type, selectedType, pickerOn, pickerUp, pickerDown, getQnAList ,qnas, selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, searchContent,getClickListValue, getDetailQnA, qnaDetailValue, qnaFileValue, qnaIsCorrect , sendData,
+				detailDataClear
+		};
+	</JavaScript>
+	<Panel ux:Name="page6BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
+		<Clicked><Callback /></Clicked>
+	</Panel>
+
+	<WhileTrue Value="{pickerOn}">
+		<Change page6PickerPanel.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<!-- 새로 등록 정보 -->
+	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
+		<Panel Dock="Top">
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked>
+						<Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" />
+						<Toggle Target="applyQuestion" />
+					</Clicked>
+				</Image>
+
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+				<Image File="Images/btn_home.png">
+					<Clicked>
+						<Callback Handler="{pageCountInit}" />
+						<Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" />
+						<Callback Handler="{goMainPageFromAnywhere}" />
+					</Clicked>
+				</Image>
+			</Grid>
+
+			<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
+		</Panel>
+
+		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="질의응답" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+
+			<Rectangle Width="100%" Color="#708EAE">
+				<Text Value="{qnaDetailValue.writerNm}" Margin="{margin}" Color="White" />
+			</Rectangle>
+		</Grid>
+
+		<Grid Color="#ccc" CellSpacing="1" Rows="Auto">
+			<Panel Color="White">
+				<TextBox Value="{qnaDetailValue.title}" Margin="{margin}" PlaceholderText="제목을 입력하세요" />
+			</Panel>
+			<Panel Color="White">
+				<TextBox Value="{qnaDetailValue.cont}" Margin="{margin}" PlaceholderText="내용을 입력하세요" Width="100%" />
+			</Panel>
+		</Grid>
+
+		<Panel Dock="Bottom" Width="100%" Color="#5079DB" Height="{margin}*14">
+			<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5" Rows="1*, 2.5*, 1*">
+				<Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" />
+				<Text Value="업로드 이미지 없음" Color="White" FontSize="{margin}*0.8" Alignment="CenterRight" />
+				<Rectangle Width="100%" Color="White" ColumnSpan="2">
+					<StackPanel>
+						<Each Items="{qnaFileValue}">
+								<WrapPanel>
+									<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+									<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+								</WrapPanel>
+							</Each>
+					</StackPanel>
+				</Rectangle>
+				<Image File="Images/btn4.png">
+					<Clicked>
+						<Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" />
+						<Toggle Target="applyQuestion" />
+					</Clicked>
+				</Image>
+				<Image File="Images/btn_08.png">
+					<Clicked>
+						<Callback Handler="{sendData}" />
+					</Clicked>
+				</Image>
+			</Grid>
+		</Panel>
+
+		<WhileTrue ux:Name="applyQuestion">
+			<Move X="-1" RelativeTo="Size" />
+		</WhileTrue>
+	</DockPanel>
+
+	<!--상세보기 문의하기 화면  -->
+	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
+		<Panel Dock="Top">
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked>
+						<Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" />
+						<Toggle Target="showQuestion" />
+					</Clicked>
+				</Image>
+
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+				<Image File="Images/btn_home.png">
+					<Clicked>
+						<Callback Handler="{pageCountInit}" />
+						<Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" />
+						<Callback Handler="{goMainPageFromAnywhere}" />
+					</Clicked>
+				</Image>
+			</Grid>
+
+			<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
+		</Panel>
+
+		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="질의응답(질문보기)" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+
+			<Rectangle Width="100%" Height="1" Color="#3E66C5" />
+		</Grid>
+
+		<Grid Color="#ccc" CellSpacing="1" Rows="Auto">
+			<Panel Color="White" Width="100%" Height="100%">
+				<StackPanel Margin="{margin}">
+					<Text Value="{qnaDetailValue.title}" FontSize="{margin}*1.2" Color="Black" />
+					<Text Value="{qnaDetailValue.writerNm}" FontSize="{margin}*1.2" Color="#4395D6" />
+					<Text Value="{qnaDetailValue.regDate1} {qnaDetailValue.regDate2}"  Color="#888" />
+				</StackPanel>
+			</Panel>
+			<Panel Color="White">
+				<Text Value="{qnaDetailValue.cont}" Margin="{margin}" />
+			</Panel>
+		</Grid>
+
+		<Panel Dock="Bottom" Width="100%" Color="#5079DB">
+			<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5" Rows="Auto">
+				<Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+				<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+					<StackPanel>
+						<Each Items="{qnaFileValue}">
+								<WrapPanel>
+									<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+									<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+								</WrapPanel>
+							</Each>
+					</StackPanel>
+				</Rectangle>
+					<Image File="Images/btn4.png">
+					<Clicked>
+						<Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" />
+						<Toggle Target="showQuestion" />
+					</Clicked>
+					</Image>
+					<WhileTrue Value="{qnaIsCorrect}">
+					<Image File="Images/btn_08.png">
+						<Clicked>
+						<Toggle Target="applyQuestion" />
+						<!-- 상세정보 수정화면 가기 -->
+						</Clicked>
+					</Image>
+					</WhileTrue>
+			</Grid>
+		</Panel>
+
+		<WhileTrue ux:Name="showQuestion">
+			<Move X="-1" RelativeTo="Size" />
+		</WhileTrue>
+	</DockPanel>
+
+	
+
+	<DockPanel ux:Name="page5PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{pickerDown}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<MyPicker Data="{type}" Selected="{selectedType}" />
+	</DockPanel>
+	<!-- 처음 화면 데이터 구성 -->
+	<StackPanel ux:InnerClass="qnas" Width="100%" Color="White">
+		<Grid Alignment="Center" ColumnCount="2" Columns="7*, 2*" Margin="{margin}" Width="100%" >
+			<Grid ColumnCount="1" RowCount="2" Rows="Auto" CellSpacing="3">
+				<WrapPanel Alignment="CenterLeft" Width="100%">
+					<WhileTrue Value="{complete}">
+						<Rectangle CornerRadius="100" Color="#f80" Alignment="Center">
+							<Text Value="등록완료" FontSize="{margin}*0.8" Color="White" Margin="5, 3, 5, 1" Alignment="Center" />
+						</Rectangle>
+					</WhileTrue>
+					<Text Value="{writerNm}" FontSize="{margin}*0.8" Alignment="Center" />
+				</WrapPanel>
+
+				<Text Value="{title}" TextWrapping="Wrap" Alignment="CenterLeft" />
+			</Grid>
+
+			<Grid ColumnCount="1" RowCount="2">
+				<Text Value="{regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterRight" />
+				<Text Value="{regDate2}" FontSize="{margin}" Color="#888" Alignment="CenterRight" />
+			</Grid>
+		</Grid>
+
+		<Clicked>
+			<Callback Handler="{getClickListValue}" />
+			<Toggle Target="showQuestion" />
+		</Clicked>
+	</StackPanel>
+	<!-- 페이지 상단 구성 -->
+	<DockPanel ux:Name="page6PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{pickerDown}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<MyPicker Data="{type}" Selected="{selectedType}" />
+	</DockPanel>
+	<DockPanel Color="White">
+		<Panel Dock="Top">
+		<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+			<Image File="Images/btn_pre.png" Alignment="Left">
+				<Clicked>
+					<Callback Handler="{pageCountInit}" />
+					<Callback Handler="{selectedTypes}" />	
+					<Callback Handler="{pickerDown}" />
+					<Callback Handler="{goBackToPrevious}" />
+				</Clicked>
+			</Image>
+
+			<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center"/>
+
+			<Image File="Images/btn_home.png">
+				<Clicked>
+					<Callback Handler="{pageCountInit}" />
+					<Callback Handler="{selectedTypes}" />	
+					<Callback Handler="{pickerDown}" />
+					<Callback Handler="{goMainPageFromAnywhere}" />
+				</Clicked>
+			</Image>
+		</Grid>
+			<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
+		</Panel>
+
+		<Grid Columns="3*, 1*" Dock="Top">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft" Dock="Top">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="질의응답" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+
+			<Rectangle Width="100%" Height="100%"  Color="#F17E22" CornerRadius="5" Alignment="Center" Margin="{margin}, {margin}/2">
+				<Clicked>
+					<Callback Handler="{detailDataClear}" />
+					<Callback Handler="{selectedTypes}" />	
+					<Callback Handler="{pickerDown}" />
+					<Toggle Target="applyQuestion" />
+				</Clicked>
+				<Text Value="문의하기" Color="White" FontSize="{margin}" Alignment="Center"/>
+			</Rectangle>
+		</Grid>
+		
+
+		<Panel Color="#5771AA" Height="{margin}*4" Dock="Top">
+			<Grid ColumnCount="3" Columns="2*, 5*, 3*" Margin="{margin}" Width="100%" CellSpacing="{margin}/2">
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="2" Color="#888" />
+					<Clicked><Callback Handler="{pickerUp}" /></Clicked>
+
+					<Text Value="{selectedType}" FontSize="{margin}" Margin="{margin}/2, 0" Alignment="CenterLeft" />
+
+					<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
+				</Rectangle>
+				<TextBox Height="100%" Width="100%" Background="White" Value="{searchText}" />
+				<Rectangle Width="60%" BoxSizing="FillAspect" Aspect="1.5" CornerRadius="3" Color="#3477BE" Alignment="CenterLeft">
+					<Text Value="검색" Alignment="Center" Color="White">
+						<Clicked>
+							<Callback Handler="{searchContent}" />
+						</Clicked>
+					</Text>
+				</Rectangle>
+			</Grid>
+		</Panel>
+
+		<ScrollView ux:Name="qnaScroll" SnapMaxTransform="false" SnapMinTransform="false">
+			<StackPanel Color="#ddd" ItemSpacing="1">
+				<Each Items="{qnas}">
+					<qnas />
+				</Each>
+				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
+					<Panel Width="100%" Height="100%" Color="#fcfcfc">
+						<Text Value="더보기({pageCount}/{totalPage})" Alignment="Center" />
+						<Clicked><Callback Handler="{nextPage}"/></Clicked>
+					</Panel>
+
+					<Panel Width="100%" Height="100%" Color="#fcfcfc">
+						<Text Value="맨위로" Alignment="Center" />
+						<Clicked>
+							<Set Target="qnaScroll.ScrollPosition" Value="0" />
+						</Clicked>
+					</Panel>
+				</Grid>
+			</StackPanel>
+		</ScrollView>
+	</DockPanel>
+</Page>

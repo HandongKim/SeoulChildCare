@@ -1,0 +1,7 @@
+<Page ux:Class="Trash">
+	<Router ux:Dependency="router"/>
+
+	<DockPanel>
+		<topBar Dock="Top" />
+	</DockPanel>
+</Page>

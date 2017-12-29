@@ -1,0 +1,476 @@
+<Page ux:Class="ApplyEdu">
+	<Router ux:Dependency="router"/>
+		<WhileActive>
+			<Callback Handler="{getEducationMain}" />
+		</WhileActive>	
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+
+		var type = Observable();
+		var selectedType = Observable();
+		var edus = Observable();
+
+		pickerOn = Observable(false);
+
+		function pickerUp() {
+			pickerOn.value = true;
+		}
+
+		function pickerDown() {
+			pickerOn.value = false;
+		}
+
+		var eduDetail = Observable();
+		var eduDetailInfo = Observable();
+
+		function eduYearList(eduYearList){
+			this.eduYearList = eduYearList.EDUYEAR;
+		}
+
+		//null Check
+		function eduList(eduList){
+
+			if(eduList.EDUSEQ!=null){
+				this.eduSeq = eduList.EDUSEQ;
+			}else{
+				this.eduSeq = "";
+			}
+
+			if(eduList.CHK_ID!=null){
+				this.chkId = eduList.CHK_ID;
+			}else{
+				this.chkId = "";
+			}
+
+			if(eduList.EDUYEAR!=null){
+				this.eduYear = eduList.EDUYEAR;
+			}else{
+				this.eduYear = "";
+			}
+
+			if(eduList.CONTENT!=null){
+				this.content = eduList.CONTENT;
+			}else{
+				this.content = "";
+			}
+
+			if(eduList.SINDATE_M!=null){
+				this.sinDateM = eduList.SINDATE_M;
+			}else{
+				this.sinDateM = "";
+			}
+
+			if(eduList.REGCNT!=null){
+				this.regCnt = eduList.REGCNT;
+			}else{
+				this.regCnt = "";
+			}
+
+			if(eduList.STATE!=null){
+				this.state = eduList.STATE;
+				if(this.state =="마감"){
+					this.fired = true;
+				}else{
+					this.fired = false;
+				}
+			}else{
+				this.state = "";
+			}
+
+			console.log("교육 리스트 생성 완료!");
+		}
+
+		//null Check 추가 해야함
+		function eduDetailList(eduDetailList){
+			this.state = eduDetailList.STATE;
+			this.eduYear = eduDetailList.EDUYEAR;
+			this.regCnt1 = eduDetailList.REGCNT1;
+			this.eduDay = eduDetailList.EDUDAY;
+			this.fromDate = eduDetailList.FROMDATE;
+			this.sinDate = eduDetailList.SINDATE;
+			this.placeUrl = eduDetailList.PLACE_URL;
+			this.object = eduDetailList.OBJECT;
+			this.remark = eduDetailList.REMARK;
+			this.regCnt = eduDetailList.REGCNT;
+			this.request = eduDetailList.REQUEST;
+			this.traffic = eduDetailList.TRAFFIC;
+			this.toDate = eduDetailList.TODATE;
+			this.place = eduDetailList.PLACE;
+			this.chkId = eduDetailList.CHK_ID;
+			this.content = eduDetailList.CONTENT;
+			this.capaCnt = eduDetailList.CAPACNT;
+			this.eduTime = eduDetailList.EDUTIME;
+			this.eduDate = eduDetailList.EDUDATE;
+			this.eduDateTime = eduDetailList.EDUDATETIME;
+			this.eduSeq = eduDetailList.EDUSEQ;
+			this.placeMap = eduDetailList.PLACE_MAP;
+		}
+
+		//null Check
+		function eduIntoList(eduIntoList){
+			this.name = eduIntoList.NAME;
+			this.offNm = eduIntoList.OFF_NM;
+			this.insName = eduIntoList.INS_NAME;
+			this.areaName = eduIntoList.AREA_NAME;
+			this.codeName = eduIntoList.CODE_NAME;
+			this.areaCode = eduIntoList.AREA_CODE;
+			this.insGbCare = eduIntoList.INS_GB_CARE;
+			this.seq = eduIntoList.SEQ;
+			this.seoulYn = eduIntoList.SEOUL_YN;
+		}
+
+		function getEducationMain(){
+			console.log("getEducationMain function Call ");
+			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
+			edus.clear();
+			type.clear();
+			fetch("http://112.218.172.44:52102/mobile/education/main.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+						// console.log("responseData : "+ JSON.stringify(responseData));
+						var responseBody = JSON.parse(response._bodyInit);
+						// console.log("==========================================================");
+						// console.log("responseBody : "+ JSON.stringify(responseBody));
+						// console.log("==========================================================");
+						
+						var eduYearList = responseBody.ds_eduyearlist[0];
+						console.log("eduYearList : "+ JSON.stringify(eduYearList));
+
+						for (var i = 0; i < responseBody.ds_eduyearlist.length; i++) {
+							console.log("여기까지 왔다.");
+							type.add(responseBody.ds_eduyearlist[i].EDUYEAR);
+						}
+						selectedType.value = eduYearList.EDUYEAR;
+						console.log("type.value : "+ JSON.stringify(type.value));
+
+						for (var i = 0; i < responseBody.ds_edulist.length; i++) {
+							edus.add(new eduList(responseBody.ds_edulist[i]));
+						}
+
+						console.log("edus.value : "+ JSON.stringify(edus.value));
+
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			        }).catch(function(err) {
+
+			        });
+		}
+
+		function clickEducation(value){
+			var eduSeq = value.data.eduSeq;
+			console.log("eduSeq : "+JSON.stringify(eduSeq));
+			getDetailEdu(eduSeq);
+		}
+
+		function getDetailEdu(eduSeq){
+			console.log("getEducationMain function Call ");
+			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsSearch = '{"eduyear":"'+selectedType.value+'","eduseq":"'+eduSeq+'"}';
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+			fetch("http://112.218.172.44:52102/mobile/education/eduapply.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+						// console.log("responseData : "+ JSON.stringify(responseData));
+						var responseBody = JSON.parse(response._bodyInit);
+						// console.log("==========================================================");
+						// console.log("responseBody : "+ JSON.stringify(responseBody));
+						// console.log("==========================================================");
+						console.log("responseBody : "+ JSON.stringify(responseBody.ds_edu));
+						eduDetail.add(new eduDetailList(responseBody.ds_edu));
+						
+						console.log("eduDetail.value : "+ JSON.stringify(eduDetail.value));
+
+						eduDetailInfo.add(new eduIntoList(responseBody.ds_info));
+
+						console.log("eduDetailInfo.value : "+ JSON.stringify(eduDetailInfo.value));
+
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			        }).catch(function(err) {
+
+			        });
+		}
+
+		function searchContent(){
+			console.log("search Content function Call ");
+			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			console.log("검색조건 : " + JSON.stringify(selectedType.value));
+			var dsSearch = '{"eduyear":"'+selectedType.value+'"}';
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch":'+dsSearch+'}');
+			edus.clear();
+			fetch("http://112.218.172.44:52102/mobile/education/main.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+						// console.log("responseData : "+ JSON.stringify(responseData));
+						var responseBody = JSON.parse(response._bodyInit);
+						// console.log("==========================================================");
+						// console.log("responseBody : "+ JSON.stringify(responseBody));
+						// console.log("==========================================================");
+						
+
+						for (var i = 0; i < responseBody.ds_edulist.length; i++) {
+							edus.add(new eduList(responseBody.ds_edulist[i]));
+						}
+
+						console.log("edus.value : "+ JSON.stringify(edus.value));
+
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			        }).catch(function(err) {
+
+			        });
+		}
+
+		module.exports = {
+			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent
+		};
+	</JavaScript>
+
+	<Panel ux:Name="page5BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
+		<Clicked><Callback /></Clicked>
+	</Panel>
+
+	<WhileTrue Value="{pickerOn}">
+		<Change page5PickerPanel.Y="0" Duration=".2" />
+	</WhileTrue>
+	<!-- 상세 페이지 구성 상세 데이터 수정 필요-->
+	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
+		<Panel Dock="Top">
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked><Toggle Target="detailApplyEdu" /></Clicked>
+				</Image>
+
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+				<Image File="Images/btn_home.png">
+					<Clicked><Callback Handler="{goMainPage}" /></Clicked>
+				</Image>
+			</Grid>
+
+			<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
+		</Panel>
+
+		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="교육신청" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+
+			<Rectangle Width="100%" Height="1" Color="#3E66C5" />
+		</Grid>
+
+		<ScrollView SnapMinTransform="false" SnapMaxTransform="false" Width="95%">
+			<StackPanel Color="White" Margin="{margin}/2" ItemSpacing="{margin}/2">
+				<Panel Color="#CCC">
+					<Grid ColumnCount="2" Columns="1*, 3.5*" Rows="Auto" CellSpacing="1" Margin="0,2,0,1">
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="교육일시" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<Text Value="{eduDetail.eduDateTime}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" />
+						</Panel>
+						<!-- 교육분류 전류 데이터 뭔지 모르겠음 -->
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="교육분류" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<Text Value="{eduDetail.request}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" />
+						</Panel>
+
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="교육내용" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<Text Value="{eduDetail.content}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" />
+						</Panel>
+
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="교육대상" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<Text Value="{eduDetail.object}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" />
+						</Panel>
+
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="교육장소" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<WrapPanel Width="100%" Alignment="Center">
+								<Text Value="{eduDetail.place}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" />
+								<Rectangle>
+									<Stroke Width="1" Color="#7C8DB5" />
+									<Text Value="약도보기" Color="#7C8DB5" FontSize="{margin}*0.9" Margin="6, 2" Alignment="Center" />
+								</Rectangle>
+							</WrapPanel>
+						</Panel>
+
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="협조사항" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<Text Value="{eduDetail.request}" FontSize="{margin}*0.9" Alignment="CenterLeft" TextWrapping="Wrap" Margin="5" />
+						</Panel>
+
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="교통안내" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<Text Value="{eduDetail.traffic}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" />
+						</Panel>
+						<!-- 문의 전화 데이터 뭔지 모르겠음 -->
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="문의전화" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<Text Value="" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" />
+						</Panel>
+					</Grid>
+				</Panel>
+
+				<!-- 어떤 데이터 넘어와야 하는지? 화면 구성 알아서 수정 필요 -->
+				<Panel Color="#CCC">
+					<Grid ColumnCount="2" Columns="1*, 3.5*" Rows="Auto" CellSpacing="1" Margin="0,2,0,1">
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="수강자명" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<TextBox Value="" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" Width="85%" />
+						</Panel>
+
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="직책" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<TextBox Value="" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" Width="85%" />
+						</Panel>
+
+						<Panel Width="100%" Height="{margin}*3" Color="#eee">
+							<Text Value="연락처" FontSize="{margin}*0.9" Alignment="Center" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<WrapPanel Width="100%" Alignment="Center">
+								<TextBox Value="" FontSize="{margin}*0.9" MaxLength="3" Alignment="CenterLeft" Margin="5,5,0,5" Width="{margin}*4" />
+								<Text Value="-" Alignment="Center" Margin="1" />
+								<TextBox Value="" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5" Width="{margin}*5" />
+								<Text Value="-" Alignment="Center" Margin="1" />
+								<TextBox Value="" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5,5,5" Width="{margin}*5" />
+							</WrapPanel>
+						</Panel>
+					</Grid>
+				</Panel>
+			</StackPanel>
+		</ScrollView>
+
+		<WhileTrue ux:Name="detailApplyEdu">
+			<Move X="-1" RelativeTo="Size" />
+		</WhileTrue>
+	</DockPanel>
+
+	<DockPanel ux:Name="page5PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{pickerDown}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<MyPicker Data="{type}" Selected="{selectedType}" />
+	</DockPanel>
+	<!-- 메인페이지 데이터 구성 -->
+	<StackPanel ux:InnerClass="edus" Width="100%" Color="White">
+		<Grid Alignment="Center" ColumnCount="2" Columns="7*, 2*" Margin="{margin}" Width="100%" >
+			<Grid ColumnCount="1" RowCount="2" Rows="Auto" CellSpacing="3">
+				<WrapPanel Alignment="CenterLeft" Width="100%">
+					<WhileTrue Value="{fired}">
+						<Rectangle CornerRadius="100" Color="#f80" Alignment="Center">
+							<Text Value="마감" FontSize="{margin}*0.8" Color="White" Margin="5, 3, 5, 1" Alignment="Center" />
+						</Rectangle>
+					</WhileTrue>
+					<Text Value=" 신청기간 : {sinDateM}" FontSize="{margin}*0.8" Alignment="Center" />
+				</WrapPanel>
+
+				<Text Value="{content}" TextWrapping="Wrap" Alignment="CenterLeft" />
+			</Grid>
+
+			<Grid ColumnCount="1" RowCount="2">
+				<Text Value="신청/접수" FontSize="{margin}" Color="#888" Alignment="CenterRight" />
+				<Text Value="{regCnt}" FontSize="{margin}" Color="#888" Alignment="CenterRight" />
+			</Grid>
+		</Grid>
+
+		<Clicked>
+			<Toggle Target="detailApplyEdu" />
+			<Callback Handler="{clickEducation}" />
+		</Clicked>
+	</StackPanel>
+
+	<!--main Page  -->
+	<DockPanel Color="White">
+		<topBar Dock="Top" />
+		<WrapPanel Margin="{margin}" Alignment="CenterLeft" Dock="Top">
+			<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+			<Text Value="교육신청" FontSize="{margin}*1.2" Color="Black" />
+		</WrapPanel>
+		<Panel Color="#5771AA" Height="10%" Dock="Top">
+			<Grid ColumnCount="3" Columns="2.5*, 3*, 5*" Margin="{margin}" Width="100%" CellSpacing="{margin}/2">
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="2" Color="#888" />
+					<Clicked><Callback Handler="{pickerUp}" /></Clicked>
+
+					<Text Value="{selectedType}" FontSize="{margin}" Margin="{margin}/2, 0" Alignment="CenterLeft" />
+
+					<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
+				</Rectangle>
+
+				<Rectangle Width="60%" BoxSizing="FillAspect" Aspect="1.5" CornerRadius="3" Color="#3477BE" Alignment="CenterLeft">
+
+					<Clicked><Callback Handler="{searchContent}" /></Clicked>
+					<Text Value="검색" Alignment="Center" Color="White" />
+				</Rectangle>
+			</Grid>
+		</Panel>
+		<ScrollView ux:Name="applyEduScroll" SnapMaxTransform="false" SnapMinTransform="false">
+			<StackPanel ItemSpacing="1" Color="#ddd">
+				<Each Items="{edus}">
+					<edus />
+				</Each>
+				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" CellSpacing="1">
+					<Panel Width="100%" Height="100%" Color="#fcfcfc">
+						<Text Value="더보기(0/0)" Alignment="Center" />
+					</Panel>
+
+					<Panel Width="100%" Height="100%" Color="#fcfcfc">
+						<Text Value="맨위로" Alignment="Center" />
+
+						<Clicked>
+							<Set Target="applyEduScroll.ScrollPosition" Value="0" />
+						</Clicked>
+					</Panel>
+				</Grid>
+			</StackPanel>
+		</ScrollView>
+	</DockPanel>
+</Page>

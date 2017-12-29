@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:background="#fff">
+  <TextView android:text="인증서 가져오기" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"
+  android:background="#369"
+  android:textColor="#fff"
+  android:gravity="center"/>
+  <TextView android:text="저장매체 선택" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"
+  android:textColor="#000"/> 
+  <Button android:text="My Storage" 
+  android:id="@+id/import_Storage" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"/>
+  <Button android:text="SD Memory" 
+  android:id="@+id/import_Memory" 
+  android:layout_width="fill_parent" 
+  android:layout_height="wrap_content"/>
+</LinearLayout>

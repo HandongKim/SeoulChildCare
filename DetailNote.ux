@@ -1,0 +1,1021 @@
+<Page ux:Class="DetailNote">
+	<Router ux:Dependency="router"/>
+
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+
+		detailText = "불러온 전표내역이 없습니다."
+		showText = Observable(false);;
+
+		// this.Parameter.onValueChanged(null, function(x) {
+		// 	if (x == null) {
+		// 		detailText.value = "불러온 전표내역이 없습니다.";
+		// 	}
+		// });
+		
+
+
+		var	CASH_IDX;
+		var	BILL_IDX;
+		var	INDEX;
+		var	DATE;
+		var	TYPE;
+		var	MONEY;
+		var	SUBTYPECOLOR;
+		var	ISBILL;
+		var	SUBTYPE;
+		var	NAME;
+		var	REVERSE;
+		var	RECEIPT;
+		var	MEMO;
+		var SELECTED_DATA;
+
+		this.Parameter.onValueChanged(null,function(x) {
+			if (x == null) {
+				// detailText.value = "불러온 전표내역이 없습니다.";
+				// // console.log(detailText.value);
+				// showText.value = true;
+			}else {
+				SELECTED_DATA = Observable(x.SELECTED_DATA);
+				CASH_IDX= Observable(x.CASH_IDX);
+				BILL_IDX= Observable(x.BILL_IDX);
+				INDEX= Observable(x.INDEX);
+				DATE= Observable(x.DATE);
+				TYPE= Observable(x.TYPE);
+				MONEY= Observable(x.MONEY);
+				SUBTYPECOLOR= Observable(x.SUBTYPECOLOR);
+				ISBILL= Observable(x.ISBILL);
+				SUBTYPE= Observable(x.SUBTYPE);
+				NAME= Observable(x.NAME);
+				REVERSE= Observable(x.REVERSE);
+				RECEIPT= Observable(x.RECEIPT);
+				MEMO= Observable(x.MEMO);
+				showText.value = false;
+
+				// // console.log("DetailNote CASH_IDX: " + x.CASH_IDX);
+    // 			// console.log("DetailNote BILL_IDX: " + x.BILL_IDX);
+    // 			// console.log("DetailNote BILL_IDX: " + x.REVERSE);
+    			// console.log("SELECTED_DATA : " + JSON.stringify(SELECTED_DATA));
+			}
+		});
+
+
+
+
+
+
+		var temp;
+
+		var notes = Observable();
+		
+		function note(arg, noteIndex) {
+
+			this.index = noteIndex;
+
+			this.date = arg.CASH_DATE.substring(4,6) + "." + arg.CASH_DATE.substring(6,8);
+
+			this.CASH_IDX = arg.CASH_IDX;
+
+			if (arg.CASH_GB == "1") {
+				this.type = "입금";
+				this.typeColor = "#4C9DFF";
+				this.money = arg.MONEY;
+				this.subTypeColor = "#8BBDFF";
+			} else {
+				this.type = "출금";
+				this.typeColor = "#FF4200";
+				this.money = arg.MONEY;
+				this.subTypeColor = "#FFBA85";
+			}
+
+			this.money = arg.MONEY;
+
+			if(this.money != null) {
+				this.money = this.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+			}
+			if (arg.MONEY == "A02") {
+				this.isBill = true;
+			} else {
+				this.isBill = false;
+			}
+			if (arg.ESTI_SUB_YN == "Y") {
+				this.subType = "목";
+				this.name = arg.ESTI_NAME;
+			} else {
+				this.subType = "세목";
+				this.name = arg.ESTI_NAME;
+			}
+
+			this.reverse = false;
+			if (arg.BILL_IDX !=null && arg.ESTI_GB !=null) {
+				if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
+					this.reverse=true;
+				}
+			}
+
+
+			if (arg.BILL_RECEIPT > 1) {
+				// console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
+
+				this.receipt = "2";
+			} else if (arg.BILL_RECEIPT == 1) {
+				this.receipt = "1";
+			} else {
+				this.receipt = "0";
+			}
+
+			this.memo = arg.BCASH_MEMO;
+		}
+
+		
+		function getListDetailNote () {
+				// console.log("testAPI clicked ");
+				var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+				// var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
+				// var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
+				// 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
+			    var dsSearch = '{"SEARCH_BCASH":'+CASH_IDX.value+',"SEARCH_BILL_IDX": '+BILL_IDX.value+'}';
+				// // console.log(" dsSearch : " + dsSearch);
+			    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+			    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+			    // console.log('jsonParam : ' + jsonParam);
+			    // console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+				fetch("http://112.218.172.44:52102/acusr/acc/bil/selectMobileOnlineBillList.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+
+						// console.log("responseData : "+ responseData);
+
+						var responseHeaders = JSON.parse(response._bodyInit);
+						// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+						// var damnIT = JSON.parse();
+						
+						// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
+
+
+						temp = responseHeaders.ds_billList[1];
+						
+						// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
+
+						notes.clear();
+
+
+						// console.log("fefefefefe temp.length : " + temp.length);
+
+
+						for (var i = 0; i < temp.length; i++) {
+							notes.add(new note(temp[i], i));
+							// console.log(JSON.stringify(notes.value));
+						}
+
+			        	var responseData = JSON.stringify(response);
+			        	
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			            // console.log("data : " + jsonData.results[0]);
+						// console.log("Reg Succeeded[ios]: " + data.registration_token);
+						// maintext.value = maintext.value + "/n" + data.registration_token;
+			        }).catch(function(err) {
+			            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+			        });
+			}
+
+		var selectedTemp;
+		var selectedMemo = Observable();
+
+		var selectedMoney = Observable();
+
+		function pickFromList(args) {
+				// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
+				var selectedYear = temp[args.data.index].CASH_DATE.substr(0,4);
+				var selectedMonth = temp[args.data.index].CASH_DATE.substr(4,2);
+				var selectedDay = temp[args.data.index].CASH_DATE.substr(6,2);
+
+				selectedTemp = temp[args.data.index];
+				var selectedSubject = temp[args.data.index].ESTI_NAME;
+
+				selectedMemo.clear();
+				selectedMemo.value= selectedTemp.BCASH_MEMO;
+
+				year.value=selectedYear;
+				month.value = selectedMonth;
+				day.value = selectedDay;
+				subType.text.value=selectedSubject;
+
+				moneyValue.value = temp[args.data.index].MONEY;
+
+
+				
+
+
+				// console.log("selectedTemp : " + JSON.stringify(selectedTemp));
+
+
+
+
+
+				// console.log("temp[arg.data.index].MONEY : " + temp[args.data.index].MONEY);
+		}
+
+
+		function initializing() {
+			// console.log("initializing started");
+			moneyValue.value="";
+			subType.text.value="";
+			selectedMemo.value="";
+		}
+
+
+		var uploadOn = Observable(false);
+
+		function tryUpload() {
+			uploadOn.value = true;
+		}
+
+		function cancelUpload() {
+			uploadOn.value = false;
+		}
+
+		var pickerOn = Observable(false);
+		var selectedData = Observable("직접등록");
+		var pickerData = Observable("직접등록", "계좌등록", "카드등록", "모바일등록", "급여등록", "수납등록");
+
+		function pickerUp() {
+			pickerOn.value = true;
+		}
+		function pickerDown() {
+			pickerOn.value = false;
+		}
+
+		var subType = {
+			isChoice: Observable(false),
+			color: Observable(),
+			type: Observable(),
+			text: Observable("계정과목 선택")
+		};
+
+		var choiceSubjectPanelOn = Observable(false);
+		function choiceSubjectPanelUp() {
+
+			// console.log("huh?????????? ");
+
+			searchTheSubjectList();
+			choiceSubjectPanelOn.value = true;
+		}
+		function choiceSubjectPanelDown() {
+			choiceSubjectPanelOn.value = false;
+		}
+
+		var year = Observable(2017);
+		var years = Observable();
+		for (var i = 0 ; i < 30 ; i++) {
+			years.add(2002+i);
+		}
+		var month = Observable(11);
+		var months = Observable();
+		for (var i = 0 ; i < 12 ; i++) {
+			months.add(1+i);
+		}
+		var day = Observable(11);
+		var days = Observable();
+		for (var i = 0 ; i < 31 ; i++) {
+			days.add(1+i);
+		}
+
+		var moneyValue= Observable();
+
+		var datePickerOn = Observable(false);
+		function datePickerUp() {
+			datePickerOn.value = true;
+		}
+		function datePickerDown() {
+			datePickerOn.value = false;
+		}
+
+
+
+		function searchTheSubjectList () {
+			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229", "ESTI_GB":"31", "BOOK_GB":"01", }';
+
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
+
+
+			fetch("http://112.218.172.44:52102/acusr/acc/bil/getEstiSearchLoad.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+
+						// console.log("responseData : "+ responseData);
+			            return response.json();
+			        }).then(function(jsonData) {
+			            
+			        }).catch(function(err) {
+			            
+			        });
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		function saveData() {
+			// console.log("saveData was clicked");
+			var ACTION = "U";
+			var CASH_IDX = selectedTemp.CASH_IDX;
+			var CASH_DATE = selectedTemp.CASH_DATE;
+
+			var CASH_GB = selectedTemp.CASH_GB;
+			var CASH_IDX2  =selectedTemp.CASH_IDX2;
+			var MONEY = selectedTemp.MONEY;
+			var ORG_BCASH_MEMO = selectedTemp.ORG_BCASH_MEMO;
+			var BCASH_MEMO = selectedTemp.ORG_BCASH_MEMO;
+			var ESTI_CODE = selectedTemp.ESTI_CODE;
+			var BILL_SUBCODE= selectedTemp.BILL_SUBCODE;
+			var BILL_IDX= selectedTemp.BILL_IDX;
+
+			var BILL_CLSS=selectedTemp.BILL_CLSS;
+			var BILL_RECEIPT =selectedTemp.BILL_RECEIPT;
+			var ESTI_SUB_YN = selectedTemp.ESTI_SUB_YN;
+			var ESTI_NAME= selectedTemp.ESTI_NAME;
+
+
+			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+
+			var ds_bCash;
+
+			if (BILL_IDX == "null") {
+				// console.log("BILL_IDX is null 1 " )
+				// console.log("BILL_IDX : " + BILL_IDX);
+				// console.log("moneyValue.value : " + moneyValue.value);
+
+				ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'" }';
+
+				// console.log("BILL_IDX is null 2") 
+			} else {
+				// console.log("BILL_IDX is not null 1 ")
+				// console.log("BILL_IDX : " + BILL_IDX);
+
+				// console.log("moneyValue.value : " + moneyValue.value);
+
+
+				ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value +'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'" }';
+
+				// console.log("BILL_IDX is not null 2 ")
+			}
+
+			var temp_ds_bCash = '{"ds_bCash":' + ds_bCash+'}';
+
+			// // console.log("ds_bCash : " + temp_ds_bCash);
+
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+temp_ds_bCash+'}');
+
+			// console.log("jsonParam : " + JSON.stringify(jsonParam));
+
+
+			fetch("http://112.218.172.44:52102/acusr/acc/bil/updatebCashMobile.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+
+						// console.log("responseData : "+ responseData);
+
+						var responseHeaders = JSON.parse(response._bodyInit);
+						// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+						// var damnIT = JSON.parse();
+						
+						// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
+
+
+						temp = responseHeaders.ds_billList[1];
+						
+						// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
+
+						notes.clear();
+
+
+						// console.log("fefefefefe temp.length : " + temp.length);
+
+
+						for (var i = 0; i < temp.length; i++) {
+							notes.add(new note(temp[i], i));
+							// console.log(JSON.stringify(notes.value));
+						}
+
+			        	var responseData = JSON.stringify(response);
+			        	
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			            // console.log("data : " + jsonData.results[0]);
+						// console.log("Reg Succeeded[ios]: " + data.registration_token);
+						// maintext.value = maintext.value + "/n" + data.registration_token;
+			        }).catch(function(err) {
+			            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+			        });
+				// console.log("saveData was clicked");
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		function deleteData () {
+			// console.log("deleteData was clicked");
+			var ACTION = "U";
+			var CASH_IDX = selectedTemp.CASH_IDX;
+			var CASH_DATE = selectedTemp.CASH_DATE;
+
+			var CASH_GB = selectedTemp.CASH_GB;
+			var CASH_IDX2  =selectedTemp.CASH_IDX2;
+			var MONEY = selectedTemp.MONEY;
+			var ORG_BCASH_MEMO = selectedTemp.ORG_BCASH_MEMO;
+			var BCASH_MEMO = selectedTemp.ORG_BCASH_MEMO;
+			var ESTI_CODE = selectedTemp.ESTI_CODE;
+			var BILL_SUBCODE= selectedTemp.BILL_SUBCODE;
+			var BILL_IDX= selectedTemp.BILL_IDX;
+
+			var BILL_CLSS=selectedTemp.BILL_CLSS;
+			var BILL_RECEIPT =selectedTemp.BILL_RECEIPT;
+			var ESTI_SUB_YN = selectedTemp.ESTI_SUB_YN;
+			var ESTI_NAME= selectedTemp.ESTI_NAME;
+
+
+			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+
+			var ds_bCash;
+
+			if (BILL_IDX == "null") {
+				// console.log("deleteData BILL is NULL Can't delete ")
+				// console.log("BILL_IDX : " + BILL_IDX);
+				// console.log("moneyValue.value : " + moneyValue.value);
+
+				ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+MONEY+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'" }';
+			} else {
+				// console.log("deleteData BILL is not  NULL ")
+				// console.log("BILL_IDX : " + BILL_IDX);
+
+				// console.log("moneyValue.value : " + moneyValue.value);
+
+
+				ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'" }';
+			}
+
+			var temp_ds_bCash = '{"ds_bCash":' + ds_bCash+'}';
+
+			// // console.log("ds_bCash : " + temp_ds_bCash);
+
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+temp_ds_bCash+'}');
+
+			// console.log("jsonParam : " + JSON.stringify(jsonParam));
+
+			if (BILL_IDX == "null") {
+			} else  {
+					fetch("http://112.218.172.44:52102/acusr/acc/bil/updatebCashMobile.do", {
+						method: 'POST',
+						headers: {
+							"Content-type": "application/json"
+						},
+						body: JSON.stringify(jsonParam)
+				        }).then(function(response) {
+							var responseData = JSON.stringify(response);
+
+							// console.log("responseData : "+ responseData);
+
+							var responseHeaders = JSON.parse(response._bodyInit);
+							// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+							// var damnIT = JSON.parse();
+							
+							// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
+
+
+							temp = responseHeaders.ds_billList[1];
+							
+							// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
+
+							notes.clear();
+
+
+							// console.log("fefefefefe temp.length : " + temp.length);
+
+
+							for (var i = 0; i < temp.length; i++) {
+								notes.add(new note(temp[i], i));
+								// console.log(JSON.stringify(notes.value));
+							}
+
+				        	var responseData = JSON.stringify(response);
+				        	
+				            return response.json();
+				        }).then(function(jsonData) {
+				            var data = jsonData.results[0];
+				            // console.log("data : " + jsonData.results[0]);
+							// console.log("Reg Succeeded[ios]: " + data.registration_token);
+							// maintext.value = maintext.value + "/n" + data.registration_token;
+				        }).catch(function(err) {
+				            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+				        });
+				}
+
+
+		}
+
+
+
+
+
+		this.Parameter.onValueChanged(null, function(x) {
+			initializing();
+			getListDetailNote();
+		});
+
+
+
+
+		module.exports = {
+			detailText, showText, uploadOn, tryUpload, cancelUpload,
+			pickerOn, selectedData, pickerData, pickerUp, pickerDown,
+			subType, notes,
+			choiceSubjectPanelOn, choiceSubjectPanelUp, choiceSubjectPanelDown,
+			year, years, month, months, day, days,
+			datePickerOn, datePickerUp, datePickerDown,
+			goPhotoCollection: function() {
+				router.push("PhotoCollection", {type: "upload"});
+				uploadOn.value = false;
+			},
+			goChoiceSubject: function() {
+				router.push("ChoiceSubject");
+			},
+			getListDetailNote,pickFromList, moneyValue,initializing, saveData,  deleteData, selectedMemo, searchTheSubjectList,
+			goShowFile: function() {
+				router.push("ShowFile");
+			}
+		};
+	</JavaScript>
+
+	<!-- <WhileTrue Value="{choiceSubjectPanelOn}">
+		<Change choiceSubjectPanel.X="0" Duration="0.2" />
+	</WhileTrue> -->
+
+
+
+	<WhileActive>
+		<!-- <Callback Handler="{initializing}" /> -->
+	</WhileActive>
+
+
+
+
+	<WhileTrue Value="{pickerOn}">
+		<Change page1PickerPanel2.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="page1PickerPanel2" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="30%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="완료" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{pickerDown}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<MyPicker Selected="{selectedData}" Data="{pickerData}" />
+	</DockPanel>
+
+
+
+
+
+
+
+	<StackPanel ux:Class="Note2" Width="100%" Color="White">
+		<Clicked>
+			<Callback Handler="{pickFromList}" />
+		</Clicked>
+		<Grid ColumnCount="2" Margin="{margin}/2">
+			<WrapPanel Alignment="CenterLeft">
+				<Text Value="{date}" Alignment="Center" />
+				<Text Value="{type}" Color="{typeColor}" Alignment="Center" Margin="4, 0" />
+				<WhileTrue Value="{isBill}">
+					<Rectangle CornerRadius="3" Color="#9859D7">
+						<Text Value="계좌" Color="White" Alignment="Center" Margin="2" />
+					</Rectangle>
+				</WhileTrue>
+			</WrapPanel>
+
+			<WrapPanel Alignment="CenterRight">
+				<Text Value="{money}" FontSize="{margin}*1.5" Color="{typeColor}" />
+				<Text Value=" 원" Alignment="Bottom" />
+			</WrapPanel>
+		</Grid>
+		<Grid ColumnCount="2" Columns="Auto" Margin="{margin}/2,0">
+			<WrapPanel Alignment="CenterLeft">
+				<WhileTrue Value="{reverse}">
+					<Rectangle BoxSizing="FillAspect" Aspect="1" CornerRadius="3" Width="{margin}*1.5" Color="#F00" Alignment="Center" Margin="1,0">
+						<RegularPolygon Sides="3" Width="90%" Height="90%">
+							<Stroke Width="2" Color="White" />
+						</RegularPolygon>
+					</Rectangle>
+				</WhileTrue>
+				<Rectangle CornerRadius="3" Color="{subTypeColor}">
+					<Text Value="{subType}" Color="White" Alignment="Center" Margin="2" />
+				</Rectangle>
+				<Text Value=" {name}" Color="#000" Alignment="Center" />
+			</WrapPanel>
+			<Panel>
+				<Match Value="{receipt}">
+					<Case String="2">
+						<Image File="Images/btn_paper2.png" Width="18%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
+					</Case>
+					<Case String="1">
+						<Image File="Images/btn_paper1.png" Width="10%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
+					</Case>
+				</Match>
+			</Panel>
+		</Grid>
+		<Text Value="{memo}" Margin="{margin}/2" />
+	</StackPanel>
+
+
+	<!-- <DockPanel ux:Name="choiceSubjectPanel" Width="100%" Height="100%" X="100%" Color="White">
+		<Panel Dock="Top">
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked><Callback Handler="{choiceSubjectPanelDown}" /></Clicked>
+				</Image>
+
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+				<Image File="Images/btn_home.png">
+					<Clicked><Callback Handler="{goMainPage}" /></Clicked>
+				</Image>
+			</Grid>
+
+			<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
+		</Panel>
+
+		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="{subType.text}" FontSize="{margin}*1.2" Color="Black"  />
+			</WrapPanel>
+			<Rectangle Width="100%" Height="1" Color="#3E66C5" />
+		</Grid>
+
+		<Panel Dock="Top" Width="95%">
+			<Grid Width="100%" ColumnCount="3" Columns="1*, 1*, 2*" Color="#ddd" CellSpacing="1">
+				<Panel Width="100%" Color="White" Margin="1,1,0,1">
+					<Text Value="세입계정" Alignment="Center" />
+				</Panel>
+				<Panel Width="100%" Color="White" Margin="0,1,0,1">
+					<Text Value="세출계정" Alignment="Center" />
+				</Panel>
+				<Panel Width="100%" Color="White" Margin="0,1,1,1" />
+			</Grid>
+		</Panel>
+
+		<ScrollView SnapMinTransform="false" SnapMaxTransform="false" Width="95%">
+			<StackPanel Color="#eee">
+				<Each Count="5">
+					<WrapPanel Width="100%" Color="White" Margin="1, 0.5">
+						<Panel Width="30" />
+						<Rectangle CornerRadius="3" Color="#18f">
+							<Text Value="목" Margin="3" Color="White" Alignment="Center" />
+						</Rectangle>
+
+						<Text Value=" [111] 계정과목" Alignment="Center" />
+					</WrapPanel>
+				</Each>
+			</StackPanel>
+		</ScrollView>
+	</DockPanel> -->
+
+	<WhileTrue Value="{datePickerOn}">
+		<Change datePickerPanel.Y="0" Duration="0.2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="datePickerPanel"  Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{datePickerDown}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Grid ColumnCount="6" Columns="4*, 1*, 2*, 1*, 2*, 1*" Width="100%" Dock="Fill" Color="#ddd">
+			<MyPicker Selected="{year}" Data="{years}" />
+
+			<Text Value="년" Alignment="Center" FontSize="{margin}*1.5" />
+
+			<MyPicker Selected="{month}" Data="{months}" />
+
+			<Text Value="월" Alignment="Center" FontSize="{margin}*1.5" />
+
+			<MyPicker Selected="{day}" Data="{days}" />
+
+			<Text Value="일" Alignment="Center" FontSize="{margin}*1.5" />
+		</Grid>
+	</DockPanel>
+
+<!-- 	<WhileTrue Value="{pickerOn}">
+		<Change detailNotePickerPanel.Y="0" />
+	</WhileTrue>
+
+	<Panel ux:Name="detailNotePickerPanel" Width="56%" Height="22%" Alignment="BottomLeft" Y="100%"> -->
+		<!-- <MyPicker Selected="{selectedData}" Data="{pickerData}" Width="92%" Alignment="TopRight">
+			<Clicked>
+				<Callback Handler="{pickerDown}" />
+			</Clicked>
+		</MyPicker> -->
+
+
+<!-- 		<MyPicker Selected="{selectedType}" Data="{type}" />
+	</Panel> -->
+
+<!-- 	<WhileTrue Value="{uploadOn}">
+		<Change selectType2.ZOffset="1.1" />
+		<Change selectType2.Y="0" Duration=".25" />
+		<Change page4BgPanel.ZOffset="1" />
+	</WhileTrue> -->
+
+	<WhileTrue Value="{uploadOn}">
+		<Change selectType2.ZOffset="1.1" />
+		<Change selectType2.Y="0" Duration=".25" />
+		<Change page4BgPanel.ZOffset="1" />
+	</WhileTrue>
+
+	<WhileActive>
+		<!-- <Callback Handler="{getListDetailNote}" /> -->
+	</WhileActive>
+
+
+
+	<!-- 증빙추가 종류 선택 패널 -->
+	<StackPanel ux:Name="selectType2" Width="70%" Height="60%" Alignment="BottomCenter" ItemSpacing="{margin}" Margin="{margin}" Y="100%" ZOffset="-1">
+		<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
+			<Rectangle Color="White" CornerRadius="10, 10, 0, 0" Width="100%">
+				<Text Value="증빙추가" Alignment="Center" FontSize="{margin}*0.7" Margin="{margin}" Color="Black" />
+			</Rectangle>
+
+			<Rectangle Color="White" Width="100%">
+				<Clicked><Callback Handler="{takePicture}" /></Clicked>
+
+				<Text Value="사진촬영" Alignment="Center" FontSize="{margin}*1.2" Margin="{margin}" Color="Blue" />
+			</Rectangle>
+
+			<Rectangle Color="White" Width="100%">
+				<Clicked><Callback Handler="{getImage}" /></Clicked>
+				<Text Value="앨범선택" Alignment="Center" FontSize="{margin}*1.2" Margin="{margin}" Color="Blue" />
+			</Rectangle>
+			<Rectangle Color="White" CornerRadius="0, 0, 10, 10" Width="100%">
+				<Clicked><Callback Handler="{goPhotoCollection}" /></Clicked>
+
+				<Text Value="증빙자료 화면 이동" Alignment="Center" FontSize="{margin}*1.2" Margin="{margin}" Color="Blue" />
+			</Rectangle>
+		</Grid>
+
+		<Rectangle Color="White" CornerRadius="10" Width="100%">
+			<Clicked><Callback Handler="{cancelUpload}" /></Clicked>
+
+			<Text Value="취소" Alignment="Center" FontSize="{margin}*1.2" Margin="{margin}" Color="Black" />
+		</Rectangle>
+	</StackPanel>
+
+	<!-- 배경 가려주는 패널 -->
+	<Panel ux:Name="page4BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-2">
+		<Clicked><Callback Handler="{cancelUpload}" /></Clicked>
+	</Panel>
+
+	<DockPanel Color="White">
+		<Panel Dock="Top">
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked>
+						<Callback Handler="{goBackToPrevious}" />
+					</Clicked>
+				</Image>
+
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+				<Image File="Images/btn_home.png">
+					<Clicked>
+						<Callback Handler="{goMainPageFromAnywhere}" />
+					</Clicked>
+				</Image>
+			</Grid>
+
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
+		</Panel>
+
+		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="전표상세" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+
+			<Rectangle Width="100%" Height="1" Color="#3E66C5" />
+		</Grid>
+
+		<ScrollView SnapMinTransform="false" SnapMaxTransform="false">
+			<StackPanel Color="#FFF">
+				<WhileTrue Value="{showText}">
+					<Text Value="{detailText}" TextWrapping="Wrap" Margin="10" />
+				</WhileTrue>
+				<Each Items="{notes}" Defer="Deferred">
+					<Note2 />
+				</Each>
+			</StackPanel>
+		</ScrollView>
+
+<!-- 		<Panel Dock="Bottom" Color="#5079DB" BoxSizing="FillAspect" Aspect="1.6">
+			<Rectangle Width="100%" Height="2" Color="#3E66C5" Alignment="Top" />
+
+			<Grid ColumnCount="5" Columns="2.5*, 1*, 3*, 2.5*, 2.5*" Margin="{margin}" RowCount="4" Rows="1*, 1*, 2.8*, 1.2*" CellSpacing="2">
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Clicked>
+						<Callback Handler="{datePickerUp}" />
+					</Clicked>
+					<Stroke Width="1" Color="#ccc" />
+					<Text Value="{year}-{month}-{day}" Alignment="CenterLeft" FontSize="{margin}*4/5" Margin="3" />
+				</Rectangle>
+
+				<Image File="Images/btn_cal.png" Margin="3,0">
+					<Clicked>
+						<Callback Handler="{datePickerUp}" />
+					</Clicked>
+				</Image>
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="1" Color="#ccc" />
+					<TextInput Value="{moneyValue}"/>
+				</Rectangle>
+
+				<Image File="Images/btn_02.png" Alignment="Center" RowSpan="2">
+					
+				</Image>
+
+				<Image File="Images/btn_03.png" Alignment="Center" RowSpan="2">
+					<Clicked><Callback Handler="{tryUpload}" /></Clicked>
+				</Image>
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF" ColumnSpan="3">
+					<Stroke Width="1" Color="#ccc" />
+					<WrapPanel Alignment="CenterLeft">
+						<WhileTrue Value="{subType.isChoice}">
+							<Rectangle CornerRadius="3" Color="{subTypeColor}">
+								<Text Value="{subType.type}" Color="White" Alignment="Center" Margin="2" />
+							</Rectangle>
+						</WhileTrue>
+
+						<Text Value="{subType.text}" Margin="3" Alignment="CenterLeft" />
+					</WrapPanel>
+					
+					<Clicked>
+						<Callback Handler="{pickerUp}" />
+					</Clicked>
+				</Rectangle>
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF" ColumnSpan="5">
+					<Stroke Width="1" Color="#ccc" />
+					<TextView />
+				</Rectangle>
+
+				<Grid ColumnCount="2" ColumnSpan="5" CellSpacing="2">
+					<Image File="Images/btn_04.png" Alignment="Center">
+						<Clicked>
+							<Callback Handler="{saveData}" />
+						</Clicked>
+
+					</Image>
+
+					<Image File="Images/btn_05.png" Alignment="Center">
+						<Clicked>
+							<Callback Handler="{deleteData}" />
+						</Clicked>
+					</Image>
+				</Grid>
+			</Grid>
+		</Panel> -->
+		<Panel Dock="Bottom" Color="#5079DB" BoxSizing="FillAspect" Aspect="1.4">
+			<Rectangle Width="100%" Height="2" Color="#3E66C5" Alignment="Top" />
+
+			<Grid ColumnCount="5" Columns="2.5*, 1*, 3*, 2.5*, 2.5*" Margin="{margin}" RowCount="5" Rows="1*, 1*, 1*, 2.8*, 1.2*" CellSpacing="2">
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Clicked>
+						<Callback Handler="{datePickerUp}" />
+					</Clicked>
+					<Stroke Width="1" Color="#ccc" />
+					<Text Value="{year}-{month}-{day}" Alignment="CenterLeft" FontSize="{margin}*4/5" Margin="3" />
+				</Rectangle>
+
+				<Image File="Images/btn_cal.png" Margin="3,0">
+					<Clicked>
+						<Callback Handler="{datePickerUp}" />
+					</Clicked>
+				</Image>
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="1" Color="#ccc" />
+					<TextInput Value="{moneyValue}"/>
+				</Rectangle>
+
+				<Image File="Images/btn_02.png" Alignment="Center" RowSpan="3">
+					<Clicked>
+						<Callback Handler="{goShowFile}" />
+					</Clicked>
+				</Image>
+
+				<Image File="Images/btn_03.png" Alignment="Center" RowSpan="3">
+					<Clicked><Callback Handler="{tryUpload}" /></Clicked>
+				</Image>
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF" ColumnSpan="3">
+					<Stroke Width="1" Color="#ccc" />
+					<WrapPanel Alignment="CenterLeft">
+						<WhileTrue Value="{subType.isChoice}">
+							<Rectangle CornerRadius="3" Color="{subTypeColor}">
+								<Text Value="{subType.type}" Color="White" Alignment="Center" Margin="2" />
+							</Rectangle>
+						</WhileTrue>
+
+						<Text Value="{subType.text}" Margin="3" Alignment="CenterLeft" />
+						
+					</WrapPanel>
+					<Clicked>
+						<Callback Handler="{goChoiceSubject}" />
+					</Clicked>
+				</Rectangle>
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF" ColumnSpan="3">
+					<Stroke Width="1" Color="#ccc" />
+					<Text Value="{selectedData}" Alignment="CenterLeft" />
+					<Clicked>
+						<Callback Handler="{pickerUp}" />
+					</Clicked>
+				</Rectangle>
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF" ColumnSpan="5">
+					<Stroke Width="1" Color="#ccc" />
+					<TextView Value="{selectedMemo}"/>
+				</Rectangle>
+
+				<Grid ColumnCount="2" ColumnSpan="5" CellSpacing="2">
+					<OrangeButton>
+						<Text Value="저장" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{saveData}" />
+						</Clicked>
+
+					</OrangeButton>
+
+					<BlackButton>
+						<Text Value="삭제" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{deleteData}" />
+						</Clicked>
+					</BlackButton>
+				</Grid>
+			</Grid>
+		</Panel>
+	</DockPanel>
+</Page>

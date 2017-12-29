@@ -1,0 +1,235 @@
+<Page ux:Class="PhotoCollection">
+	<Router ux:Dependency="router"/>
+
+	<JavaScript File="PhotoCollection.js" />
+
+	<!-- 증빙추가 클릭시 종류 선택 창 -->
+	<WhileTrue Value="{uploadOn}">
+		<Change selectType.ZOffset="1.1" />
+		<Change selectType.Y="0" Duration=".25" />
+		<Change page3BgPanel.ZOffset="1" />
+	</WhileTrue>
+
+	<!-- 피커패널 온 -->
+	<WhileTrue Value="{pickerOn}">
+		<Change pickerPanel.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<WhileActive>
+		<Callback Handler="{getPhotoList}" />
+	</WhileActive>
+
+
+	<!-- 증빙추가 종류 선택 패널 -->
+	<StackPanel ux:Name="selectType" Width="70%" Height="40%" Alignment="BottomCenter" ItemSpacing="{margin}" Margin="{margin}" Y="100%" ZOffset="-1">
+		<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
+			<Rectangle Color="White" CornerRadius="10, 10, 0, 0" Width="100%">
+				<Text Value="증빙추가" Alignment="Center" FontSize="{margin}*0.7" Margin="{margin}" Color="Black" />
+			</Rectangle>
+
+			<Rectangle Color="White" Width="100%">
+				<Clicked><Callback Handler="{takePicture}" /></Clicked>
+
+				<Text Value="사진촬영" Alignment="Center" FontSize="{margin}*1.2" Margin="{margin}" Color="Black" />
+			</Rectangle>
+
+			<Rectangle Color="White" CornerRadius="0, 0, 10, 10" Width="100%">
+				<Clicked><Callback Handler="{getImage}" /></Clicked>
+
+				<Text Value="앨범선택" Alignment="Center" FontSize="{margin}*1.2" Margin="{margin}" Color="Black" />
+			</Rectangle>
+		</Grid>
+
+		<Rectangle Color="White" CornerRadius="10" Width="100%">
+			<Clicked><Callback Handler="{cancelUpload}" /></Clicked>
+
+			<Text Value="취소" Alignment="Center" FontSize="{margin}*1.2" Margin="{margin}" Color="Black" />
+		</Rectangle>
+	</StackPanel>
+
+	<!-- 배경 가려주는 패널 -->
+	<Panel ux:Name="page3BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
+		<Clicked><Callback Handler="{cancelUpload}" /></Clicked>
+	</Panel>
+
+	<!-- 피커 패널 -->
+	<DockPanel ux:Name="pickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{pickerDown}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Grid ColumnCount="6" Columns="1*, 4*, 1*, 2*, 1*, 1*" Width="100%" Dock="Fill" Color="#ddd">
+			<Panel />
+			<MyPicker Selected="{year}" Data="{years}" />
+
+			<Text Value="년" Alignment="Center" FontSize="{margin}*1.5" />
+
+			<MyPicker Selected="{month}" Data="{months}" />
+
+			<Text Value="월" Alignment="Center" FontSize="{margin}*1.5" />
+			<Panel />
+		</Grid>
+	</DockPanel>
+
+	<!-- 이미지 선택시 보여지는 패널 -->
+	<WhileTrue Value="{selectedMode}">
+		<Change imagePanel.Opacity="1" Duration=".1" />
+		<Change imagePanel.ZOffset="1.1" Duration=".1" />
+	</WhileTrue>
+	<Panel ux:Name="imagePanel" Width="100%" Height="100%" Color="#FFF" Opacity="0" ZOffset="-1">
+		<DockPanel>
+			<Panel Dock="Top">
+				<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+					<Image File="Images/btn_pre.png" Alignment="Left">
+						<Clicked><Callback Handler="{cancelSelectedMode}" /></Clicked>
+					</Image>
+
+					<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+					<Panel />
+				</Grid>
+
+				<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
+			</Panel>
+
+			<Grid ColumnCount="3" Columns="4*, 1*, 1*" Dock="Top">
+				<Image File="Images/tx19.png" Alignment="CenterLeft" Margin="{margin}" Width="56%">
+				</Image>
+
+				<Image File="Images/btn_down.png" Alignment="CenterRight" Margin="{margin}">
+					<Clicked><Callback Handler="{save}" /></Clicked>
+				</Image>
+
+				<Image File="Images/btn_delete.png" Alignment="CenterRight" Margin="{margin}">
+				</Image>
+			</Grid>
+
+			<Panel Width="100%" Background="#000">
+				<PageControl ActiveIndex="{activeIndex}">
+					<Each Items="{selectedPicture}" Defer="Deferred">
+						<Panel>
+							<Image Url="{resource}" Alignment="Center">
+								<InteractiveTransform ux:Name="transform" />
+
+								<ZoomGesture Minimum="1" Target="transform" />
+								<PanGesture Target="transform"/>
+								<!-- <Draggable /> -->
+							</Image>
+						</Panel>
+					</Each>
+				</PageControl>
+
+				
+				<!-- <Each Items="{selectedPicture}">
+					<Image File="{resource}" Alignment="TopCenter">
+						<ExitingAnimation>
+							<Move RelativeTo="Size" X="1" Duration=".2" />
+						</ExitingAnimation>
+					</Image>
+				</Each> -->
+			</Panel>
+
+			<SavePanel ux:Name="savepanel" Width="300">
+				<Image File="{spicture}" StretchMode="UniformToFill">
+					<Desaturate Amount="1" />
+				</Image>
+			</SavePanel>
+		</DockPanel>
+	</Panel>
+
+	<!-- 증빙자료모음 화면 -->
+	<DockPanel Color="White">
+		<topBar Dock="Top" />
+
+		<Grid ColumnCount="3" Columns="3*, 1*, 2.5*" Dock="Top" Margin="{margin}, {margin}/3">
+			<Panel>
+				<Text Value="{year}년 {month}월" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}, 0" />
+				<Image File="Images/bg_select.png" />
+
+				<Clicked>
+					<Callback Handler="{pickerUp}" />
+				</Clicked>
+			</Panel>
+
+			<Panel />
+
+			<Panel>
+				<Match Value="{panelType}">
+					<Case String="normal">
+						<Text Value="영수증 업로드" Color="Black" FontSize="{margin}*1.2" Alignment="CenterRight">
+							<Clicked><Callback Handler="{tryUpload}" /></Clicked>
+						</Text>
+					</Case>
+
+					<Case String="upload">
+						<Grid ux:Name="basicPanel" ColumnCount="2" Columns="2*, 3*">
+							<Image File="Images/btn_choice.png">
+								<Clicked><Callback Handler="{goToSelectionMode}" /></Clicked>
+							</Image>
+							<Image File="Images/btn_upload.png">
+								<Clicked><Callback Handler="{tryUpload}" /></Clicked>
+							</Image>
+						</Grid>
+					</Case>
+
+					<Case String="selecting">
+						<Grid ux:Name="selectingPanel" ColumnCount="3" Columns="1*, 2*, 2*">
+							<Panel />
+
+							<Image File="Images/btn_cancel.png">
+								<Clicked><Callback Handler="{cancelSelectionMode}" /></Clicked>
+							</Image>
+
+							<Image File="Images/btn_apply.png" Width="80%" Alignment="CenterRight">
+								<Clicked></Clicked>
+							</Image>
+						</Grid>
+					</Case>
+				</Match>
+
+				<!-- <WhileTrue Value="{selectionMode}">
+					<Change basicPanel.Opacity="0" />
+					<Change basicPanel.HitTestMode="None" />
+					<Change selectingPanel.Opacity="1" />
+				</WhileTrue> -->
+			</Panel>
+		</Grid>
+
+		<ScrollView SnapMaxTransform="false" SnapMinTransform="false">
+			<Grid ColumnCount="3" CellSpacing="2" Color="#FFF">
+				<!-- <ColumnLayout ColumnCount="3" /> -->
+
+				<Each Items="{pictures}" Defer="Deferred">
+					<Panel Background="#eee" Width="100%" BoxSizing="FillAspect" Aspect="0.7">
+						<!-- <DropShadow Angle="90" /> -->
+						
+						<Image ux:Name="checkmark" File="Images/btn_checked.png" Alignment="TopLeft" Margin="5" Width="20" Height="20" Opacity="0" />
+						<Image File="Images/btn_check.png" ux:Name="checkmarkBackground" Width="20" Height="20" Margin="5" Alignment="TopLeft" Opacity="0" />
+						<Image File="Images/btn_link.png" ux:Name="linked" Width="20" Height="20" Margin="5" Alignment="TopLeft" Opacity="0" />
+						<Tapped>
+							<Callback Handler="{toggleSelect}" />
+						</Tapped>
+						<Image ux:Name="picture" StretchMode="UniformToFill" Url="{resource}" MemoryPolicy="UnloadUnused" />
+						<WhileTrue Value="{isSelected}">
+							<!-- <Change picture.Opacity="0.6" /> -->
+							<Change checkmark.Opacity="1" />
+							<!-- <Change checkmarkBackground.Opacity="1" /> -->
+						</WhileTrue>
+						<WhileTrue Value="{selectionMode}">
+							<Change checkmarkBackground.Opacity="1" />
+						</WhileTrue>
+						<WhileTrue Value="{isLinked}">
+							<Change linked.Opacity="1" />
+						</WhileTrue>
+					</Panel>
+				</Each>
+			</Grid>
+		</ScrollView>
+	</DockPanel>
+</Page>

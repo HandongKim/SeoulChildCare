@@ -1,0 +1,235 @@
+<App ux:AutoCtor="false">
+	<Router ux:Name="router" />
+
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+		var Camera = require('FuseJS/Camera');
+		var CameraRoll = require('FuseJS/CameraRoll');
+		var ImageTools = require('FuseJS/ImageTools');
+
+		function takePicture() {
+			Camera.takePicture().then(function(image) {
+
+				console.log("Take Picture!!!");
+
+				var boundary = "SpecificString";
+				fetch("http://112.218.172.44:52102/acusr/acc/bil/MobileReceiptImgUpload.do", {
+					method: 'POST',	
+					headers: {
+						"Content-type": "multipart/form-data; boundary=MultipartBoundry"
+					},
+					body: JSON.stringify({
+						"SIGNGB":"1",
+						"signedText":mSignedData
+			                })
+			        }).then(function(response) {
+			        	console.log("response.ok :"  + response.ok);
+			        	isConnected = response.ok;
+
+						// staticDsParam = JSON.parse(response._bodyInit);
+			   //      	// staticDsParam = staticDsParam.result;
+			   //      	staticParamStringValue = JSON.stringify(staticDsParam.dsParam);
+			   //      	console.log("staticDsParam : " + staticDsParam);
+						// console.log("staticParamStringValue : " + staticParamStringValue);
+			        	if(isConnected == true) {
+			        		router.goto("MainPage");
+			        	}
+			        	console.log("isConnected : " + isConnected);
+
+			        	var responseData = JSON.stringify(response);
+						console.log("responseData : "+ responseData);
+			            return response.json();
+			        	
+			        }).then(function(jsonData) {
+			            // var data = jsonData.results[0];
+
+			            // console.log("data : " + jsonData.results[0]);
+						
+			        }).catch(function(err) {
+			            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+			        });
+
+
+
+
+
+				CameraRoll.publishImage(image);
+			}).catch(function(error) {
+				//
+			});
+		}
+
+
+		function save() {
+
+			console.log("save");
+			var FileSystem = require("FuseJS/FileSystem");
+
+			var oReq = new XMLHttpRequest();
+			oReq.open("GET", "[http://112.218.172.44:52102/acusr/acc/bil/mImgDownLoad.do?GVMEMCODE=SEOUL000000000000121&ATCHMNFL_IDX=12]", true);
+			oReq.responseType = "arraybuffer";
+
+			oReq.onload = function (oEvent) {
+				console.log("oReq.onload");
+		  		var arrayBuffer = oReq.response; 
+		  		if (arrayBuffer) {
+		    		var path = FileSystem.dataDirectory + "/" + "testfile.jpg";
+		    		FileSystem.writeBufferToFile(path, arrayBuffer);
+		  		}
+			};
+
+			oReq.send(null);
+			savepanel.save("test.png");
+			var saveDir = "t";
+			if (Environment.ios) {
+				saveDir = FileSystem.iosPaths.documents;
+			} else if (Environment.android) {
+				console.log(FileSystem.androidPaths.files);
+				saveDir = FileSystem.androidPaths.files;
+			}
+			pictures.add({
+				index: pictures.length,
+				resource: saveDir+"/test.png",
+				isSelected: Observable(false),
+				isLinked: Observable(false)
+			});
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+		function getImage() {
+			CameraRoll.getImage().then(function(image) {
+				// newFacePath.value = image.path;
+				// console.log("get success");
+			}).catch(function(reason) {
+				console.log("Couldn't get image: "+reason);
+			});
+		};
+
+		var margin = Observable();
+
+		function placed(args) {
+			margin.value = args.width / 25;
+		}
+
+		module.exports = {
+			goBackToPrevious: function() {
+				router.getRoute(function(route) {
+					console.log("goBackToPrevious From " + route[0]);
+					if (route[0] == "NoteManage") {
+						router.goto("MainPage");
+					} else if (route[0] == "DetailNote") {
+						router.goto("NoteManage");
+					} else if (route[0] == "ShowFile") {
+						router.goto("DetailNote");
+					} else if (route[0] == "ChoiceSubject") {
+						router.goto("DetailNote");
+					} else {
+						router.goBack();
+					}
+				});
+				// console.log("goBackToPrevious");
+				// router.goBack();
+			},
+			goNoteManage: function() {
+				router.push("NoteManage");
+			},
+
+			goMainPageFromAnywhere:function () {
+				router.goto("MainPage");
+			},
+
+			goPhotoCollection: function() {
+				router.push("PhotoCollection", {type: "normal"});
+			},
+			goNotice: function() {
+				router.goto("Notice");
+			},
+			goApplyEdu: function() {
+				router.push("ApplyEdu");
+			},
+			goQnA: function() {
+				router.push("QnA");
+			},
+			goRecieveWork: function() {
+				router.push("RecieveWork");
+			},
+			goSendWork: function() {
+				router.push("SendWork");
+			},
+			goTrash: function() {
+				router.push("Trash");
+			},
+			takePicture,
+			getImage, placed, margin
+		};
+	</JavaScript>
+
+	<Panel ux:Class="topBar">
+		<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+			<Image File="Images/btn_pre.png" Alignment="Left">
+				<Clicked>
+					<Callback Handler="{goBackToPrevious}" />
+				</Clicked>
+			</Image>
+
+			<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+			<Image File="Images/btn_home.png">
+				<Clicked>
+					<Callback Handler="{goMainPageFromAnywhere}" />
+				</Clicked>
+			</Image>
+		</Grid>
+
+		<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+			<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+		</Rectangle>
+	</Panel>
+
+	<Rectangle ux:Class="BlueButton" ux:Name="BlueButtonBg" Width="100%" Height="{margin}*3" Color="#3477BE" CornerRadius="5">
+		<WhilePressed>
+			<Change BlueButtonBg.Color="#498DD5" />
+		</WhilePressed>
+	</Rectangle>
+	<Rectangle ux:Class="GrayButton" ux:Name="GrayButtonBg" Width="100%" Height="{margin}*3" Color="#959595" CornerRadius="5">
+		<WhilePressed>
+			<Change GrayButtonBg.Color="#A7A7A7" />
+		</WhilePressed>
+	</Rectangle>
+	<Rectangle ux:Class="OrangeButton" Width="100%" Height="{margin}*2.4" Color="#F17E22" />
+	<Rectangle ux:Class="BlackButton" Width="100%" Height="{margin}*2.4" Color="#333333" />
+	<Rectangle ux:Class="GrayButton2" Width="100%" Height="{margin}*2.4" Color="#959595" />
+
+	<iOS.StatusBarConfig Style="Dark" Animation="Slide" IsVisible="True" />
+	<Android.StatusBarConfig Color="#000f" IsVisible="True" />
+	<MemoryPolicy ux:Global="MyUnload" UnloadInBackground="true" UnusedTimeout="0.5" UnpinInvisible="true"/>
+	<ClientPanel Placed="{placed}">
+		<Navigator DefaultPath="Intro">
+			<Intro ux:Template="Intro" router="router" />
+			<Login ux:Template="Login" router="router" />
+			<MainPage ux:Template="MainPage" router="router" />
+			<NoteManage ux:Template="NoteManage" router="router" />
+			<DetailNote ux:Template="DetailNote" router="router" />
+			<ChoiceSubject ux:Template="ChoiceSubject" router="router" />
+			<ShowFile ux:Template="ShowFile" router="router" />
+			<DetailFile ux:Template="DetailFile" router="router" />
+			<PhotoCollection ux:Template="PhotoCollection" router="router" />
+			<Notice ux:Template="Notice" router="router" />
+			<ApplyEdu ux:Template="ApplyEdu" router="router" />
+			<QnA ux:Template="QnA" router="router" />
+			<RecieveWork ux:Template="RecieveWork" router="router" />
+			<SendWork ux:Template="SendWork" router="router" />
+			<Trash ux:Template="Trash" router="router" />
+		</Navigator>
+	</ClientPanel>
+</App>

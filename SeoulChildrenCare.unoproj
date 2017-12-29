@@ -1,0 +1,68 @@
+{
+  "RootNamespace": "",
+  "Title":"서울시어린이집회계",
+
+  "Packages": [
+    "Fuse",
+    "FuseJS",
+    "Fuse.Camera",
+    "Fuse.CameraRoll",
+    "Fuse.ImageTools",
+    "Android.ActivityUtils"
+  ],
+  "Includes": [
+    "*",
+    "Images/*.png:Bundle",
+    "Evidence/*.jpg:Bundle"
+  ],
+  "Mobile": {
+    "Orientations": "Portrait"
+  },
+  "Projects": [
+    "fuse_modules/MaxGraey/fuse-device/device_include.unoproj",
+    "fuse_modules/bolav/fuse-usersettings/usersettings_include.unoproj",
+    "./Fuse.UniSign/Fuse.UniSign.unoproj",
+  ],
+  "Icon": "./Images/icon-512-2.png",
+  "Versions" : "1.0.0",
+   "Android": {
+      "Package": "app.ss.accss",
+
+      "Icons": {
+          "LDPI": "$(Icon)",
+          "MDPI": "$(Icon)",
+          "HDPI": "$(Icon)",
+          "XHDPI": "$(Icon)",
+          "XXHDPI": "$(Icon)",
+          "XXXHDPI": "$(Icon)"
+        },
+
+  },
+  "iOS": {
+    "DevelopmentTeam": "R33668Z4ZE",
+    "BundleIdentifier": "app.ss.accss.ios",
+    "PreviewBundleIdentifier": "com.crosscert.sample.maxtedpreview",
+    "DeploymentTarget" : "8.0",
+
+    "Icons" : {
+        "iPhone_29_1x": "./Images/icons/iOS/Icon-Small.png",
+        "iPhone_29_2x": "./Images/icons/iOS/Icon-Small@2x.png",
+        "iPhone_29_3x": "./Images/icons/iOS/Icon-Small@3x.png",
+        "iPhone_40_1x": "./Images/icons/iOS/Icon-Small-40.png",
+        "iPhone_40_2x": "./Images/icons/iOS/Icon-Small-40@2x.png",
+        "iPhone_40_3x": "./Images/icons/iOS/Icon-Small-40@3x.png",
+        "iPhone_60_1x": "./Images/icons/iOS/Icon-60.png",
+        "iPhone_60_2x": "./Images/icons/iOS/Icon-60@2x.png",
+        "iPhone_60_3x": "./Images/icons/iOS/Icon-60@3x.png"
+    }   
+  },
+  "Excludes": [
+    "fuse_modules/"
+  ],
+  "FusePM": {
+    "Dependencies": [
+      "https://github.com/MaxGraey/fuse-device",
+      "https://github.com/bolav/fuse-usersettings"
+    ]
+  }
+}

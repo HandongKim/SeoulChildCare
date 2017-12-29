@@ -1,0 +1,95 @@
+<Page ux:Class="DetailFile">
+	<Router ux:Dependency="router"/>
+
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+		var Environment = require('FuseJS/Environment');
+		var FileSystem = require("FuseJS/FileSystem");
+		var CameraRoll = require("FuseJS/CameraRoll");
+		var ImageTools = require("FuseJS/ImageTools");
+
+		var resource = Observable();
+		this.Parameter.onValueChanged(null, function(x) {
+			// console.log(JSON.stringify(x));
+			resource.value = x.resource;
+		});
+
+		function save() {
+			savepanel2.save("test.png");
+			var saveDir = "t";
+			if (Environment.ios) {
+				saveDir = FileSystem.iosPaths.documents;
+				var arrayBuff;
+				FileSystem.readBufferFromFile(saveDir+"/test.png").then(function(image) {
+					arrayBuff = image;
+					// console.log(JSON.stringify(arrayBuff));
+					ImageTools.getImageFromBuffer(arrayBuff).then(function(image) {
+						console.log("Scratch image path is: " + image.path);
+						CameraRoll.publishImage(image).then(function(x) {
+							console.log("success");
+						}, function(error) {
+							console.log(error);
+						});
+					});
+					resource.value = saveDir+"/test.png";
+				});
+				// FileSystem.getFileInfo(saveDir+"/test.png").then(function(fileInfo) {
+				// 	console.log("file was modified on ", JSON.stringify(fileInfo));
+				// });
+				
+				// console.log("save");
+			} else if (Environment.android) {
+				console.log(FileSystem.androidPaths.files);
+				// saveDir = FileSystem.androidPaths.files;
+			}
+		}
+
+		module.exports = {
+			resource, save
+		};
+	</JavaScript>
+
+	<DockPanel Color="White">
+		<Panel Dock="Top">
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked>
+						<Callback Handler="{goBackToPrevious}" />
+					</Clicked>
+				</Image>
+
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+				<Image File="Images/btn_home.png">
+					<Clicked>
+						<Callback Handler="{goMainPageFromAnywhere}" />
+					</Clicked>
+				</Image>
+			</Grid>
+
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
+		</Panel>
+
+		<Grid ColumnCount="3" Columns="4*, 1*, 1*" Rows="Auto" Dock="Top" Color="#FFF">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="증빙보기상세" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+
+			<Image File="Images/btn_down.png" Alignment="CenterRight" Margin="{margin}">
+				<Clicked><Callback Handler="{save}" /></Clicked>
+			</Image>
+
+			<Image File="Images/btn_delete.png" Alignment="CenterRight" Margin="{margin}">
+			</Image>
+
+			<Rectangle Width="100%" Height="1" Color="#3E66C5" ColumnSpan="3" />
+		</Grid>
+
+		<SavePanel ux:Name="savepanel2">
+			<Image ux:Name="imageForSave" File="{resource}" />
+		</SavePanel>
+	</DockPanel>
+</Page>

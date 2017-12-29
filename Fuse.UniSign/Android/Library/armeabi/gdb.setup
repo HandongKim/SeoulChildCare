@@ -1,0 +1,3 @@
+set solib-search-path /cygdrive/d/USTOOLKIT/obj/local/armeabi-v7a
+directory /cygdrive/e/Software/Developer/_java/android-ndk-r4b-windows/android-ndk-r4b/build/platforms/android-3/arch-arm/usr/include
+directory /cygdrive/d/USTOOLKIT/jni

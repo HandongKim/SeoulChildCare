@@ -1,0 +1,17 @@
+{
+  "Packages": [
+    "Fuse",
+    "FuseJS",
+    "Uno.Threading",
+    "Uno.Permissions",
+  ],
+  "Includes": [
+    "*",
+    "**.jar:File:Android",
+    "**.so:File:Android",
+    "**.uxl:Extensions",
+    "**.a:File:iOS",
+    "**.h:ObjCHeader:iOS",
+    "**.java:Java:Android",
+  ]
+}

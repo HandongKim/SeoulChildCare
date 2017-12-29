@@ -1,0 +1,981 @@
+<Page ux:Class="NoteManage">
+	<Router ux:Dependency="router"/>
+	<WhileActive>
+		<!-- <Callback Handler="{getBillCashInputLoad}" /> -->
+		<Callback Handler="{selectOnlineBCashList}"/>
+	</WhileActive>
+
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+
+		var unReg = Observable(false);
+		
+
+		var year = Observable();
+		var years = Observable();
+		for (var i = 0 ; i < 30 ; i++) {
+			years.add(2010+i);
+		}
+		var month = Observable();
+		
+
+		var months = Observable();
+		for (var i = 0 ; i < 12 ; i++) {
+			months.add(1+i);
+		}
+
+		// 날짜 선택 피커 화면 켜고 끄는 변수
+		var pickerOn = Observable(false);
+		// 날짜 선택 피커 화면 올리고 내리는 함수
+		function pickerUp() {
+			pickerOn.value = true;
+		}
+		
+		function pickerDown() {
+				notes.clear();
+				
+				var tempMonth;
+
+				console.log("MONTH.VALUE : " + month.value);
+
+				if(month.value <10) {
+					tempMonth = "0" +month.value.toString();
+				} else {
+					tempMonth = month.value
+				}
+
+				console.log("tempMonth : " +tempMonth);
+
+
+				var yearAndMonth = year.value.toString() + tempMonth.toString();
+
+
+
+
+
+				console.log("yearAndMonth : " + yearAndMonth);
+
+
+				// console.log("testAPI clicked ");
+				var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+
+			 var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+			 // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
+			    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+			    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+			    
+			    console.log('jsonParam : ' + jsonParam);
+			    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+				fetch("http://112.218.172.44:52102/acusr/acc/bil/selectOnlineBCashList.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+						var responseHeaders = JSON.parse(response._bodyInit);
+						console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+						temp = responseHeaders.ds_bCashList[1];
+						console.log("");
+						console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
+
+						//
+						var date1;
+						var type1;
+						var typeColor1;
+						var isBill1;
+						var money1;
+						var moneyColor1;
+						var contents1;
+
+
+						//2017.12.18 시작 
+						// 
+
+
+
+						for (var i = 0; i < temp.length; i++) {
+							notes.add(new note(temp[i], i));
+						}
+
+						//2017.12.18 끝
+			        	var responseData = JSON.stringify(response);
+			        	
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			            console.log("data : " + jsonData.results[0]);
+						console.log("Reg Succeeded[ios]: " + data.registration_token);
+						// maintext.value = maintext.value + "/n" + data.registration_token;
+			        }).catch(function(err) {
+			            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+			        });
+
+
+
+
+
+
+
+
+
+
+			pickerOn.value = false;
+		}
+
+
+
+
+
+
+		// 타입 선택 피커 화면 켜고 끄는 변수
+		var pickerOn2 = Observable(false);
+		var selectedType = Observable("전체");
+		var type = Observable("전체", "입금", "출금");
+
+		// type.clear() 이용해서 type내용 없애고, type.add로 서버에서 받아온 내용을 넣으면 됩니다. 그리고, 처음으로 넣는 값도 selectedType.value에 같이 넣어주세요.
+
+		// 타입 선택 피커 화면 올리고 내리는 함수
+		function pickerUp2() {
+			pickerOn2.value = true;
+		}
+		function pickerDown2() {
+
+			// alert("pLease ");
+
+				notes.clear();
+				
+				var tempMonth;
+
+				console.log("MONTH.VALUE : " + month.value);
+
+				if(month.value <10) {
+					tempMonth = "0" +month.value.toString();
+				} else {
+					tempMonth = month.value
+				}
+
+				console.log("tempMonth : " +tempMonth);
+
+
+				var yearAndMonth = year.value.toString() + tempMonth.toString();
+
+
+
+
+
+				console.log("yearAndMonth : " + yearAndMonth);
+
+
+				var esti_code = "";
+				console.log("selectedType = " +  selectedType);
+				if(selectedType.value == "전체") {
+					esti_code="";
+				} else if (selectedType.value == "입금") {
+					esti_code="1";
+				} else if (selectedType.value == "출금") {
+					esti_code="2";
+				}
+
+			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+
+			 var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"'+ esti_code+'","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+			 // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
+			    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+			    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+			    
+			    console.log('jsonParam : ' + jsonParam);
+			    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+				fetch("http://112.218.172.44:52102/acusr/acc/bil/selectOnlineBCashList.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+						var responseHeaders = JSON.parse(response._bodyInit);
+						console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+						temp = responseHeaders.ds_bCashList[1];
+						console.log("");
+						console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
+
+						//
+						var date1;
+						var type1;
+						var typeColor1;
+						var isBill1;
+						var money1;
+						var moneyColor1;
+						var contents1;
+
+
+						//2017.12.18 시작 
+						// 
+
+
+
+						for (var i = 0; i < temp.length; i++) {
+							notes.add(new note(temp[i], i));
+						}
+
+						//2017.12.18 끝
+			        	var responseData = JSON.stringify(response);
+			        	
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			            console.log("data : " + jsonData.results[0]);
+						console.log("Reg Succeeded[ios]: " + data.registration_token);
+						// maintext.value = maintext.value + "/n" + data.registration_token;
+			        }).catch(function(err) {
+			            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+			        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			pickerOn2.value = false;
+		}
+
+
+		var pickerOn3 = Observable(false);
+		function pickerUp3() {
+			pickerOn3.value = true;
+		}
+		function pickerDown3() {
+
+
+			// selectedbillCashInputDataList.value = 
+			pickerOn3.value = false;
+		}
+
+
+
+
+		function checkClick() {
+			unReg.value = !unReg.value
+		}
+
+		function preClick() {
+			if (month.value > 1) {
+				month.value--;
+			} else {
+				month.value = 12;
+				year.value--;
+			}
+		}
+
+		function nextClick() {
+			if (month.value < 12) {
+				month.value++;
+			} else {
+				month.value = 1;
+				year.value++;
+			}
+		}
+
+		var notes = Observable();
+		
+		function note(arg, noteIndex) {
+
+			this.index = noteIndex;
+
+			this.date = arg.BILL_DATE0.substring(4,6) + "." + arg.BILL_DATE0.substring(6,8);
+
+			if (arg.CASH_GB == "1") {
+				this.type = "입금";
+				this.typeColor = "#4C9DFF";
+				this.money = arg.MONEY_IN;
+				this.subTypeColor = "#8BBDFF";
+			} else {
+				this.type = "출금";
+				this.typeColor = "#FF4200";
+				this.money = arg.MONEY_OUT;
+				this.subTypeColor = "#FFBA85";
+			}
+			this.money = this.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			if (arg.BILL_GB == "A02") {
+				this.isBill = true;
+			} else {
+				this.isBill = false;
+			}
+			if (arg.ESTI_SUB_YN == "Y") {
+				this.subType = "목";
+				this.name = arg.ESTI_NAME;
+			} else {
+				this.subType = "세목";
+				this.name = arg.ESTI_NAME + "[" + arg.ESTI_SUB_NM + "]";
+			}
+
+			// if (arg.ESTI_CODE == null) {
+			// 	this.reverse = true;
+			// } else if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)) {
+			// 	this.reverse = true;
+			// } else {
+			// 	this.reverse = false;
+			// }
+			this.reverse = false;
+			if(arg.BILL_IDX != null) {
+				if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)) {
+					this.reverse=true;
+				} 
+			}
+
+
+			if (arg.BILL_RECEIPT > 1) {
+				console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
+
+				this.receipt = "2";
+			} else if (arg.BILL_RECEIPT == 1) {
+				this.receipt = "1";
+			} else {
+				this.receipt = "0";
+			}
+
+			this.memo = arg.MEMO;
+		}
+		
+
+
+
+		// 지금은 임시로 넣었지만, 파라메터 값의 조건에 따라 값들을 직접 지정해서 추가해주는 방식을 사용하는 것이 좋을 것 같습니다. ux단에서 구분해서 보여주기 보다는 조건판단은 자바스크립트에서 모두 하고 결과만 보여줄 수 있도록 속성값들을 추가하는 거죠. 함수를 사용하셔서 넣어도 좋고요. 그리고 전표상세로 넘어갈 때에는 파라미터에서 전표를 구분할 수 있는 값을 넘겨줘서, 그것을 가지고 다시 세부적으로 보이게 하는 방향을 사용하는 것이 좋지 않을까 합니다.
+
+
+		var billCashInputData = Observable();
+		var billCashInputDataList = Observable();
+
+		var selectedbillCashInputDataList = Observable("전체");
+
+
+
+
+		function getBillCashInputLoad () {
+
+			billCashInputDataList.clear();
+			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+
+			var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+
+			fetch("http://112.218.172.44:52102/acusr/acc/bil/getBillCashInputLoad.do", {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify(jsonParam)
+			}).then(function (response) {
+				var responseData = JSON.stringify(response);
+				var responseHeaders = JSON.parse(response._bodyInit);
+				console.log("responseData : " + JSON.stringify(responseData));
+
+
+
+				// responseHeaders = JSON.parse(responseHeaders);
+
+
+				// var responseHeaderString = JSON.stringify(responseHeaders);
+
+
+				var responseDsCashCodeList = JSON.stringify(responseHeaders.ds_bCashCodeList);
+
+				// var responseHeaderString = JSON.stringify(responseDsSearch);
+
+				responseDsCashCodeList = responseDsCashCodeList.split('],')[1];
+
+				
+				responseDsCashCodeList = responseDsCashCodeList.substr(0, responseDsCashCodeList.length-1);
+
+
+
+
+				console.log("response.header 1 : " + responseDsCashCodeList);
+
+				billCashInputData.replaceAll(JSON.parse(responseDsCashCodeList));
+
+				console.log("billCashInputData.length : " + billCashInputData.length);
+				
+				// responseHeaderString = responseHeaderString.replaceAll(']', '}');
+
+				billCashInputDataList.add("전체");
+
+				for (var i =0; i < billCashInputData.length; i++) {
+					billCashInputDataList.add(billCashInputData.getAt(i).NAME);
+				}
+
+
+					console.log("billCashInputDataList : " + billCashInputDataList);
+
+
+
+			        //console.log("responseData : "+ responseData);
+					return response.json();
+				}).then(function(jsonData) {
+
+				}).catch(function(err) {
+					console.log("ERROR : " + err.message);
+				});
+			}
+
+
+			var selectOnlineBCashListData = Observable();
+			var temp;
+
+
+			function selectOnlineBCashList () {
+
+				getBillCashInputLoad();
+
+
+				// notes.clear() 
+				console.log("testAPI clicked ");
+				var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+				// var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
+				// var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
+				// 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
+				var currentTime = new Date()
+
+				var tempYear = (new Date()).getFullYear();
+				console.log("date : " + typeof(tempYear));
+
+				var monthTemp = currentTime.getMonth() + 1;
+
+				console.log("month : " + month);
+
+
+				year.value = tempYear;
+				month.value = monthTemp;
+
+
+				var tempMonth = monthTemp.toString();
+				if(monthTemp < 10) {
+
+					tempMonth = "0" +monthTemp.toString();
+				}
+
+				var yearAndMonth = tempYear + tempMonth;
+
+				console.log("yearAndMonth : " +yearAndMonth);
+
+
+				
+
+				console.log("year.value : " + year.value);
+				console.log("month.value : " + month.value);
+
+
+
+
+
+			    // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
+
+			    var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+
+
+			    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+			    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+			    
+			    console.log('jsonParam : ' + jsonParam);
+			    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+				fetch("http://112.218.172.44:52102/acusr/acc/bil/selectOnlineBCashList.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+						var responseHeaders = JSON.parse(response._bodyInit);
+						console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+						temp = responseHeaders.ds_bCashList[1];
+						console.log("");
+						console.log("2017.12.18 2 esponseHeaders.ds_bCashList : "+ JSON.stringify(temp));
+
+						//
+						var date1;
+						var type1;
+						var typeColor1;
+						var isBill1;
+						var money1;
+						var moneyColor1;
+						var contents1;
+
+
+						//2017.12.18 시작 
+						// 
+
+						for (var i = 0; i < temp.length; i++) {
+							notes.add(new note(temp[i], i));
+						}
+
+						for (var i = 0; i < notes.length; i++) {
+							console.log("아 짜증난다");
+						}
+						console.log("NOTES : " + JSON.stringify(notes.values));
+
+						//2017.12.18 끝
+			        	var responseData = JSON.stringify(response);
+			        	
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			            console.log("data : " + jsonData.results[0]);
+						console.log("Reg Succeeded[ios]: " + data.registration_token);
+						// maintext.value = maintext.value + "/n" + data.registration_token;
+			        }).catch(function(err) {
+			            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+			        });
+			}
+
+
+			function unRegisteredChecked() {
+					// alert("pLease ");
+
+				notes.clear();
+				
+				var tempMonth;
+
+				console.log("MONTH.VALUE : " + month.value);
+
+				if(month.value <10) {
+					tempMonth = "0" +month.value.toString();
+				} else {
+					tempMonth = month.value
+				}
+
+				console.log("tempMonth : " +tempMonth);
+
+
+				var yearAndMonth = year.value.toString() + tempMonth.toString();
+
+
+
+
+
+				console.log("yearAndMonth : " + yearAndMonth);
+
+
+				var esti_code = "";
+				console.log("selectedType = " +  selectedType);
+				if(selectedType.value == "전체") {
+					esti_code="";
+				} else if (selectedType.value == "입금") {
+					esti_code="1";
+				} else if (selectedType.value == "출금") {
+					esti_code="2";
+				}
+
+				var searchGubun = "A";
+				if(unReg.value == true) {
+					searchGubun = "N";
+				}
+
+
+			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+
+				
+
+
+			var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"","search_cashgb":"'+ esti_code+'","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+			 // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
+			    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+			    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+			    
+			    console.log('jsonParam : ' + jsonParam);
+			    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+				fetch("http://112.218.172.44:52102/acusr/acc/bil/selectOnlineBCashList.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+						var responseHeaders = JSON.parse(response._bodyInit);
+						console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+						temp = responseHeaders.ds_bCashList[1];
+						console.log("");
+						console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
+
+						//
+						var date1;
+						var type1;
+						var typeColor1;
+						var isBill1;
+						var money1;
+						var moneyColor1;
+						var contents1;
+
+
+						//2017.12.18 시작 
+						// 
+
+
+
+						for (var i = 0; i < temp.length; i++) {
+							notes.add(new note(temp[i], i));
+						}
+
+
+
+						//2017.12.18 끝
+			        	var responseData = JSON.stringify(response);
+			        	
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			            console.log("data : " + jsonData.results[0]);
+						console.log("Reg Succeeded[ios]: " + data.registration_token);
+						// maintext.value = maintext.value + "/n" + data.registration_token;
+			        }).catch(function(err) {
+			            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+			        });
+
+
+
+			}
+
+
+
+
+
+
+
+		module.exports = {
+			unReg, checkClick,
+			year, month, years, months, pickerOn, pickerUp, pickerDown, preClick, nextClick, pickerOn2, pickerOn3, pickerUp2, pickerDown2, selectedType, type, notes,
+			goDetailNote1: function(arg) {
+				router.push("DetailNote", "new");
+			},
+			goDetailNote2: function(arg) {
+
+				console.log("[arg.data.index] : " + arg.data.index);
+				console.log("notes[arg.data.index] : " + JSON.stringify(notes._values));
+
+
+				var infoJSON = {
+					CASH_IDX2:temp[arg.data.index].CASH_IDX2,
+					ORG_BCASH_MEMO:temp[arg.data.index].ORG_BCASH_MEMO,
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+					SELECTED_DATA:temp[arg.data.index],
+
+					CASH_IDX:temp[arg.data.index].CASH_IDX,
+					BILL_IDX:temp[arg.data.index].BILL_IDX,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					INDEX:notes._values[arg.data.index].index,
+					DATE:notes._values[arg.data.index].date,
+					TYPE:notes._values[arg.data.index].type,
+					MONEY:notes._values[arg.data.index].money,
+					SUBTYPECOLOR:notes._values[arg.data.index].subTypeColor,
+					ISBILL:notes._values[arg.data.index].isBill,
+					SUBTYPE:notes._values[arg.data.index].subType,
+					NAME:notes._values[arg.data.index].name,
+					REVERSE:notes._values[arg.data.index].reverse,
+					RECEIPT:notes._values[arg.data.index].receipt,
+					
+					MEMO:temp[arg.data.index].BCASH_MEMO
+
+					
+				}
+
+
+				console.log("temp[arg.data.index].CASH_IDX : " + temp[arg.data.index].CASH_IDX);
+				console.log("temp[arg.data.index].BILL_IDX : " + temp[arg.data.index].BILL_IDX);
+				// console.log("notes[arg.data.index].reverse : " + notes[arg.data.index]._values.reverse);
+
+
+
+				
+				router.push("DetailNote", infoJSON);
+			},
+			getBillCashInputLoad, billCashInputDataList	,pickerUp3, pickerDown3, selectOnlineBCashList, selectedbillCashInputDataList,
+			unRegisteredChecked
+		};
+	</JavaScript>
+
+	<!-- <StackPanel ux:Class="Note" Width="100%" BoxSizing="FillAspect" Aspect="3.7" Color="White">
+		<Clicked>
+			<Callback Handler="{goDetailNote2}" />
+		</Clicked>
+		<Grid ColumnCount="2" Margin="{margin}">
+			<WrapPanel Alignment="CenterLeft">
+				<Text Value="{date}" Alignment="Center" />
+				<Text Value="{type}" Color="{typeColor}" Alignment="Center" Margin="4, 0" />
+				<WhileTrue Value="{isBill}">
+					<Rectangle CornerRadius="3" Color="#808">
+						<Text Value="계좌" Color="White" Alignment="Center" Margin="2" />
+					</Rectangle>
+				</WhileTrue>
+			</WrapPanel>
+
+			<WrapPanel Alignment="CenterRight">
+				<Text Value="{money}" FontSize="{margin}*1.5" Color="{moneyColor}" />
+				<Text Value=" 원" Alignment="Bottom" />
+			</WrapPanel>
+		</Grid>
+		<Text Value="{contents}" Margin="{margin}, 0" />
+	</StackPanel> -->
+
+	<StackPanel ux:Class="Note" Width="100%" Color="White">
+		<Clicked>
+			<Callback Handler="{goDetailNote2}" />
+		</Clicked>
+		<Grid ColumnCount="2" Margin="{margin}/2">
+			<WrapPanel Alignment="CenterLeft">
+				<Text Value="{date}" Alignment="Center" />
+				<Text Value="{type}" Color="{typeColor}" Alignment="Center" Margin="4, 0" />
+				<WhileTrue Value="{isBill}">
+					<Rectangle CornerRadius="3" Color="#9859D7">
+						<Text Value="계좌" Color="White" Alignment="Center" Margin="2" />
+					</Rectangle>
+				</WhileTrue>
+			</WrapPanel>
+
+			<WrapPanel Alignment="CenterRight">
+				<Text Value="{money}" FontSize="{margin}*1.5" Color="{typeColor}" />
+				<Text Value=" 원" Alignment="Bottom" />
+			</WrapPanel>
+		</Grid>
+		<Grid ColumnCount="2" Columns="Auto" Margin="{margin}/2,0">
+			<WrapPanel Alignment="CenterLeft">
+				<WhileTrue Value="{reverse}">
+					<Rectangle BoxSizing="FillAspect" Aspect="1" CornerRadius="3" Width="{margin}*1.5" Color="#F00" Alignment="Center" Margin="1,0">
+						<RegularPolygon Sides="3" Width="90%" Height="90%">
+							<Stroke Width="2" Color="White" />
+						</RegularPolygon>
+					</Rectangle>
+				</WhileTrue>
+				<Rectangle CornerRadius="3" Color="{subTypeColor}">
+					<Text Value="{subType}" Color="White" Alignment="Center" Margin="2" />
+				</Rectangle>
+				<Text Value=" {name}" Color="#000" Alignment="Center" />
+			</WrapPanel>
+			<Panel>
+				<Match Value="{receipt}">
+					<Case String="2">
+						<Image File="Images/btn_paper2.png" Width="18%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
+					</Case>
+					<Case String="1">
+						<Image File="Images/btn_paper1.png" Width="10%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
+					</Case>
+				</Match>
+			</Panel>
+		</Grid>
+		<Text Value="{memo}" Margin="{margin}/2" />
+	</StackPanel>
+
+
+
+
+	<WhileTrue Value="{pickerOn}">
+		<Change page1PickerPanel.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="page1PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{pickerDown}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Grid ColumnCount="6" Columns="1*, 4*, 1*, 2*, 1*, 1*" Width="100%" Dock="Fill" Color="#ddd">
+			<Panel />
+			<MyPicker Selected="{year}" Data="{years}" />
+
+			<Text Value="년" Alignment="Center" FontSize="{margin}*1.5" />
+
+			<MyPicker Selected="{month}" Data="{months}" />
+
+			<Text Value="월" Alignment="Center" FontSize="{margin}*1.5" />
+			<Panel />
+		</Grid>
+	</DockPanel>
+
+	<WhileTrue Value="{pickerOn2}">
+		<Change page1PickerPanel2.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="page1PickerPanel2" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="완료" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{pickerDown2}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<MyPicker Selected="{selectedType}" Data="{type}" />
+	</DockPanel>
+
+
+	<WhileTrue Value="{pickerOn3}">
+		<Change page1PickerPanel3.Y="0" Duration=".2" />
+	</WhileTrue>
+
+
+<!-- 전체 부분 선 -->
+	<DockPanel ux:Name="page1PickerPanel3" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="완료" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{pickerDown3}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<MyPicker Selected="{selectedbillCashInputDataList}" Data="{billCashInputDataList}" />
+	</DockPanel>
+
+
+
+	<DockPanel>
+		<topBar Dock="Top" />
+
+		<Grid ColumnCount="1" Rows="Auto" Dock="Top">
+			<Grid Columns="2*, 3*">
+				<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+					<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+					<Text Value="전표관리" FontSize="{margin}*1.2" Color="Black" />
+				</WrapPanel>
+
+				<Panel Width="80%" Alignment="CenterRight">
+					<!-- <Text Value="전체" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}*2, 0" /> -->
+					<Text Value="{selectedbillCashInputDataList}" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}*2, 0" />
+					<Image File="Images/bg_select2.png" Margin="{margin}" />
+
+
+					<Clicked>
+						<Callback Handler="{pickerUp3}" />
+					</Clicked>
+
+				</Panel>
+			</Grid>
+
+			<Panel Color="#5771AA">
+				<Grid ColumnCount="3" Columns="5*, 5*, 3*" Margin="{margin}, {margin}*6/7" CellSpacing="3">
+					<Panel>
+						<Text Value="{year}년 {month}월" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}, 0" />
+						<Image File="Images/bg_select.png" />
+
+						<Clicked>
+							<Callback Handler="{pickerUp}" />
+						</Clicked>
+					</Panel>
+					<!-- <Grid Columns="1*, 10*, 1*" CellSpacing="{margin}*4/7">
+						<Image File="Images/cal_pre.png" MemoryPolicy="UnloadUnused">
+							<Clicked><Callback Handler="{preClick}" /></Clicked>
+						</Image>
+
+						<Text Value="{year}년 {month}월" Alignment="Center" FontSize="{margin}" Color="White" />
+						<Image File="Images/cal_next.png" MemoryPolicy="UnloadUnused">
+							<Clicked><Callback Handler="{nextClick}" /></Clicked>
+						</Image>
+					</Grid> -->
+
+					<Grid ColumnCount="2" Columns="1*, 1*" CellSpacing="3">
+						<Rectangle Width="100%" Height="100%" Color="#FFF">
+							<Stroke Width="2" Color="#888" />
+							<Clicked><Callback Handler="{pickerUp2}" /></Clicked>
+
+							<Text Value="{selectedType}" FontSize="{margin}" Margin="{margin}/2, 0" Alignment="CenterLeft" />
+
+							<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
+						</Rectangle>
+						<!-- <Panel Margin="5,0">
+							<Text Value="전체" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}, 0" />
+
+							<Image File="Images/bg_select2.png" StretchMode="Scale9" />
+						</Panel> -->
+
+						<Grid ColumnCount="2" Columns="1*, 3*">
+							<Panel Alignment="CenterRight">
+								<Clicked>
+									<Callback Handler="{checkClick}" />
+									<Callback Handler="{unRegisteredChecked}" />
+								</Clicked>
+
+								<Image ux:Name="fm_checked" File="Images/fm_checked.png" Opacity="0" />
+								<Image ux:Name="fm_check" File="Images/fm_check.png" />
+
+								<WhileTrue Value="{unReg}">
+									<Change fm_checked.Opacity="1" />
+									<Change fm_check.Opacity="0" />
+									
+								</WhileTrue>
+							</Panel>
+							<Text Value="미등록" FontSize="{margin}" Color="White" Alignment="Center" />
+						</Grid>
+					</Grid>
+
+					<!-- <Image File="Images/btn_01.png" Width="80%" Alignment="CenterRight">
+						<Clicked><Callback Handler="{goDetailNote1}" /></Clicked>
+					</Image> -->
+				</Grid>
+			</Panel>
+		</Grid>
+
+		<ScrollView SnapMaxTransform="false" SnapMinTransform="false">
+			<StackPanel Color="#eee" ItemSpacing="1">
+				<Each Items="{notes}">
+					<Note />
+				</Each>
+			</StackPanel>
+		</ScrollView>
+	</DockPanel>
+</Page>

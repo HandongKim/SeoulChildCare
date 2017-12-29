@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.crosscert.sample"
+      android:versionCode="1"
+      android:versionName="1.0.0.4">
+    <application android:icon="@drawable/icon" android:label="@string/app_name"
+    			android:theme="@android:style/Theme.NoTitleBar" android:debuggable="true">
+    	<activity android:name="com.crosscert.sample.mainMenu" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+    
+        <activity android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" android:name="com.crosscert.sample.Intro">
+	        <intent-filter>
+	            <action android:name="android.intent.action.MAIN" />
+	            <category android:name="android.intent.category.LAUNCHER" />
+	        </intent-filter>
+	    </activity>
+	    
+	    <activity android:name="com.crosscert.sample.listCert" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" >
+	       <intent-filter>
+	           <action android:name="com.crosscert.sample"/>
+               <category android:name="android.intent.category.DEFAULT" />
+               <action android:name="android.intent.action.VIEW" />
+               <category android:name="android.intent.category.BROWSABLE" />
+               <data android:scheme="crosscert" android:host="libtest" />
+	       </intent-filter>
+        </activity>
+        
+        <activity android:name=".esign.Esign1InputPasswd" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        <activity android:name=".esign.Esign2Verify" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        <activity android:name=".management.Mngmt1VerifyCert" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        <activity android:name=".management.Mngmt2ChangePasswd" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        <activity android:name=".management.Mngmt3VerifyIdentity" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        <activity android:name=".management.Mngmt4DeleteCert" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        <activity android:name=".movement.exportcert.ExportCert1InputPasswd" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        <activity android:name=".movement.exportcert.ExportCert2ApproveNum" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        <activity android:name="com.crosscert.sample.movement.importcert.ImportCert1ApprvNum" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        <activity android:name="com.crosscert.sample.movement.importcert.ImportCert2InputPasswd" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        <activity android:name="com.crosscert.sample.movement.importcert.ImportCert3Storage" android:screenOrientation="portrait" android:windowSoftInputMode="stateUnspecified|adjustPan" />
+        
+    </application>
+    <uses-sdk android:minSdkVersion="4" />
+    <supports-screens android:anyDensity="true" />
+    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+
+
+</manifest> 

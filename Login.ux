@@ -1,0 +1,386 @@
+<Page ux:Class="Login">
+	<UserSettings ux:Global="UserSettings" />
+	<Router ux:Dependency="router"/>
+
+	<JavaScript File="Login.js" />
+	<Alert ux:Name="loginAlert" Title="{alert.title}" MainText="{alert.contents}" Type="{alert.type}" Layer="{alert.layer}" />
+
+	<WhileActive>
+		<Callback Handler="{getLicenseInfo}" />
+		<Callback Handler="{getList}" />
+	</WhileActive>
+
+	<WhileTrue Value="{corSelected}">
+		<Change tab1_over.Opacity="0" />
+		<Change tab1.Opacity="1" />
+		<Change tab2.Opacity="0" />
+		<Change tab2_on.Opacity="1" />
+	</WhileTrue>
+
+	<WhileTrue Value="{onPanel}">
+		<Change bgPanel.Opacity="0.5" />
+		<Change bgPanel.ZOffset="1.2" />
+	</WhileTrue>
+
+	<!-- 비밀번호 변경시 보여지는 패널 -->
+	<StackPanel ux:Name="changePwPanel" Width="100%" Y="-100%" Color="White" Alignment="TopCenter" ZOffset="1.3">
+		<Image File="Images/top_bg.png" MemoryPolicy="UnloadUnused">
+			<Image File="Images/top_tx2.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" MemoryPolicy="UnloadUnused" />
+		</Image>
+
+		<Grid ColumnCount="2" Columns="1*, 3.5*" Margin="{margin}" CellSpacing="{margin}/2" Rows="Auto">
+			<Text Value="현재 비밀번호" Color="Black" Alignment="CenterLeft" FontSize="{margin}*0.85" />
+
+			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
+				<Stroke Width="2" Color="#ddd" />
+
+				<TextInput Value="{chgPassword.password}" Margin="{margin}, 0" IsPassword="true" />
+			</Rectangle>
+
+			<Text Value="변경 비밀번호" Color="Black" Alignment="CenterLeft" FontSize="{margin}*0.85" />
+
+			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
+				<Stroke Width="2" Color="#ddd" />
+
+				<TextInput Value="{chgPassword.newPassword}" Margin="{margin}, 0" IsPassword="true" />
+			</Rectangle>
+
+			<Text Value="비밀번호 확인" Color="Black" Alignment="CenterLeft" FontSize="{margin}*0.85" />
+
+			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
+				<Stroke Width="2" Color="#ddd" />
+
+				<TextInput Value="{chgPassword.confirmPassword}" Margin="{margin}, 0" IsPassword="true" />
+			</Rectangle>
+		</Grid>
+
+		<Grid ColumnCount="2" Margin="{margin}, 0, {margin}, {margin}" CellSpacing="4">
+			<BlueButton>
+				<Text Value="확인" Alignment="Center" Color="White" />
+				<Clicked> 
+					<Callback Handler="{changePassword}" />
+				</Clicked>
+			</BlueButton>
+
+			<GrayButton>
+				<Text Value="취소" Alignment="Center" Color="White" />
+				<Clicked>
+					<Callback Handler="{popDownPanel}" />
+					<Callback Handler="{popDownChangePw}" />
+				</Clicked>
+			</GrayButton>
+		</Grid>
+
+		<WhileTrue Value="{onChangePw}">
+			<Change changePwPanel.Y="0" Duration=".3" />
+		</WhileTrue>
+	</StackPanel>
+
+	<!-- 인증서 가져오기할 때 보여지는 패널 -->
+	<StackPanel ux:Name="importPanel" Width="100%" Y="-100%" Color="White" Alignment="TopCenter" ZOffset="1.3">
+		<Image File="Images/top_bg.png" MemoryPolicy="UnloadUnused">
+			<Image File="Images/top_tx3.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" MemoryPolicy="UnloadUnused" />
+		</Image>
+
+		<Grid ColumnCount="5" Columns="8*, 2*, 7*, 2*, 13.5*" CellSpacing="1" Rows="Auto" Margin="{margin}">
+			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
+				<Stroke Width="2" Color="#ddd" />
+
+				<Text Margin="{margin}, 0" MaxLength="4" Alignment="Center" Value="{firstNum}" FontSize="{margin}*1.2"/>
+			</Rectangle>
+
+			<Panel />
+
+			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
+				<Stroke Width="2" Color="#ddd" />
+
+				<Text Margin="{margin}, 0" MaxLength="4" Alignment="Center" Value="{secondNum}" FontSize="{margin}*1.2"/>
+			</Rectangle>
+
+			<Panel />
+
+			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
+				<Stroke Width="2" Color="#ddd" />
+
+				<Text Margin="{margin}, 0" MaxLength="5" Alignment="Center" Value="{thirdNum}" FontSize="{margin}*1.2"/>
+			</Rectangle>
+
+			<Text Value="접속대기시간: {countDownMinutes}:{countDownSeconds}" Alignment="CenterLeft" Color="Black" ColumnSpan="5" FontSize="{margin}*2/3" />
+		</Grid>
+
+		<BlueButton Margin="{margin}, 0">
+			<Text Value="닫기" Alignment="Center" Color="White" />
+
+			<Clicked>
+				<Callback Handler="{popDownPanel}" />
+				<Callback Handler="{popDownImportPanel}" />
+			</Clicked>
+		</BlueButton>
+
+		<Image File="Images/tx_input.png" MemoryPolicy="UnloadUnused" Alignment="CenterLeft"  Width="80%" Margin="{margin}" />
+
+		<WhileTrue Value="{onImportPanel}">
+			<Change importPanel.Y="0" Duration=".3" />
+		</WhileTrue>
+	</StackPanel>
+
+	<!-- 인증서 내보내기 하기 전 비밀번호 입력 패널 -->
+	
+
+	<StackPanel ux:Name="enterPw" Width="100%" Color="White" Alignment="TopCenter" ZOffset="1.3" Y="-100%">
+		<Image File="Images/top_bg.png" MemoryPolicy="UnloadUnused">
+			<Image File="Images/top_tx4.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" MemoryPolicy="UnloadUnused" />
+		</Image>
+		<Text Value="인증서 비밀번호 입력 :" Alignment="CenterLeft" Margin="{margin}" FontSize="{margin}*1.5" />
+			<TextBox Value="{exportCertPw}" Margin="{margin}, 0" IsPassword="true" Alignment="Center" Width="100%" />
+		<Grid ColumnCount="2" Margin="{margin}" CellSpacing="4">
+			<BlueButton>
+				<Text Value="확인" Alignment="Center" Color="White" />
+				<Clicked>
+					<Callback Handler="{popDownEnterPw}" />
+					<Callback Handler="{popUpExportPanel}" />
+					
+				</Clicked>
+			</BlueButton>
+
+			<GrayButton>
+				<Text Value="취소" Alignment="Center" Color="White" />
+				<Clicked>
+					<Callback Handler="{popDownPanel}" />
+					<Callback Handler="{popDownEnterPw}" />
+				</Clicked>
+			</GrayButton>
+		</Grid>
+
+		<WhileTrue Value="{onEnterPw}">
+			<Change enterPw.Y="0" Duration=".3" />
+		</WhileTrue>
+	</StackPanel>
+
+
+
+
+
+
+
+	<!-- 인증서 내보내기 할 때 보여지는 패널 -->
+	<StackPanel ux:Name="exportPanel" Width="100%" Y="-100%" Color="White" Alignment="TopCenter" ZOffset="1.3">
+		<Image File="Images/top_bg.png" MemoryPolicy="UnloadUnused">
+			<Image File="Images/top_tx4.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" MemoryPolicy="UnloadUnused" />
+		</Image>
+
+		<Grid ColumnCount="5" Columns="8*, 2*, 7*, 2*, 13.5*" CellSpacing="1" Rows="Auto" Margin="{margin}">
+			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
+				<Stroke Width="2" Color="#ddd" />
+
+				<TextInput Margin="{margin}, 0" Alignment="Center" Value="{firstNum}"/>
+			</Rectangle>
+
+			<Panel />
+
+			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
+				<Stroke Width="2" Color="#ddd" />
+
+				<TextInput Margin="{margin}, 0"  Alignment="Center" Value="{secondNum}"/>
+			</Rectangle>
+
+			<Panel />
+
+			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
+				<Stroke Width="2" Color="#ddd" />
+
+				<TextInput Margin="{margin}, 0" Alignment="Center" Value="{thirdNum}"/>
+			</Rectangle>
+
+			<Text Value="접속대기시간:09:58" Alignment="CenterLeft" Color="Black" ColumnSpan="5" FontSize="{margin}*2/3" />
+		</Grid>
+		
+		<BlueButton Margin="{margin}, 0">
+			<Text Value="닫기" Alignment="Center" Color="White" />
+			<Clicked>
+				<Callback Handler="{popDownPanel}" />
+				<Callback Handler="{popDownExportPanel}" />
+			</Clicked>
+		</BlueButton>
+
+		<Image File="Images/tx_output.png" MemoryPolicy="UnloadUnused" Alignment="CenterLeft"  Width="80%" Margin="{margin}" />
+
+		<WhileTrue Value="{onExportPanel}">
+			<Change exportPanel.Y="0" Duration=".3" />
+		</WhileTrue>
+	</StackPanel>
+
+	<Panel ux:Name="bgPanel" Width="100%" Height="100%" Color="#555" Opacity="0" ZOffset="-1" />
+
+	<DockPanel Color="White">
+		<Panel Dock="Top">
+			<Image File="Images/top_tx1.png" Width="40%" Alignment="Left" Margin="30, 15, 0, 15" />
+
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="6">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
+		</Panel>
+
+		<DockPanel >
+			<Grid ColumnCount="2" Margin="20" Dock="Top">
+				<Panel>
+					<Clicked><Callback Handler="{friSelect}" /></Clicked>
+					<Image ux:Name="tab1_over" File="Images/tab1_on.png" />
+					<Image ux:Name="tab1" File="Images/tab1.png" Opacity="0" />
+				</Panel>
+
+				<Panel>
+					<Clicked><Callback Handler="{corSelect}" /></Clicked>
+					<Image ux:Name="tab2" File="Images/tab2.png" />
+					<Image ux:Name="tab2_on" File="Images/tab2_on.png" Opacity="0" />
+				</Panel>
+			</Grid>
+			<ScrollView SnapMinTransform="false" SnapMaxTransform="false">
+				<StackPanel Color="#eee" ItemSpacing="1">
+					<Each Items="{data}">
+						<Rectangle Width="100%" BoxSizing="FillAspect" Aspect="4" Color="White">
+							<Clicked>
+								<Callback Handler="{chooseCertificate}"/>
+							</Clicked>
+
+							<!-- <Panel ux:Name="certificate">
+								<Grid ColumnCount="2" Columns="1*, 3*" CellSpacing="4">
+									<Image File="{ImageName}" Width="85%" Alignment="CenterRight" />
+
+									<Grid ColumnCount="1" RowCount="3" Rows="Auto">
+										<Text Value="{PolicyHumanReadableForm}" Alignment="Center" FontSize="20" />
+										<Text Value="{CommonName}" Alignment="Center" FontSize="20" />
+										<Grid ColumnCount="2">
+											<Text Value="{Organization}" Alignment="Center" FontSize="20"/>
+											<Text Value="{ValidityEndDate}" Alignment="Center" FontSize="20" />
+										</Grid>
+									</Grid>
+								</Grid>
+							</Panel> -->
+							<Panel ux:Name="certificate" Margin="{margin}/2, 0">
+								<Grid ColumnCount="2" Columns="1*, 3*" CellSpacing="10">
+									<Image File="{ImageName}" Width="85%" Alignment="CenterRight" />
+
+									<Grid ColumnCount="1" RowCount="3" Rows="Auto" Alignment="CenterLeft" Width="100%">
+										<Text Value="{PolicyHumanReadableForm}" Alignment="CenterLeft" Color="#333" FontSize="{margin}*1.1" />
+										<Text Value="{CommonName}" Alignment="CenterLeft" Color="#000" FontSize="{margin}*1.4" />
+										<Grid ColumnCount="2">
+											<Text Value="발급자: {Organization}" Alignment="CenterLeft" Color="#aaa" FontSize="{margin}*0.9"/>
+											<Text Value="만료일: {ValidityEndDate}" Alignment="CenterRight" Color="#aaa" FontSize="{margin}*0.9" Margin="{margin}/2,0" />
+										</Grid>
+									</Grid>
+								</Grid>
+							</Panel>
+
+						</Rectangle>
+					</Each>
+				</StackPanel>
+			</ScrollView>
+			<Rectangle Width="100%" Height="3" Color="#363f4e" Dock="Bottom" />
+		</DockPanel>
+
+		<StackPanel Dock="Bottom" Margin="{margin}*1.5, {margin}*5, {margin}*1.5, {margin}*1.5">
+			<Grid Columns="3.5*, 1.5*" Width="100%" Margin="0,4">
+				<Panel>
+					<WrapPanel Alignment="Center" Width="100%">
+						<Text Value="·인증서 비밀번호는" Alignment="CenterLeft" FontSize="{margin}*0.7" />
+						<Text Value=" 대소문자를 구분" Alignment="CenterLeft" FontSize="{margin}*0.7" Color="Black" />
+						<Text Value="합니다." Alignment="CenterLeft" FontSize="{margin}*0.7" />
+					</WrapPanel>
+				</Panel>
+				<!-- <Image File="Images/tx1.png" Alignment="CenterLeft" /> -->
+				<!-- <Image File="Images/tx9.png" Width="60%" Alignment="CenterRight"> -->
+				<Panel>
+					<Text Value="비밀번호변경 >" Alignment="CenterRight" FontSize="{margin}*0.7" Color="Black" />
+					<Clicked>
+						<Callback Handler="{popUpPanel}" />
+						<Callback Handler="{popUpChangePw}" />
+					</Clicked>
+				</Panel>
+				<!-- </Image> -->
+			</Grid>
+
+			<TextBox Value="{certPw}" PlaceholderText="인증서 비밀번호 입력" Width="100%" IsPassword="true" Height="40" />
+
+			<BlueButton Margin="0,5">
+				<Text Value="로그인" Color="White" Alignment="Center" />
+			<!-- <Panel>
+				<Image ux:Name="btn1" File="Images/btn1.png" Width="100%" Margin="0, 5" MemoryPolicy="UnloadUnused" />
+
+				<Image ux:Name="btn1_over" File="Images/btn1_over.png" Width="100%" Margin="0, 5" MemoryPolicy="UnloadUnused" Opacity="0" /> -->
+
+				<Clicked>
+					<!-- <Callback Handler="{goMainPage}" /> -->
+					<Callback Handler="{goMainPage2}" />
+
+
+					<!-- <Set Target="loginAlert.Layer" Value="Overlay" /> -->
+					
+				
+				</Clicked>
+
+			</BlueButton>
+				<!-- <WhilePressed>
+					<Change btn1.Opacity="0" />
+					<Change btn1_over.Opacity="1" />
+				</WhilePressed>
+			</Panel> -->
+
+			<Grid Columns="7.3*, 1*, 10*, 1*, 10*" Width="100%" Margin="0,5">
+				<Panel>
+					<Text Value="인증서삭제" Color="Black" Alignment="BottomCenter" FontSize="{margin}*1" />
+
+					<Clicked>
+						<Callback Handler="{removeCertificate}" />
+					</Clicked>
+				</Panel>
+
+				<Text Value="|" FontSize="{margin}*1.1" Color="Black" Alignment="Center" />
+
+				<Panel>
+					<Text Value="인증서 가져오기" Color="Black" Alignment="BottomCenter" FontSize="{margin}*1" />
+
+					<Clicked>
+						<Callback Handler="{popUpPanel}" />
+						<Callback Handler="{popUpImportPanel}" />
+					</Clicked>
+				</Panel>
+
+				<Text Value="|" FontSize="{margin}*1.1" Color="Black" Alignment="Center" />
+
+				<Panel>
+					<Text Value="인증서 내보내기" Color="Black" Alignment="BottomCenter" FontSize="{margin}*1" />
+
+					<Clicked>
+						<Callback Handler="{popUpPanel}" />
+						<Callback Handler="{popUpEnterPw}" />
+					</Clicked>
+				</Panel>
+				<!-- <Image File="Images/tx3.png" Margin="5" MemoryPolicy="UnloadUnused">
+					<Clicked>
+						<Callback Handler="{removeCertificate}" />
+					</Clicked>
+				</Image>
+
+
+				<Image File="Images/tx_stick.png" Width="2" MemoryPolicy="UnloadUnused" />
+
+				<Image File="Images/tx4.png" Margin="5" MemoryPolicy="UnloadUnused">
+					<Clicked>
+						<Callback Handler="{popUpPanel}" />
+						<Callback Handler="{popUpImportPanel}" />
+					</Clicked>
+				</Image>
+
+				<Image File="Images/tx_stick.png" Width="2" MemoryPolicy="UnloadUnused" />
+
+				<Image File="Images/tx5.png" Margin="5" MemoryPolicy="UnloadUnused">
+					<Clicked>
+						<Callback Handler="{popUpPanel}" />
+						<Callback Handler="{popUpEnterPw}" />
+					</Clicked>
+				</Image> -->
+			</Grid>
+		</StackPanel>
+	</DockPanel>
+</Page>

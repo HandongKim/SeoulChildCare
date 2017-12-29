@@ -1,0 +1,196 @@
+<Panel ux:Class="ChoiceSubject">
+	<Router ux:Dependency="router"/>
+
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+
+		var incomeSubject = [
+			{type: "1", text: " [111] 정부지원 보육료"},
+			{type: "1", text: " [112] 부모부담 보육료"},
+			{type: "1", text: " [211] 특별활동비"},
+			{type: "2", text: " [211-] 특별활동비[영어]"},
+			{type: "2", text: " [211-1] 특별활동비[국어]"},
+			{type: "2", text: " [211-2] 특별 발레"},
+			{type: "2", text: " [211-123] 자연"},
+			{type: "1", text: " [221] 기타 필요경비"},
+			{type: "2", text: " [221-111] 입학준비금(상해보험료)"},
+			{type: "2", text: " [221-112] 입학준비금(피복류구입비)"},
+			{type: "2", text: " [221-113] 입학준비금"},
+			{type: "2", text: " [221-121] 현장학습비"},
+			{type: "2", text: " [221-131] 차량운행비"},
+			{type: "2", text: " [221-141] 행사비"},
+			{type: "2", text: " [221-151] 아침.저녁급식비"},
+			{type: "2", text: " [221-161] 기타시도특성회비"},
+			{type: "1", text: " [311] 인건비 보조금"},
+			{type: "1", text: " [321] 기본보육료"},
+			{type: "2", text: " [321-] 영어"},
+			{type: "1", text: " [322] 공공형 운영비"},
+			{type: "1", text: " [323] 기타 지원금"},
+			{type: "1", text: " [331] 자본보조금"},
+			{type: "1", text: " [411] 전입금"},
+			{type: "1", text: " [421] 단기차입금"},
+			{type: "1", text: " [422] 장기차입금"},
+			{type: "1", text: " [511] 지정후원금"},
+			{type: "1", text: " [512] 비지정후원금"},
+			{type: "1", text: " [611] 적립금 처분 수입"},
+			{type: "1", text: " [711] 과년도 수입"},
+			{type: "1", text: " [811] 이자수입"},
+			{type: "1", text: " [812] 기타잡수입"}
+		];
+		var outcomeSubject = [
+			{type: "3", text: " [111] 원장급여"},
+			{type: "3", text: " [112] 원장수장"},
+			{type: "3", text: " [121] 보육교직원급여"},
+			{type: "3", text: " [122] 보육교직원수당"},
+			{type: "3", text: " [131] 기타 인건비"},
+			{type: "3", text: " [141] 법정부담금"},
+			{type: "3", text: " [142] 퇴직금 및 퇴직적립금"},
+			{type: "3", text: " [211] 수용비 및 수수료"},
+			{type: "4", text: " [211-1] 전기요금"},
+			{type: "4", text: " [211-2] 전화요금"},
+			{type: "3", text: " [212] 공공요금 및 제세공과금"},
+			{type: "4", text: " [212-1] 전기요금"},
+			{type: "3", text: " [213] 연료비"},
+			{type: "3", text: " [214] 여비"},
+			{type: "3", text: " [215] 차량비"},
+			{type: "3", text: " [216] 복리후생비"},
+			{type: "3", text: " [217] 기타 운영비"},
+			{type: "4", text: " [217-111] 임대료"},
+			{type: "4", text: " [217-121] 건물융자금의이자"},
+			{type: "4", text: " [217-151] 기타"},
+			{type: "3", text: " [221] 업무추진비"},
+			{type: "3", text: " [222] 직책급"},
+			{type: "3", text: " [223] 회의비"},
+			{type: "3", text: " [311] 교직원연수·연구비"},
+			{type: "3", text: " [312] 교재·교구 구입비"},
+			{type: "3", text: " [313] 행사비"},
+			{type: "3", text: " [314] 영유아복리비"},
+			{type: "3", text: " [315] 급식비"},
+			{type: "3", text: " [411] 특별활동비지출"},
+			{type: "3", text: " [421] 기타 필요경비 지출"},
+			{type: "4", text: " [421-111] 입학준비금(상해보험료)"},
+			{type: "4", text: " [421-112] 입학준비금(피복류구입비)"},
+			{type: "4", text: " [421-113] 입학준비금"},
+			{type: "4", text: " [421-121] 현장학습비"},
+			{type: "4", text: " [421-131] 차량운행비"},
+			{type: "4", text: " [421-141] 행사비"},
+			{type: "4", text: " [421-151] 아침.저녁급식비"},
+			{type: "4", text: " [421-161] 기타"},
+			{type: "3", text: " [511] 적립금"},
+			{type: "3", text: " [611] 단기 차입금 상환"},
+			{type: "3", text: " [612] 장기 차입금 상환"},
+			{type: "3", text: " [621] 보조금 반환금"},
+			{type: "3", text: " [622] 보호자 반환금"},
+			{type: "3", text: " [623] 법인회계 전출금"},
+			{type: "3", text: " [711] 시설비"},
+			{type: "3", text: " [712] 시설장비 유지비"},
+			{type: "3", text: " [721] 자산취득비"},
+			{type: "4", text: " [721-001] 차량할부금"},
+			{type: "4", text: " [721-002] 차산취득비"},
+			{type: "3", text: " [811] 과년도 지출"}
+		];
+
+		var subjects = Observable();
+
+		for (var i = 0 ; i < incomeSubject.length ; i++) {
+			subjects.add(incomeSubject[i]);
+		}
+
+		function incomeClick() {
+			subjects.clear();
+			for (var i = 0 ; i < incomeSubject.length ; i++) {
+				subjects.add(incomeSubject[i]);
+			}
+		}
+
+		function outcomeClick() {
+			subjects.clear();
+			for (var i = 0 ; i < outcomeSubject.length ; i++) {
+				subjects.add(outcomeSubject[i]);
+			}
+		}
+		module.exports = {
+			subjects, incomeClick, outcomeClick
+		};
+	</JavaScript>
+
+	<DockPanel ux:Name="choiceSubjectPanel" Width="100%" Height="100%" Color="White">
+		<topBar Dock="Top" />
+
+		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="계정과목선택" FontSize="{margin}*1.2" Color="Black"  />
+			</WrapPanel>
+			<Rectangle Width="100%" Height="1" Color="#3E66C5" />
+		</Grid>
+
+		<Panel Dock="Top" Width="95%">
+			<Rectangle Width="100%" Height="2" Color="#333333" Alignment="Bottom" />
+			<Grid Width="100%" ColumnCount="3" Columns="1*, 1*, 2*" Color="#ddd" CellSpacing="1" Height="{margin}*3">
+				<Panel ux:Name="incomePanel" Width="100%" Color="#333333" Margin="1,1,0,1">
+					<Text ux:Name="incomeText" Value="세입계정" Alignment="Center" Color="#FFFFFF" />
+					<Clicked>
+						<Callback Handler="{incomeClick}" />
+						<Toggle Target="changeSubject" />
+					</Clicked>
+
+					<WhileTrue ux:Name="changeSubject">
+						<Change incomePanel.Color="#FFFFFF" />
+						<Change incomeText.Color="#333333" />
+						<Change outcomePanel.Color="#333333" />
+						<Change outcomeText.Color="#FFFFFF" />
+					</WhileTrue>
+				</Panel>
+				<Panel ux:Name="outcomePanel" Width="100%" Color="#FFFFFF" Margin="0,1,0,1">
+					<Text ux:Name="outcomeText" Value="세출계정" Alignment="Center" Color="#333333" />
+					<Clicked>
+						<Callback Handler="{outcomeClick}" />
+						<Toggle Target="changeSubject" />
+					</Clicked>
+				</Panel>
+				<Panel Width="100%" Color="White" Margin="0,1,1,1" />
+			</Grid>
+		</Panel>
+
+		<ScrollView SnapMinTransform="false" SnapMaxTransform="false" Width="95%">
+			<StackPanel Color="#eee">
+				<Each Items="{subjects}">
+					<WrapPanel Width="100%" Color="White" Margin="1, 0.5">
+						<Match Value="{type}">
+							<Case String="1">
+								<Panel Width="30" />
+								<Rectangle CornerRadius="3" Color="#4487CE">
+									<Text Value="목" Margin="3" Color="White" Alignment="Center" />
+								</Rectangle>
+							</Case>
+
+							<Case String="2">
+								<Panel Width="60" />
+								<Rectangle CornerRadius="3" Color="#599DE5">
+									<Text Value="세목" Margin="3" Color="White" Alignment="Center" />
+								</Rectangle>
+							</Case>
+
+							<Case String="3">
+								<Panel Width="30" />
+								<Rectangle CornerRadius="3" Color="#F17E22">
+									<Text Value="목" Margin="3" Color="White" Alignment="Center" />
+								</Rectangle>
+							</Case>
+
+							<Case String="4">
+								<Panel Width="60" />
+								<Rectangle CornerRadius="3" Color="#F1A248">
+									<Text Value="세목" Margin="3" Color="White" Alignment="Center" />
+								</Rectangle>
+							</Case>
+						</Match>
+
+						<Text Value="{text}" Alignment="Center" />
+					</WrapPanel>
+				</Each>
+			</StackPanel>
+		</ScrollView>
+	</DockPanel>
+</Panel>

@@ -1,0 +1,21 @@
+<Page ux:Class="Intro">
+	<Router ux:Dependency="router"/>
+
+	<JavaScript>
+		module.exports = {
+			goLogin: function() {
+				router.goto("Login");
+			}
+		};
+	</JavaScript>
+
+	<WhileActive>
+		<Callback Handler="{goLogin}" Delay="1.5" />
+	</WhileActive>
+
+	<Panel>
+		<Image File="Images/intro_center.png" Width="55%" StretchMode="Uniform" Alignment="Center"/>
+		<Image File="Images/intro_top.png" StretchMode="Uniform" Alignment="Top"/>
+		<Image File="Images/intro_bottom.png" StretchMode="Uniform" Alignment="Bottom"/>
+	</Panel>
+</Page>
