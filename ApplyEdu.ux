@@ -6,6 +6,8 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 
+		var test="테스트입니다";
+
 		var type = Observable();
 		var selectedType = Observable();
 		var edus = Observable();
