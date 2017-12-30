@@ -759,7 +759,9 @@
 				</Image>
 			</Grid>
 
-			<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
 		</Panel>
 
 		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
@@ -797,18 +799,20 @@
 							</Each>
 					</StackPanel>
 				</Rectangle>
-				<Image File="Images/btn4.png">
+				<GrayButton2>
+					<Text Value="취소" Color="White" Alignment="Center" />
 					<Clicked>
 						<Callback Handler="{selectedTypes}" />	
 						<Callback Handler="{pickerDown}" />
 						<Toggle Target="applyQuestion" />
 					</Clicked>
-				</Image>
-				<Image File="Images/btn_08.png">
+				</GrayButton2>
+				<OrangeButton>
+					<Text Value="저장" Color="White" Alignment="Center" />
 					<Clicked>
 						<Callback Handler="{sendData}" />
 					</Clicked>
-				</Image>
+				</OrangeButton>
 			</Grid>
 		</Panel>
 
@@ -841,7 +845,9 @@
 				</Image>
 			</Grid>
 
-			<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
 		</Panel>
 
 		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
@@ -880,21 +886,23 @@
 							</Each>
 					</StackPanel>
 				</Rectangle>
-					<Image File="Images/btn4.png">
+				<GrayButton2>
+					<Text Value="취소" Alignment="Center" Color="White" />
 					<Clicked>
 						<Callback Handler="{selectedTypes}" />	
 						<Callback Handler="{pickerDown}" />
 						<Toggle Target="showQuestion" />
 					</Clicked>
-					</Image>
-					<WhileTrue Value="{qnaIsCorrect}">
-					<Image File="Images/btn_08.png">
+				</GrayButton2>
+				<WhileTrue Value="{qnaIsCorrect}">
+					<OrangeButton>
+						<Text Value="저장" Alignment="Center" Color="White" />
 						<Clicked>
-						<Toggle Target="applyQuestion" />
-						<!-- 상세정보 수정화면 가기 -->
+							<Toggle Target="applyQuestion" />
+							<!-- 상세정보 수정화면 가기 -->
 						</Clicked>
-					</Image>
-					</WhileTrue>
+					</OrangeButton>
+				</WhileTrue>
 			</Grid>
 		</Panel>
 
@@ -961,28 +969,30 @@
 	</DockPanel>
 	<DockPanel Color="White">
 		<Panel Dock="Top">
-		<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
-			<Image File="Images/btn_pre.png" Alignment="Left">
-				<Clicked>
-					<Callback Handler="{pageCountInit}" />
-					<Callback Handler="{selectedTypes}" />	
-					<Callback Handler="{pickerDown}" />
-					<Callback Handler="{goBackToPrevious}" />
-				</Clicked>
-			</Image>
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked>
+						<Callback Handler="{pageCountInit}" />
+						<Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" />
+						<Callback Handler="{goBackToPrevious}" />
+					</Clicked>
+				</Image>
 
-			<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center"/>
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center"/>
 
-			<Image File="Images/btn_home.png">
-				<Clicked>
-					<Callback Handler="{pageCountInit}" />
-					<Callback Handler="{selectedTypes}" />	
-					<Callback Handler="{pickerDown}" />
-					<Callback Handler="{goMainPageFromAnywhere}" />
-				</Clicked>
-			</Image>
-		</Grid>
-			<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
+				<Image File="Images/btn_home.png">
+					<Clicked>
+						<Callback Handler="{pageCountInit}" />
+						<Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" />
+						<Callback Handler="{goMainPageFromAnywhere}" />
+					</Clicked>
+				</Image>
+			</Grid>
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
 		</Panel>
 
 		<Grid Columns="3*, 1*" Dock="Top">
