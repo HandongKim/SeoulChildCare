@@ -1,4 +1,4 @@
-<P기ge ux:Class="ApplyEdu">
+<Page ux:Class="ApplyEdu">
 	<Router ux:Dependency="router"/>
 		<WhileActive>
 			<Callback Handler="{getEducationMain}" />
