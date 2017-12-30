@@ -24,9 +24,10 @@
 
 	<!-- 비밀번호 변경시 보여지는 패널 -->
 	<StackPanel ux:Name="changePwPanel" Width="100%" Y="-100%" Color="White" Alignment="TopCenter" ZOffset="1.3">
-		<Image File="Images/top_bg.png" MemoryPolicy="UnloadUnused">
-			<Image File="Images/top_tx2.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" MemoryPolicy="UnloadUnused" />
-		</Image>
+		<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="6">
+			<Image File="Images/top_tx2.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" />
+			<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+		</Rectangle>
 
 		<Grid ColumnCount="2" Columns="1*, 3.5*" Margin="{margin}" CellSpacing="{margin}/2" Rows="Auto">
 			<Text Value="현재 비밀번호" Color="Black" Alignment="CenterLeft" FontSize="{margin}*0.85" />
@@ -78,9 +79,10 @@
 
 	<!-- 인증서 가져오기할 때 보여지는 패널 -->
 	<StackPanel ux:Name="importPanel" Width="100%" Y="-100%" Color="White" Alignment="TopCenter" ZOffset="1.3">
-		<Image File="Images/top_bg.png" MemoryPolicy="UnloadUnused">
-			<Image File="Images/top_tx3.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" MemoryPolicy="UnloadUnused" />
-		</Image>
+		<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="6">
+			<Image File="Images/top_tx3.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" />
+			<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+		</Rectangle>
 
 		<Grid ColumnCount="5" Columns="8*, 2*, 7*, 2*, 13.5*" CellSpacing="1" Rows="Auto" Margin="{margin}">
 			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
@@ -117,7 +119,31 @@
 			</Clicked>
 		</BlueButton>
 
-		<Image File="Images/tx_input.png" MemoryPolicy="UnloadUnused" Alignment="CenterLeft"  Width="80%" Margin="{margin}" />
+		<StackPanel Margin="{margin}">
+			<Text Value="인증서 가져오는 방법" FontSize="{margin}*1.1" Color="Black" Alignment="CenterLeft" />
+			<Text Value="1. 한국전자인증 공인인증서 페이지에 접속합니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+			<Text Value="    (http://www.unisign.go.kr)" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+			<WrapPanel>
+				<Text Value="2. 공인인증서" FontSize="{margin}*0.8" Alignment="CenterLeft" />
+				<Text Value=" 이동 버튼" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+				<Text Value="을 선택합니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+			</WrapPanel>
+			<WrapPanel>
+				<Text Value="3. 공인인증서 복사하기" FontSize="{margin}*0.8" Alignment="CenterLeft" />
+				<Text Value=" (PC→스마트폰)" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+				<Text Value="를 선택합니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+			</WrapPanel>
+			<WrapPanel>
+				<Text Value="4. 상단에 생성된" FontSize="{margin}*0.8" Alignment="CenterLeft" />
+				<Text Value=" 승인번호 13자리를 입력" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+				<Text Value="합니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+			</WrapPanel>
+			<WrapPanel>
+				<Text Value="5." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+				<Text Value=" 확인버튼" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+				<Text Value="을 선택하면 인증서 복사가 완료됩니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+			</WrapPanel>
+		</StackPanel>
 
 		<WhileTrue Value="{onImportPanel}">
 			<Change importPanel.Y="0" Duration=".3" />
@@ -128,9 +154,10 @@
 	
 
 	<StackPanel ux:Name="enterPw" Width="100%" Color="White" Alignment="TopCenter" ZOffset="1.3" Y="-100%">
-		<Image File="Images/top_bg.png" MemoryPolicy="UnloadUnused">
-			<Image File="Images/top_tx4.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" MemoryPolicy="UnloadUnused" />
-		</Image>
+		<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="6">
+			<Image File="Images/top_tx4.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" />
+			<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+		</Rectangle>
 		<Text Value="인증서 비밀번호 입력 :" Alignment="CenterLeft" Margin="{margin}" FontSize="{margin}*1.5" />
 			<TextBox Value="{exportCertPw}" Margin="{margin}, 0" IsPassword="true" Alignment="Center" Width="100%" />
 		<Grid ColumnCount="2" Margin="{margin}" CellSpacing="4">
@@ -165,10 +192,11 @@
 
 	<!-- 인증서 내보내기 할 때 보여지는 패널 -->
 	<StackPanel ux:Name="exportPanel" Width="100%" Y="-100%" Color="White" Alignment="TopCenter" ZOffset="1.3">
-		<Image File="Images/top_bg.png" MemoryPolicy="UnloadUnused">
-			<Image File="Images/top_tx4.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" MemoryPolicy="UnloadUnused" />
-		</Image>
-
+		<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="6">
+			<Image File="Images/top_tx4.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" />
+			<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+		</Rectangle>
+		
 		<Grid ColumnCount="5" Columns="8*, 2*, 7*, 2*, 13.5*" CellSpacing="1" Rows="Auto" Margin="{margin}">
 			<Rectangle Width="100%" Height="{margin}*3" CornerRadius="8">
 				<Stroke Width="2" Color="#ddd" />
@@ -203,7 +231,31 @@
 			</Clicked>
 		</BlueButton>
 
-		<Image File="Images/tx_output.png" MemoryPolicy="UnloadUnused" Alignment="CenterLeft"  Width="80%" Margin="{margin}" />
+		<StackPanel Margin="{margin}">
+			<Text Value="인증서 내보내는 방법" FontSize="{margin}*1.1" Color="Black" Alignment="CenterLeft" />
+			<Text Value="1. 한국전자인증 공인인증서 페이지에 접속합니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+			<Text Value="    (http://www.unisign.go.kr)" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+			<WrapPanel>
+				<Text Value="2. 공인인증서" FontSize="{margin}*0.8" Alignment="CenterLeft" />
+				<Text Value=" 이동 버튼" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+				<Text Value="을 선택합니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+			</WrapPanel>
+			<WrapPanel>
+				<Text Value="3. 공인인증서 복사하기" FontSize="{margin}*0.8" Alignment="CenterLeft" />
+				<Text Value=" (스마트폰→PC)" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+				<Text Value="를 선택합니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+			</WrapPanel>
+			<WrapPanel>
+				<Text Value="4. 상단에 생성된" FontSize="{margin}*0.8" Alignment="CenterLeft" />
+				<Text Value=" 승인번호 13자리를 입력" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+				<Text Value="합니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+			</WrapPanel>
+			<WrapPanel>
+				<Text Value="5." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+				<Text Value=" 확인버튼" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+				<Text Value="을 선택하면 인증서 내보내기가 완료됩니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
+			</WrapPanel>
+		</StackPanel>
 
 		<WhileTrue Value="{onExportPanel}">
 			<Change exportPanel.Y="0" Duration=".3" />
