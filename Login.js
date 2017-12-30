@@ -459,7 +459,7 @@ function getUUID () {
 function chooseCertificate(args) {
 	// console.log(args.data.isSelected.value);
 	data.forEach(function(cert) {
-		if (args.data.certificateIndexValue == cert.certificateIndexValue) {
+		if (args.data.certIndex == cert.certIndex) {
 			cert.isSelected.value = true;
 		} else {
 			cert.isSelected.value = false;
