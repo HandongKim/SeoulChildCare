@@ -151,7 +151,7 @@
 			        }).then(function(response) {
 						var responseData = JSON.stringify(response);
 
-						// console.log("responseData : "+ responseData);
+						console.log("2017.12.30 : responseData : "+ responseData);
 
 						var responseHeaders = JSON.parse(response._bodyInit);
 						// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));

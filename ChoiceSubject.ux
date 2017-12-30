@@ -1,6 +1,8 @@
 <Panel ux:Class="ChoiceSubject">
 	<Router ux:Dependency="router"/>
-
+	<WhileActive>
+		<Callback Handler="{getTheSubjectList}" />
+	</WhileActive>
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
@@ -115,8 +117,62 @@
 			console.log(arg.data.text);
 			Backend.subject.value = arg.data.text;
 		}
+
+		function getTheSubjectList() {
+			console.log("getTheSubjectList was called");
+
+			fetch("http://112.218.172.44:52102/acusr/acc/bil/getEstiSearchLoad.do", {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify({
+					"SIGNGB":"1",
+					"signedText":mSignedData
+		                })
+		        }).then(function(response) {
+		        	console.log("response.ok :"  + response.ok);
+		        	isConnected = response.ok;
+
+					// staticDsParam = JSON.parse(response._bodyInit);
+		   //      	// staticDsParam = staticDsParam.result;
+		   //      	staticParamStringValue = JSON.stringify(staticDsParam.dsParam);
+		   //      	console.log("staticDsParam : " + staticDsParam);
+					// console.log("staticParamStringValue : " + staticParamStringValue);
+		        	if(isConnected == true) {
+		        		router.goto("MainPage");
+		        	}
+		        	console.log("isConnected : " + isConnected);
+
+		        	var responseData = JSON.stringify(response);
+					console.log("responseData : "+ responseData);
+		            return response.json();
+		        	
+		        }).then(function(jsonData) {
+		            // var data = jsonData.results[0];
+
+		            // console.log("data : " + jsonData.results[0]);
+					
+		        }).catch(function(err) {
+		            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+		        });
+
+
+
+
+
+
+		}
+
+
+
+
+
+
+
+
 		module.exports = {
-			subjects, incomeClick, outcomeClick, selectSubject
+			subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList
 		};
 	</JavaScript>
 
