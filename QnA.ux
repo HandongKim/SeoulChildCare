@@ -751,6 +751,7 @@
 
 				<Image File="Images/btn_home.png">
 					<Clicked>
+						<Toggle Target="applyQuestion" />
 						<Callback Handler="{pageCountInit}" />
 						<Callback Handler="{selectedTypes}" />	
 						<Callback Handler="{pickerDown}" />
@@ -837,6 +838,7 @@
 
 				<Image File="Images/btn_home.png">
 					<Clicked>
+						<Toggle Target="showQuestion" />
 						<Callback Handler="{pageCountInit}" />
 						<Callback Handler="{selectedTypes}" />	
 						<Callback Handler="{pickerDown}" />
