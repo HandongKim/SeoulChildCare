@@ -297,8 +297,8 @@
 								<Change this.Color="#aaa" />
 							</WhileSelected>
 							<Clicked>
-								<Callback Handler="{chooseCertificate}"/>
 								<ToggleSelection />
+								<Callback Handler="{chooseCertificate}"/>
 							</Clicked>
 
 							<!-- <Panel ux:Name="certificate">
