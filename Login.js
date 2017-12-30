@@ -3,6 +3,8 @@ var Timer = require("FuseJS/Timer");
 var UniSign = require("UniSign");
 var settings = require('UserSettings');
 var Device = require('Device');
+var Backend = require('Backend.js');
+
 
 var corSelected = Observable(false);
 var onPanel = Observable(false);
@@ -402,7 +404,7 @@ function setLicense () {
 
 
 function getLogicSignedData () {
-	var value = password.value;
+	var value = certPw.value;
 	mSignedData = UniSign.getLogicSignedData(value, certificateIndexValue);
 	return mSignedData;
 }
@@ -747,9 +749,24 @@ function connectToServer() {
    //      	staticParamStringValue = JSON.stringify(staticDsParam.dsParam);
    //      	console.log("staticDsParam : " + staticDsParam);
 			// console.log("staticParamStringValue : " + staticParamStringValue);
-        	if(isConnected == true) {
-        		router.goto("MainPage");
-        	}
+
+
+			var responseHeaders = JSON.parse(response._bodyInit);
+
+        	var dsParam = responseHeaders.dsParam;
+
+        	// console.log("dsParam : " + JSON.stringify(dsParam));
+
+        	Backend.dsParam = JSON.stringify(dsParam);
+
+        	console.log("Backend.dsParam : "  + Backend.dsParam);
+
+
+        	// if(isConnected == true) {
+        	// 	router.goto("MainPage");
+        	// }
+        	
+
         	console.log("isConnected : " + isConnected);
 
         	var responseData = JSON.stringify(response);

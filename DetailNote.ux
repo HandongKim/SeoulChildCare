@@ -131,6 +131,11 @@
 		
 		function getListDetailNote () {
 				// console.log("testAPI clicked ");
+
+
+
+
+
 				var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 				// var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
 				// var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
@@ -192,6 +197,7 @@
 		var selectedMemo = Observable();
 
 		var selectedMoney = Observable();
+		var CASH_GB = Observable();
 
 		function pickFromList(args) {
 				// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
@@ -202,6 +208,10 @@
 				selectedTemp = temp[args.data.index];
 				var selectedSubject = temp[args.data.index].ESTI_NAME;
 
+				CASH_GB.value = temp[args.data.index].CASH_GB;
+
+				console.log("temp[args.data.index].CASH_GB : " +  CASH_GB.value);
+
 				selectedMemo.clear();
 				selectedMemo.value= selectedTemp.BCASH_MEMO;
 
@@ -211,6 +221,14 @@
 				subType.text.value=selectedSubject;
 
 				moneyValue.value = temp[args.data.index].MONEY;
+
+
+
+
+
+
+
+
 
 
 				
@@ -304,27 +322,48 @@
 
 
 		function searchTheSubjectList () {
-			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229", "ESTI_GB":"31", "BOOK_GB":"01", }';
+			var esti_gb = "";
+			if (CASH_GB.value == "1") {
+					esti_gb = "31"
+			} else if (CASH_GB.value =="2") {
+				esti_gb="32"
+			}
+
+
+			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229", "ESTI_GB":"' + esti_gb +'", "BOOK_GB":"01", }';
+
+
+			console.log("2017.12.30 log =================================================================");
+			console.log("dsParam : " + dsParam);
+			console.log("dsParm TYpe : " + typeof(dsParam) );
+
+
+			console.log("2017.12.30 log =================================================================");
+
 
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
 
 
-			fetch("http://112.218.172.44:52102/acusr/acc/bil/getEstiSearchLoad.do", {
-					method: 'POST',
-					headers: {
-						"Content-type": "application/json"
-					},
-					body: JSON.stringify(jsonParam)
-			        }).then(function(response) {
-						var responseData = JSON.stringify(response);
 
-						// console.log("responseData : "+ responseData);
-			            return response.json();
-			        }).then(function(jsonData) {
+
+
+
+			// fetch("http://112.218.172.44:52102/acusr/acc/bil/getEstiSearchLoad.do", {
+			// 		method: 'POST',
+			// 		headers: {
+			// 			"Content-type": "application/json"
+			// 		},
+			// 		body: JSON.stringify(jsonParam)
+			//         }).then(function(response) {
+			// 			var responseData = JSON.stringify(response);
+
+			// 			// console.log("responseData : "+ responseData);
+			//             return response.json();
+			//         }).then(function(jsonData) {
 			            
-			        }).catch(function(err) {
+			//         }).catch(function(err) {
 			            
-			        });
+			//         });
 		}
 
 
@@ -579,6 +618,8 @@
 				uploadOn.value = false;
 			},
 			goChoiceSubject: function() {
+
+				searchTheSubjectList();
 				router.push("ChoiceSubject");
 			},
 			getListDetailNote,pickFromList, moneyValue,initializing, saveData,  deleteData, selectedMemo, searchTheSubjectList,
