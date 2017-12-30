@@ -112,7 +112,8 @@
 		}
 
 		function selectSubject(arg) {
-			Backend.subject.value = arg.text;
+			console.log(arg.data.text);
+			Backend.subject.value = arg.data.text;
 		}
 		module.exports = {
 			subjects, incomeClick, outcomeClick, selectSubject
