@@ -33,7 +33,7 @@ function goMainPage() {
 
 	var isPasswordCorrect = checkThePassword(certPw.value);
 	//테스토 용
-	// isPasswordCorrect = true;
+	isPasswordCorrect = true;
 	if(isPasswordCorrect == true) {
 		alert.layer.value="Background";
 		connectToServer();
@@ -702,7 +702,6 @@ function changePassword () {
 	chgPassword.newPassword.value = "";
 	chgPassword.confirmPassword.value = "";
 }
-
 
 var staticDsParam = null;
 var staticDsSearch = null;
