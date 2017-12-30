@@ -449,7 +449,7 @@
 				// 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
 				var currentTime = new Date()
 
-				var tempYear = (new Date()).getFullYear();
+				var tempYear = currentTime.getFullYear();
 				console.log("date : " + typeof(tempYear));
 
 				var monthTemp = currentTime.getMonth() + 1;
@@ -768,8 +768,8 @@
 		<Clicked>
 			<Callback Handler="{goDetailNote2}" />
 		</Clicked>
-		<Grid ColumnCount="2" Margin="{margin}/2">
-			<WrapPanel Alignment="CenterLeft">
+		<Panel Margin="{margin}/2">
+			<Grid ColumnCount="3" Width="40%" Alignment="CenterLeft">
 				<Text Value="{date}" Alignment="Center" />
 				<Text Value="{type}" Color="{typeColor}" Alignment="Center" Margin="4, 0" />
 				<WhileTrue Value="{isBill}">
@@ -777,13 +777,12 @@
 						<Text Value="계좌" Color="White" Alignment="Center" Margin="2" />
 					</Rectangle>
 				</WhileTrue>
-			</WrapPanel>
+			</Grid>
 
-			<WrapPanel Alignment="CenterRight">
-				<Text Value="{money}" FontSize="{margin}*1.5" Color="{typeColor}" />
-				<Text Value=" 원" Alignment="Bottom" />
-			</WrapPanel>
-		</Grid>
+			<Text Value="{money}" Margin="0,0,{margin}*1.5,0" FontSize="{margin}*1.5" Color="{typeColor}" Alignment="CenterRight" />
+			<Text Value="원" Alignment="BottomRight" />
+
+		</Panel>
 		<Grid ColumnCount="2" Columns="Auto" Margin="{margin}/2,0">
 			<WrapPanel Alignment="CenterLeft">
 				<WhileTrue Value="{reverse}">
