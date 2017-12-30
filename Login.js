@@ -457,6 +457,15 @@ function getUUID () {
 
 
 function chooseCertificate(args) {
+	// console.log(args.data.isSelected.value);
+	data.forEach(function(cert) {
+		if (args.data.certificateIndexValue == cert.certificateIndexValue) {
+			cert.isSelected.value = true;
+		} else {
+			cert.isSelected.value = false;
+		}
+	});
+	// console.log(args.data.isSelected.value);
 	var argsValue = JSON.stringify(args);
 	var certificateInfo = JSON.parse(argsValue);
 
@@ -468,7 +477,7 @@ function chooseCertificate(args) {
 	// console.log("certificateInfo : " + test);
 	console.log("certificateIndexValue : " + certificateIndexValue);
 
-	console.log("chooseCertificate : args : "+ args.CertIndex);
+	console.log("chooseCertificate : args : "+ args.certIndex);
 
 	// getLogicSignedData();
 }function exportCert () {
@@ -531,7 +540,7 @@ function chooseCertificate(args) {
 */
 
 var certificates = null;
-var data = Observable("");
+var data = Observable();
 
 function getList () {
 	// setLicense(); 
@@ -561,7 +570,12 @@ function getList () {
 	console.log("============================================== Total List ==============================================");
 	console.log("certificates : " + stringValue);
 	console.log("============================================== Total data ==============================================");
-	}		
+	}
+
+	// data.forEach(function(cert) {
+		// console.log(cert.certIndex);
+		// cert.isSelected = Observable(true);
+	// });
 }
 
 function setTheInitialData () {
@@ -605,7 +619,9 @@ function setTheInitialData () {
 		// individualCertificate = '{"certIndex":' +i +      ', "ImageName":"' +imageName.value +      '", "PolicyHumanReadableForm":"'+certificates[i].PolicyHumanReadableForm+'","CommonName":"'+certificates[i].CommonName+'","Organization":"'+certificates[i].Organization+'","ValidityEndDate":"' + daysBetween(today, certificateExpireDate).toString()+'"}';
 		individualCertificate = '{"certIndex":' +i +      ', "ImageName":"' +imageName.value +      '", "PolicyHumanReadableForm":"'+certificates[i].PolicyHumanReadableForm+'","CommonName":"'+certificates[i].CommonName+'","Organization":"'+certificates[i].Organization+'","ValidityEndDate":"' + certificates[i].ValidityEndDate+'"}';
 		console.log("individualCertificate : " + individualCertificate);
-		tempData.push(JSON.parse(individualCertificate));
+		var tempArray = JSON.parse(individualCertificate);
+		tempArray.isSelected = Observable(false);
+		tempData.push(tempArray);
 	}
 	
 	// console.log("tempData : " + tempData.toArray());
@@ -613,6 +629,7 @@ function setTheInitialData () {
 	console.log("typeof :" + typeof(stringValue));
 	data.replaceAll(tempData);
     console.log("stringValue Value : " + data);
+    // console.log(JSON.stringify(data));
 }
 
 /*
