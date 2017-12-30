@@ -264,7 +264,10 @@
 				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
 
 				<Image File="Images/btn_home.png">
-					<Clicked><Callback Handler="{goMainPage}" /></Clicked>
+					<Clicked>
+						<Callback Handler="{goMainPage}" />
+						<!-- <Toggle Target="" /> -->
+					</Clicked>
 				</Image>
 			</Grid>
 

@@ -44,9 +44,10 @@
 			console.log("문의하기 디테일 " + JSON.stringify(qnaDetailValue.value));
 			console.log("호출 되나!!!??");
 			//detail값 초기화
+			if(qnaDetailValue.value!=null){
 			qnaDetailValue.value.area.value = "";
 			qnaDetailValue.value.bodComYn.value = "";
-			qnaDetailValue.value.bodFromClss.value = "";
+			qnaDetailValue.value.bodFormClss.value = "";
 			qnaDetailValue.value.commSeq.value = "";
 			qnaDetailValue.value.cont.value = "";
 			qnaDetailValue.value.inqAdmCnt.value = "";
@@ -65,10 +66,15 @@
 			qnaDetailValue.value.writeHost.value = "";
 			qnaDetailValue.value.writerNm.value = "";
 			qnaDetailValue.value.writerOrg.value = "";
-
+			}else{
+				//상세보기를 누르지 않으면 디테일 값이 없으므로 더미데이터를 만들어준다.
+				var details = '{"AREA":null,"BOD_COM_YN":null,"BOD_FORM_CLSS":null,"COMM_SEQ":null,"CONT":null,"INQ_ADM_CNT":null,"INQ_USR_CNT":null,"QA_REPLY_YN":null,"REGDATE":null,"REGDATE1":null,"REGDATE2":null,"REGID":null,"REPLY_DEPTH":null,"REPLY_REF":null,"REPLY_SORTKEY":null,"REQ_YN":null,"SITE_CLSS_SND":null,"TITLE":null,"WRITE_HOST":null,"WRITER_NM":null,"WRITER_ORG":null}';
+				qnaDetailValue.add(new qnaDetail(details));
+				console.log("더미 qnaDetailValue : " + qnaDetailValue.value);
+			}
 			//detail 파일 값 초기화
-
-			// qnaFileValue.value.fileStoreDir.value = "";
+			if(qnaFileValue.value!=null){
+			qnaFileValue.value.fileStoreDir.value = "";
 			qnaFileValue.value.commClss.value = "";
 			qnaFileValue.value.commSeq.value = "";
 			qnaFileValue.value.fileNm.value = "";
@@ -76,6 +82,11 @@
 			qnaFileValue.value.fileStoreNm.value = "";
 			qnaFileValue.value.fileSize.value = "";
 			qnaFileValue.value.fileSeq.value = "";
+			}else{
+				var detailFile = '{"FILE_STORE_DIR":null,"COMM_CLSS":null,"COMM_SEQ":null,"FILE_NM":null,"FILE_BLOB":null,"FILE_STORE_NM":null,"FILE_SIZE":null,"FILE_SEQ":null}';
+				qnaFileValue.add(new qnaDetailFile(detailFile));
+				console.log("더미 qnaFileValue : " + qnaFileValue.value);
+			}
 		}		
 
 		//더 보기 클릭 시 호출
@@ -95,22 +106,22 @@
 		function searchContent(){
 			//조회시 AREA 값은 GVAREACODE 값과 동일 하다. 나중에 서버에서 데이터 받아올 경우 그렇게 세팅 해야 한다.
 			pageCount.value = 1;
-			var sCombo;
+			var combo;
 			if(selectedType.value=="제목"){
-				sCombo = "head";
+				combo = "head";
 			}else if (selectedType.value=="내용"){
-				sCombo = "main";
+				combo = "main";
 			}
 
 			if(searchText.value==null){
 				searchText.value = "";
-				sCombo = "head";
+				combo = "head";
 			}
 
 			qnas.clear();
 
 			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
-			var dsSearch = '{"AREA":"11110","commClss":"Q","fCombo":"ALL","page":"1","sch_txt":"'+searchText.value+'","combo":"'+sCombo+'"}';
+			var dsSearch = '{"AREA":"11110","commClss":"Q","fCombo":"ALL","page":"1","sch_txt":"'+searchText.value+'","combo":"'+combo+'"}';
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
 
@@ -133,13 +144,10 @@
 		
 						// console.log("==============================");
 						// console.log("searchResponseList.length : "+ searchResponseList.length);
-						
-
-						console.log(qnas.value);
 
 						for (var i = 0; i < searchResponseList.length; i++) {
-							console.log("searchResponseList i : "+ JSON.stringify(searchResponseList[i]));
-							qnas.add(new qnaList(searchResponseList[i]));
+							// console.log("searchResponseList i : "+ JSON.stringify(searchResponseList[i]));
+							qnas.add(new qna(searchResponseList[i]));
 						}
 
 						console.log("qnas : " + JSON.stringify(qnas.value));
@@ -402,10 +410,10 @@
 					body: JSON.stringify(jsonParam)
 			        }).then(function(response) {
 						var responseData = JSON.stringify(response);
-						// console.log("2017.12.21 responseBody : "+ JSON.stringify(responseData));
+						// console.log("responseData : "+ JSON.stringify(responseData));
 						var detailBody = JSON.parse(response._bodyInit);
 						var qnaDetails = detailBody.ds_qna_dtl[1];
-						// console.log("qnaDetail : "+ JSON.stringify(qnaDetails));
+						console.log("qnaDetail : "+ JSON.stringify(qnaDetails));
 						
 						qnaDetailValue.clear();
 
@@ -427,7 +435,7 @@
 						console.log("qnaIsCorrect : "+qnaIsCorrect.value);
 						console.log("=============================");
 
-						console.log("qnaDetailValue : " + JSON.stringify(qnaDetailValue));
+						// console.log("qnaDetailValue : " + JSON.stringify(qnaDetailValue));
 
 						qnaFileValue.clear();
 
@@ -446,114 +454,6 @@
 			        });
 		}
 
-		// function qnaDetail(qnaDetail){
-		// 	if(qnaDetail.AREA!=null){
-		// 		this.area = qnaDetail.AREA;
-		// 	}else{
-		// 		this.area = "";
-		// 	}
-		// 	if(qnaDetail.BOD_COM_YN!=null){
-		// 		this.bodComYn = qnaDetail.BOD_COM_YN;
-		// 	}else{
-		// 		this.bodComYn = "";
-		// 	}
-		// 	if(qnaDetail.BOD_FORM_CLSS!=null){
-		// 		this.bodFromClss = qnaDetail.BOD_FORM_CLSS;
-		// 	}else{
-		// 		this.bodFromClss = "";
-		// 	}
-		// 	if(qnaDetail.COMM_SEQ!=null){
-		// 		this.commSeq = qnaDetail.COMM_SEQ;
-		// 	}else{
-		// 		this.commSeq = "";
-		// 	}
-		// 	if(qnaDetail.CONT!=null){
-		// 		this.cont = qnaDetail.CONT;
-		// 	}else{	
-		// 		this.cont = "";
-		// 	}
-		// 	if(qnaDetail.INQ_ADM_CNT!=null){
-		// 		this.inqAdmCnt = qnaDetail.INQ_ADM_CNT;
-		// 	}else{
-		// 		this.inqAdmCnt = "";
-		// 	}
-		// 	if(qnaDetail.INQ_USR_CNT!=null){
-		// 		this.inqUsrCnt = qnaDetail.INQ_USR_CNT;
-		// 	}else{
-		// 		this.inqUsrCnt = "";
-		// 	}
-		// 	if(qnaDetail.QA_REPLY_YN!=null){
-		// 		this.qaReplyYn = qnaDetail.QA_REPLY_YN;
-		// 	}else{
-		// 		this.qaReplyYn = "";
-		// 	}
-		// 	if(qnaDetail.REGDATE!=null){
-		// 		this.regDate = qnaDetail.REGDATE;
-		// 	}else{
-		// 		this.regDate = "";
-		// 	}
-		// 	if(qnaDetail.REGDATE1!=null){
-		// 		this.regDate1 = qnaDetail.REGDATE1;
-		// 	}else{
-		// 		this.regDate1 = "";
-		// 	}
-		// 	if(qnaDetail.REGDATE2!=null){
-		// 		this.regDate2 = qnaDetail.REGDATE1;
-		// 	}else{
-		// 		this.regDate2 = "";
-		// 	}
-		// 	if(qnaDetail.REGID!=null){
-		// 		this.regId = qnaDetail.REGID;
-		// 	}else{
-		// 		this.regId = "";
-		// 	}
-		// 	if(qnaDetail.REPLY_DEPTH!=null){
-		// 		this.replyDepth = qnaDetail.REPLY_DEPTH;
-		// 	}else{
-		// 		this.replyDepth = "";
-		// 	}
-		// 	if(qnaDetail.REPLY_REF!=null){
-		// 		this.replyRef = qnaDetail.REPLY_REF;
-		// 	}else{
-		// 		this.replyRef = "";
-		// 	}
-		// 	if(qnaDetail.REPLY_SORTKEY!=null){
-		// 		this.replySortkey = qnaDetail.REPLY_SORTKEY;
-		// 	}else{
-		// 		this.replySortkey = "";
-		// 	}
-		// 	if(qnaDetail.REQ_YN!=null){
-		// 		this.reqYn = qnaDetail.REQ_YN;
-		// 	}else{
-		// 		this.reqYn = "";
-		// 	}
-		// 	if(qnaDetail.SITE_CLSS_SND!=null){
-		// 		this.siteClssSnd = qnaDetail.SITE_CLSS_SND;
-		// 	}else{
-		// 		this.siteClssSnd = "";
-		// 	}
-		// 	if(qnaDetail.TITLE!=null){
-		// 		this.title = qnaDetail.TITLE;
-		// 	}else{
-		// 		this.title = "";
-		// 	}
-		// 	if(qnaDetail.WRITE_HOST!=null){
-		// 		this.writeHost = qnaDetail.WRITE_HOST;
-		// 	}else{
-		// 		this.writeHost = "";
-		// 	}
-		// 	if(qnaDetail.WRITER_NM!=null){
-		// 		this.writerNm = qnaDetail.WRITER_NM;
-		// 	}else{
-		// 		this.writerNm = "";
-		// 	}
-		// 	if(qnaDetail.WRITER_ORG!=null){
-		// 		this.writerOrg = qnaDetail.WRITER_ORG;
-		// 	}else{
-		// 		this.writerOrg = "";
-		// 	}
-		// }
-
 		function qnaDetail(qnaDetail){
 			if(qnaDetail.AREA!=null){
 				this.area = Observable(qnaDetail.AREA);
@@ -566,9 +466,9 @@
 				this.bodComYn = Observable();
 			}
 			if(qnaDetail.BOD_FORM_CLSS!=null){
-				this.bodFromClss = Observable(qnaDetail.BOD_FORM_CLSS);
+				this.bodFormClss = Observable(qnaDetail.BOD_FORM_CLSS);
 			}else{
-				this.bodFromClss = Observable();
+				this.bodFormClss = Observable();
 			}
 			if(qnaDetail.COMM_SEQ!=null){
 				this.commSeq = Observable(qnaDetail.COMM_SEQ);
@@ -606,7 +506,7 @@
 				this.regDate1 = Observable();
 			}
 			if(qnaDetail.REGDATE2!=null){
-				this.regDate2 = Observable(qnaDetail.REGDATE1);
+				this.regDate2 = Observable(qnaDetail.REGDATE2);
 			}else{
 				this.regDate2 = Observable();
 			}
@@ -715,11 +615,69 @@
 		}
 
 		function sendData(){
-			if(qnaDetailValue.value.commSeq!=null){
-				console.log("commSeq 있음");
-			}else{
+			if(qnaDetailValue.value.commSeq.value==null || qnaDetailValue.value.commSeq.value==""){
 				console.log("commSeq 없음");
+				console.log("commSeq 없음 : " + qnaDetailValue.value.title.value );
+				console.log("commSeq 없음 : " + qnaDetailValue.value.cont.value );
+				registerSend();
+			}else{
+				console.log("commSeq 있음 : " +qnaDetailValue.value.commSeq.value);
+				console.log("commSeq 있음 : " +qnaDetailValue.value.title.value);
+				console.log("commSeq 있음 : " +qnaDetailValue.value.cont.value);
+				modifySned();
+				
 			}
+		}
+
+		function modifySned(){
+			console.log("modifySned function Call ");
+			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsDetail = '{"REGDATE":"'+JSON.stringify(qnaDetailValue.value.regDate.value)+'","AREA":'+JSON.stringify(qnaDetailValue.value.area.value)+',"CONT":'+JSON.stringify(qnaDetailValue.value.cont.value)+',"COMM_SEQ":"'+JSON.stringify(qnaDetailValue.value.commSeq.value)+'","REPLY_REF":"'+JSON.stringify(qnaDetailValue.value.replyRef.value)+'","REGDATE1":'+JSON.stringify(qnaDetailValue.value.regDate1.value)+',"INQ_ADM_CNT":"'+JSON.stringify(qnaDetailValue.value.inqAdmCnt.value)+'","REGID":'+JSON.stringify(qnaDetailValue.value.regId.value)+',"SITE_CLSS_SND":'+JSON.stringify(qnaDetailValue.value.siteClssSnd.value)+',"QA_REPLY_YN":'+JSON.stringify(qnaDetailValue.value.qaReplyYn.value)+',"INQ_USR_CNT":"'+JSON.stringify(qnaDetailValue.value.inqUsrCnt.value)+'","REPLY_DEPTH":"'+JSON.stringify(qnaDetailValue.value.replyDepth.value)+'","WRITER_NM":'+JSON.stringify(qnaDetailValue.value.writerNm.value)+',"WRITE_HOST":"'+JSON.stringify(qnaDetailValue.value.writeHost.value)+'","REGDATE2":'+JSON.stringify(qnaDetailValue.value.regDate2.value)+',"BOD_COM_YN":'+JSON.stringify(qnaDetailValue.value.bodComYn.value)+',"WRITER_ORG":'+JSON.stringify(qnaDetailValue.value.writerOrg.value)+',"BOD_FORM_CLSS":'+JSON.stringify(qnaDetailValue.value.bodFormClss.value)+',"REQ_YN":'+JSON.stringify(qnaDetailValue.value.reqYn.value)+',"TITLE":'+JSON.stringify(qnaDetailValue.value.title.value)+',"REPLY_SORTKEY":'+JSON.stringify(qnaDetailValue.value.replySortkey.value)+'}';
+
+			console.log("update dsDetal : " + dsDetail);
+			//첨부파일 수정필요
+			var dsFileList = '{}';
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
+
+			fetch("http://112.218.172.44:52102/acusr/cmt/qnaUserUpdate.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+						console.log("responseData : "+ JSON.stringify(responseData));
+			            return response.json();
+			        }).then(function(jsonData) {
+			            // var data = jsonData.results[0];
+			        }).catch(function(err) {
+
+			        });
+		}
+
+		function registerSend(){
+			console.log("registerSend function Call ");
+			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsDetail = '{"CONT":"'+qnaDetailValue.value.cont.value+'","TITLE":"'+qnaDetailValue.value.title.value+'"}';
+			var dsFileList = '{}';
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
+
+			fetch("http://112.218.172.44:52102/acusr/cmt/insertQnaCommList.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
+						console.log("responseData : "+ JSON.stringify(responseData));
+			            return response.json();
+			        }).then(function(jsonData) {
+
+			        }).catch(function(err) {
+
+			        });
 		}
 
 		module.exports = {
