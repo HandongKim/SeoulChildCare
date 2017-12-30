@@ -10,9 +10,9 @@ public partial class MainView
 		if defined(ANDROID)
 		{
 			// Execute several times
-			Fuse.UniSign.API.SetLicense("ikdt8CleK1HVv3Qa0temFA==");
-			Fuse.UniSign.API.SetLicense("ikdt8CleK1HVv3Qa0temFA==");
-			Fuse.UniSign.API.SetLicense("ikdt8CleK1HVv3Qa0temFA==");
+			Fuse.UniSign.API.SetLicense("fzgCFFYVf7f5WKSC0+wf+A==");
+			Fuse.UniSign.API.SetLicense("fzgCFFYVf7f5WKSC0+wf+A==");
+			Fuse.UniSign.API.SetLicense("fzgCFFYVf7f5WKSC0+wf+A==");
 		}
 
 		InitializeUX();

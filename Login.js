@@ -133,7 +133,7 @@ function exportCert () {
 	// setLicense();
 	console.log("exportCert was clicked");
 
-	session = UniSign.startGenerateCert("ikdt8CleK1HVv3Qa0temFA==");
+	session = UniSign.startGenerateCert("fzgCFFYVf7f5WKSC0+wf+A==");
 	var uniqueInfo = UniSign.getUniqueInfo();
 	
 	console.log("Unique info: " + JSON.stringify(uniqueInfo));
@@ -307,7 +307,7 @@ function importCert () {
 	//타이머 시작
 	startTimer();
 	console.log("importCert was clicked");
-	session = UniSign.startGenerateCert("ikdt8CleK1HVv3Qa0temFA==");
+	session = UniSign.startGenerateCert("fzgCFFYVf7f5WKSC0+wf+A==");
 	var uniqueInfo = UniSign.getUniqueInfo();
 	console.log("Unique info: " + JSON.stringify(uniqueInfo));	
 	UniSign.generateCertNum(session, "Import", uniqueInfo).then(result => {
@@ -396,7 +396,7 @@ function startTimer() {
 
 function setLicense () {
 	console.log("setLicense was clicked");
-	UniSign.setLicense("ikdt8CleK1HVv3Qa0temFA==");
+	UniSign.setLicense("fzgCFFYVf7f5WKSC0+wf+A==");
 };
 
 
@@ -475,7 +475,7 @@ function chooseCertificate(args) {
 	// setLicense();
 	console.log("exportCert was clicked");
 
-	session = UniSign.startGenerateCert("ikdt8CleK1HVv3Qa0temFA==");
+	session = UniSign.startGenerateCert("fzgCFFYVf7f5WKSC0+wf+A==");
 	var uniqueInfo = UniSign.getUniqueInfo();
 	
 	console.log("Unique info: " + JSON.stringify(uniqueInfo));

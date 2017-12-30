@@ -1,4 +1,4 @@
-<Page ux:Class="ApplyEdu">
+<P기ge ux:Class="ApplyEdu">
 	<Router ux:Dependency="router"/>
 		<WhileActive>
 			<Callback Handler="{getEducationMain}" />
@@ -9,6 +9,7 @@
 		var type = Observable();
 		var selectedType = Observable();
 		var edus = Observable();
+
 
 		pickerOn = Observable(false);
 

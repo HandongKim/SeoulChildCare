@@ -26,7 +26,7 @@
   "Icon": "./Images/icon-512-2.png",
   "Versions" : "1.0.0",
    "Android": {
-      "Package": "app.ss.accss",
+      "Package": "com.crosscert.sample",
 
       "Icons": {
           "LDPI": "$(Icon)",
@@ -40,7 +40,7 @@
   },
   "iOS": {
     "DevelopmentTeam": "R33668Z4ZE",
-    "BundleIdentifier": "app.ss.accss.ios",
+    "BundleIdentifier": "com.crosscert.sample",
     "PreviewBundleIdentifier": "com.crosscert.sample.maxtedpreview",
     "DeploymentTarget" : "8.0",
 
