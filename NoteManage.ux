@@ -783,8 +783,8 @@
 			<Text Value="원" Alignment="BottomRight" />
 
 		</Panel>
-		<Grid ColumnCount="2" Columns="Auto" Margin="{margin}/2,0">
-			<WrapPanel Alignment="CenterLeft">
+		<Panel Margin="{margin}/2,0">
+			<WrapPanel Alignment="CenterLeft" Width="100%">
 				<WhileTrue Value="{reverse}">
 					<Rectangle BoxSizing="FillAspect" Aspect="1" CornerRadius="3" Width="{margin}*1.5" Color="#F00" Alignment="Center" Margin="1,0">
 						<RegularPolygon Sides="3" Width="90%" Height="90%">
@@ -807,7 +807,7 @@
 					</Case>
 				</Match>
 			</Panel>
-		</Grid>
+		</Panel>
 		<Text Value="{memo}" Margin="{margin}/2" />
 	</StackPanel>
 
