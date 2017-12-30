@@ -294,7 +294,7 @@
 						<Rectangle ux:Name="cBox" Width="100%" BoxSizing="FillAspect" Aspect="4" Color="White">
 							<Selectable />
 							<WhileSelected>
-								<Change cBox.Color="#aaa" />
+								<Change this.Color="#aaa" />
 							</WhileSelected>
 							<Clicked>
 								<Callback Handler="{chooseCertificate}"/>
