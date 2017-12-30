@@ -6,8 +6,6 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 
-		var test="테스트입니다";
-
 		var type = Observable();
 		var selectedType = Observable();
 		var edus = Observable();
@@ -269,9 +267,7 @@
 				</Image>
 			</Grid>
 
-			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
-				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
-			</Rectangle>
+			<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
 		</Panel>
 
 		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
