@@ -267,7 +267,9 @@
 				</Image>
 			</Grid>
 
-			<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
 		</Panel>
 
 		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
