@@ -36,6 +36,8 @@
 				// detailText.value = "불러온 전표내역이 없습니다.";
 				// // console.log(detailText.value);
 				// showText.value = true;
+				// Backend.subject.text.value = "계정과목 선택";
+				// Backend.subject.isChoice.value = false;
 			}else {
 				SELECTED_DATA = Observable(x.SELECTED_DATA);
 				CASH_IDX= Observable(x.CASH_IDX);
@@ -52,6 +54,8 @@
 				RECEIPT= Observable(x.RECEIPT);
 				MEMO= Observable(x.MEMO);
 				showText.value = false;
+				Backend.subject.text.value = "계정과목 선택";
+				Backend.subject.isChoice.value = false;
 
 				// // console.log("DetailNote CASH_IDX: " + x.CASH_IDX);
     // 			// console.log("DetailNote BILL_IDX: " + x.BILL_IDX);
@@ -200,6 +204,7 @@
 		var CASH_GB = Observable();
 
 		function pickFromList(args) {
+			// console.log(JSON.stringify(args));
 				// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
 				var selectedYear = temp[args.data.index].CASH_DATE.substr(0,4);
 				var selectedMonth = temp[args.data.index].CASH_DATE.substr(4,2);
@@ -218,7 +223,10 @@
 				year.value=selectedYear;
 				month.value = selectedMonth;
 				day.value = selectedDay;
-				subType.text.value=selectedSubject;
+				Backend.subject.isChoice.value = true;
+				Backend.subject.color.value = args.data.subTypeColor;
+				Backend.subject.type.value = args.data.subType;
+				Backend.subject.text.value = selectedSubject;
 
 				moneyValue.value = temp[args.data.index].MONEY;
 
@@ -247,7 +255,7 @@
 		function initializing() {
 			// console.log("initializing started");
 			moneyValue.value="";
-			subType.text= Backend.subject;
+			// subType.text= Backend.subject;
 			// Backend.subject.value = "";
 			selectedMemo.value="";
 		}
@@ -275,10 +283,10 @@
 		}
 
 		var subType = {
-			isChoice: Observable(false),
-			color: Observable(),
-			type: Observable(),
-			text: Observable("계정과목 선택")
+			isChoice: Backend.subject.isChoice,
+			color: Backend.subject.color,
+			type: Backend.subject.type,
+			text: Backend.subject.text
 		};
 
 		var choiceSubjectPanelOn = Observable(false);
@@ -341,7 +349,7 @@
 			console.log("2017.12.30 log =================================================================");
 
 
-			var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
+			// var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
 
 
 
@@ -670,7 +678,48 @@
 		<Clicked>
 			<Callback Handler="{pickFromList}" />
 		</Clicked>
-		<Grid ColumnCount="2" Margin="{margin}/2">
+		<Panel Margin="{margin}/2">
+			<Grid ColumnCount="3" Width="40%" Alignment="CenterLeft">
+				<Text Value="{date}" Alignment="Center" />
+				<Text Value="{type}" Color="{typeColor}" Alignment="Center" Margin="4, 0" />
+				<WhileTrue Value="{isBill}">
+					<Rectangle CornerRadius="3" Color="#9859D7">
+						<Text Value="계좌" Color="White" Alignment="Center" Margin="2" />
+					</Rectangle>
+				</WhileTrue>
+			</Grid>
+
+			<Text Value="{money}" Margin="0,0,{margin}*1.5,0" FontSize="{margin}*1.5" Color="{typeColor}" Alignment="CenterRight" />
+			<Text Value="원" Alignment="BottomRight" />
+
+		</Panel>
+		<Panel Margin="{margin}/2,0">
+			<WrapPanel Alignment="CenterLeft" Width="100%">
+				<WhileTrue Value="{reverse}">
+					<Rectangle BoxSizing="FillAspect" Aspect="1" CornerRadius="3" Width="{margin}*1.5" Color="#F00" Alignment="Center" Margin="1,0">
+						<RegularPolygon Sides="3" Width="90%" Height="90%">
+							<Stroke Width="2" Color="White" />
+						</RegularPolygon>
+					</Rectangle>
+				</WhileTrue>
+				<Rectangle CornerRadius="3" Color="{subTypeColor}">
+					<Text Value="{subType}" Color="White" Alignment="Center" Margin="2" />
+				</Rectangle>
+				<Text Value=" {name}" Color="#000" Alignment="Center" />
+			</WrapPanel>
+			<Panel>
+				<Match Value="{receipt}">
+					<Case String="2">
+						<Image File="Images/btn_paper2.png" Width="10%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
+					</Case>
+					<Case String="1">
+						<Image File="Images/btn_paper1.png" Width="10%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
+					</Case>
+				</Match>
+			</Panel>
+		</Panel>
+		<Text Value="{memo}" Margin="{margin}/2" />
+		<!-- <Grid ColumnCount="2" Margin="{margin}/2">
 			<WrapPanel Alignment="CenterLeft">
 				<Text Value="{date}" Alignment="Center" />
 				<Text Value="{type}" Color="{typeColor}" Alignment="Center" Margin="4, 0" />
@@ -711,7 +760,7 @@
 				</Match>
 			</Panel>
 		</Grid>
-		<Text Value="{memo}" Margin="{margin}/2" />
+		<Text Value="{memo}" Margin="{margin}/2" /> -->
 	</StackPanel>
 
 
@@ -1016,7 +1065,7 @@
 					<Stroke Width="1" Color="#ccc" />
 					<WrapPanel Alignment="CenterLeft">
 						<WhileTrue Value="{subType.isChoice}">
-							<Rectangle CornerRadius="3" Color="{subTypeColor}">
+							<Rectangle Margin="2,0" CornerRadius="3" Color="{subType.color}">
 								<Text Value="{subType.type}" Color="White" Alignment="Center" Margin="2" />
 							</Rectangle>
 						</WhileTrue>

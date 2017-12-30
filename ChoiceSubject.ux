@@ -115,7 +115,21 @@
 
 		function selectSubject(arg) {
 			console.log(arg.data.text);
-			Backend.subject.value = arg.data.text;
+			if (arg.data.type == 1) {
+				Backend.subject.color.value = "#4C9DFF";
+				Backend.subject.type.value = "목";
+			} else if (arg.data.type == 2) {
+				Backend.subject.color.value = "#8BBDFF";
+				Backend.subject.type.value = "세목";
+			} else if (arg.data.type == 3) {
+				Backend.subject.color.value = "#FF4200";
+				Backend.subject.type.value = "목";
+			} else if (arg.data.type == 4) {
+				Backend.subject.color.value = "#FFBA85";
+				Backend.subject.type.value = "세목";
+			}
+			Backend.subject.isChoice.value = true;
+			Backend.subject.text.value = arg.data.text;
 		}
 
 		function getTheSubjectList() {
