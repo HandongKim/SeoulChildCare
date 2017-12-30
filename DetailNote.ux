@@ -3,6 +3,7 @@
 
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
+		var Backend = require('Backend.js');
 
 		detailText = "불러온 전표내역이 없습니다."
 		showText = Observable(false);;
@@ -599,7 +600,7 @@
 
 
 
-	<WhileTrue Value="{pickerOn}">
+	<!-- <WhileTrue Value="{pickerOn}">
 		<Change page1PickerPanel2.Y="0" Duration=".2" />
 	</WhileTrue>
 
@@ -615,7 +616,7 @@
 		</Panel>
 
 		<MyPicker Selected="{selectedData}" Data="{pickerData}" />
-	</DockPanel>
+	</DockPanel> -->
 
 
 
@@ -988,7 +989,7 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF" ColumnSpan="3">
 					<Stroke Width="1" Color="#ccc" />
-					<Text Value="{selectedData}" Alignment="CenterLeft" />
+					<Text Value="모바일등록" Alignment="CenterLeft" />
 					<Clicked>
 						<Callback Handler="{pickerUp}" />
 					</Clicked>

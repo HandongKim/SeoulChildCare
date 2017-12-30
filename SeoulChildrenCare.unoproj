@@ -12,6 +12,7 @@
   ],
   "Includes": [
     "*",
+    "**.js:Bundle",
     "Images/*.png:Bundle",
     "Evidence/*.jpg:Bundle"
   ],

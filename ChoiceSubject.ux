@@ -3,6 +3,7 @@
 
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
+		var Backend = require('Backend.js');
 
 		var incomeSubject = [
 			{type: "1", text: " [111] 정부지원 보육료"},
@@ -109,8 +110,12 @@
 				subjects.add(outcomeSubject[i]);
 			}
 		}
+
+		function selectSubject(arg) {
+			Backend.subject.value = arg.text;
+		}
 		module.exports = {
-			subjects, incomeClick, outcomeClick
+			subjects, incomeClick, outcomeClick, selectSubject
 		};
 	</JavaScript>
 
@@ -188,6 +193,10 @@
 						</Match>
 
 						<Text Value="{text}" Alignment="Center" />
+
+						<Clicked>
+							<Callback Handler="{selectSubject}" />
+						</Clicked>
 					</WrapPanel>
 				</Each>
 			</StackPanel>
