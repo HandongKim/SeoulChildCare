@@ -289,10 +289,16 @@
 			</Grid>
 			<ScrollView SnapMinTransform="false" SnapMaxTransform="false">
 				<StackPanel Color="#eee" ItemSpacing="1">
+					<Selection MinCount="1" MaxCount="1" />
 					<Each Items="{data}">
-						<Rectangle Width="100%" BoxSizing="FillAspect" Aspect="4" Color="White">
+						<Rectangle ux:Name="cBox" Width="100%" BoxSizing="FillAspect" Aspect="4" Color="White">
+							<Selectable />
+							<WhileSelected>
+								<Change cBox.Color="#aaa" />
+							</WhileSelected>
 							<Clicked>
 								<Callback Handler="{chooseCertificate}"/>
+								<ToggleSelection />
 							</Clicked>
 
 							<!-- <Panel ux:Name="certificate">
