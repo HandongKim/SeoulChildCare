@@ -333,9 +333,11 @@
 			if(arg.BILL_IDX != null) {
 				if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)) {
 					this.reverse=true;
-				} 
+				}
+				this.isShow = true;
+			} else {
+				this.isShow = false;
 			}
-
 
 			if (arg.BILL_RECEIPT > 1) {
 				console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
@@ -783,31 +785,33 @@
 			<Text Value="원" Alignment="BottomRight" />
 
 		</Panel>
-		<Panel Margin="{margin}/2,0">
-			<WrapPanel Alignment="CenterLeft" Width="100%">
-				<WhileTrue Value="{reverse}">
-					<Rectangle BoxSizing="FillAspect" Aspect="1" CornerRadius="3" Width="{margin}*1.5" Color="#F00" Alignment="Center" Margin="1,0">
-						<RegularPolygon Sides="3" Width="90%" Height="90%">
-							<Stroke Width="2" Color="White" />
-						</RegularPolygon>
+		<WhileTrue Value="{isShow}">
+			<Panel Margin="{margin}/2,0">
+				<WrapPanel Alignment="CenterLeft" Width="100%">
+					<WhileTrue Value="{reverse}">
+						<Rectangle BoxSizing="FillAspect" Aspect="1" CornerRadius="3" Width="{margin}*1.5" Color="#F00" Alignment="Center" Margin="1,0">
+							<RegularPolygon Sides="3" Width="90%" Height="90%">
+								<Stroke Width="2" Color="White" />
+							</RegularPolygon>
+						</Rectangle>
+					</WhileTrue>
+					<Rectangle CornerRadius="3" Color="{subTypeColor}">
+						<Text Value="{subType}" Color="White" Alignment="Center" Margin="2" />
 					</Rectangle>
-				</WhileTrue>
-				<Rectangle CornerRadius="3" Color="{subTypeColor}">
-					<Text Value="{subType}" Color="White" Alignment="Center" Margin="2" />
-				</Rectangle>
-				<Text Value=" {name}" Color="#000" Alignment="Center" />
-			</WrapPanel>
-			<Panel>
-				<Match Value="{receipt}">
-					<Case String="2">
-						<Image File="Images/btn_paper2.png" Width="10%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
-					</Case>
-					<Case String="1">
-						<Image File="Images/btn_paper1.png" Width="10%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
-					</Case>
-				</Match>
+					<Text Value=" {name}" Color="#000" Alignment="Center" />
+				</WrapPanel>
+				<Panel>
+					<Match Value="{receipt}">
+						<Case String="2">
+							<Image File="Images/btn_paper2.png" Width="10%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
+						</Case>
+						<Case String="1">
+							<Image File="Images/btn_paper1.png" Width="10%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
+						</Case>
+					</Match>
+				</Panel>
 			</Panel>
-		</Panel>
+		</WhileTrue>
 		<Text Value="{memo}" Margin="{margin}/2" />
 	</StackPanel>
 
