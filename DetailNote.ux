@@ -225,14 +225,12 @@
 				// console.log("temp[arg.data.index].MONEY : " + temp[args.data.index].MONEY);
 		}
 
-		Backend.subject.onValueChanged(function(x) {
-			subType.text.value = x;
-		});
 
 		function initializing() {
 			// console.log("initializing started");
 			moneyValue.value="";
-			subType.text.value="";
+			subType.text.value= Backend.subject.value;
+			// Backend.subject.value = "";
 			selectedMemo.value="";
 		}
 
