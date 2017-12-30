@@ -362,8 +362,8 @@
 				<Image ux:Name="btn1_over" File="Images/btn1_over.png" Width="100%" Margin="0, 5" MemoryPolicy="UnloadUnused" Opacity="0" /> -->
 
 				<Clicked>
-					<Callback Handler="{goMainPage}" />
-					<!-- <Callback Handler="{goMainPage2}" /> -->
+					<!-- <Callback Handler="{goMainPage}" /> -->
+					<Callback Handler="{goMainPage2}" />
 
 
 					<!-- <Set Target="loginAlert.Layer" Value="Overlay" /> -->
