@@ -229,7 +229,7 @@
 		function initializing() {
 			// console.log("initializing started");
 			moneyValue.value="";
-			subType.text.value= Backend.subject.value;
+			subType.text= Backend.subject;
 			// Backend.subject.value = "";
 			selectedMemo.value="";
 		}
