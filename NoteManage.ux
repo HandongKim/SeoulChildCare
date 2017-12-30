@@ -800,7 +800,7 @@
 			<Panel>
 				<Match Value="{receipt}">
 					<Case String="2">
-						<Image File="Images/btn_paper2.png" Width="18%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
+						<Image File="Images/btn_paper2.png" Width="10%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
 					</Case>
 					<Case String="1">
 						<Image File="Images/btn_paper1.png" Width="10%" MemoryPolicy="UnloadUnused" Alignment="CenterRight" />
