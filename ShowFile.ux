@@ -19,6 +19,131 @@
 			router.push("DetailFile", {index: arg.data.index, resource: arg.data.resource});
 		}
 
+
+		function ServerPicture(resource, _index) {
+			this.index = _index;
+			this.resource = resource;
+			this.isSelected = Observable(false);
+			this.isLinked = Observable(false);
+		}
+
+		var photoListFromServer;
+
+		function getPhotoList () {
+			photoListFromServer = new Array;
+
+			pictures.clear();
+
+			console.log("getPhotoList");
+
+			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+
+	// var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+	 		var dsSearch = '{"ATCHMNFL_YM":"201711"}';
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+	    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+	    
+			console.log('jsonParam : ' + jsonParam);
+			console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+
+
+			fetch("http://112.218.172.44:52102/acusr/acc/bil/getMobileRciptList.do", {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify(jsonParam)
+		        }).then(function(response) {
+					var responseData = JSON.stringify(response);
+					
+					// console.log("responseData : " + responseData);
+		 
+					var message = JSON.parse(response._bodyInit);
+					var isSuccess = message.MiResultMsg;
+					console.log("message : " + message.MiResultMsg); 
+
+					
+
+
+					
+
+
+					var tempList1 = JSON.parse(response._bodyInit);
+
+					console.log("tempList1 : " + JSON.stringify(tempList1));
+
+					tempList1 = tempList1.resultData[1];
+
+					for (var i = 0; i < tempList1.length; i++) {
+						var temp2 = tempList1[i].ATCHMNFL_IDX.toString()
+						photoListFromServer.push(temp2);
+				
+					}
+
+					if (isSuccess =="success") {
+						
+						for (var i = 0; i <photoListFromServer.length ; i++) {
+							var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';					
+							var dsSearch = '{"ATCHMNFL_IDX":"'+photoListFromServer[i]+'"}';
+
+							var baseURL= "http://112.218.172.44:52102/acusr/acc/bil/mImgView.do?";
+
+							var GVMEMCODE = "SEOUL000000000000121";
+
+							var requestParameter = "GVMEMCODE=" + GVMEMCODE+ "&ATCHMNFL_IDX=" + photoListFromServer[i];
+
+							var imgUrl = baseURL + requestParameter;
+							console.log("requestParameter : " + imgUrl);
+
+
+							// var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+							// console.log('jsonParam : ' + jsonParam);
+							pictures.add(new ServerPicture(imgUrl, i));
+
+							console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+						}
+						
+					} else {
+						console.log("isSuccess is failed");
+					}
+					
+		            // return response.json();
+		        }).then(function(jsonData) {
+		            var data = jsonData.results[0];
+		           
+					// console.log("Reg Succeeded[ios]: " + data.registration_token);
+					// maintext.value = maintext.value + "/n" + data.registration_token;
+		        }).catch(function(err) {
+		            
+		        });
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		module.exports = {
 			files, goDetailFile
 		};

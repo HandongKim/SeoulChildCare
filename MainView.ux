@@ -6,58 +6,152 @@
 		var Camera = require('FuseJS/Camera');
 		var CameraRoll = require('FuseJS/CameraRoll');
 		var ImageTools = require('FuseJS/ImageTools');
+		var Uploader = require("Uploader");
 
-		function takePicture() {
-			Camera.takePicture().then(function(image) {
+		var print = debug_log;
+		var uploadUrl = 'https://www.accgg.co.kr/Mobile/ReceiptImgUpload.do';// 서버 IP를 변경하세요.
 
-				console.log("Take Picture!!!");
+		var sendPictureBtnEnabled = Observable(false);
+		var targetImgPath = Observable();
 
-				// var boundary = "SpecificString";
-				// fetch("http://112.218.172.44:52102/acusr/acc/bil/MobileReceiptImgUpload.do", {
-				// 	method: 'POST',	
-				// 	headers: {
-				// 		"Content-type": "multipart/form-data; boundary=MultipartBoundry"
-				// 	},
-				// 	body: JSON.stringify({
-				// 		"SIGNGB":"1",
-				// 		"signedText":mSignedData
-			 //                })
-			 //        }).then(function(response) {
-			 //        	console.log("response.ok :"  + response.ok);
-			 //        	isConnected = response.ok;
+		function takePicture()
+		{
+			Camera.takePicture().then(function(image)
+			{
+				var args = { desiredWidth:320, desiredHeight:320 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
+				ImageTools.resize(image, args).then(function(resizedImage) {
+					targetImgPath.value = resizedImage.path;
+					sendPictureBtnEnabled.value = true;
 
-				// 		// staticDsParam = JSON.parse(response._bodyInit);
-			 //   //      	// staticDsParam = staticDsParam.result;
-			 //   //      	staticParamStringValue = JSON.stringify(staticDsParam.dsParam);
-			 //   //      	console.log("staticDsParam : " + staticDsParam);
-				// 		// console.log("staticParamStringValue : " + staticParamStringValue);
-			 //        	if(isConnected == true) {
-			 //        		router.goto("MainPage");
-			 //        	}
-			 //        	console.log("isConnected : " + isConnected);
+					CameraRoll.publishImage(resizedImage);
+					console.log("picture was saved");
 
-			 //        	var responseData = JSON.stringify(response);
-				// 		console.log("responseData : "+ responseData);
-			 //            return response.json();
-			        	
-			 //        }).then(function(jsonData) {
-			 //            // var data = jsonData.results[0];
+					sendPicture();
+				}).catch(function(reason) {
+					console.log("Couldn't resize image: " + reason);
+				});
+			}).catch(function(reason) {
+				console.log("Couldn't take picture: " + reason);
+			});
+		};
 
-			 //            // console.log("data : " + jsonData.results[0]);
-						
-			 //        }).catch(function(err) {
-			 //            console.log("Reg Succeeded[ios] Error!! : " + err.message);
-			 //        });
+		function sendPicture()
+		{
+			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsSearch = '{"ATCHMNFL_YM":"11110","FILE_SE":"N","DOWN_LVL":"ALL"}';
+			console.log("===========================================");
+			console.log("searchContent ds Search : " + dsSearch);
+
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
 
 
 
-
-				CameraRoll.publishImage(image);
-			}).catch(function(error) {
-				//
+			Uploader.send(targetImgPath.value, uploadUrl, JSON.stringify(jsonParam)).then(function(response) {
+				console.log("upload complete.");
+				console.log(JSON.stringify(response));
 			});
 		}
+
+		// module.exports = {
+			
+		// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// function takePicture() {
+		// 	Camera.takePicture().then(function(image) {
+
+		// 		console.log("Take Picture!!!");
+
+		// 		// var boundary = "SpecificString";
+		// 		// fetch("http://112.218.172.44:52102/acusr/acc/bil/MobileReceiptImgUpload.do", {
+		// 		// 	method: 'POST',	
+		// 		// 	headers: {
+		// 		// 		"Content-type": "multipart/form-data; boundary=MultipartBoundry"
+		// 		// 	},
+		// 		// 	body: JSON.stringify({
+		// 		// 		"SIGNGB":"1",
+		// 		// 		"signedText":mSignedData
+		// 	 //                })
+		// 	 //        }).then(function(response) {
+		// 	 //        	console.log("response.ok :"  + response.ok);
+		// 	 //        	isConnected = response.ok;
+
+		// 		// 		// staticDsParam = JSON.parse(response._bodyInit);
+		// 	 //   //      	// staticDsParam = staticDsParam.result;
+		// 	 //   //      	staticParamStringValue = JSON.stringify(staticDsParam.dsParam);
+		// 	 //   //      	console.log("staticDsParam : " + staticDsParam);
+		// 		// 		// console.log("staticParamStringValue : " + staticParamStringValue);
+		// 	 //        	if(isConnected == true) {
+		// 	 //        		router.goto("MainPage");
+		// 	 //        	}
+		// 	 //        	console.log("isConnected : " + isConnected);
+
+		// 	 //        	var responseData = JSON.stringify(response);
+		// 		// 		console.log("responseData : "+ responseData);
+		// 	 //            return response.json();
+			        	
+		// 	 //        }).then(function(jsonData) {
+		// 	 //            // var data = jsonData.results[0];
+
+		// 	 //            // console.log("data : " + jsonData.results[0]);
+						
+		// 	 //        }).catch(function(err) {
+		// 	 //            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+		// 	 //        });
+
+
+
+
+
+		// 		CameraRoll.publishImage(image);
+		// 	}).catch(function(error) {
+		// 		//
+		// 	});
+		// }
 
 
 		function save() {
@@ -176,9 +270,18 @@
 				router.push("Trash");
 			},
 			takePicture,
-			getImage, placed, margin
+			getImage, placed, margin,
+
+
+
+			targetImgPath,
+			sendPicture,
+			sendPictureBtnEnabled
 		};
 	</JavaScript>
+
+	<Uploader ux:Global="Uploader" />
+
 
 	<Panel ux:Class="topBar">
 		<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
