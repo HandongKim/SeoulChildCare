@@ -174,8 +174,13 @@ function save() {
 	// oReq.send(null);
 
 
+	var today = new Date();
+	var date = today.getFullYear()+''+(today.getMonth()+1)+''+today.getDate();
+	var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
+	var dateTime = date+''+time;
+	var imageName = dateTime + ".png";
 
-	savepanel.save("test.png");
+	savepanel.save(imageName);
 	console.log("make image");
 	var saveDir = "t";
 	if (Environment.ios) {
@@ -186,7 +191,7 @@ function save() {
 	}
 	var arrayBuff;
 	setTimeout(function() {
-		FileSystem.readBufferFromFile(saveDir+"/test.png").then(function(image) {
+		FileSystem.readBufferFromFile(saveDir+"/"+imageName).then(function(image) {
 			console.log("read success");
 			arrayBuff = image;
 			// console.log(JSON.stringify(arrayBuff));
@@ -194,7 +199,7 @@ function save() {
 				console.log("Scratch image path is: " + image.path);
 				CameraRoll.publishImage(image).then(function(x) {
 					console.log("save success");
-					FileSystem.delete(saveDir+"/test.png").then(function() {
+					FileSystem.delete(saveDir+"/"+imageName).then(function() {
 						console.log("delete success");
 					});
 				}, function(error) {
@@ -309,11 +314,19 @@ function getPhotoList () {
 
 }
 
+
+	function deleteThePicture() {
+		
+	}
+
+
+
+
 module.exports = {
 	panelType,
 	year, years, month, months, pickerOn, pickerUp, pickerDown,
 	uploadOn, tryUpload, cancelUpload,
 	pictures, selectionMode, goToSelectionMode, cancelSelectionMode, toggleSelect, header, deleteSelected,
 	selectedMode, cancelSelectedMode, selectedPicture, activeIndex,
-	save, clicked, spicture, getPhotoList
+	save, clicked, spicture, getPhotoList,deleteThePicture
 };

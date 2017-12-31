@@ -17,8 +17,14 @@
 		var targetImgPath = Observable();
 		var takedPicture = Observable();
 
+
 		function takePicture()
 		{
+			var today = new Date();
+    		var date = today.getFullYear()+''+(today.getMonth()+1)+''+today.getDate();
+			var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
+			var dateTime = date+''+time;
+
 			Camera.takePicture().then(function(image)
 			{
 				// 찍은 사진 리사이징하기
@@ -33,7 +39,13 @@
 					// console.log("picture was saved");
 
 					// 리사이징한 이미지 흑백으로 변환
-					savepanel3.save("test.png");
+					
+
+					console.log("dateTime : " + dateTime);
+
+					var imageName = dateTime + ".png";
+
+					savepanel3.save(imageName);
 					console.log("make image");
 					var saveDir = "t";
 					if (Environment.ios) {
@@ -44,7 +56,11 @@
 					}
 					var arrayBuff;
 					setTimeout(function() {
-						FileSystem.readBufferFromFile(saveDir+"/test.png").then(function(image) {
+
+						
+
+
+						FileSystem.readBufferFromFile(saveDir+"/"+imageName).then(function(image) {
 							console.log("read success");
 							arrayBuff = image;
 							// console.log(JSON.stringify(arrayBuff));
@@ -53,10 +69,10 @@
 								// 흑백으로 변한사진 카메라롤에 저장
 								CameraRoll.publishImage(image).then(function(x) {
 									console.log("save success");
-									FileSystem.delete(saveDir+"/test.png").then(function() {
+									FileSystem.delete(saveDir+"/"+imageName).then(function() {
 										console.log("delete success");
 									});
-									targetImgPath.value = saveDir + "./test.png";
+									targetImgPath.value = saveDir + "./"+imageName;
 									// sendPicture();
 									takedPicture.value = "";
 								}, function(error) {

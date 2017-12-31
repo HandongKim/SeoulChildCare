@@ -107,6 +107,10 @@
 				</Image>
 
 				<Image File="Images/btn_delete.png" Alignment="CenterRight" Margin="{margin}">
+					<Clicked>
+						<Callback Handler="{deleteThePicture}" />
+					</Clicked>
+
 				</Image>
 			</Grid>
 
