@@ -322,15 +322,24 @@
 			}
 
 
-			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229", "ESTI_GB":"' + esti_gb +'", "BOOK_GB":"01"}';
+			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229", "ESTI_GB":"' + esti_gb +'", "BOOKGB":"01"}';
+
+
+
 
 			var ds_bCash = CASH_GB.value;
+
+
+
+
 			console.log("2017.12.30 log =================================================================");
 			console.log("dsParam : " + dsParam);
 			console.log("dsParm TYpe : " + typeof(dsParam) );
 			console.log("2017.12.30 log =================================================================");
 			console.log('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
-			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": "'+ds_bCash+'"}');
+			// var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": "'+ds_bCash+'"}');
+
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
 
 
 			fetch("http://112.218.172.44:52102/acusr/acc/bil/getEstiSearchLoad.do", {
@@ -341,6 +350,12 @@
 					body: JSON.stringify(jsonParam)
 			        }).then(function(response) {
 						var responseData = JSON.stringify(response);
+
+
+
+
+
+
 
 						console.log("responseData : "+ responseData);
 			            return response.json();
@@ -608,8 +623,15 @@
 				router.push("ChoiceSubject");
 			},
 			getListDetailNote,pickFromList, moneyValue,initializing, saveData,  deleteData, selectedMemo, searchTheSubjectList,
+
 			goShowFile: function() {
-				router.push("ShowFile");
+
+				var infoJSON = {
+					BILL_IDX:BILL_IDX.value					
+				}
+
+
+				router.push("ShowFile", infoJSON);
 			}
 		};
 	</JavaScript>

@@ -7,7 +7,6 @@
 
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
-
 		var unReg = Observable(false);
 		
 

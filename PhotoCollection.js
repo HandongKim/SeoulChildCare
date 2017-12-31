@@ -58,7 +58,7 @@ function Picture(resource) {
 }
 
 
-function ServerPicture(resource, _index) {
+function toggleSelect(resource, _index) {
 	this.index = _index;
 	this.resource = resource;
 	this.isSelected = Observable(false);
@@ -111,10 +111,18 @@ activeIndex.onValueChanged(null, function(x) {
 		spicture.value = selectedPicture.getAt(x).resource;
 	}
 });
+
+
+var currentPictureIndex = Observable();
+
+
 function toggleSelect(args) {
 	if (selectionMode.value === false) {
 		selectedMode.value = true;
 		activeIndex.value = args.data.index;
+
+		currentPictureIndex.value = args.data.index;
+
 		spicture.value = args.data.resource;
 
 		selectedPicture.add(pictures.getAt(activeIndex.value));
@@ -219,6 +227,7 @@ function clicked(args) {
 
 
 var photoListFromServer;
+var tempList1;
 
 function getPhotoList () {
 	photoListFromServer = new Array;
@@ -230,7 +239,7 @@ function getPhotoList () {
 	var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 
 	// var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
-	 var dsSearch = '{"ATCHMNFL_YM":"201711"}';
+	var dsSearch = '{"ATCHMNFL_YM":"201711"}';
 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 	    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
 	    
@@ -248,7 +257,7 @@ function getPhotoList () {
         }).then(function(response) {
 			var responseData = JSON.stringify(response);
 			
-			// console.log("responseData : " + responseData);
+			console.log("2017.12.31 responseData : " + responseData);
  
 			var message = JSON.parse(response._bodyInit);
 			var isSuccess = message.MiResultMsg;
@@ -260,7 +269,7 @@ function getPhotoList () {
 			
 
 
-			var tempList1 = JSON.parse(response._bodyInit);
+			tempList1 = JSON.parse(response._bodyInit);
 
 			console.log("tempList1 : " + JSON.stringify(tempList1));
 
@@ -273,7 +282,7 @@ function getPhotoList () {
 			}
 
 			if (isSuccess =="success") {
-				
+				console.log("wjifjwoejfoijo");
 				for (var i = 0; i <photoListFromServer.length ; i++) {
 					var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';					
 					var dsSearch = '{"ATCHMNFL_IDX":"'+photoListFromServer[i]+'"}';
@@ -316,7 +325,57 @@ function getPhotoList () {
 
 
 	function deleteThePicture() {
-		
+		var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+		var ATCHMNFL_IDX = tempList1[currentPictureIndex.value].ATCHMNFL_IDX.toString()
+
+
+	// var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+		var dsSearch = '{"ATCHMNFL_IDX":"'+ATCHMNFL_IDX+'"}';
+		var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+	    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+	    
+		console.log('jsonParam : ' + jsonParam);
+		console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+		fetch("http://112.218.172.44:52102/acusr/acc/bil/DeleteMapngReceipt.do", {
+			method: 'POST',
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify(jsonParam)
+	        }).then(function(response) {
+				var responseData = JSON.stringify(response);
+				
+				console.log("2017.12.31 responseData : " + responseData);
+	 
+				var message = JSON.parse(response._bodyInit);
+				var isSuccess = message.MiResultMsg;
+				console.log("message : " + message.MiResultMsg); 
+
+				
+
+
+				
+
+
+				var tempList1 = JSON.parse(response._bodyInit);
+
+				console.log("tempList1 : " + JSON.stringify(tempList1));
+
+				tempList1 = tempList1.resultData[1];
+
+				
+				
+	            // return response.json();
+	        }).then(function(jsonData) {
+	            var data = jsonData.results[0];
+	           
+				// console.log("Reg Succeeded[ios]: " + data.registration_token);
+				// maintext.value = maintext.value + "/n" + data.registration_token;
+	        }).catch(function(err) {
+	            
+	        });
+
 	}
 
 

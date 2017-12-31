@@ -9,6 +9,26 @@ var subject = {
 
 var dsParam="";
 
+
+
+
+
+
+var choiceSubjectList = Observable();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = {
 	subject, dsParam
 };

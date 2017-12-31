@@ -34,15 +34,16 @@ function goMainPage() {
 	console.log("certPw : " + certPw.value);
 
 	var isPasswordCorrect = checkThePassword(certPw.value);
+	// var isPasswordCorrect = checkThePassword("1q2w3e4r!@");
 	//테스토 용
-	isPasswordCorrect = true;
+	// isPasswordCorrect = true;
 	if(isPasswordCorrect == true) {
 		alert.layer.value="Background";
 		connectToServer();
 		settings.setString('key', '20171212121212');
 	} else {
-		console.log("Really Really??????????????????????????????");
-		alert.message.value="비밀번호가 틀렸습니다. 121231231231231"
+		
+		alert.message.value="비밀번호가 틀렸습니다."
 		alert.layer.value = "Overlay";
 	}
 }
@@ -405,6 +406,7 @@ function setLicense () {
 
 function getLogicSignedData () {
 	var value = certPw.value;
+	// value = "1q2w3e4r!@";
 	mSignedData = UniSign.getLogicSignedData(value, certificateIndexValue);
 	return mSignedData;
 }
@@ -741,8 +743,11 @@ function connectToServer() {
 			"signedText":mSignedData
                 })
         }).then(function(response) {
-        	console.log("response.ok :"  + response.ok);
-        	isConnected = response.ok;
+        	console.log("response.resultCode :"  + response.resultCode);
+        	
+        	
+
+        	
 
 			// staticDsParam = JSON.parse(response._bodyInit);
    //      	// staticDsParam = staticDsParam.result;
@@ -755,6 +760,13 @@ function connectToServer() {
 
         	var dsParam = responseHeaders.dsParam;
 
+
+        	var reulstCode = responseHeaders.resultCode;
+
+        	if(reulstCode == "000") {
+        		isConnected = true;
+        	} 
+
         	// console.log("dsParam : " + JSON.stringify(dsParam));
 
         	Backend.dsParam = JSON.stringify(dsParam);
@@ -762,9 +774,9 @@ function connectToServer() {
         	console.log("Backend.dsParam : "  + Backend.dsParam);
 
 
-        	// if(isConnected == true) {
-        	// 	router.goto("MainPage");
-        	// }
+        	if(isConnected == true) {
+        		router.goto("MainPage");
+        	}
         	
 
         	console.log("isConnected : " + isConnected);
