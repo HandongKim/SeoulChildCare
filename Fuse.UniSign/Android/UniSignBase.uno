@@ -237,40 +237,21 @@ namespace Fuse.UniSign.Android
 			{
 				debug_log("public static Cert[] GetUserCertList started");
 				var userCertsArray = GetCertList();
-
 				debug_log("typeof userCertsArray : " + userCertsArray);
-
 				var count = ArrayHelpers.Count(userCertsArray);
 				debug_log("1111 Count from NSArrayHelpers: " + count);
-
-
-
 				var result = new Certificate[0];
-				
-				
 				if (count == 0) {
-					
 				} else {
 					result = new Certificate[count];
 				}
-				
 				debug_log("22222 Count from NSArrayHelpers: " + count);
-
 				for (var i = 0; i < count; i++) {
 					result[i] = new Certificate(i, ArrayHelpers.ObjectAtIndex(userCertsArray, i));
 				}
-
-
 				ToolkitMgr.androidList = result;
-
 				debug_log("3333 Count from NSArrayHelpers: " + count);
-				
-				
-
-
 				debug_log("44444 Count from NSArrayHelpers: " + count);
-								
-
 				return result;
 			}
 		}
@@ -288,8 +269,6 @@ namespace Fuse.UniSign.Android
 			
         	return CertListMgr.getInstance().getUserCertList();
 		@}
-
-
 
 		public static Certificate GetUserCertificateAtIndex(int index)
 		{
@@ -320,6 +299,10 @@ namespace Fuse.UniSign.Android
     		//NSString *test = @"imgg";
     		//data = [test dataUsingEncoding:NSUTF8StringEncoding];
     		//BOOL ret = [toolkit isCorrectCert:cert password:password error:&error]; 
+
+
+
+
     		boolean ret = false;
     		return ret;
 		@}
@@ -349,6 +332,35 @@ namespace Fuse.UniSign.Android
 
 
 
+
+
+		public static string getLogicSignedData(string password, Java.Object certificate) {
+			return GetLogicSignedData(password, certificate);
+
+		}
+
+		[Foreign(Language.Java)]
+		static string GetLogicSignedData(string password, Java.Object certificate) 
+		@{
+
+			String data="imgg";
+
+			byte[] inputData = data.getBytes();
+                // 서명 결과 데이터 : Base64 문자열로 인코딩 된다.
+             String inputbase64 = "";
+
+			// 인증서 비밀번호
+
+            try {
+
+
+				byte[] resultData = CertToolkitMgr.getInstance().logicCMSSignedData((com.crosscert.android.core.Cert)certificate, inputData, password.getBytes());
+				inputbase64 = CertToolkitMgr.getInstance().utilBase64Encode(resultData);
+            } catch (Exception e) {
+
+			}
+			return inputbase64;
+		@}
 
 
 		
@@ -395,8 +407,8 @@ namespace Fuse.UniSign.Android
 
 
 
-	[ForeignInclude(Language.Java, "com.crosscert.android.core.Cert", "com.crosscert.android.core.CertUtil")]
-	extern(ANDROID) public class Certificate
+	[ForeignInclude(Language.Java, "com.crosscert.android.core.Cert", "com.crosscert.android.core.CertUtil", "com.crosscert.android.core.CertToolkitMgr")]
+	extern(ANDROID) public class Certificate : UniSignBase
 	{
 		private int _certIndex;
 		Java.Object _handle;

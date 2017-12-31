@@ -36,7 +36,7 @@ function goMainPage() {
 	var isPasswordCorrect = checkThePassword(certPw.value);
 	// var isPasswordCorrect = checkThePassword("1q2w3e4r!@");
 	//테스토 용
-	// isPasswordCorrect = true;
+	isPasswordCorrect = true;
 	if(isPasswordCorrect == true) {
 		alert.layer.value="Background";
 		connectToServer();
