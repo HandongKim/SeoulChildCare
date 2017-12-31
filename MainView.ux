@@ -58,14 +58,17 @@
 									});
 									targetImgPath.value = saveDir + "./test.png";
 									sendPicture();
+									takedPicture.value = "";
 								}, function(error) {
 									console.log(error);
 								});
 							});
+						}, function(error) {
+							console.log(error);
 						});
-					}, 1500);
+					}, 2000);
 
-					sendPicture();
+					// sendPicture();
 				}).catch(function(reason) {
 					console.log("Couldn't resize image: " + reason);
 				});
@@ -91,152 +94,6 @@
 				console.log(JSON.stringify(response));
 			});
 		}
-
-		// module.exports = {
-			
-		// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		// function takePicture() {
-		// 	Camera.takePicture().then(function(image) {
-
-		// 		console.log("Take Picture!!!");
-
-		// 		// var boundary = "SpecificString";
-		// 		// fetch("http://112.218.172.44:52102/acusr/acc/bil/MobileReceiptImgUpload.do", {
-		// 		// 	method: 'POST',	
-		// 		// 	headers: {
-		// 		// 		"Content-type": "multipart/form-data; boundary=MultipartBoundry"
-		// 		// 	},
-		// 		// 	body: JSON.stringify({
-		// 		// 		"SIGNGB":"1",
-		// 		// 		"signedText":mSignedData
-		// 	 //                })
-		// 	 //        }).then(function(response) {
-		// 	 //        	console.log("response.ok :"  + response.ok);
-		// 	 //        	isConnected = response.ok;
-
-		// 		// 		// staticDsParam = JSON.parse(response._bodyInit);
-		// 	 //   //      	// staticDsParam = staticDsParam.result;
-		// 	 //   //      	staticParamStringValue = JSON.stringify(staticDsParam.dsParam);
-		// 	 //   //      	console.log("staticDsParam : " + staticDsParam);
-		// 		// 		// console.log("staticParamStringValue : " + staticParamStringValue);
-		// 	 //        	if(isConnected == true) {
-		// 	 //        		router.goto("MainPage");
-		// 	 //        	}
-		// 	 //        	console.log("isConnected : " + isConnected);
-
-		// 	 //        	var responseData = JSON.stringify(response);
-		// 		// 		console.log("responseData : "+ responseData);
-		// 	 //            return response.json();
-			        	
-		// 	 //        }).then(function(jsonData) {
-		// 	 //            // var data = jsonData.results[0];
-
-		// 	 //            // console.log("data : " + jsonData.results[0]);
-						
-		// 	 //        }).catch(function(err) {
-		// 	 //            console.log("Reg Succeeded[ios] Error!! : " + err.message);
-		// 	 //        });
-
-
-
-
-
-		// 		CameraRoll.publishImage(image);
-		// 	}).catch(function(error) {
-		// 		//
-		// 	});
-		// }
-
-
-		function save() {
-
-			console.log("save");
-			var FileSystem = require("FuseJS/FileSystem");
-
-			var oReq = new XMLHttpRequest();
-			oReq.open("GET", "[http://112.218.172.44:52102/acusr/acc/bil/mImgDownLoad.do?GVMEMCODE=SEOUL000000000000121&ATCHMNFL_IDX=12]", true);
-			oReq.responseType = "arraybuffer";
-
-			oReq.onload = function (oEvent) {
-				console.log("oReq.onload");
-		  		var arrayBuffer = oReq.response; 
-		  		if (arrayBuffer) {
-		    		var path = FileSystem.dataDirectory + "/" + "testfile.jpg";
-		    		FileSystem.writeBufferToFile(path, arrayBuffer);
-		  		}
-			};
-
-			oReq.send(null);
-			savepanel.save("test.png");
-			var saveDir = "t";
-			if (Environment.ios) {
-				saveDir = FileSystem.iosPaths.documents;
-			} else if (Environment.android) {
-				console.log(FileSystem.androidPaths.files);
-				saveDir = FileSystem.androidPaths.files;
-			}
-			pictures.add({
-				index: pictures.length,
-				resource: saveDir+"/test.png",
-				isSelected: Observable(false),
-				isLinked: Observable(false)
-			});
-		}
-
-
-
-
-
-
-
-
-
-
 
 
 		function getImage() {
@@ -315,7 +172,7 @@
 
 			targetImgPath,
 			sendPicture,
-			sendPictureBtnEnabled
+			sendPictureBtnEnabled, takedPicture
 		};
 	</JavaScript>
 
@@ -379,11 +236,10 @@
 			<SendWork ux:Template="SendWork" router="router" />
 			<Trash ux:Template="Trash" router="router" />
 		</Navigator>
+		<SavePanel ux:Name="savepanel3" Alignment="Bottom" Width="50">
+			<Image File="{takedPicture}">
+				<Desaturate Amount="1" />
+			</Image>
+		</SavePanel>
 	</ClientPanel>
-
-	<SavePanel ux:Name="savepanel3">
-		<Image File="{takedPicture}">
-			<Desaturate Amount="1" />
-		</Image>
-	</SavePanel>
 </App>
