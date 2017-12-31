@@ -205,7 +205,7 @@ function save() {
 		}, function(error) {
 			console.log(error);
 		});
-	}, 1000);
+	}, 1500);
 }
 
 function clicked(args) {

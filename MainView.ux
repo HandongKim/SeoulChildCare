@@ -13,18 +13,55 @@
 
 		var sendPictureBtnEnabled = Observable(false);
 		var targetImgPath = Observable();
+		var takedPicture = Observable();
 
 		function takePicture()
 		{
 			Camera.takePicture().then(function(image)
 			{
+				// 찍은 사진 리사이징하기
 				var args = { desiredWidth:320, desiredHeight:320 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
 				ImageTools.resize(image, args).then(function(resizedImage) {
-					targetImgPath.value = resizedImage.path;
+					// 리사이징한 사진 savepanel3에 표시
+					takedPicture.value = resizedImage.path;
+					// targetImgPath.value = resizedImage.path;
 					sendPictureBtnEnabled.value = true;
+					// 리사이징한 사진 저정부분은 삭제
+					// CameraRoll.publishImage(resizedImage);
+					// console.log("picture was saved");
 
-					CameraRoll.publishImage(resizedImage);
-					console.log("picture was saved");
+					// 리사이징한 이미지 흑백으로 변환
+					savepanel3.save("test.png");
+					console.log("make image");
+					var saveDir = "t";
+					if (Environment.ios) {
+						saveDir = FileSystem.iosPaths.documents;
+					} else if (Environment.android) {
+						// console.log(FileSystem.androidPaths.files);
+						saveDir = FileSystem.androidPaths.files;
+					}
+					var arrayBuff;
+					setTimeout(function() {
+						FileSystem.readBufferFromFile(saveDir+"/test.png").then(function(image) {
+							console.log("read success");
+							arrayBuff = image;
+							// console.log(JSON.stringify(arrayBuff));
+							ImageTools.getImageFromBuffer(arrayBuff).then(function(image) {
+								console.log("Scratch image path is: " + image.path);
+								// 흑백으로 변한사진 카메라롤에 저장
+								CameraRoll.publishImage(image).then(function(x) {
+									console.log("save success");
+									FileSystem.delete(saveDir+"/test.png").then(function() {
+										console.log("delete success");
+									});
+									targetImgPath.value = saveDir + "./test.png";
+									sendPicture();
+								}, function(error) {
+									console.log(error);
+								});
+							});
+						});
+					}, 1500);
 
 					sendPicture();
 				}).catch(function(reason) {
@@ -341,4 +378,10 @@
 			<Trash ux:Template="Trash" router="router" />
 		</Navigator>
 	</ClientPanel>
+
+	<SavePanel ux:Name="savepanel3">
+		<Image File="{takedPicture}">
+			<Desaturate Amount="1" />
+		</Image>
+	</SavePanel>
 </App>
