@@ -22,7 +22,7 @@
 			Camera.takePicture().then(function(image)
 			{
 				// 찍은 사진 리사이징하기
-				var args = { desiredWidth:320, desiredHeight:320 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
+				var args = { desiredWidth:480, desiredHeight:640 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
 				ImageTools.resize(image, args).then(function(resizedImage) {
 					// 리사이징한 사진 savepanel3에 표시
 					takedPicture.value = resizedImage.path;
@@ -57,7 +57,7 @@
 										console.log("delete success");
 									});
 									targetImgPath.value = saveDir + "./test.png";
-									sendPicture();
+									// sendPicture();
 									takedPicture.value = "";
 								}, function(error) {
 									console.log(error);
