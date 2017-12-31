@@ -54,7 +54,7 @@
 	</Panel>
 
 	<Panel Height="100%" Color="#ddd">
-		<PageControl Width="50%" Orientation="Vertical" InactiveState="Unchanged" Transition="None" Active="{Property Selected}">
+		<PageControl Width="50%" Orientation="Vertical" InactiveState="Unchanged" Transition="None" Active="{Property Selected}" >
 			<Selection Value="{Property Selected}" MaxCount="1" MinCount="1" />
 			<Each Items="{datas}" Defer="Deferred">
 				<SpinnerPanel Name="{name}" />

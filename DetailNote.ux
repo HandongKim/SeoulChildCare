@@ -131,7 +131,6 @@
 
 			this.memo = arg.BCASH_MEMO;
 		}
-
 		
 		function getListDetailNote () {
 				// console.log("testAPI clicked ");
@@ -225,17 +224,6 @@
 				Backend.subject.text.value = selectedSubject;
 
 				moneyValue.value = temp[args.data.index].MONEY;
-
-
-
-
-
-
-
-
-
-
-				
 
 
 				// console.log("selectedTemp : " + JSON.stringify(selectedTemp));
