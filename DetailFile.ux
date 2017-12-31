@@ -16,32 +16,34 @@
 
 		function save() {
 			savepanel2.save("test.png");
+			console.log("make image");
 			var saveDir = "t";
 			if (Environment.ios) {
 				saveDir = FileSystem.iosPaths.documents;
-				var arrayBuff;
+			} else if (Environment.android) {
+				// console.log(FileSystem.androidPaths.files);
+				saveDir = FileSystem.androidPaths.files;
+			}
+			var arrayBuff;
+			setTimeout(function() {
 				FileSystem.readBufferFromFile(saveDir+"/test.png").then(function(image) {
+					console.log("read success");
 					arrayBuff = image;
 					// console.log(JSON.stringify(arrayBuff));
 					ImageTools.getImageFromBuffer(arrayBuff).then(function(image) {
 						console.log("Scratch image path is: " + image.path);
 						CameraRoll.publishImage(image).then(function(x) {
-							console.log("success");
+							console.log("save success");
+							FileSystem.delete(saveDir+"/test.png").then(function() {
+								console.log("delete success");
+							});
 						}, function(error) {
 							console.log(error);
 						});
 					});
-					resource.value = saveDir+"/test.png";
+					// resource.value = saveDir+"/test.png";
 				});
-				// FileSystem.getFileInfo(saveDir+"/test.png").then(function(fileInfo) {
-				// 	console.log("file was modified on ", JSON.stringify(fileInfo));
-				// });
-				
-				// console.log("save");
-			} else if (Environment.android) {
-				console.log(FileSystem.androidPaths.files);
-				// saveDir = FileSystem.androidPaths.files;
-			}
+			}, 1500);
 		}
 
 		module.exports = {

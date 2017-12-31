@@ -1,7 +1,8 @@
 var Observable = require('FuseJS/Observable');
-var Storage = require("FuseJS/Storage");
 var FileSystem = require("FuseJS/FileSystem");
 var Environment = require('FuseJS/Environment');
+var CameraRoll = require("FuseJS/CameraRoll");
+var ImageTools = require("FuseJS/ImageTools");
 
 // 어떤 경로로 접근했는지 구분하기 위한 함수
 var panelType = Observable("normal");
@@ -154,41 +155,57 @@ function deleteSelected(args) {
 
 function save() {
 
-	console.log("save");
-	var FileSystem = require("FuseJS/FileSystem");
+	// console.log("save");
+	// var FileSystem = require("FuseJS/FileSystem");
 
-	var oReq = new XMLHttpRequest();
-	oReq.open("GET", "[http://112.218.172.44:52102/acusr/acc/bil/mImgDownLoad.do?GVMEMCODE=SEOUL000000000000121&ATCHMNFL_IDX=12]", true);
-	oReq.responseType = "arraybuffer";
+	// var oReq = new XMLHttpRequest();
+	// oReq.open("GET", "[http://112.218.172.44:52102/acusr/acc/bil/mImgDownLoad.do?GVMEMCODE=SEOUL000000000000121&ATCHMNFL_IDX=12]", true);
+	// oReq.responseType = "arraybuffer";
 
-	oReq.onload = function (oEvent) {
-		console.log("oReq.onload");
-  		var arrayBuffer = oReq.response; 
-  		if (arrayBuffer) {
-    		var path = FileSystem.dataDirectory + "/" + "testfile.jpg";
-    		FileSystem.writeBufferToFile(path, arrayBuffer);
-  		}
-	};
+	// oReq.onload = function (oEvent) {
+	// 	console.log("oReq.onload");
+ //  		var arrayBuffer = oReq.response; 
+ //  		if (arrayBuffer) {
+ //    		var path = FileSystem.dataDirectory + "/" + "testfile.jpg";
+ //    		FileSystem.writeBufferToFile(path, arrayBuffer);
+ //  		}
+	// };
 
-	oReq.send(null);
-
+	// oReq.send(null);
 
 
 
 	savepanel.save("test.png");
+	console.log("make image");
 	var saveDir = "t";
 	if (Environment.ios) {
 		saveDir = FileSystem.iosPaths.documents;
 	} else if (Environment.android) {
-		console.log(FileSystem.androidPaths.files);
+		// console.log(FileSystem.androidPaths.files);
 		saveDir = FileSystem.androidPaths.files;
 	}
-	pictures.add({
-		index: pictures.length,
-		resource: saveDir+"/test.png",
-		isSelected: Observable(false),
-		isLinked: Observable(false)
-	});
+	var arrayBuff;
+	setTimeout(function() {
+		FileSystem.readBufferFromFile(saveDir+"/test.png").then(function(image) {
+			console.log("read success");
+			arrayBuff = image;
+			// console.log(JSON.stringify(arrayBuff));
+			ImageTools.getImageFromBuffer(arrayBuff).then(function(image) {
+				console.log("Scratch image path is: " + image.path);
+				CameraRoll.publishImage(image).then(function(x) {
+					console.log("save success");
+					FileSystem.delete(saveDir+"/test.png").then(function() {
+						console.log("delete success");
+					});
+				}, function(error) {
+					console.log(error);
+				});
+			});
+			// resource.value = saveDir+"/test.png";
+		}, function(error) {
+			console.log(error);
+		});
+	}, 1000);
 }
 
 function clicked(args) {

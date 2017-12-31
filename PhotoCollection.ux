@@ -135,12 +135,11 @@
 				</Each> -->
 			</Panel>
 
-			<SavePanel ux:Name="savepanel" Width="300">
-				<Image File="{spicture}" StretchMode="UniformToFill">
-					<Desaturate Amount="1" />
-				</Image>
-			</SavePanel>
+			
 		</DockPanel>
+		<SavePanel ux:Name="savepanel">
+			<Image File="{spicture}" />
+		</SavePanel>
 	</Panel>
 
 	<!-- 증빙자료모음 화면 -->
