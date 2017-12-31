@@ -3,6 +3,8 @@
 
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
+		var Environment = require('FuseJS/Environment');
+		var FileSystem = require("FuseJS/FileSystem");
 		var Camera = require('FuseJS/Camera');
 		var CameraRoll = require('FuseJS/CameraRoll');
 		var ImageTools = require('FuseJS/ImageTools');
