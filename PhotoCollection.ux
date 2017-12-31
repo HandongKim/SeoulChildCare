@@ -138,7 +138,7 @@
 			
 		</DockPanel>
 		<SavePanel ux:Name="savepanel">
-			<Image File="{spicture}" />
+			<Image Url="{spicture}" />
 		</SavePanel>
 	</Panel>
 
