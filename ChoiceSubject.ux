@@ -101,7 +101,7 @@
 			}else {
 				CASH_GB = Observable(x.CASH_GB);
 				console.log("2018.01.01 CASH_GB : " + CASH_GB.value);
-				searchTheSubjectList("31");
+				searchTheSubjectList("3"+CASH_GB.value);
 			}
 		});
 
