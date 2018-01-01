@@ -107,7 +107,7 @@
 
 
 		var temp;
-		var recievedData = Observable();
+		var recievedData;
 
 		function searchTheSubjectList () {
 			var esti_gb = "";
@@ -150,7 +150,10 @@
 
 						console.log("responseHeaders.ds_estiList[1] : "+  JSON.stringify(temp));
 
-						recievedData.value = temp;
+						recievedData = temp;
+						for (var i = 0 ; i < recievedData.length ; i++) {
+							subjects.add(new income(recievedData[i]));
+						}
 
 			            return response.json();
 			        }).then(function(jsonData) {
@@ -259,9 +262,9 @@
 
 		var subjects = Observable();
 
-		for (var i = 0 ; i < recievedData.length ; i++) {
-			subjects.add(new income(recievedData[i]));
-		}
+		// for (var i = 0 ; i < recievedData.length ; i++) {
+		// 	subjects.add(new income(recievedData[i]));
+		// }
 
 		function incomeClick() {
 			subjects.clear();
