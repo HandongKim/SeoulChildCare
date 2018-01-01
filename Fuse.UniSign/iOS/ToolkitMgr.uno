@@ -67,7 +67,7 @@ namespace Fuse.UniSign.iOS
 			NSData  *data = nil;
     					
     		//NSString *test = @"BASE64_WORD";
-    		NSString *test = @"imgg";
+    		NSString *test = @"imss";
     		data = [test dataUsingEncoding:NSUTF8StringEncoding];
     		BOOL ret = [toolkit isCorrectCert:cert password:password error:&error]; 
     		return ret;
@@ -93,7 +93,7 @@ namespace Fuse.UniSign.iOS
     		USToolkitMgr *toolkit = [USToolkitMgr getInstance:&error];
 			NSData  *data = nil;
 
-    		NSString *test = @"imgg";
+    		NSString *test = @"imss";
     		data = [test dataUsingEncoding:NSUTF8StringEncoding];
     		NSData *ret = [toolkit logicSignedData:cert data:data password:password error:&error];
 		    NSString *mSignedData = [NSString base64Encode:ret error:&error];

@@ -296,7 +296,7 @@ namespace Fuse.UniSign.Android
 		@{
 			boolean ret = false;
 
-			String data="imgg";
+			String data="imss";
 
 			byte[] inputData = data.getBytes();
                 // 서명 결과 데이터 : Base64 문자열로 인코딩 된다.
@@ -361,7 +361,7 @@ namespace Fuse.UniSign.Android
 		static string GetLogicSignedData(string password, Java.Object certificate) 
 		@{
 
-			String data="imgg";
+			String data="imss";
 
 			byte[] inputData = data.getBytes();
                 // 서명 결과 데이터 : Base64 문자열로 인코딩 된다.

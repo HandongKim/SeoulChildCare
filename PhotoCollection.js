@@ -35,10 +35,99 @@ function pickerUp() {
 }
 
 function pickerDown() {
+	photoListFromServer = new Array;
+	pictures.clear();
 
-	console.log("pickerDown is pressed");
-console.log("pickerDown is pressed");console.log("pickerDown is pressed");console.log("pickerDown is pressed");
-console.log("pickerDown is pressed");console.log("pickerDown is pressed");console.log("pickerDown is pressed");
+	console.log("year.value : "  + year.value);
+	console.log("month.value : "  + month.value);
+
+	var tempMonth = month.value.toString();
+	if(month.value < 10) {
+		tempMonth = "0" +month.value.toString();
+	}
+
+
+
+	var yearAndMonth = year.value.toString() + tempMonth;
+
+
+	var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+
+	// var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+	var dsSearch = '{"ATCHMNFL_YM":"'+yearAndMonth+'"}';
+	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+	    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+	    
+	console.log('jsonParam : ' + jsonParam);
+	console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+
+
+	fetch("http://112.218.172.44:52102/acusr/acc/bil/getMobileRciptList.do", {
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+        }).then(function(response) {
+			var responseData = JSON.stringify(response);
+			
+			console.log("2017.12.31 responseData : " + responseData);
+ 
+			var message = JSON.parse(response._bodyInit);
+			var isSuccess = message.MiResultMsg;
+			console.log("message : " + message.MiResultMsg); 
+			tempList1 = JSON.parse(response._bodyInit);
+
+			console.log("tempList1 : " + JSON.stringify(tempList1));
+
+			tempList1 = tempList1.resultData[1];
+
+			for (var i = 0; i < tempList1.length; i++) {
+				var temp2 = tempList1[i].ATCHMNFL_IDX.toString()
+				photoListFromServer.push(temp2);
+		
+			}
+
+			if (isSuccess =="success") {
+				console.log("wjifjwoejfoijo");
+				for (var i = 0; i <photoListFromServer.length ; i++) {
+					var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';					
+					var dsSearch = '{"ATCHMNFL_IDX":"'+photoListFromServer[i]+'"}';
+
+					var baseURL= "http://112.218.172.44:52102/acusr/acc/bil/mImgView.do?";
+
+					var GVMEMCODE = "SEOUL000000000000121";
+
+					var requestParameter = "GVMEMCODE=" + GVMEMCODE+ "&ATCHMNFL_IDX=" + photoListFromServer[i];
+
+					var imgUrl = baseURL + requestParameter;
+					console.log("requestParameter : " + imgUrl);
+
+
+					// var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+					// console.log('jsonParam : ' + jsonParam);
+					pictures.add(new ServerPicture(imgUrl, i));
+
+					console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+				}
+				
+			} else {
+				console.log("isSuccess is failed");
+			}
+			
+            // return response.json();
+        }).then(function(jsonData) {
+            var data = jsonData.results[0];
+           
+			// console.log("Reg Succeeded[ios]: " + data.registration_token);
+			// maintext.value = maintext.value + "/n" + data.registration_token;
+        }).catch(function(err) {
+            
+        });
+
+
+
 
 
 	pickerOn.value = false;
@@ -251,27 +340,27 @@ function getPhotoList () {
 
 
 	var currentTime = new Date()
-				var tempYear = currentTime.getFullYear();
-				console.log("date : " + typeof(tempYear));
+	var tempYear = currentTime.getFullYear();
+	console.log("date : " + typeof(tempYear));
 
-				var monthTemp = currentTime.getMonth() + 1;
+	var monthTemp = currentTime.getMonth() + 1;
 
-				console.log("month : " + month);
-
-
-				year.value = tempYear;
-				month.value = monthTemp;
+	console.log("month : " + month);
 
 
-				var tempMonth = monthTemp.toString();
-				if(monthTemp < 10) {
+	year.value = tempYear;
+	month.value = monthTemp;
 
-					tempMonth = "0" +monthTemp.toString();
-				}
 
-				var yearAndMonth = tempYear + tempMonth;
+	var tempMonth = monthTemp.toString();
+	if(monthTemp < 10) {
 
-				console.log("yearAndMonth : " +yearAndMonth);
+		tempMonth = "0" +monthTemp.toString();
+	}
+
+	var yearAndMonth = tempYear + tempMonth;
+
+	console.log("yearAndMonth : " +yearAndMonth);
 
 
 

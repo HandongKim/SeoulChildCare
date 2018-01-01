@@ -210,10 +210,10 @@
 
 				<Each Items="{files}" Defer="Deferred">
 					<Panel Background="#eee">
-						<Tapped>
+						<!-- <Tapped>
 							<Callback Handler="{goDetailFile}" />
-						</Tapped>
-						<Image ux:Name="picture" StretchMode="UniformToFill" File="{resource}" />
+						</Tapped> -->
+						<Image ux:Name="picture" StretchMode="UniformToFill" Url="{resource}" />
 					</Panel>
 				</Each>
 			</Grid>
