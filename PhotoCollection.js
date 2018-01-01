@@ -35,6 +35,12 @@ function pickerUp() {
 }
 
 function pickerDown() {
+
+	console.log("pickerDown is pressed");
+console.log("pickerDown is pressed");console.log("pickerDown is pressed");console.log("pickerDown is pressed");
+console.log("pickerDown is pressed");console.log("pickerDown is pressed");console.log("pickerDown is pressed");
+
+
 	pickerOn.value = false;
 }
 
@@ -65,7 +71,12 @@ function toggleSelect(resource, _index) {
 	this.isLinked = Observable(false);
 }
 
-
+function ServerPicture(resource, _index) {
+	this.index = _index;
+	this.resource = resource;
+	this.isSelected = Observable(false);
+	this.isLinked = Observable(false);
+}
 
 
 pictures = Observable();
@@ -230,16 +241,48 @@ var photoListFromServer;
 var tempList1;
 
 function getPhotoList () {
+
+
 	photoListFromServer = new Array;
 
 	pictures.clear();
 
 	console.log("getPhotoList");
 
+
+	var currentTime = new Date()
+				var tempYear = currentTime.getFullYear();
+				console.log("date : " + typeof(tempYear));
+
+				var monthTemp = currentTime.getMonth() + 1;
+
+				console.log("month : " + month);
+
+
+				year.value = tempYear;
+				month.value = monthTemp;
+
+
+				var tempMonth = monthTemp.toString();
+				if(monthTemp < 10) {
+
+					tempMonth = "0" +monthTemp.toString();
+				}
+
+				var yearAndMonth = tempYear + tempMonth;
+
+				console.log("yearAndMonth : " +yearAndMonth);
+
+
+
+
+
+
+
 	var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 
 	// var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
-	var dsSearch = '{"ATCHMNFL_YM":"201711"}';
+	var dsSearch = '{"ATCHMNFL_YM":"'+yearAndMonth+'"}';
 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 	    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
 	    
