@@ -3,7 +3,7 @@
 	<Router ux:Dependency="router"/>
 
 	<JavaScript File="Login.js" />
-	<Alert ux:Name="loginAlert" Title="{alert.title}" MainText="{alert.contents}" Type="{alert.type}" Layer="{alert.layer}" />
+	<Alert ux:Name="loginAlert" Title="{alert.title}" MainText="{alert.message}" Type="{alert.type}" Layer="{alert.layer}" />
 
 	<WhileActive>
 		<Callback Handler="{getLicenseInfo}" />

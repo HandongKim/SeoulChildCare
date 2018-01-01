@@ -42,8 +42,9 @@ function goMainPage() {
 		connectToServer();
 		settings.setString('key', '20171212121212');
 	} else {
-		
-		alert.message.value="비밀번호가 틀렸습니다."
+		alert.title.value = "비밀번호 오류";
+		alert.message.value = "비밀번호가 틀렸습니다.";
+		alert.type.value = "Check";
 		alert.layer.value = "Overlay";
 	}
 }
@@ -106,6 +107,7 @@ onExportPanel = Observable(false);
 var alert = {
 	title: Observable(),
 	message: Observable(),
+	type: Observable(),
 	layer: Observable("Background")
 }
 
