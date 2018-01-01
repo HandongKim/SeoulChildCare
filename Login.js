@@ -31,19 +31,35 @@ function popDownPanel() {
 var alertViewBool = Observable("Background");
 
 function goMainPage() {
-	console.log("certPw : " + certPw.value);
+	if (certSelected) {
+		console.log("certPw : " + certPw.value);
 
-	var isPasswordCorrect = checkThePassword(certPw.value);
-	// var isPasswordCorrect = checkThePassword("1q2w3e4r!@");
-	//테스토 용
-	// isPasswordCorrect = true;
-	if(isPasswordCorrect == true) {
-		alert.layer.value="Background";
-		connectToServer();
-		settings.setString('key', '20171212121212');
+		if (certPw.value == null) {
+			alert.title.value = "비밀번호 입력";
+			alert.message.value = "비밀번호를 입력하세요.";
+			alert.type.value = "Check";
+			alert.layer.value = "Overlay";
+		} else {
+			// 비밀번호를 입력한 상태라면
+			var isPasswordCorrect = checkThePassword(certPw.value);
+			// var isPasswordCorrect = checkThePassword("1q2w3e4r!@");
+			//테스토 용
+			// isPasswordCorrect = true;
+			if(isPasswordCorrect == true) {
+				alert.layer.value="Background";
+				connectToServer();
+				settings.setString('key', '20171212121212');
+			} else {
+				alert.title.value = "비밀번호 오류";
+				alert.message.value = "비밀번호가 틀렸습니다.";
+				alert.type.value = "Check";
+				alert.layer.value = "Overlay";
+			}
+
+		}
 	} else {
-		alert.title.value = "비밀번호 오류";
-		alert.message.value = "비밀번호가 틀렸습니다.";
+		alert.title.value = "인증서 선택";
+		alert.message.value = "인증서를 선택하세요.";
 		alert.type.value = "Check";
 		alert.layer.value = "Overlay";
 	}
@@ -460,6 +476,7 @@ function getUUID () {
 	return deviceUUID;
 }
 
+var certSelected = false;
 
 
 function chooseCertificate(args) {
@@ -467,6 +484,7 @@ function chooseCertificate(args) {
 	data.forEach(function(cert) {
 		if (args.data.certIndex == cert.certIndex) {
 			cert.isSelected.value = true;
+			certSelected = true;
 		} else {
 			cert.isSelected.value = false;
 		}
