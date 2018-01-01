@@ -5,6 +5,7 @@ var subject = {
 	color: Observable(),
 	type: Observable(),
 	name: Observable(),
+	text: Observable(),
 	ESTI_CODE: Observable(),
 	ESTI_GB: Observable(),
 	ESTI_SUBCODE: Observable()
