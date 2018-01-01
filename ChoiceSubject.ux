@@ -171,7 +171,7 @@
 	{"DISPLAY_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÍ∏à","DISPLAY_CODE":"911","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1090101","ESTI_DISPLAY":"911","ESTI_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÍ∏à","M_DISPLAY_NAME2":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÍ∏à","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[911]Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÍ∏à","MEMO":"Ï†ÑÎÖÑÎèÑ Î∂àÏö©ÏúºÎ°ú Ïù¥ÏõîÎêú Í∏àÏï°","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
 
 
-	{"DISPLAY_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","DISPLAY_CODE":"912","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1090102","ESTI_DISPLAY":"912","ESTI_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","M_DISPLAY_NAME2":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[912]Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","MEMO":"Ï†ÑÎÖÑÎèÑÏóê Ï¢ÖÎ£åÎêòÏßÄ Î™ªÌïú Ïù¥ÏõîÏÇ¨ÏóÖ","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"}
+	{"DISPLAY_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","DISPLAY_CODE":"912","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1게90102","ESTI_DISPLAY":"912","ESTI_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","M_DISPLAY_NAME2":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[912]Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","MEMO":"Ï†ÑÎÖÑÎèÑÏóê Ï¢ÖÎ£åÎêòÏßÄ Î™ªÌïú Ïù¥ÏõîÏÇ¨ÏóÖ","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"}
 ];
 
 		function income(subject) {
@@ -181,7 +181,11 @@
 				this.type = "2"
 			}
 			this.text = " " + subject.M_DISPLAY_NAME;
-			this.name = subject.DISPLAY_NAME;
+			this.name = subject.M_DISPLAY_NAME2;
+			this.ESTI_CODE = subject.ESTI_CODE;
+			this.ESTI_GB = subject.ESTI_GB;
+			this.ESTI_SUBCODE = subject.ESTI_SUBCODE;
+			this.ESTI_SUB_YN = subject.ESTI_SUB_YN;
 		}
 
 		var subjects = Observable();
@@ -224,6 +228,9 @@
 			}
 			Backend.subject.isChoice.value = true;
 			Backend.subject.name.value = arg.data.name;
+			Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
+			Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
+			Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
 		}
 
 		function getTheSubjectList() {
