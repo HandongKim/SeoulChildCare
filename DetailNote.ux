@@ -623,7 +623,7 @@
 			goShowFile: function() {
 
 				var infoJSON = {
-					BILL_IDX:BILL_IDX.value					
+					BILL_IDX:BILL_IDX.value				
 				}
 
 

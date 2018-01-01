@@ -50,7 +50,7 @@
 		function getPhotoList () {
 			photoListFromServer = new Array;
 
-			pictures.clear();
+			files.clear();
 
 			console.log("getPhotoList");
 
@@ -117,7 +117,7 @@
 
 							// var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 							// console.log('jsonParam : ' + jsonParam);
-							pictures.add(new ServerPicture(imgUrl, i));
+							files.add(new ServerPicture(imgUrl, i));
 
 							console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 						}
@@ -163,9 +163,14 @@
 
 
 		module.exports = {
-			files, goDetailFile
+			files, goDetailFile, getPhotoList
 		};
 	</JavaScript>
+
+	<WhileActive>
+		<Callback Handler="{getPhotoList}" />
+	</WhileActive>
+
 
 	<!-- 증빙자료모음 화면 -->
 	<DockPanel Color="White">
