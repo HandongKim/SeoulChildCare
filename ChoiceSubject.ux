@@ -101,7 +101,7 @@
 			}else {
 				CASH_GB = Observable(x.CASH_GB);
 				console.log("2018.01.01 CASH_GB : " + CASH_GB.value);
-				searchTheSubjectList();
+				searchTheSubjectList(CASH_GB.value);
 			}
 		});
 
@@ -109,15 +109,13 @@
 		var temp;
 		var recievedData;
 
-
-
-		function searchTheSubjectList () {
-			var esti_gb = "";
-			if (CASH_GB.value == "1") {
-					esti_gb = "31"
-			} else if (CASH_GB.value =="2") {
-				esti_gb="32"
-			}
+		function searchTheSubjectList (esti_gb) {
+			// var esti_gb = "";
+			// if (CASH_GB.value == "1") {
+			// 		esti_gb = "31"
+			// } else if (CASH_GB.value =="2") {
+			// 	esti_gb="32"
+			// }
 			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229", "ESTI_GB":"' + esti_gb +'", "BOOKGB":"01"}';
 			var ds_bCash = CASH_GB.value;
 			console.log("2017.12.30 log =================================================================");
@@ -245,10 +243,18 @@
 // ];
 
 		function income(subject) {
-			if (subject.ESTI_SUBCODE == null) {
-				this.type = "1";
-			} else {
-				this.type = "2"
+			if (subject.ESTI_GB == "31") {
+				if (subject.ESTI_SUBCODE == null) {
+					this.type = "1";
+				} else {
+					this.type = "2"
+				}
+			} else if (subject.ESTI_GB == "32") {
+				if (subject.ESTI_SUBCODE == null) {
+					this.type = "3";
+				} else {
+					this.type = "4"
+				}
 			}
 			this.text = " " + subject.M_DISPLAY_NAME;
 			this.name = subject.M_DISPLAY_NAME2;
@@ -256,7 +262,7 @@
 			this.ESTI_GB = subject.ESTI_GB;
 			this.ESTI_SUBCODE = subject.ESTI_SUBCODE;
 			this.ESTI_SUB_YN = subject.ESTI_SUB_YN;
-			// console.log("add" + subject.DISPLAY_NAME);
+			console.log("add" + subject.DISPLAY_NAME);
 		}
 
 		var subjects = Observable();
@@ -270,16 +276,18 @@
 			// for (var i = 0 ; i < incomeSubject.length ; i++) {
 			// 	subjects.add(incomeSubject[i]);
 			// }
-			for (var i = 0 ; i < recievedData.length ; i++) {
-				subjects.add(new income(recievedData[i]));
-			}
+			// for (var i = 0 ; i < recievedData.length ; i++) {
+			// 	subjects.add(new income(recievedData[i]));
+			// }
+			searchTheSubjectList("31");
 		}
 
 		function outcomeClick() {
-			subjects.clear();
-			for (var i = 0 ; i < outcomeSubject.length ; i++) {
-				subjects.add(outcomeSubject[i]);
-			}
+			// subjects.clear();
+			// for (var i = 0 ; i < outcomeSubject.length ; i++) {
+			// 	subjects.add(outcomeSubject[i]);
+			// }
+			searchTheSubjectList("32");
 		}
 
 		function selectSubject(arg) {
