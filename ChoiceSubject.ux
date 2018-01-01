@@ -110,6 +110,7 @@
 		var recievedData;
 
 
+
 		function searchTheSubjectList () {
 			var esti_gb = "";
 			if (CASH_GB.value == "1") {
@@ -147,6 +148,7 @@
 
 						console.log("responseHeaders.ds_estiList[1] : "+ JSON.parse(temp) );
 
+<<<<<<< .merge_file_vdV1ff
 <<<<<<< HEAD
 						recievedData = temp;
 						for (var i = 0 ; i < recievedData.length ; i++) {
@@ -155,6 +157,9 @@
 =======
 						recievedData.value = JSON.parse(temp);
 >>>>>>> a591d6c1375c607abe314eb7589fa19c9cbfc255
+=======
+						recievedData.value = JSON.parse(temp);
+>>>>>>> .merge_file_hyKF2k
 
 			            return response.json();
 			        }).then(function(jsonData) {
