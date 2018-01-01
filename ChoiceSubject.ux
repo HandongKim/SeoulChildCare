@@ -325,6 +325,20 @@
 			Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
 			Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
 			Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
+
+
+
+			console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
+			console.log("Backend.subject.name.value : " + Backend.subject.name.value);
+			console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
+			console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
+
+
+			router.push("DetailNote");
+
+
+
+
 		}
 
 		function getTheSubjectList() {
