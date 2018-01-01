@@ -1,4 +1,4 @@
-<Panel ux:Class="ChoiceSubject">
+<Page ux:Class="ChoiceSubject">
 	<Router ux:Dependency="router"/>
 	<WhileActive>
 		<Callback Handler="{getTheSubjectList}" />
@@ -146,20 +146,12 @@
 						
 
 
-						console.log("responseHeaders.ds_estiList[1] : "+ JSON.parse(temp) );
+						// console.log("responseHeaders.ds_estiList[1] : "+ JSON.parse(temp) );
 
-<<<<<<< .merge_file_vdV1ff
-<<<<<<< HEAD
-						recievedData = temp;
-						for (var i = 0 ; i < recievedData.length ; i++) {
-							subjects.add(new income(recievedData[i]));
+						// recievedData = temp;
+						for (var i = 0 ; i < temp.length ; i++) {
+							subjects.add(new income(temp[i]));
 						}
-=======
-						recievedData.value = JSON.parse(temp);
->>>>>>> a591d6c1375c607abe314eb7589fa19c9cbfc255
-=======
-						recievedData.value = JSON.parse(temp);
->>>>>>> .merge_file_hyKF2k
 
 			            return response.json();
 			        }).then(function(jsonData) {
@@ -264,6 +256,7 @@
 			this.ESTI_GB = subject.ESTI_GB;
 			this.ESTI_SUBCODE = subject.ESTI_SUBCODE;
 			this.ESTI_SUB_YN = subject.ESTI_SUB_YN;
+			// console.log("add" + subject.DISPLAY_NAME);
 		}
 
 		var subjects = Observable();
@@ -452,4 +445,4 @@
 			</StackPanel>
 		</ScrollView>
 	</DockPanel>
-</Panel>
+</Page>
