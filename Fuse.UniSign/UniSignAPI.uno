@@ -92,7 +92,6 @@ namespace Fuse.UniSign
 				// throw new Exception("Platform not supported");
 			}
 		}
-
 		public static bool CheckPassword(string password, int certIndex) 
 		{
 			if defined(iOS) {
@@ -109,8 +108,6 @@ namespace Fuse.UniSign
 			} else {
 				return false;
 			}
-			
-
 		}
 
 		public static string GetLogicSignedData (string password, int certIndex)
@@ -374,9 +371,7 @@ namespace Fuse.UniSign
 
 	extern(iOS) class iOSCertSession : GenerateCertSession
 	{
-
 		TransferMgr _mgr;
-
 		public iOSCertSession()
 		{
 			string error = null;
@@ -427,18 +422,11 @@ namespace Fuse.UniSign
 
 			return isExported;
 		}
-		
-
-
-
-
-
 	}
 
 	extern(iOS) public class iOSCert : Cert
 	{
 		Certificate _certificate;
-
 		public iOSCert(Certificate certificate)
 		{
 			_certificate = certificate;

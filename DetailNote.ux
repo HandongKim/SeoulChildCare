@@ -321,7 +321,6 @@
 				esti_gb="32"
 			}
 
-
 			var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229", "ESTI_GB":"' + esti_gb +'", "BOOKGB":"01"}';
 
 
@@ -612,8 +611,12 @@
 			},
 			goChoiceSubject: function() {
 
-				searchTheSubjectList();
-				router.push("ChoiceSubject");
+				// searchTheSubjectList();
+				var infoJSON = {
+					CASH_GB:CASH_GB.value
+				}
+
+				router.push("ChoiceSubject", infoJSON);
 			},
 			getListDetailNote,pickFromList, moneyValue,initializing, saveData,  deleteData, selectedMemo, searchTheSubjectList,
 
