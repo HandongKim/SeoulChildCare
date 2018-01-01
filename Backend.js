@@ -4,7 +4,7 @@ var subject = {
 	isChoice: Observable(),
 	color: Observable(),
 	type: Observable(),
-	text: Observable()
+	name: Observable()
 };
 
 var dsParam="";

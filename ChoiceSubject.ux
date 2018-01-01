@@ -93,16 +93,110 @@
 			{type: "3", text: " [811] 과년도 지출"}
 		];
 
+		var recievedData = [
+	{"DISPLAY_NAME":"Ï†ïÎ∂ÄÏßÄÏõê Î≥¥Ïú°Î£å","DISPLAY_CODE":"111","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1010101","ESTI_DISPLAY":"111","ESTI_NAME":"Ï†ïÎ∂ÄÏßÄÏõê Î≥¥Ïú°Î£å","M_DISPLAY_NAME2":"Ï†ïÎ∂ÄÏßÄÏõê Î≥¥Ïú°Î£å","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[111]Ï†ïÎ∂ÄÏßÄÏõê Î≥¥Ïú°Î£å","MEMO":"Îßå0~5ÏÑ∏ÏïÑ, Ïû•Ïï†ÏïÑ, Îã§Î¨∏Ìôî‚ÄßÎßûÎ≤åÏù¥Í∞ÄÍµ¨ Îì±Ïóê ÏßÄÏõêÎêòÎäî Î≥¥Ïú°Î£å Î∞è Ïπ¥ÎìúÏàòÏàòÎ£å ÌôòÍ∏âÍ∏à Îì±","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+	{"DISPLAY_NAME":"Î∂ÄÎ™®Î∂ÄÎã¥ Î≥¥Ïú°Î£å","DISPLAY_CODE":"112","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1010102","ESTI_DISPLAY":"112","ESTI_NAME":"Î∂ÄÎ™®Î∂ÄÎã¥ Î≥¥Ïú°Î£å","M_DISPLAY_NAME2":"Î∂ÄÎ™®Î∂ÄÎã¥ Î≥¥Ïú°Î£å","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[112]Î∂ÄÎ™®Î∂ÄÎã¥ Î≥¥Ïú°Î£å","MEMO":"Î≥¥Ìò∏ÏûêÎ°úÎ∂ÄÌÑ∞ Î∞õÏùÄ Î≥¥Ïú°Î£å","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+	{"DISPLAY_NAME":"ÌäπÎ≥ÑÌôúÎèôÎπÑ","DISPLAY_CODE":"211","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1020101","ESTI_DISPLAY":"211","ESTI_NAME":"ÌäπÎ≥ÑÌôúÎèôÎπÑ","M_DISPLAY_NAME2":"ÌäπÎ≥ÑÌôúÎèôÎπÑ","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[211]ÌäπÎ≥ÑÌôúÎèôÎπÑ","MEMO":"Î≥¥Ìò∏ÏûêÍ∞Ä Î∂ÄÎã¥ÌïòÎäî ÌäπÎ≥ÑÌôúÎèô ÎπÑÏö©","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+	{"DISPLAY_NAME":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","DISPLAY_CODE":"221","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1020201","ESTI_DISPLAY":"221","ESTI_NAME":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ[]","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[221]Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","MEMO":"Î≥¥Ìò∏ÏûêÍ∞Ä Î∂ÄÎã¥ÌïòÎäî ÏûÖÌïôÏ§ÄÎπÑÍ∏à, ÌòÑÏû•ÌïôÏäµÎπÑ, Ï∞®ÎüâÏö¥ÌñâÎπÑ, ÏïÑÏπ®‚ÄßÏ†ÄÎÖÅ Í∏âÏãùÎπÑ, Ï°∏ÏóÖÏï®Î≤îÎπÑ Îì± Í∏∞ÌÉÄ ÌïÑÏöî Í≤ΩÎπÑ","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"Y"},
+
+	{"DISPLAY_NAME":"  <ÏÑ∏Î™©>ÏûÖÌïôÍ∏à(ÏÉÅÌï¥Î≥¥Ìóò)","DISPLAY_CODE":"111","ESTI_SUBNAME":"ÏûÖÌïôÍ∏à(ÏÉÅÌï¥Î≥¥Ìóò)","ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1020201","ESTI_DISPLAY":"221","ESTI_NAME":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ[ÏûÖÌïôÍ∏à(ÏÉÅÌï¥Î≥¥Ìóò)]","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[221-111]ÏûÖÌïôÍ∏à(ÏÉÅÌï¥Î≥¥Ìóò)","MEMO":"ÏÉÅÌï¥Î≥¥ÌóòÎ£å","SORT_GUBUN":"99","ESTI_PART":"D","ESTI_SUBCODE":"111","BOOK_GB":"01","ESTI_SUB_YN":"Y"},
+
+	{"DISPLAY_NAME":"  <ÏÑ∏Î™©>ÏûÖÌïôÍ∏à(ÌîºÎ≥µÍµ¨ÏûÖ)","DISPLAY_CODE":"112","ESTI_SUBNAME":"ÏûÖÌïôÍ∏à(ÌîºÎ≥µÍµ¨ÏûÖ)","ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1020201","ESTI_DISPLAY":"221","ESTI_NAME":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ[ÏûÖÌïôÍ∏à(ÌîºÎ≥µÍµ¨ÏûÖ)]","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[221-112]ÏûÖÌïôÍ∏à(ÌîºÎ≥µÍµ¨ÏûÖ)","MEMO":"ÏõêÎ≥µ, Ï≤¥Ïú°Î≥µ, Î™®Ïûê, Í∞ÄÎ∞©, ÏàòÏ≤©, Î™ÖÏ∞∞","SORT_GUBUN":"99","ESTI_PART":"D","ESTI_SUBCODE":"112","BOOK_GB":"01","ESTI_SUB_YN":"Y"},
+
+	{"DISPLAY_NAME":"  <ÏÑ∏Î™©>ÏûÖÌïôÏ§ÄÎπÑÍ∏à","DISPLAY_CODE":"113","ESTI_SUBNAME":"ÏûÖÌïôÏ§ÄÎπÑÍ∏à","ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1020201","ESTI_DISPLAY":"221","ESTI_NAME":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ[ÏûÖÌïôÏ§ÄÎπÑÍ∏à]","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[221-113]ÏûÖÌïôÏ§ÄÎπÑÍ∏à","MEMO":null,"SORT_GUBUN":"99","ESTI_PART":"D","ESTI_SUBCODE":"113","BOOK_GB":"01","ESTI_SUB_YN":"Y"},
+
+
+	{"DISPLAY_NAME":"  <ÏÑ∏Î™©>ÌòÑÏû•ÌïôÏäµÎπÑ","DISPLAY_CODE":"121","ESTI_SUBNAME":"ÌòÑÏû•ÌïôÏäµÎπÑ","ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1020201","ESTI_DISPLAY":"221","ESTI_NAME":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ[ÌòÑÏû•ÌïôÏäµÎπÑ]","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[221-121]ÌòÑÏû•ÌïôÏäµÎπÑ","MEMO":"ÌòÑÏû•ÌïôÏäµÎπÑ, ÏàòÎ†®ÌöåÎπÑ, Í≤¨ÌïôÎπÑ","SORT_GUBUN":"99","ESTI_PART":"D","ESTI_SUBCODE":"121","BOOK_GB":"01","ESTI_SUB_YN":"Y"},
+
+
+	{"DISPLAY_NAME":"  <ÏÑ∏Î™©>Ï∞®ÎüâÏö¥ÌñâÎπÑ","DISPLAY_CODE":"131","ESTI_SUBNAME":"Ï∞®ÎüâÏö¥ÌñâÎπÑ","ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1020201","ESTI_DISPLAY":"221","ESTI_NAME":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ[Ï∞®ÎüâÏö¥ÌñâÎπÑ]","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[221-131]Ï∞®ÎüâÏö¥ÌñâÎπÑ","MEMO":"ÌÜµÌïôÏ∞®Îüâ Ïù¥Ïö©ÏãúÎ°ú ÌïúÏ†ï","SORT_GUBUN":"99","ESTI_PART":"D","ESTI_SUBCODE":"131","BOOK_GB":"01","ESTI_SUB_YN":"Y"},
+
+	{"DISPLAY_NAME":"  <ÏÑ∏Î™©>ÌñâÏÇ¨ÎπÑ","DISPLAY_CODE":"141","ESTI_SUBNAME":"ÌñâÏÇ¨ÎπÑ","ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1020201","ESTI_DISPLAY":"221","ESTI_NAME":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ[ÌñâÏÇ¨ÎπÑ]","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[221-141]ÌñâÏÇ¨ÎπÑ","MEMO":"ÏûÖÌïô, Ï°∏ÏóÖ, Ïó∞Îßê, ÏÉùÏùº, Ïû¨Î°±ÏûîÏπò ÌñâÏÇ¨ÎπÑ Î∞è Í∞úÏù∏Ïö© Ïï®Î≤îÎπÑ, Ïï°ÏûêÏ†úÏûëÎπÑÎì±","SORT_GUBUN":"99","ESTI_PART":"D","ESTI_SUBCODE":"141","BOOK_GB":"01","ESTI_SUB_YN":"Y"},
+
+
+	{"DISPLAY_NAME":"  <ÏÑ∏Î™©>Ï°∞.ÏÑùÏãùÎπÑ","DISPLAY_CODE":"151","ESTI_SUBNAME":"Ï°∞.ÏÑùÏãùÎπÑ","ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1020201","ESTI_DISPLAY":"221","ESTI_NAME":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ[Ï°∞.ÏÑùÏãùÎπÑ]","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[221-151]Ï°∞.ÏÑùÏãùÎπÑ","MEMO":"ÏïÑÏπ®,Ï†ÄÎÖÅ Í∏âÏãùÎπÑ","SORT_GUBUN":"99","ESTI_PART":"D","ESTI_SUBCODE":"151","BOOK_GB":"01","ESTI_SUB_YN":"Y"},
+
+
+	{"DISPLAY_NAME":"  <ÏÑ∏Î™©>Í∏∞ÌÉÄ","DISPLAY_CODE":"161","ESTI_SUBNAME":"Í∏∞ÌÉÄ","ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1020201","ESTI_DISPLAY":"221","ESTI_NAME":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ ÌïÑÏöîÍ≤ΩÎπÑ[Í∏∞ÌÉÄ]","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[221-161]Í∏∞ÌÉÄ","MEMO":"ÏßÄÏûêÏ≤¥Ïùò Ïó¨Í±¥ Îì± Í≥†Î†§, Ïãú.ÎèÑÏßÄÏÇ¨Í∞Ä Î≥ÑÎèÑÎ°ú Ï†ïÌïòÎäî ÎπÑÏö©","SORT_GUBUN":"99","ESTI_PART":"D","ESTI_SUBCODE":"161","BOOK_GB":"01","ESTI_SUB_YN":"Y"},
+
+
+	{"DISPLAY_NAME":"Ïù∏Í±¥ÎπÑ Î≥¥Ï°∞Í∏à","DISPLAY_CODE":"311","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1030101","ESTI_DISPLAY":"311","ESTI_NAME":"Ïù∏Í±¥ÎπÑ Î≥¥Ï°∞Í∏à","M_DISPLAY_NAME2":"Ïù∏Í±¥ÎπÑ Î≥¥Ï°∞Í∏à","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[311]Ïù∏Í±¥ÎπÑ Î≥¥Ï°∞Í∏à","MEMO":"Íµ≠Í∞Ä Î∞è ÏßÄÎ∞©ÏûêÏπòÎã®Ï≤¥Î°úÎ∂ÄÌÑ∞ Î∞õÏùÄ Ïù∏Í±¥ÎπÑ(Ïñ¥Î¶∞Ïù¥ÏßëÏúºÎ°ú ÏßÄÏõêÎêòÎäî Ï≤òÏö∞Í∞úÏÑ†ÎπÑ Îì± Ìè¨Ìï®)","SORT_GUBUN":"11","ESTI_PART":"S","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+
+	{"DISPLAY_NAME":"Í∏∞Î≥∏Î≥¥Ïú°Î£å","DISPLAY_CODE":"321","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1030201","ESTI_DISPLAY":"321","ESTI_NAME":"Í∏∞Î≥∏Î≥¥Ïú°Î£å","M_DISPLAY_NAME2":"Í∏∞Î≥∏Î≥¥Ïú°Î£å","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[321]Í∏∞Î≥∏Î≥¥Ïú°Î£å","MEMO":"Íµ≠Í∞Ä Î∞è ÏßÄÏûêÏ≤¥Í∞Ä Î≥¥Ïú°ÎπÑÏö©Ïùò ÏùºÏ†ïÎ∂ÄÎ∂ÑÏùÑ Ïñ¥Î¶∞Ïù¥ÏßëÏóê ÏßÄÏõêÌïòÎäî Î≥¥Ï°∞Í∏à","SORT_GUBUN":"11","ESTI_PART":"S","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"Í≥µÍ≥µÌòï Ïö¥ÏòÅÎπÑ","DISPLAY_CODE":"322","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1030202","ESTI_DISPLAY":"322","ESTI_NAME":"Í≥µÍ≥µÌòï Ïö¥ÏòÅÎπÑ","M_DISPLAY_NAME2":"Í≥µÍ≥µÌòï Ïö¥ÏòÅÎπÑ","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[322]Í≥µÍ≥µÌòï Ïö¥ÏòÅÎπÑ","MEMO":"Íµ≠Í∞Ä Î∞è ÏßÄÏûêÏ≤¥Í∞Ä Í≥µÍ≥µÌòïÏñ¥Î¶∞Ïù¥ÏßëÏóê ÏßÄÏõêÌïòÎäî Ïö¥ÏòÅ Î≥¥Ï°∞Í∏à","SORT_GUBUN":"11","ESTI_PART":"S","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+
+	{"DISPLAY_NAME":"Í∏∞ÌÉÄ ÏßÄÏõêÍ∏à","DISPLAY_CODE":"323","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1030203","ESTI_DISPLAY":"323","ESTI_NAME":"Í∏∞ÌÉÄ ÏßÄÏõêÍ∏à","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ ÏßÄÏõêÍ∏à","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[323]Í∏∞ÌÉÄ ÏßÄÏõêÍ∏à","MEMO":"Íµ≠Í∞Ä Î∞è ÏßÄÎ∞©ÏûêÏπòÎã®Ï≤¥Í∞Ä ÏßÄÏõêÌïòÎäî Í∏â¬∑Í∞ÑÏãùÎπÑ Î∞è ÎÉâÎÇúÎ∞©ÎπÑ, ÎàÑÎ¶¨Í≥ºÏ†ïÏö¥ÏòÅÎπÑ Îì±","SORT_GUBUN":"11","ESTI_PART":"S","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"ÏûêÎ≥∏Î≥¥Ï°∞Í∏à","DISPLAY_CODE":"331","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1030301","ESTI_DISPLAY":"331","ESTI_NAME":"ÏûêÎ≥∏Î≥¥Ï°∞Í∏à","M_DISPLAY_NAME2":"ÏûêÎ≥∏Î≥¥Ï°∞Í∏à","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[331]ÏûêÎ≥∏Î≥¥Ï°∞Í∏à","MEMO":"Ïã†Ï¶ùÏ∂ïÎπÑ, Í∞ú‚ÄßÎ≥¥ÏàòÎπÑ, Ïû•ÎπÑÎπÑ Îì±","SORT_GUBUN":"11","ESTI_PART":"S","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"Ï†ÑÏûÖÍ∏à","DISPLAY_CODE":"411","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1040101","ESTI_DISPLAY":"411","ESTI_NAME":"Ï†ÑÏûÖÍ∏à","M_DISPLAY_NAME2":"Ï†ÑÏûÖÍ∏à","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[411]Ï†ÑÏûÖÍ∏à","MEMO":"Î≤ïÏù∏, Îã®Ï≤¥, Í∞úÏù∏ Îì± Ïö¥ÏòÅ‚ÄßÍ≤ΩÏòÅÏûêÎ°úÎ∂ÄÌÑ∞Ïùò Ïö¥ÏòÅÏßÄÏõêÍ∏à","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"Îã®Í∏∞Ï∞®ÏûÖÍ∏à","DISPLAY_CODE":"421","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1040201","ESTI_DISPLAY":"421","ESTI_NAME":"Îã®Í∏∞Ï∞®ÏûÖÍ∏à","M_DISPLAY_NAME2":"Îã®Í∏∞Ï∞®ÏûÖÍ∏à","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[421]Îã®Í∏∞Ï∞®ÏûÖÍ∏à","MEMO":"ÌöåÍ≥ÑÏó∞ÎèÑ ÎÇ¥ ÏÉÅÌôòÏùÑ ÏõêÏπôÏúºÎ°ú ÏãúÏÑ§Ïö¥ÏòÅÏóê ÌïÑÏöîÌïú ÎπÑÏö©ÏùÑ Í∏àÏúµÍ∏∞Í¥Ä Îì±ÏúºÎ°úÎ∂ÄÌÑ∞ ÏùºÏãú Ï∞®ÏûÖÌïú Îã®Í∏∞Ï∞®ÏûÖÍ∏à","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"Ïû•Í∏∞Ï∞®ÏûÖÍ∏à","DISPLAY_CODE":"422","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1040202","ESTI_DISPLAY":"422","ESTI_NAME":"Ïû•Í∏∞Ï∞®ÏûÖÍ∏à","M_DISPLAY_NAME2":"Ïû•Í∏∞Ï∞®ÏûÖÍ∏à","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[422]Ïû•Í∏∞Ï∞®ÏûÖÍ∏à","MEMO":"ÏãúÏÑ§ Í∞ú‚ÄßÎ≥¥Ïàò Îì±ÏùÑ ÏúÑÌï¥ Í∏àÏúµÍ∏∞Í¥Ä Îì±ÏúºÎ°úÎ∂ÄÌÑ∞ Ï∞®ÏûÖÌïú Ïû•Í∏∞Ï∞®ÏûÖÍ∏à","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"ÏßÄÏ†ïÌõÑÏõêÍ∏à","DISPLAY_CODE":"511","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1050101","ESTI_DISPLAY":"511","ESTI_NAME":"ÏßÄÏ†ïÌõÑÏõêÍ∏à","M_DISPLAY_NAME2":"ÏßÄÏ†ïÌõÑÏõêÍ∏à","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[511]ÏßÄÏ†ïÌõÑÏõêÍ∏à","MEMO":"Íµ≠ÎÇ¥Ïô∏ ÎØºÍ∞ÑÎã®Ï≤¥ Î∞è Í∞úÏù∏ÏúºÎ°úÎ∂ÄÌÑ∞ ÌõÑÏõêÎ™ÖÎ™©ÏúºÎ°ú Î∞õÏùÄ Í∏∞Î∂ÄÍ∏à‚ÄßÍ≤∞Ïó∞ÌõÑÏõêÍ∏à‚ÄßÏúÑÎ¨∏Í∏à‚ÄßÏ∞¨Ï°∞Í∏à Ï§ë ÌõÑÏõêÎ™©Ï†ÅÏù¥ ÏßÄÏ†ïÎêú ÏàòÏûÖ","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"ÎπÑÏßÄÏ†ïÌõÑÏõêÍ∏à","DISPLAY_CODE":"512","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1050102","ESTI_DISPLAY":"512","ESTI_NAME":"ÎπÑÏßÄÏ†ïÌõÑÏõêÍ∏à","M_DISPLAY_NAME2":"ÎπÑÏßÄÏ†ïÌõÑÏõêÍ∏à","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[512]ÎπÑÏßÄÏ†ïÌõÑÏõêÍ∏à","MEMO":"Íµ≠ÎÇ¥Ïô∏ ÎØºÍ∞ÑÎã®Ï≤¥ Î∞è Í∞úÏù∏ÏúºÎ°úÎ∂ÄÌÑ∞ ÌõÑÏõêÎ™ÖÎ™©ÏúºÎ°ú Î∞õÏùÄ Í∏∞Î∂ÄÍ∏à‚ÄßÍ≤∞Ïó∞ÌõÑÏõêÍ∏à‚ÄßÏúÑÎ¨∏Í∏à‚ÄßÏ∞¨Ï°∞Í∏à Ï§ë ÌõÑÏõêÎ™©Ï†ÅÏù¥ ÏßÄÏ†ïÎêòÏßÄ ÏïÑÎãàÌïú ÏàòÏûÖÍ≥º ÏûêÏÑ†ÌñâÏÇ¨ Îì±ÏúºÎ°ú ÏñªÏñ¥ÏßÄÎäî ÏàòÏûÖ","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"Ï†ÅÎ¶ΩÍ∏à Ï≤òÎ∂Ñ ÏàòÏûÖ","DISPLAY_CODE":"611","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1060101","ESTI_DISPLAY":"611","ESTI_NAME":"Ï†ÅÎ¶ΩÍ∏à Ï≤òÎ∂Ñ ÏàòÏûÖ","M_DISPLAY_NAME2":"Ï†ÅÎ¶ΩÍ∏à Ï≤òÎ∂Ñ ÏàòÏûÖ","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[611]Ï†ÅÎ¶ΩÍ∏à Ï≤òÎ∂Ñ ÏàòÏûÖ","MEMO":"Ï†ÅÎ¶ΩÍ∏à Î∞è Ìá¥ÏßÅÏ†ÅÎ¶ΩÍ∏àÏóêÏÑú Ïù¥Ï†ÑÎ∞õÏùÄ Ïù∏Ï∂úÍ∏à","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"Í≥ºÎÖÑÎèÑ ÏàòÏûÖ","DISPLAY_CODE":"711","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1070101","ESTI_DISPLAY":"711","ESTI_NAME":"Í≥ºÎÖÑÎèÑ ÏàòÏûÖ","M_DISPLAY_NAME2":"Í≥ºÎÖÑÎèÑ ÏàòÏûÖ","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[711]Í≥ºÎÖÑÎèÑ ÏàòÏûÖ","MEMO":"Ï†ÑÎÖÑÎèÑ Ï∂úÎÇ©Ï†ïÎ¶¨Í∏∞Í∞Ñ Ïù¥ÌõÑÏóê ÎÇ©ÏûÖÎêú ÏàòÏûÖ","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"Ïù¥ÏûêÏàòÏûÖ","DISPLAY_CODE":"811","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1080101","ESTI_DISPLAY":"811","ESTI_NAME":"Ïù¥ÏûêÏàòÏûÖ","M_DISPLAY_NAME2":"Ïù¥ÏûêÏàòÏûÖ","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[811]Ïù¥ÏûêÏàòÏûÖ","MEMO":"Í∏àÏúµÍ∏∞Í¥ÄÏóê ÏòàÏπòÌïú ÏòàÍ∏àÏùò Ïù¥ÏûêÏàòÏûÖ","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"Í∏∞ÌÉÄ Ïû°ÏàòÏûÖ","DISPLAY_CODE":"812","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1080102","ESTI_DISPLAY":"812","ESTI_NAME":"Í∏∞ÌÉÄ Ïû°ÏàòÏûÖ","M_DISPLAY_NAME2":"Í∏∞ÌÉÄ Ïû°ÏàòÏûÖ","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[812]Í∏∞ÌÉÄ Ïû°ÏàòÏûÖ","MEMO":"Ï∞®Îüâ‚ÄßÎ¨ºÌíà Îì± Îß§Í∞ÅÏàòÏûÖ. Î≥ÄÏÉÅÍ∏à, ÏúÑÏïΩÍ∏à ÏàòÏûÖ, ÍµêÏú° Ïô∏ ÏàòÏûÖ(Î≥¥Ï¶ùÍ∏à ÏàòÏûÖ Îì±), Î≥¥Ïú°ÍµêÏÇ¨ Ïã§ÏäµÎπÑ, Î≥¥ÌóòÎ£å ÏàòÎ†πÏï° Îì± Ïñ¥Î¶∞Ïù¥Ïßë ÏûêÏÇ∞Îß§Í∞Å ÏàòÏûÖ Ìè¨Ìï®","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+
+	{"DISPLAY_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÍ∏à","DISPLAY_CODE":"911","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1090101","ESTI_DISPLAY":"911","ESTI_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÍ∏à","M_DISPLAY_NAME2":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÍ∏à","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[911]Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÍ∏à","MEMO":"Ï†ÑÎÖÑÎèÑ Î∂àÏö©ÏúºÎ°ú Ïù¥ÏõîÎêú Í∏àÏï°","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"},
+
+
+	{"DISPLAY_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","DISPLAY_CODE":"912","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1090102","ESTI_DISPLAY":"912","ESTI_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","M_DISPLAY_NAME2":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[912]Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","MEMO":"Ï†ÑÎÖÑÎèÑÏóê Ï¢ÖÎ£åÎêòÏßÄ Î™ªÌïú Ïù¥ÏõîÏÇ¨ÏóÖ","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"}
+];
+
+		function income(subject) {
+			if (subject.ESTI_SUBCODE == null) {
+				this.type = "1";
+			} else {
+				this.type = "2"
+			}
+			this.text = " " + subject.M_DISPLAY_NAME;
+			this.name = subject.DISPLAY_NAME;
+		}
+
 		var subjects = Observable();
 
-		for (var i = 0 ; i < incomeSubject.length ; i++) {
-			subjects.add(incomeSubject[i]);
+		for (var i = 0 ; i < recievedData.length ; i++) {
+			subjects.add(new income(recievedData[i]));
 		}
 
 		function incomeClick() {
 			subjects.clear();
-			for (var i = 0 ; i < incomeSubject.length ; i++) {
-				subjects.add(incomeSubject[i]);
+			// for (var i = 0 ; i < incomeSubject.length ; i++) {
+			// 	subjects.add(incomeSubject[i]);
+			// }
+			for (var i = 0 ; i < recievedData.length ; i++) {
+				subjects.add(new income(recievedData[i]));
 			}
 		}
 
@@ -129,7 +223,7 @@
 				Backend.subject.type.value = "세목";
 			}
 			Backend.subject.isChoice.value = true;
-			Backend.subject.text.value = arg.data.text;
+			Backend.subject.name.value = arg.data.name;
 		}
 
 		function getTheSubjectList() {
