@@ -281,29 +281,48 @@ namespace Fuse.UniSign.Android
 		
 
 
-		public static bool checkThePassword (string password, Java.Object cert) 
+		public static bool checkThePassword (string password, Java.Object certificate) 
 		{
-			var isPasswordCorrect = CheckThePassword(password, cert);
-			return isPasswordCorrect;
+			
+			//debug_log("2018.01.01 type of certificate : " + typeof(cert));
+
+			
+			return CheckThePassword(password, certificate);
 		}
 
 
 		[Foreign(Language.Java)]
-		static bool CheckThePassword (string password, Java.Object cert)
+		static bool CheckThePassword (string password, Java.Object certificate)
 		@{
-			//NSError *error;
-			//USToolkitMgr *toolkit = [USToolkitMgr getInstance:&error];
-			//NSData  *data = nil;
-    					
-    		//NSString *test = @"BASE64_WORD";
-    		//NSString *test = @"imgg";
-    		//data = [test dataUsingEncoding:NSUTF8StringEncoding];
-    		//BOOL ret = [toolkit isCorrectCert:cert password:password error:&error]; 
+			boolean ret = false;
+
+			String data="imgg";
+
+			byte[] inputData = data.getBytes();
+                // 서명 결과 데이터 : Base64 문자열로 인코딩 된다.
+             String inputbase64 = "NOT YET TESTED";
+
+			// 인증서 비밀번호
+            try {
+				byte[] resultData = CertToolkitMgr.getInstance().logicCMSSignedData((com.crosscert.android.core.Cert)certificate, inputData, password.getBytes());
+				inputbase64 = CertToolkitMgr.getInstance().utilBase64Encode(resultData);
+            } catch (Exception e) {
+
+			}
 
 
+			System.out.println("inputbase64 : " + inputbase64);
 
+			if (inputbase64.equals("NOT YET TESTED")) {
 
-    		boolean ret = false;
+				System.out.println("ret is false");
+
+				ret = false;
+			}else {
+				System.out.println("ret is true");				
+				ret = true;
+			}
+
     		return ret;
 		@}
 
@@ -336,7 +355,6 @@ namespace Fuse.UniSign.Android
 
 		public static string getLogicSignedData(string password, Java.Object certificate) {
 			return GetLogicSignedData(password, certificate);
-
 		}
 
 		[Foreign(Language.Java)]
@@ -350,10 +368,7 @@ namespace Fuse.UniSign.Android
              String inputbase64 = "";
 
 			// 인증서 비밀번호
-
             try {
-
-
 				byte[] resultData = CertToolkitMgr.getInstance().logicCMSSignedData((com.crosscert.android.core.Cert)certificate, inputData, password.getBytes());
 				inputbase64 = CertToolkitMgr.getInstance().utilBase64Encode(resultData);
             } catch (Exception e) {
@@ -465,6 +480,7 @@ namespace Fuse.UniSign.Android
 		public string CertImageName { get { return GetCertImageName(_handle); } }
 		public string CRLDP_IP { get { return GetCRLDP_IP(_handle); } }
 		public string CRLDP_PORT { get { return GetCRLDP_PORT(_handle); } }
+		public byte [] BSignPriKey {get {return GetBSignPriKey(_handle);}}
 
 		[Foreign(Language.Java)]
 		static int GetSignatureAlgorithmTyp(Java.Object handle)
@@ -714,6 +730,14 @@ namespace Fuse.UniSign.Android
 		@{
 			return "";
 		@}
+
+
+		static byte [] GetBSignPriKey(Java.Object handle) 
+		@{
+			byte [] temp = ((Cert)handle).getBSignPriKey();
+			return temp;
+		@}
+
 	}
 
 	extern(ANDROID) public class Util : UniSignBase

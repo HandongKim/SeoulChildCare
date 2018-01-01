@@ -103,9 +103,9 @@ namespace Fuse.UniSign
 			} else if defined(ANDROID) {
 				debug_log("Android Check");
 				Certificate certificate = ToolkitMgr.GetUserCertificateAtIndex(certIndex);
-				debug_log("2017.12.31 certificate : "+ certificate);
+				debug_log("2018.01.01 certificate : "+ certificate);
 				var isCorrect = ToolkitMgr.checkThePassword(password, certificate.Handle);
-				return false;
+				return isCorrect;
 			} else {
 				return false;
 			}
@@ -126,6 +126,7 @@ namespace Fuse.UniSign
 			{
 				debug_log("2017.12.31 GetLogicSignedData Android");
 				Certificate certificate = ToolkitMgr.GetUserCertificateAtIndex(certIndex);
+				debug_log("2017.12.31 certificate : "+ certificate);
 				var mSignedData = ToolkitMgr.getLogicSignedData(password, certificate.Handle);
 				return mSignedData;
 			}else {

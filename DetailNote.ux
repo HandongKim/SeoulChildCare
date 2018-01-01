@@ -350,13 +350,6 @@
 					body: JSON.stringify(jsonParam)
 			        }).then(function(response) {
 						var responseData = JSON.stringify(response);
-
-
-
-
-
-
-
 						console.log("responseData : "+ responseData);
 			            return response.json();
 			        }).then(function(jsonData) {
