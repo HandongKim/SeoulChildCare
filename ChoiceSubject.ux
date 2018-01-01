@@ -101,7 +101,7 @@
 			}else {
 				CASH_GB = Observable(x.CASH_GB);
 				console.log("2018.01.01 CASH_GB : " + CASH_GB.value);
-				searchTheSubjectList(CASH_GB.value);
+				searchTheSubjectList("31");
 			}
 		});
 
@@ -283,7 +283,7 @@
 		}
 
 		function outcomeClick() {
-			// subjects.clear();
+			subjects.clear();
 			// for (var i = 0 ; i < outcomeSubject.length ; i++) {
 			// 	subjects.add(outcomeSubject[i]);
 			// }
