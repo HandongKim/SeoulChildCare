@@ -54,7 +54,7 @@
 				RECEIPT= Observable(x.RECEIPT);
 				MEMO= Observable(x.MEMO);
 				showText.value = false;
-				Backend.subject.text.value = "계정과목 선택";
+				Backend.subject.name.value = "계정과목 선택";
 				Backend.subject.isChoice.value = false;
 
 				// // console.log("DetailNote CASH_IDX: " + x.CASH_IDX);
@@ -64,8 +64,7 @@
 			}
 		});
 
-
-
+		var tempCode;
 
 
 
@@ -111,10 +110,10 @@
 				this.name = arg.ESTI_NAME;
 			}
 
-			this.reverse = false;
+			this.reverse = Observable(false);
 			if (arg.BILL_IDX !=null && arg.ESTI_GB !=null) {
 				if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
-					this.reverse=true;
+					this.reverse=Observable(true);
 				}
 			}
 
@@ -218,10 +217,11 @@
 				year.value=selectedYear;
 				month.value = selectedMonth;
 				day.value = selectedDay;
+				tempCode = args.data.ESTI_CODE;
 				Backend.subject.isChoice.value = true;
 				Backend.subject.color.value = args.data.subTypeColor;
 				Backend.subject.type.value = args.data.subType;
-				Backend.subject.text.value = selectedSubject;
+				Backend.subject.name.value = selectedSubject;
 
 				moneyValue.value = temp[args.data.index].MONEY;
 
@@ -270,7 +270,7 @@
 			isChoice: Backend.subject.isChoice,
 			color: Backend.subject.color,
 			type: Backend.subject.type,
-			text: Backend.subject.text
+			text: Backend.subject.name
 		};
 
 		var choiceSubjectPanelOn = Observable(false);
@@ -593,6 +593,18 @@
 			getListDetailNote();
 		});
 
+
+		// var tempCode2 = Backend.ESTI_CODE;
+
+		// subType.text.onValueChanged(null, function(code) {
+		// 	if (tempCode2.value != tempCode) {
+		// 		notes.forEach(function(note) {
+		// 			if (note.index == selectedTemp) {
+		// 				note.reverse.value = true;
+		// 			}
+		// 		});
+		// 	}
+		// });
 
 
 
@@ -1063,7 +1075,7 @@
 							</Rectangle>
 						</WhileTrue>
 
-						<Text Value="{subType.text}" Margin="3" Alignment="CenterLeft" />
+						<Text Value="{subType.text}" Margin="3" Alignment="CenterLeft" Width="100%" />
 						
 					</WrapPanel>
 					<Clicked>

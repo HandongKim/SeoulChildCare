@@ -306,7 +306,7 @@
 		}
 
 		function selectSubject(arg) {
-			console.log(arg.data.text);
+			// console.log(arg.data.text);
 			if (arg.data.type == 1) {
 				Backend.subject.color.value = "#4C9DFF";
 				Backend.subject.type.value = "목";
@@ -334,7 +334,7 @@
 			console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
 
 
-			router.push("DetailNote");
+			router.goBack();
 
 
 
