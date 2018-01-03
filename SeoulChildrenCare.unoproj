@@ -27,7 +27,7 @@
   "Icon": "./Images/icon-512-2.png",
   "Versions" : "1.0.0",
    "Android": {
-      "Package": "com.crosscert.sample",
+      "Package": "app.ss.accss",
 
       "Icons": {
           "LDPI": "$(Icon)",

@@ -1,4 +1,4 @@
-<App ux:AutoCtor="false">
+<App>
 	<Router ux:Name="router" />
 
 	<JavaScript>

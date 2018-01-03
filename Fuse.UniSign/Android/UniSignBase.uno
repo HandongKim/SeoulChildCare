@@ -480,7 +480,7 @@ namespace Fuse.UniSign.Android
 		public string CertImageName { get { return GetCertImageName(_handle); } }
 		public string CRLDP_IP { get { return GetCRLDP_IP(_handle); } }
 		public string CRLDP_PORT { get { return GetCRLDP_PORT(_handle); } }
-		public byte [] BSignPriKey {get {return GetBSignPriKey(_handle);}}
+		
 
 		[Foreign(Language.Java)]
 		static int GetSignatureAlgorithmTyp(Java.Object handle)
@@ -729,13 +729,6 @@ namespace Fuse.UniSign.Android
 		static string GetCRLDP_PORT(Java.Object handle)
 		@{
 			return "";
-		@}
-
-
-		static byte [] GetBSignPriKey(Java.Object handle) 
-		@{
-			byte [] temp = ((Cert)handle).getBSignPriKey();
-			return temp;
 		@}
 
 	}

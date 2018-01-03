@@ -1,22 +1,8 @@
 <Extensions Backend="CPlusPlus" Condition="Android">
-
-    <CopyFile Name="AndroidUSTK-1.1.2.0.jar" TargetName="@(Java.LibsDirectory)/AndroidUSTK-1.1.2.0.jar" />
+    <CopyFile Name="AndroidUSTK-1.1.4.1.jar" TargetName="@(Java.LibsDirectory)/AndroidUSTK-1.1.4.1.jar" />
 	<CopyFile Name="armeabi/gdb.setup" TargetName="@(Java.LibsDirectory)/armeabi/gdb.setup" />
 	<CopyFile Name="armeabi/gdbserver" TargetName="@(Java.LibsDirectory)/armeabi/gdbserver" />
 	<CopyFile Name="armeabi/libCertTransfer.so" TargetName="@(Java.LibsDirectory)/armeabi/libCertTransfer.so" />
 	<CopyFile Name="armeabi/libUSToolkit.so" TargetName="@(Java.LibsDirectory)/armeabi/libUSToolkit.so" />
-	<CopyFile Name="armeabi/libUSToolkit.so_emul" TargetName="@(Java.LibsDirectory)/armeabi/libUSToolkit.so_emul" />
-
-  <Require AndroidManifest.ActivityElement>
-    <![CDATA[
-	<intent-filter>
-	    <action android:name="android.intent.action.VIEW" />
-	    <category android:name="android.intent.category.DEFAULT" />
-	    <category android:name="android.intent.category.BROWSABLE" />
-		<action android:name="com.crosscert.sample"/>
-		<data android:scheme="crosscert" android:host="libtest" />
-	</intent-filter>
-    ]]>
-  </Require>
-  
+	<CopyFile Name="armeabi/libUSToolkit.so_emul" TargetName="@(Java.LibsDirectory)/armeabi/libUSToolkit.so_emul" />  
 </Extensions>
