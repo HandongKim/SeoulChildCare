@@ -1,6 +1,6 @@
 {
   "RootNamespace": "",
-  "Title":"서울시어린이집회계",
+  "Title":"서울시회계",
 
   "Packages": [
     "Fuse",
@@ -26,7 +26,11 @@
   ],
   "Icon": "./Images/icon-512-2.png",
   "Versions" : "1.0.0",
+  "VersionCode" : "100",
+  "VersionName": "1.0.0",
    "Android": {
+      "VersionCode": "$(VersionCode)",
+      "VersionName": "$(VersionName)",
       "Package": "app.ss.accss",
 
       "Icons": {

@@ -128,7 +128,7 @@
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
 			edus.clear();
 			type.clear();
-			fetch("http://112.218.172.44:52102/mobile/education/main.do", {
+			fetch("http://www.aseoul.co.kr/mobile/education/main.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -177,7 +177,7 @@
 			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			var dsSearch = '{"eduyear":"'+selectedType.value+'","eduseq":"'+eduSeq+'"}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-			fetch("http://112.218.172.44:52102/mobile/education/eduapply.do", {
+			fetch("http://www.aseoul.co.kr/mobile/education/eduapply.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -214,7 +214,7 @@
 			var dsSearch = '{"eduyear":"'+selectedType.value+'"}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch":'+dsSearch+'}');
 			edus.clear();
-			fetch("http://112.218.172.44:52102/mobile/education/main.do", {
+			fetch("http://www.aseoul.co.kr/mobile/education/main.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"

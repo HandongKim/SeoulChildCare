@@ -102,7 +102,7 @@
 			}
 		}
 
-		//http://112.218.172.44:52102 외부
+		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
 		//검색 기능 지금 제대로 안되는것 같다.
 		function searchContent(){
@@ -129,7 +129,7 @@
 
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-			fetch("http://112.218.172.44:52102/acusr/cmt/qnaList.do", {
+			fetch("http://www.aseoul.co.kr/acusr/cmt/qnaList.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -281,7 +281,7 @@
 			}
 		}
 
-		//http://112.218.172.44:52102 외부
+		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
 		//처음 데이터 가져오기
 		function getQnAList(){
@@ -292,7 +292,7 @@
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			qnas.clear();
 
-			fetch("http://112.218.172.44:52102/acusr/cmt/qnaList.do", {
+			fetch("http://www.aseoul.co.kr/acusr/cmt/qnaList.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -336,7 +336,7 @@
 			        });
 		}
 
-		//http://112.218.172.44:52102 외부
+		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
 		//다음페이지 넘기기
 		function getQnANextPage(page){
@@ -358,7 +358,7 @@
 			var dsSearch = '{"AREA":"11110","commClss":"Q","page":"'+page.value+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			console.log("nextPage Call ! : " + dsSearch);
-			fetch("http://112.218.172.44:52102/acusr/cmt/qnaList.do", {
+			fetch("http://www.aseoul.co.kr/acusr/cmt/qnaList.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -392,7 +392,7 @@
 			getDetailQnA(qnaData);
 		}
 
-		//http://112.218.172.44:52102 외부
+		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
 		// 수정 페이지 호출 
 		function getDetailQnA(qnaData){
@@ -404,7 +404,7 @@
 			console.log("dsSearch : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-			fetch("http://112.218.172.44:52102/acusr/cmt/qnaListDtl.do", {
+			fetch("http://www.aseoul.co.kr/acusr/cmt/qnaListDtl.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -641,7 +641,7 @@
 			var dsFileList = '{}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
 
-			fetch("http://112.218.172.44:52102/acusr/cmt/qnaUserUpdate.do", {
+			fetch("http://www.aseoul.co.kr/acusr/cmt/qnaUserUpdate.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -665,7 +665,7 @@
 			var dsFileList = '{}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
 
-			fetch("http://112.218.172.44:52102/acusr/cmt/insertQnaCommList.do", {
+			fetch("http://www.aseoul.co.kr/acusr/cmt/insertQnaCommList.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"

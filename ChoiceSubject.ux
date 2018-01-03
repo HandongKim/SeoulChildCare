@@ -142,7 +142,7 @@
 			// var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": "'+ds_bCash+'"}');
 
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
-			fetch("http://112.218.172.44:52102/acusr/acc/bil/getEstiSearchLoad.do", {
+			fetch("http://www.aseoul.co.kr/acusr/acc/bil/getEstiSearchLoad.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"

@@ -50,7 +50,7 @@
 		// 	}
 		// }
 
-		//http://112.218.172.44:52102 외부
+		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
 		function searchContent(){
 			//조회시 AREA 값은 GVAREACODE 값과 동일 하다. 나중에 서버에서 데이터 받아올 경우 그렇게 세팅 해야 한다.
@@ -75,7 +75,7 @@
 			console.log("searchContent ds Search : " + dsSearch);
 
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-			fetch("http://112.218.172.44:52102/acusr/cmt/notiUserMipList.do", {
+			fetch("http://www.aseoul.co.kr/acusr/cmt/notiUserMipList.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -210,7 +210,7 @@
 			}
 		}
 
-		//http://112.218.172.44:52102 외부
+		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
 		//공지사항 첫페이지 호출
 		function getNoticeListValue(){
@@ -222,7 +222,7 @@
 
 			notices.clear();
 
-			fetch("http://112.218.172.44:52102/acusr/cmt/notiUserMipList.do", {
+			fetch("http://www.aseoul.co.kr/acusr/cmt/notiUserMipList.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -275,7 +275,7 @@
 			}
 		}
 
-		//http://112.218.172.44:52102 외부
+		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
 		// 다음 페이지 호출을 위한 함수
 		function getNoticeNextPage(page){
@@ -297,7 +297,7 @@
 			// console.log("nextPage : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-			fetch("http://112.218.172.44:52102/acusr/cmt/notiUserMipList.do", {
+			fetch("http://www.aseoul.co.kr/acusr/cmt/notiUserMipList.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -459,7 +459,7 @@
 			console.log("파일 생성 완료!");
 		}
 
-		//http://112.218.172.44:52102 외부
+		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
 		//세부사항 첨부파일 호출 
 		function getNoticeDetailValue(noticeData){
@@ -475,7 +475,7 @@
 			console.log("dsSearch : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-			fetch("http://112.218.172.44:52102/acusr/cmt/noticeUserMipDetailList.do", {
+			fetch("http://www.aseoul.co.kr/acusr/cmt/noticeUserMipDetailList.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"

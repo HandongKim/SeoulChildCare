@@ -754,7 +754,7 @@ function connectToServer() {
 	console.log("mSignedData : " + mSignedData);
 	var isConnected = false;
 
-	fetch("http://112.218.172.44:52102/common/loginSigned.do", {
+	fetch("http://www.aseoul.co.kr/common/loginSigned.do", {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"
