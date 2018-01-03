@@ -3,7 +3,7 @@
 
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
-
+		var Backend = require('Backend.js');
 		// 이미지를 보여주는데 필요한 변수 및 함수
 		function File(resource) {
 			this.index = resource - 1;

@@ -5,7 +5,9 @@
 		</WhileActive>	
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
+		var Backend = require('Backend.js');
 
+		
 		var type = Observable();
 		var selectedType = Observable();
 		var edus = Observable();

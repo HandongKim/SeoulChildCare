@@ -9,7 +9,8 @@
 		var CameraRoll = require('FuseJS/CameraRoll');
 		var ImageTools = require('FuseJS/ImageTools');
 		var Uploader = require("Uploader");
-
+		var Backend = require('Backend.js');
+		
 		var print = debug_log;
 		var uploadUrl = 'https://www.accgg.co.kr/Mobile/ReceiptImgUpload.do';// 서버 IP를 변경하세요.
 

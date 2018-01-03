@@ -5,6 +5,7 @@
 	</WhileActive>	
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
+		var Backend = require('Backend.js');
 
 		var type = Observable("제목", "내용");
 		var selectedType = Observable("제목");
@@ -39,6 +40,8 @@
 
 		var globalSearch ;
 
+		var dsParam = Backend.dsParam;
+
 		// function totalCount(count){
 		// 	if(count.CNT!=null){
 		// 		this.totalPage = count.CNT;
@@ -66,7 +69,7 @@
 
 			notices.clear();
 
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			var dsSearch = '{"AREA":"11110","commClss":"N","fCombo":"ALL","page":"1","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
@@ -212,7 +215,7 @@
 		//공지사항 첫페이지 호출
 		function getNoticeListValue(){
 			console.log("function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			var dsSearch = '{"AREA":"11110","commClss":"N","fCombo":"ALL","page":"1","sch_txt":"","sCombo":"head"}';
 			globalSearch = JSON.parse(dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
@@ -289,7 +292,7 @@
 			}
 
 			console.log("function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			var dsSearch = '{"AREA":"11110","commClss":"N","fCombo":"ALL","page":"'+page.value+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
 			// console.log("nextPage : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
@@ -463,7 +466,7 @@
 
 			console.log("넘어온 idx 값 : "+JSON.stringify(noticeData.idx));
 			console.log("DetailValue function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			if(globalSearch!=null){
 				var dsSearch = '{"commClss":'+JSON.stringify(noticeData.commClss)+',"commSeq":'+JSON.stringify(noticeData.commSeq)+',"fCombo":'+JSON.stringify(globalSearch.fCombo)+',"prjOrgNm":'+JSON.stringify(noticeData.prjOrgNm)+',"sch_txt":'+JSON.stringify(globalSearch.sch_txt)+',"sCombo":'+JSON.stringify(globalSearch.sCombo)+'}';
 			}else{

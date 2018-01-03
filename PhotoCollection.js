@@ -3,7 +3,7 @@ var FileSystem = require("FuseJS/FileSystem");
 var Environment = require('FuseJS/Environment');
 var CameraRoll = require("FuseJS/CameraRoll");
 var ImageTools = require("FuseJS/ImageTools");
-
+var Backend = require('Backend.js');
 // 어떤 경로로 접근했는지 구분하기 위한 함수
 var panelType = Observable("normal");
 
@@ -30,9 +30,15 @@ for (var i = 0 ; i < 12 ; i++) {
 
 var pickerOn = Observable(false);
 
+
+
+
 function pickerUp() {
 	pickerOn.value = true;
 }
+
+var dsParam = Backend.dsParam;
+
 
 function pickerDown() {
 	photoListFromServer = new Array;
@@ -51,7 +57,7 @@ function pickerDown() {
 	var yearAndMonth = year.value.toString() + tempMonth;
 
 
-	var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 
 	// var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
 	var dsSearch = '{"ATCHMNFL_YM":"'+yearAndMonth+'"}';

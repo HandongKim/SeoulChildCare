@@ -7,7 +7,8 @@
 		var FileSystem = require("FuseJS/FileSystem");
 		var CameraRoll = require("FuseJS/CameraRoll");
 		var ImageTools = require("FuseJS/ImageTools");
-
+		var Backend = require('Backend.js');
+		
 		var resource = Observable();
 		this.Parameter.onValueChanged(null, function(x) {
 			// console.log(JSON.stringify(x));

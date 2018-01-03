@@ -12,6 +12,8 @@
 
 		pickerOn = Observable(false);
 
+		var Backend = require('Backend.js');
+		
 		function pickerUp() {
 			pickerOn.value = true;
 		}
