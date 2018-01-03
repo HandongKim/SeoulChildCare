@@ -6,6 +6,7 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
+		var ValueFactory = require('ValueFactory');
 
 		// var incomeSubject = [
 		// 	{type: "1", text: " [111] 정부지원 보육료"},
@@ -334,7 +335,15 @@
 			console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
 
 
-			router.goBack();
+			var infoJSON = {
+				choicesubject_ischoice:Backend.subject.isChoice.value,
+				choicesubject_name:Backend.subject.name.value,
+				choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
+				choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
+			}
+
+			var str = JSON.stringify(infoJSON);
+			ValueFactory.setInfoJson(str);
 
 
 

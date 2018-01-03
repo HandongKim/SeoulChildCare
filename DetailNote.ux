@@ -4,7 +4,14 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
+		var ValueFactory = require('ValueFactory');
 
+		console.log("===================");
+		console.log(JSON.stringify(ValueFactory.getInfoJson()));
+		console.log("===================");
+
+
+		
 		detailText = "불러온 전표내역이 없습니다."
 		showText = Observable(false);;
 
