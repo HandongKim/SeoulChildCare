@@ -443,12 +443,12 @@
 			if (arg.CASH_GB == "1") {
 				this.type = "입금";
 				this.typeColor = "#4C9DFF";
-				this.money = arg.MONEY_IN;
+				this.money = arg.BCASH_MONEY;
 				this.subTypeColor = "#8BBDFF";
 			} else {
 				this.type = "출금";
 				this.typeColor = "#FF4200";
-				this.money = arg.MONEY_OUT;
+				this.money = arg.BCASH_MONEY;
 				this.subTypeColor = "#FFBA85";
 			}
 			this.money = this.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -465,7 +465,7 @@
 			} else {
 				this.subType = "세목";
 
-				if(arg.ESTI_SUB_NM == null) {
+				if(arg.ESTI_SUB_NM != null) {
 					this.name = arg.ESTI_NAME + "[" + arg.ESTI_SUB_NM + "]";
 				} else {
 					this.name = arg.ESTI_NAME;	
@@ -503,7 +503,7 @@
 				this.receipt = "0";
 			}
 
-			this.memo = arg.MEMO;
+			this.memo = arg.BCASH_MEMO;
 		}
 		
 

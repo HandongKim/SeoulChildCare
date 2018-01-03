@@ -640,7 +640,7 @@
 
 				router.push("ChoiceSubject", infoJSON);
 			},
-			getListDetailNote,pickFromList, moneyValue,initializing, saveData,  deleteData, selectedMemo, searchTheSubjectList,
+			getListDetailNote,pickFromList, moneyValue,initializing, saveData,  deleteData, selectedMemo,
 
 			goShowFile: function() {
 
