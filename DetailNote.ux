@@ -4,11 +4,11 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
-		var ValueFactory = require('ValueFactory');
+		// var ValueFactory = require('ValueFactory');
 
-		console.log("===================");
-		console.log(JSON.stringify(ValueFactory.getInfoJson()));
-		console.log("===================");
+		// console.log("===================");
+		// console.log(JSON.stringify(ValueFactory.getInfoJson()));
+		// console.log("===================");
 
 
 		
@@ -394,8 +394,20 @@
 			var MONEY = selectedTemp.MONEY;
 			var ORG_BCASH_MEMO = selectedTemp.ORG_BCASH_MEMO;
 			var BCASH_MEMO = selectedTemp.ORG_BCASH_MEMO;
-			var ESTI_CODE = selectedTemp.ESTI_CODE;
+			
+
+//이거 가져오고
+
+	// 	ESTI_CODE: Observable(),
+	// ESTI_GB: Observable(),
+	// ESTI_SUBCODE: Observable()
+
+
+
+			var ESTI_CODE = Backend.subject.ESTI_CODE;
 			var BILL_SUBCODE= selectedTemp.BILL_SUBCODE;
+			
+
 			var BILL_IDX= selectedTemp.BILL_IDX;
 
 			var BILL_CLSS=selectedTemp.BILL_CLSS;

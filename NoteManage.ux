@@ -460,10 +460,10 @@
 				this.isBill = false;
 			}
 			if (arg.ESTI_SUB_YN == "Y") {
-				this.subType = "목";
+				this.subType = "세목";
 				this.name = arg.ESTI_NAME;
 			} else {
-				this.subType = "세목";
+				this.subType = "목";
 
 				if(arg.ESTI_SUB_NM != null) {
 					this.name = arg.ESTI_NAME + "[" + arg.ESTI_SUB_NM + "]";
@@ -867,23 +867,6 @@
 					CASH_IDX:temp[arg.data.index].CASH_IDX,
 					BILL_IDX:temp[arg.data.index].BILL_IDX,
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 					INDEX:notes._values[arg.data.index].index,
 					DATE:notes._values[arg.data.index].date,
 					TYPE:notes._values[arg.data.index].type,
@@ -899,6 +882,38 @@
 
 					
 				}
+
+				Backend.noteManageParamValuesForDetailNote.index.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.bill_idx.value = temp[arg.data.index].BILL_IDX;
+				Backend.noteManageParamValuesForDetailNote.cash_idx.value = temp[arg.data.index].CASH_IDX;
+				Backend.noteManageParamValuesForDetailNote.cash_idx2.value = temp[arg.data.index].CASH_IDX2;
+				Backend.noteManageParamValuesForDetailNote.org_bcash_memo.value = temp[arg.data.index].ORG_BCASH_MEMO;
+				Backend.noteManageParamValuesForDetailNote.date.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.type.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.money.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.subtype.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.subtypecolor.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.isBill.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.name.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.reverse.value = notes._values[arg.data.index].index;
+
+
+				Backend.noteManageParamValuesForDetailNote.receipt.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.memo.value = notes._values[arg.data.index].index;
+
+
+				Backend.noteManageParamValuesForDetailNote.selected_data.value = notes._values[arg.data.index].index;
+
+
+
+				Backend.noteManageParamValuesForDetailNote.index.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.index.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.index.value = notes._values[arg.data.index].index;
+				Backend.noteManageParamValuesForDetailNote.index.value = notes._values[arg.data.index].index;
+
+
+
+
 
 
 				console.log("temp[arg.data.index].CASH_IDX : " + temp[arg.data.index].CASH_IDX);

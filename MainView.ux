@@ -1,5 +1,5 @@
-<!-- <App> -->
-<App ux:AutoCtor="false">
+<App>
+<!-- <App ux:AutoCtor="false"> -->
 	<Router ux:Name="router" />
 
 	<JavaScript>
