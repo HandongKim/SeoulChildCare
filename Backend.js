@@ -11,6 +11,8 @@ var LOGIN_URL = "/common/loginSigned.do";
 var selectOnlineBCashList_URL = "/acusr/acc/bil/selectOnlineBCashList.do";
 var getBillCashInputLoad_URL ="/acusr/acc/bil/getBillCashInputLoad";
 
+//DetailNote [전표관리상세보기에 쓰이는 URL]
+var selectMobileOnlineBillList_URL = "/acusr/acc/bil/selectMobileOnlineBillList.do";
 
 
 
@@ -52,8 +54,14 @@ var noteManageParamValuesForDetailNote = {
 	selected_data: Observable()
 }
 
+var CASH_INX = "";
+var BILL_INX = "";
 
 
+var testArray = {
+	cash:Observable(),
+	bill:Observable()
+}
 
 
 
@@ -67,5 +75,6 @@ var noteManageParamValuesForDetailNote = {
 
 module.exports = {
 	subject, dsParam, noteManageParamValuesForDetailNote, choiceSubjectList, 
-	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, getBillCashInputLoad_URL
+	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, getBillCashInputLoad_URL,
+	selectMobileOnlineBillList_URL, CASH_INX, BILL_INX, testArray
 };

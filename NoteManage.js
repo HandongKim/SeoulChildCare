@@ -100,6 +100,77 @@ function selectOnlineBCashListIndividualData (args, index) {
 	this.BCASH_MONEY = args.BCASH_MONEY;
 }
 
+var pickedSelectOnlineBCashListIndividualDataInstance = Observable();
+
+function pickedSelectOnlineBCashListIndividualData (args) {
+	this.SUBJECT = args.SUBJECT;
+	this.BILL_NURIGB = args.BILL_NURIGB;
+	this.BIGO = args.BIGO;
+	this.CASH_IDX2 = args.CASH_IDX2;
+	this.GUBUN = args.GUBUN;
+	this.CASH_GB = args.CASH_GB;
+	this.BILL_NUM = args.BILL_NUM;
+	this.BCASH_IDX = args.BCASH_IDX;
+	this.BILL_DATE = args.BILL_DATE;
+	this.CASH_PLACE = args.CASH_PLACE;
+	this.ESTI_SUB_NM = args.ESTI_SUB_NM;
+	this.SUM_MONEY = args.SUM_MONEY;
+	this.BILL_INPROGRAM = args.BILL_INPROGRAM;
+	this.BILL_ETC1 = args.BILL_ETC1;
+	this.MEMO = args.MEMO;
+	this.BILL_ETC2 = args.BILL_ETC2;
+	this.BILL_ETC3 = args.BILL_ETC3;
+	this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO;
+	this.MONEY_OUT = args.MONEY_OUT;
+	this.FIRMNAME = args.FIRMNAME;
+	this.ACTION = args.ACTION;
+	this.BILL_ETC4 = args.BILL_ETC4;
+	this.CASH_ORDER = args.CASH_ORDER;
+	this.MONEY_GB = args.MONEY_GB;
+	this.EDITABLE = args.EDITABLE;
+	this.BILL_BOJOGB = args.BILL_BOJOGB;
+	this.ESTI_CODE = args.ESTI_CODE;
+	this.CRED_SEQ = args.CRED_SEQ;
+	this.ESTI_NAME = args.ESTI_NAME;
+	this.BOOK_GB = args.BOOK_GB;
+	this.BILL_IDX = args.BILL_IDX;
+	this.BILL_CANCELGB = args.BILL_CANCELGB;
+	this.BILL_GB = args.BILL_GB;
+	this.MEMO_ADD = args.MEMO_ADD;
+	this.ESTI_GB = args.ESTI_GB;
+	this.BILL_DATE0 = args.BILL_DATE0;
+	this.BILL_DATE1 = args.BILL_DATE1;
+	this.BILL_DATE4 = args.BILL_DATE4;
+	this.CASH_DATE = args.CASH_DATE;
+	this.BILL_DATE2 = args.BILL_DATE2;
+	this.PURPOSE = args.PURPOSE;
+	this.BILL_DATE3 = args.BILL_DATE3;
+	this.GRID_NURIGB = args.GRID_NURIGB;
+	this.BILL_CLSS = args.BILL_CLSS;
+	this.CASH_MEMO = args.CASH_MEMO;
+	this.CHK = args.CHK;
+	this.BILL_SUBCODE = args.BILL_SUBCODE;
+	this.BILL_NUMDETAIL = args.BILL_NUMDETAIL;
+	this.BILL_MONEY = args.BILL_MONEY;
+	this.GRID_BOJOGB = args.GRID_BOJOGB;
+	this.CONTENTS = args.CONTENTS;
+	this.BCASH_MEMO = args.BCASH_MEMO;
+	this.CASH_IDX = args.CASH_IDX;
+	this.ESTI_DISPLAY = args.ESTI_DISPLAY;
+	this.PREV_IDX = args.PREV_IDX;
+	this.MEMCODE = args.MEMCODE;
+	this.BILL_RECEIPT = args.BILL_RECEIPT;
+	this.ESTI_PART = args.ESTI_PART;
+	this.MONEY = args.MONEY;
+	this.REMAIN = args.REMAIN;
+	this.ESTI_SUB_YN = args.ESTI_SUB_YN;
+	this.BILL_KEEPCODE = args.BILL_KEEPCODE;
+	this.MONEY_IN = args.MONEY_IN;
+	this.BCASH_MONEY = args.BCASH_MONEY;
+}
+
+
+
 
 var selectOnlineBCashList_URL = Backend.BASE_URL + Backend.selectOnlineBCashList_URL;
 
@@ -794,116 +865,223 @@ function selectOnlineBCashList () {
 }
 
 
-	function unRegisteredChecked() {
-			// alert("pLease ");
+function unRegisteredChecked() {
+		// alert("pLease ");
 
-		notes.clear();
-		
-		var tempMonth;
+	notes.clear();
+	
+	var tempMonth;
 
-		console.log("MONTH.VALUE : " + month.value);
+	console.log("MONTH.VALUE : " + month.value);
 
-		if(month.value <10) {
-			tempMonth = "0" +month.value.toString();
-		} else {
-			tempMonth = month.value
-		}
+	if(month.value <10) {
+		tempMonth = "0" +month.value.toString();
+	} else {
+		tempMonth = month.value
+	}
 
-		console.log("tempMonth : " +tempMonth);
-
-
-		var yearAndMonth = year.value.toString() + tempMonth.toString();
+	console.log("tempMonth : " +tempMonth);
 
 
+	var yearAndMonth = year.value.toString() + tempMonth.toString();
 
 
 
-		console.log("yearAndMonth : " + yearAndMonth);
 
 
-		var esti_code = "";
-		console.log("selectedType = " +  selectedType);
-		if(selectedType.value == "전체") {
-			esti_code="";
-		} else if (selectedType.value == "입금") {
-			esti_code="1";
-		} else if (selectedType.value == "출금") {
-			esti_code="2";
-		}
-
-		var searchGubun = "A";
-		if(unReg.value == true) {
-			searchGubun = "N";
-		}
+	console.log("yearAndMonth : " + yearAndMonth);
 
 
-	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
-	// var dsParam = Backend.dsParam
-		
+	var esti_code = "";
+	console.log("selectedType = " +  selectedType);
+	if(selectedType.value == "전체") {
+		esti_code="";
+	} else if (selectedType.value == "입금") {
+		esti_code="1";
+	} else if (selectedType.value == "출금") {
+		esti_code="2";
+	}
 
-
-	var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"","search_cashgb":"'+ esti_code+'","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
-	 // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
-	    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-	    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
-	    
-	    console.log('jsonParam : ' + jsonParam);
-	    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
-
-	    
-		fetch(selectOnlineBCashList_URL, {
-			method: 'POST',
-			headers: {
-				"Content-type": "application/json"
-			},
-			body: JSON.stringify(jsonParam)
-	        }).then(function(response) {
-				var responseData = JSON.stringify(response);
-				var responseHeaders = JSON.parse(response._bodyInit);
-				console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
-				temp = responseHeaders.ds_bCashList[1];
-				console.log("");
-				console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
-
-				//
-				var date1;
-				var type1;
-				var typeColor1;
-				var isBill1;
-				var money1;
-				var moneyColor1;
-				var contents1;
-
-
-				//2017.12.18 시작 
-				// 
-
-
-
-				for (var i = 0; i < temp.length; i++) {
-					notes.add(new note(temp[i], i));
-				}
-
-
-
-				//2017.12.18 끝
-	        	var responseData = JSON.stringify(response);
-	        	
-	            return response.json();
-	        }).then(function(jsonData) {
-	            var data = jsonData.results[0];
-	            console.log("data : " + jsonData.results[0]);
-				console.log("Reg Succeeded[ios]: " + data.registration_token);
-				// maintext.value = maintext.value + "/n" + data.registration_token;
-	        }).catch(function(err) {
-	            console.log("Reg Succeeded[ios] Error!! : " + err.message);
-	        });
-
-
-
+	var searchGubun = "A";
+	if(unReg.value == true) {
+		searchGubun = "N";
 	}
 
 
+// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+// var dsParam = Backend.dsParam
+	
+
+
+var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"","search_cashgb":"'+ esti_code+'","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+ // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
+    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+    
+    console.log('jsonParam : ' + jsonParam);
+    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+    
+	fetch(selectOnlineBCashList_URL, {
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+        }).then(function(response) {
+			var responseData = JSON.stringify(response);
+			var responseHeaders = JSON.parse(response._bodyInit);
+			console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+			temp = responseHeaders.ds_bCashList[1];
+			console.log("");
+			console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
+
+			//
+			var date1;
+			var type1;
+			var typeColor1;
+			var isBill1;
+			var money1;
+			var moneyColor1;
+			var contents1;
+
+
+			//2017.12.18 시작 
+			// 
+
+
+
+			for (var i = 0; i < temp.length; i++) {
+				notes.add(new note(temp[i], i));
+			}
+
+
+
+			//2017.12.18 끝
+        	var responseData = JSON.stringify(response);
+        	
+            return response.json();
+        }).then(function(jsonData) {
+            var data = jsonData.results[0];
+            console.log("data : " + jsonData.results[0]);
+			console.log("Reg Succeeded[ios]: " + data.registration_token);
+			// maintext.value = maintext.value + "/n" + data.registration_token;
+        }).catch(function(err) {
+            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+        });
+
+
+
+}
+
+
+var testValueToBe = {
+	CASH_IDX:Observable(),
+	BILL_IDX:Observable()
+}
+
+function goDetailNote2 (arg) {
+
+		// pickedSelectOnlineBCashListIndividualDataInstance = Observable();
+
+		console.log("[arg.data.index] : " + arg.data.index);
+		console.log("selectOnlineBCashListDatas[" +arg.data.index +"].CASH_IDX : " + JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX));
+		console.log("selectOnlineBCashListDatas[" +arg.data.index +"].BILL_IDX : " + JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX));
+
+		Backend.CASH_IDX = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX);
+		Backend.BILL_IDX = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX);
+
+		Backend.testArray.cash.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX);
+		Backend.testArray.bill.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX);
+
+		testValueToBe.CASH_IDX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX);
+		testValueToBe.BILL_IDX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX);
+
+
+
+		console.log("Backend.testArray.CASH_IDX.value : " + Backend.CASH_IDX);
+		console.log("Backend.testArray.BILL_IDX.value : " + Backend.BILL_IDX);
+
+
+		console.log("Backend.testArray.cash.value : " + Backend.testArray.cash.value);
+		console.log("Backend.testArray.bill.value : " + Backend.testArray.bill.value);
+
+
+		console.log("testValueToBe.CASH_IDX.value : " + testValueToBe.CASH_IDX.value);
+		console.log("testValueToBe.BILL_IDX.value : " + testValueToBe.BILL_IDX.value);
+
+		// testValueToBe="TEST VALUE 2";
+		// pickedSelectOnlineBCashListIndividualDataInstance.add(new pickedSelectOnlineBCashListIndividualData(selectOnlineBCashListDatas._values[arg.data.index]));
+
+		// console.log("pickedSelectOnlineBCashListIndividualDataInstance.CASH_IDX : " + pickedSelectOnlineBCashListIndividualDataInstance.length);
+		// console.log("pickedSelectOnlineBCashListIndividualDataInstance.BILL_IDX : " + pickedSelectOnlineBCashListIndividualDataInstance.value.BILL_IDX);
+
+		// var infoJSON = {
+		// 	CASH_IDX2:temp[arg.data.index].CASH_IDX2,
+		// 	ORG_BCASH_MEMO:temp[arg.data.index].ORG_BCASH_MEMO,
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+		// 	SELECTED_DATA:temp[arg.data.index],
+
+		// 	CASH_IDX:temp[arg.data.index].CASH_IDX,
+		// 	BILL_IDX:temp[arg.data.index].BILL_IDX,
+
+		// 	INDEX:notes._values[arg.data.index].index,
+		// 	DATE:notes._values[arg.data.index].date,
+		// 	TYPE:notes._values[arg.data.index].type,
+		// 	MONEY:notes._values[arg.data.index].money,
+		// 	SUBTYPECOLOR:notes._values[arg.data.index].subTypeColor,
+		// 	ISBILL:notes._values[arg.data.index].isBill,
+		// 	SUBTYPE:notes._values[arg.data.index].subType,
+		// 	NAME:notes._values[arg.data.index].name,
+		// 	REVERSE:notes._values[arg.data.index].reverse,
+		// 	RECEIPT:notes._values[arg.data.index].receipt,
+			
+		// 	MEMO:temp[arg.data.index].BCASH_MEMO
+
+			
+		// }
+
+		// Backend.noteManageParamValuesForDetailNote.index.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.bill_idx.value = temp[arg.data.index].BILL_IDX;
+		// Backend.noteManageParamValuesForDetailNote.cash_idx.value = temp[arg.data.index].CASH_IDX;
+		// Backend.noteManageParamValuesForDetailNote.cash_idx2.value = temp[arg.data.index].CASH_IDX2;
+		// Backend.noteManageParamValuesForDetailNote.org_bcash_memo.value = temp[arg.data.index].ORG_BCASH_MEMO;
+		// Backend.noteManageParamValuesForDetailNote.date.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.type.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.money.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.subtype.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.subtypecolor.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.isBill.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.name.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.reverse.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.receipt.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.memo.value = notes._values[arg.data.index].index;
+		// Backend.noteManageParamValuesForDetailNote.selected_data.value = notes._values[arg.data.index].index;
+		
+		// console.log("temp[arg.data.index].CASH_IDX : " + temp[arg.data.index].CASH_IDX);
+		// console.log("temp[arg.data.index].BILL_IDX : " + temp[arg.data.index].BILL_IDX);
+		// // console.log("notes[arg.data.index].reverse : " + notes[arg.data.index]._values.reverse);
+
+
+
+		
+		router.push("DetailNote");
+	}
 
 
 
@@ -914,79 +1092,7 @@ module.exports = {
 	year, month, years, months, pickerOn, pickerUp, pickerDown, preClick, nextClick, pickerOn2, pickerOn3, pickerUp2, pickerDown2, selectedType, type, notes,
 	goDetailNote1: function(arg) {
 		router.push("DetailNote", "new");
-	},
-	goDetailNote2: function(arg) {
-
-		console.log("[arg.data.index] : " + arg.data.index);
-		console.log("notes[arg.data.index] : " + JSON.stringify(notes._values));
-
-
-		var infoJSON = {
-			CASH_IDX2:temp[arg.data.index].CASH_IDX2,
-			ORG_BCASH_MEMO:temp[arg.data.index].ORG_BCASH_MEMO,
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-			SELECTED_DATA:temp[arg.data.index],
-
-			CASH_IDX:temp[arg.data.index].CASH_IDX,
-			BILL_IDX:temp[arg.data.index].BILL_IDX,
-
-			INDEX:notes._values[arg.data.index].index,
-			DATE:notes._values[arg.data.index].date,
-			TYPE:notes._values[arg.data.index].type,
-			MONEY:notes._values[arg.data.index].money,
-			SUBTYPECOLOR:notes._values[arg.data.index].subTypeColor,
-			ISBILL:notes._values[arg.data.index].isBill,
-			SUBTYPE:notes._values[arg.data.index].subType,
-			NAME:notes._values[arg.data.index].name,
-			REVERSE:notes._values[arg.data.index].reverse,
-			RECEIPT:notes._values[arg.data.index].receipt,
-			
-			MEMO:temp[arg.data.index].BCASH_MEMO
-
-			
-		}
-
-		Backend.noteManageParamValuesForDetailNote.index.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.bill_idx.value = temp[arg.data.index].BILL_IDX;
-		Backend.noteManageParamValuesForDetailNote.cash_idx.value = temp[arg.data.index].CASH_IDX;
-		Backend.noteManageParamValuesForDetailNote.cash_idx2.value = temp[arg.data.index].CASH_IDX2;
-		Backend.noteManageParamValuesForDetailNote.org_bcash_memo.value = temp[arg.data.index].ORG_BCASH_MEMO;
-		Backend.noteManageParamValuesForDetailNote.date.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.type.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.money.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.subtype.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.subtypecolor.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.isBill.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.name.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.reverse.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.receipt.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.memo.value = notes._values[arg.data.index].index;
-		Backend.noteManageParamValuesForDetailNote.selected_data.value = notes._values[arg.data.index].index;
-		
-		console.log("temp[arg.data.index].CASH_IDX : " + temp[arg.data.index].CASH_IDX);
-		console.log("temp[arg.data.index].BILL_IDX : " + temp[arg.data.index].BILL_IDX);
-		// console.log("notes[arg.data.index].reverse : " + notes[arg.data.index]._values.reverse);
-
-
-
-		
-		router.push("DetailNote", infoJSON);
-	},
+	},goDetailNote2,
 	getBillCashInputLoad, billCashInputDataList	,pickerUp3, pickerDown3, selectOnlineBCashList, selectedbillCashInputDataList,
-	unRegisteredChecked, WhileInActive
+	unRegisteredChecked, WhileInActive, pickedSelectOnlineBCashListIndividualDataInstance, testValueToBe
 };

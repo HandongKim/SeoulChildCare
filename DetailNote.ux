@@ -11,9 +11,9 @@
 
 
 
-	<WhileActive>
+	<!-- <WhileActive> -->
 		<!-- <Callback Handler="{viewWillAppear}" /> -->
-	</WhileActive>
+	<!-- </WhileActive> -->
 
 
 
@@ -247,7 +247,7 @@
 
 
 	<WhileActive>
-		<!-- <Callback Handler="{getListDetailNote}" /> -->
+		<Callback Handler="{getListDetailNote}" />
 	</WhileActive>
 
 
