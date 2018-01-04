@@ -45,7 +45,7 @@
 		</Clicked>
 		<Panel Margin="{margin}/2">
 			<Grid ColumnCount="3" Width="40%" Alignment="CenterLeft">
-				<Text Value="{date}" Alignment="Center" />
+				<Text Value="{CASH_DATE}" Alignment="Center" />
 				<Text Value="{type}" Color="{typeColor}" Alignment="Center" Margin="4, 0" />
 				<WhileTrue Value="{isBill}">
 					<Rectangle CornerRadius="3" Color="#9859D7">
@@ -54,7 +54,7 @@
 				</WhileTrue>
 			</Grid>
 
-			<Text Value="{money}" Margin="0,0,{margin}*1.5,0" FontSize="{margin}*1.5" Color="{typeColor}" Alignment="CenterRight" />
+			<Text Value="{BCASH_MONEY}" Margin="0,0,{margin}*1.5,0" FontSize="{margin}*1.5" Color="{typeColor}" Alignment="CenterRight" />
 			<Text Value="원" Alignment="BottomRight" />
 
 		</Panel>
@@ -85,7 +85,7 @@
 				</Panel>
 			</Panel>
 		</WhileTrue>
-		<Text Value="{memo}" Margin="{margin}/2" />
+		<Text Value="{BCASH_MEMO}" Margin="{margin}/2" />
 	</StackPanel>
 
 

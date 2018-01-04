@@ -10,7 +10,8 @@ var corSelected = Observable(false);
 var onPanel = Observable(false);
 var mSignedData = null;
 
-var licenseKey = "ikdt8CleK1HVv3Qa0temFA==";
+// var licenseKey = "ikdt8CleK1HVv3Qa0temFA==";
+var licenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
 
 function friSelect() {
 	corSelected.value = false;
@@ -130,7 +131,7 @@ var alert = {
 
 
 function getLicenseInfo () {
-		// setLicense();
+		setLicense();
 		console.log("getLicenseInfo was clicked");
 		console.log("UniSign.getLicenseInfo() : " +  UniSign.getLicenseInfo());
 
@@ -152,7 +153,7 @@ function popUpExportPanel() {
 
 
 function exportCert () {
-	// setLicense();
+	setLicense();
 	console.log("exportCert was clicked");
 
 	session = UniSign.startGenerateCert(licenseKey);
@@ -322,7 +323,7 @@ var interval = 0;
 
 function importCert () {
 	//라이센스 셋팅
-	// setLicense();
+	setLicense();
 
 	//타이머 초기화
 	clearInterval(interval);
@@ -506,7 +507,7 @@ function chooseCertificate(args) {
 
 	// getLogicSignedData();
 }function exportCert () {
-	// setLicense();
+	setLicense();
 	console.log("exportCert was clicked");
 
 	session = UniSign.startGenerateCert(licenseKey);
@@ -568,7 +569,7 @@ var certificates = null;
 var data = Observable();
 
 function getList () {
-	// setLicense(); 
+	setLicense(); 
 	console.log("javascript getList started ");
 
 	// if(UniSign.getUserCertificates()==null){
@@ -754,7 +755,10 @@ function connectToServer() {
 	console.log("mSignedData : " + mSignedData);
 	var isConnected = false;
 
-	fetch("http://www.aseoul.co.kr/common/loginSigned.do", {
+	var url = Backend.BASE_URL + Backend.LOGIN_URL;
+	console.log("connect To server Url : " + url);
+
+	fetch(url, {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"

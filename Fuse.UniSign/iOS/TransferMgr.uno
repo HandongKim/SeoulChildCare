@@ -68,6 +68,7 @@ namespace Fuse.UniSign.iOS
 			debug_log("2017.11.28 Process NO 2");
 			error = null;
 
+
 			var _toolkitMgr = ToolkitMgr.TryGetInstance(out error);
 			if (error != null) {
 				debug_log("Failed to get instance: " + error);
@@ -75,6 +76,10 @@ namespace Fuse.UniSign.iOS
 			} else {
 				debug_log("Got instance!");
 			}
+
+			debug_log("2018.01.04 ah.. shit");
+
+
 
 			var errorClosure = new ErrorClosure();
 			var importedCert = ImportCert(_handle, _toolkitMgr.Handle, errorClosure.OnError);

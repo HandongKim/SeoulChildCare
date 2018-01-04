@@ -32,138 +32,182 @@ function WhileInActive() {
 
 var selectOnlineBCashListDatas = Observable();
 
-
 function selectOnlineBCashListIndividualData (args, index) {
 	this.INDEX = index;
-	this.BCASH_IDX = args.BCASH_IDX;
-	this.BCASH_MEMO =args.BCASH_MEMO; 
-	this.BCASH_MONEY =args.BCASH_MONEY;
-	this.BILL_CLSS = args.BILL_CLSS;
-	this.BILL_GB = args.BILL_GB;
-	this.BILL_IDX = args.BILL_IDX;
-	this.CASH_DATE = args.CASH_DATE;
+	this.SUBJECT = args.SUBJECT;
+	this.BILL_NURIGB = args.BILL_NURIGB;
+	this.BIGO = args.BIGO;
+	this.CASH_IDX2 = args.CASH_IDX2;
+	this.GUBUN = args.GUBUN;
 	this.CASH_GB = args.CASH_GB;
-	this.CASH_IDX = args.CASH_IDX;
-	this.ESTI_GB = args.ESTI_GB;
-	this.ESTI_NAME = args.ESTI_NAME;
-	this.ESTI_PART = args.ESTI_PART;
+	this.BILL_NUM = args.BILL_NUM;
+	this.BCASH_IDX = args.BCASH_IDX;
+	this.BILL_DATE = args.BILL_DATE;
+	this.CASH_PLACE = args.CASH_PLACE;
 	this.ESTI_SUB_NM = args.ESTI_SUB_NM;
-	this.ESTI_SUB_YN = args.ESTI_SUB_YN;
+	this.SUM_MONEY = args.SUM_MONEY;
+	this.BILL_INPROGRAM = args.BILL_INPROGRAM;
+	this.BILL_ETC1 = args.BILL_ETC1;
+	this.MEMO = args.MEMO;
+	this.BILL_ETC2 = args.BILL_ETC2;
+	this.BILL_ETC3 = args.BILL_ETC3;
+	this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO;
+	this.MONEY_OUT = args.MONEY_OUT;
+	this.FIRMNAME = args.FIRMNAME;
+	this.ACTION = args.ACTION;
+	this.BILL_ETC4 = args.BILL_ETC4;
+	this.CASH_ORDER = args.CASH_ORDER;
+	this.MONEY_GB = args.MONEY_GB;
+	this.EDITABLE = args.EDITABLE;
+	this.BILL_BOJOGB = args.BILL_BOJOGB;
+	this.ESTI_CODE = args.ESTI_CODE;
+	this.CRED_SEQ = args.CRED_SEQ;
+	this.ESTI_NAME = args.ESTI_NAME;
+	this.BOOK_GB = args.BOOK_GB;
+	this.BILL_IDX = args.BILL_IDX;
+	this.BILL_CANCELGB = args.BILL_CANCELGB;
+	this.BILL_GB = args.BILL_GB;
+	this.MEMO_ADD = args.MEMO_ADD;
+	this.ESTI_GB = args.ESTI_GB;
+	this.BILL_DATE0 = args.BILL_DATE0;
+	this.BILL_DATE1 = args.BILL_DATE1;
+	this.BILL_DATE4 = args.BILL_DATE4;
+	this.CASH_DATE = args.CASH_DATE;
+	this.BILL_DATE2 = args.BILL_DATE2;
+	this.PURPOSE = args.PURPOSE;
+	this.BILL_DATE3 = args.BILL_DATE3;
+	this.GRID_NURIGB = args.GRID_NURIGB;
+	this.BILL_CLSS = args.BILL_CLSS;
+	this.CASH_MEMO = args.CASH_MEMO;
+	this.CHK = args.CHK;
+	this.BILL_SUBCODE = args.BILL_SUBCODE;
+	this.BILL_NUMDETAIL = args.BILL_NUMDETAIL;
+	this.BILL_MONEY = args.BILL_MONEY;
+	this.GRID_BOJOGB = args.GRID_BOJOGB;
+	this.CONTENTS = args.CONTENTS;
+	this.BCASH_MEMO = args.BCASH_MEMO;
+	this.CASH_IDX = args.CASH_IDX;
+	this.ESTI_DISPLAY = args.ESTI_DISPLAY;
+	this.PREV_IDX = args.PREV_IDX;
+	this.MEMCODE = args.MEMCODE;
 	this.BILL_RECEIPT = args.BILL_RECEIPT;
+	this.ESTI_PART = args.ESTI_PART;
+	this.MONEY = args.MONEY;
+	this.REMAIN = args.REMAIN;
+	this.ESTI_SUB_YN = args.ESTI_SUB_YN;
+	this.BILL_KEEPCODE = args.BILL_KEEPCODE;
+	this.MONEY_IN = args.MONEY_IN;
+	this.BCASH_MONEY = args.BCASH_MONEY;
 }
 
 
+var selectOnlineBCashList_URL = Backend.BASE_URL + Backend.selectOnlineBCashList_URL;
+
+
+
+
+
 function pickerDown() {
-				notes.clear();
-				
-				var tempMonth;
+	notes.clear();
+	var tempMonth;
+	console.log("MONTH.VALUE : " + month.value);
 
-				console.log("MONTH.VALUE : " + month.value);
+	if(month.value <10) {
+		tempMonth = "0" +month.value.toString();
+	} else {
+		tempMonth = month.value
+	}
 
-				if(month.value <10) {
-					tempMonth = "0" +month.value.toString();
-				} else {
-					tempMonth = month.value
-				}
-
-				console.log("tempMonth : " +tempMonth);
+	console.log("tempMonth : " +tempMonth);
 
 
-				var yearAndMonth = year.value.toString() + tempMonth.toString();
+	var yearAndMonth = year.value.toString() + tempMonth.toString();
 
 
 
 
 
-				console.log("yearAndMonth : " + yearAndMonth);
+	console.log("yearAndMonth : " + yearAndMonth);
 
 
-				var esti_code = "";
-				console.log("selectedType = " +  selectedType);
-				if(selectedType.value == "전체") {
-					esti_code="";
-				} else if (selectedType.value == "입금") {
-					esti_code="1";
-				} else if (selectedType.value == "출금") {
-					esti_code="2";
-				}
+	var esti_code = "";
+	console.log("selectedType = " +  selectedType);
+	if(selectedType.value == "전체") {
+		esti_code="";
+	} else if (selectedType.value == "입금") {
+		esti_code="1";
+	} else if (selectedType.value == "출금") {
+		esti_code="2";
+	}
 
-				var searchGubun = "A";
-				if(unReg.value == true) {
-					searchGubun = "N";
-				}
+	var searchGubun = "A";
+	if(unReg.value == true) {
+		searchGubun = "N";
+	}
 
-				// console.log("testAPI clicked ");
-				// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+	// console.log("testAPI clicked ");
+	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 
-				// var dsParam = Backend.dsParam;
-
-
-			 	var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"","search_cashgb":"'+ esti_code+'","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
-			 // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
-			    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-			    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
-			    
-			    console.log('jsonParam : ' + jsonParam);
-			    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
-
-				fetch("http://www.aseoul.co.kr/acusr/acc/bil/selectOnlineBCashList.do", {
-					method: 'POST',
-					headers: {
-						"Content-type": "application/json"
-					},
-					body: JSON.stringify(jsonParam)
-			        }).then(function(response) {
-						var responseData = JSON.stringify(response);
-						var responseHeaders = JSON.parse(response._bodyInit);
-						console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
-						temp = responseHeaders.ds_bCashList[1];
-						console.log("");
-						console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
-
-						//
-						var date1;
-						var type1;
-						var typeColor1;
-						var isBill1;
-						var money1;
-						var moneyColor1;
-						var contents1;
+	// var dsParam = Backend.dsParam;
 
 
-						//2017.12.18 시작 
-						// 
+ 	var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"","search_cashgb":"'+ esti_code+'","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+ // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
+    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+    
+    console.log('jsonParam : ' + jsonParam);
+    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
 
+   
+	fetch(selectOnlineBCashList_URL, {
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+        }).then(function(response) {
+			var responseData = JSON.stringify(response);
+			var responseHeaders = JSON.parse(response._bodyInit);
+			console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+			temp = responseHeaders.ds_bCashList[1];
+			console.log("");
+			console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
 
-						for (var i = 0; i < temp.length; i++) {
-							notes.add(new note(temp[i], i));
-						}
+			//
+			var date1;
+			var type1;
+			var typeColor1;
+			var isBill1;
+			var money1;
+			var moneyColor1;
+			var contents1;
 
-						//2017.12.18 끝
-			        	var responseData = JSON.stringify(response);
-			        	
-			            return response.json();
-			        }).then(function(jsonData) {
-			            var data = jsonData.results[0];
-			            console.log("data : " + jsonData.results[0]);
-						console.log("Reg Succeeded[ios]: " + data.registration_token);
-						// maintext.value = maintext.value + "/n" + data.registration_token;
-			        }).catch(function(err) {
-			            console.log("Reg Succeeded[ios] Error!! : " + err.message);
-			        });
+
+			//2017.12.18 시작 
+			// 
 
 
 
+			for (var i = 0; i < temp.length; i++) {
+				notes.add(new note(temp[i], i));
+			}
 
-
-
-
-
-
-
-			pickerOn.value = false;
-		}
+			//2017.12.18 끝
+        	var responseData = JSON.stringify(response);
+        	
+            return response.json();
+        }).then(function(jsonData) {
+            var data = jsonData.results[0];
+            console.log("data : " + jsonData.results[0]);
+			console.log("Reg Succeeded[ios]: " + data.registration_token);
+			// maintext.value = maintext.value + "/n" + data.registration_token;
+        }).catch(function(err) {
+            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+        });
+	pickerOn.value = false;
+}
 
 
 
@@ -234,7 +278,8 @@ function pickerDown() {
 			    console.log('jsonParam : ' + jsonParam);
 			    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-				fetch("http://www.aseoul.co.kr/acusr/acc/bil/selectOnlineBCashList.do", {
+			    
+				fetch(selectOnlineBCashList_URL, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -375,7 +420,10 @@ function pickerDown() {
 			    console.log('jsonParam : ' + jsonParam);
 			    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-				fetch("http://www.aseoul.co.kr/acusr/acc/bil/selectOnlineBCashList.do", {
+			     
+
+
+				fetch(selectOnlineBCashList_URL, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -452,79 +500,78 @@ function pickerDown() {
 		}
 
 		var notes = Observable();
+
 		
-		function note(arg, noteIndex) {
+function note(arg, noteIndex) {
+	this.index = noteIndex;
 
-			this.index = noteIndex;
+	this.CASH_DATE = arg.CASH_DATE.substring(4,6) + "." + arg.CASH_DATE.substring(6,8);
 
-			this.date = arg.BILL_DATE0.substring(4,6) + "." + arg.BILL_DATE0.substring(6,8);
+	
+	if (arg.CASH_GB == "1") {
+		this.type = "입금";
+		this.typeColor = "#4C9DFF";
+		this.subTypeColor = "#8BBDFF";
+	} else {
+		this.type = "출금";
+		this.typeColor = "#FF4200";
+		this.subTypeColor = "#FFBA85";
+	}
 
-			
-			if (arg.CASH_GB == "1") {
-				this.type = "입금";
-				this.typeColor = "#4C9DFF";
-				this.money = arg.BCASH_MONEY;
-				this.subTypeColor = "#8BBDFF";
-			} else {
-				this.type = "출금";
-				this.typeColor = "#FF4200";
-				this.money = arg.BCASH_MONEY;
-				this.subTypeColor = "#FFBA85";
-			}
-			this.money = this.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	this.BCASH_MONEY = arg.BCASH_MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
+	if (arg.BILL_GB == "A02") {
+		this.isBill = true;
+	} else {
+		this.isBill = false;
+	}
 
-			if (arg.BILL_GB == "A02") {
-				this.isBill = true;
-			} else {
-				this.isBill = false;
-			}
-			if (arg.ESTI_SUB_YN == "Y") {
-				this.subType = "세목";
-				this.name = arg.ESTI_NAME;
-			} else {
-				this.subType = "목";
+	if (arg.ESTI_SUB_YN == "Y") {
+		this.subType = "세목";
+		this.name = arg.ESTI_NAME;
+	} else {
+		this.subType = "목";
 
-				if(arg.ESTI_SUB_NM != null) {
-					this.name = arg.ESTI_NAME + "[" + arg.ESTI_SUB_NM + "]";
-				} else {
-					this.name = arg.ESTI_NAME;	
-				}
-				
-
-
-				
-			}
-
-			// if (arg.ESTI_CODE == null) {
-			// 	this.reverse = true;
-			// } else if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)) {
-			// 	this.reverse = true;
-			// } else {
-			// 	this.reverse = false;
-			// }
-			this.reverse = false;
-			if(arg.BILL_IDX != null) {
-				if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)) {
-					this.reverse=true;
-				}
-				this.isShow = true;
-			} else {
-				this.isShow = false;
-			}
-
-			if (arg.BILL_RECEIPT > 1) {
-				console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
-
-				this.receipt = "2";
-			} else if (arg.BILL_RECEIPT == 1) {
-				this.receipt = "1";
-			} else {
-				this.receipt = "0";
-			}
-
-			this.memo = arg.BCASH_MEMO;
+		if(arg.ESTI_SUB_NM != null) {
+			this.name = arg.ESTI_NAME + "[" + arg.ESTI_SUB_NM + "]";
+		} else {
+			this.name = arg.ESTI_NAME;	
 		}
+		
+
+
+		
+	}
+
+	// if (arg.ESTI_CODE == null) {
+	// 	this.reverse = true;
+	// } else if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)) {
+	// 	this.reverse = true;
+	// } else {
+	// 	this.reverse = false;
+	// }
+	this.reverse = false;
+	if(arg.BILL_IDX != null) {
+		if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)) {
+			this.reverse=true;
+		}
+		this.isShow = true;
+	} else {
+		this.isShow = false;
+	}
+
+	if (arg.BILL_RECEIPT > 1) {
+		console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
+
+		this.receipt = "2";
+	} else if (arg.BILL_RECEIPT == 1) {
+		this.receipt = "1";
+	} else {
+		this.receipt = "0";
+	}
+
+	this.BCASH_MEMO = arg.BCASH_MEMO;
+}
 		
 
 
@@ -550,7 +597,14 @@ function getBillCashInputLoad () {
 	var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-	fetch("http://www.aseoul.co.kr/acusr/acc/bil/getBillCashInputLoad.do", {
+
+	var url = Backend.BASE_URL + Backend.getBillCashInputLoad_URL;
+
+	console.log("=========================== 2018.01.04===========================");
+	console.log("getBillCashInputLoad URL : " + url);
+	console.log("=========================== 2018.01.04===========================");
+
+	fetch(url, {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"
@@ -632,15 +686,8 @@ function getBillCashInputLoad () {
 
 function selectOnlineBCashList () {
 	getBillCashInputLoad();
-	// notes.clear() 
+	notes.clear(); 
 	console.log("testAPI clicked ");
-	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
-
-	// var dsParam = Backend.dsParam;
-
-	// var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
-	// var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
-	// 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
 	var currentTime = new Date()
 
 	var tempYear = currentTime.getFullYear();
@@ -686,7 +733,17 @@ function selectOnlineBCashList () {
     console.log('jsonParam : ' + jsonParam);
     console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-	fetch("http://www.aseoul.co.kr/acusr/acc/bil/selectOnlineBCashList.do", {
+
+     
+
+    console.log("=========================== 2018.01.04===========================");
+	console.log("selectOnlineBCashList_URL URL : " + selectOnlineBCashList_URL);
+	console.log("=========================== 2018.01.04===========================");
+
+
+
+
+	fetch(selectOnlineBCashList_URL, {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"
@@ -695,11 +752,10 @@ function selectOnlineBCashList () {
         }).then(function(response) {
 			var responseData = JSON.stringify(response);
 			var responseHeaders = JSON.parse(response._bodyInit);
-			console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+			// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
 			temp = responseHeaders.ds_bCashList[1];
 			console.log("");
-			console.log("2017.12.18 2 esponseHeaders.ds_bCashList : "+ JSON.stringify(temp));
-
+			console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
 			//
 			var date1;
 			var type1;
@@ -715,9 +771,13 @@ function selectOnlineBCashList () {
 
 			for (var i = 0; i < temp.length; i++) {
 				notes.add(new note(temp[i], i));
+				selectOnlineBCashListDatas.add( new selectOnlineBCashListIndividualData(temp[i], i));
 			}
 
-			console.log("NOTES : " + JSON.stringify(notes.values));
+
+
+			console.log("selectOnlineBCashListDatas : " + JSON.stringify(selectOnlineBCashListDatas));
+
 
 			//2017.12.18 끝
         	var responseData = JSON.stringify(response);
@@ -790,7 +850,8 @@ function selectOnlineBCashList () {
 	    console.log('jsonParam : ' + jsonParam);
 	    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-		fetch("http://www.aseoul.co.kr/acusr/acc/bil/selectOnlineBCashList.do", {
+	    
+		fetch(selectOnlineBCashList_URL, {
 			method: 'POST',
 			headers: {
 				"Content-type": "application/json"

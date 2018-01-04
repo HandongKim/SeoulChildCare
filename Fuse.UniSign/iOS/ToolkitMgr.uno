@@ -148,7 +148,7 @@ namespace Fuse.UniSign.iOS
 			NSError* error;
 			USToolkitMgr* instance = [USToolkitMgr getInstance:&error];
 			if (error != nil) {
-				onError([NSString stringWithFormat:@"%@", error]);
+				onError([NSString stringWithFormat:@"what kinda error is this %@", error]);
 				return nil;
 			} else {
 				return instance;
