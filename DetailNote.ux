@@ -11,9 +11,9 @@
 
 
 
-	<!-- <WhileActive> -->
+	<WhileActive>
 		<!-- <Callback Handler="{viewWillAppear}" /> -->
-	<!-- </WhileActive> -->
+	</WhileActive>
 
 
 

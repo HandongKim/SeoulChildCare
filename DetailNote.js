@@ -1,7 +1,6 @@
 var Observable = require('FuseJS/Observable');
 var Backend = require('Backend.js');
 var CommonModule = require('CommonModule.js');
-var NoteManage = require('NoteManage.js');
 
 		// var ValueFactory = require('ValueFactory');
 
@@ -9,7 +8,6 @@ var NoteManage = require('NoteManage.js');
 		// console.log(JSON.stringify(ValueFactory.getInfoJson()));
 		// console.log("===================");
 
-var url = Backend.BASE_URL + Backend.selectMobileOnlineBillList_URL;
 
 		
 detailText = "불러온 전표내역이 없습니다."
@@ -25,8 +23,15 @@ showText = Observable(false);;
 
 
 
-		var	CASH_IDX;
-		var	BILL_IDX;
+		var	CASH_IDX = Backend.dataFromNoteManageToDetailNote.CASH_IDX.value;
+		var	BILL_IDX = Backend.dataFromNoteManageToDetailNote.BILL_IDX.value;
+
+
+
+
+
+
+
 		var	INDEX;
 		var	DATE;
 		var	TYPE;
@@ -60,42 +65,38 @@ showText = Observable(false);;
 
 
 
-		this.Parameter.onValueChanged(null,function(x) {
-			if (x == null) {
-				// detailText.value = "불러온 전표내역이 없습니다.";
-				// // console.log(detailText.value);
-				// showText.value = true;
-				// Backend.subject.text.value = "계정과목 선택";
-				// Backend.subject.isChoice.value = false;
-			}else {
+		// this.Parameter.onValueChanged(null,function(x) {
+		// 	if (x == null) {
+		// 		// detailText.value = "불러온 전표내역이 없습니다.";
+		// 		// // console.log(detailText.value);
+		// 		// showText.value = true;
+		// 		// Backend.subject.text.value = "계정과목 선택";
+		// 		// Backend.subject.isChoice.value = false;
+		// 	}else {
+		// 		SELECTED_DATA = Observable(x.SELECTED_DATA);
+		// 		CASH_IDX= Observable(x.CASH_IDX);
+		// 		BILL_IDX= Observable(x.BILL_IDX);
+		// 		INDEX= Observable(x.INDEX);
+		// 		DATE= Observable(x.DATE);
+		// 		TYPE= Observable(x.TYPE);
+		// 		MONEY= Observable(x.MONEY);
+		// 		SUBTYPECOLOR= Observable(x.SUBTYPECOLOR);
+		// 		ISBILL= Observable(x.ISBILL);
+		// 		SUBTYPE= Observable(x.SUBTYPE);
+		// 		NAME= Observable(x.NAME);
+		// 		REVERSE= Observable(x.REVERSE);
+		// 		RECEIPT= Observable(x.RECEIPT);
+		// 		MEMO= Observable(x.MEMO);
+		// 		showText.value = false;
+		// 		Backend.subject.name.value = "계정과목 선택";
+		// 		Backend.subject.isChoice.value = false;
 
-				// console.log("구름구름구름구름구름구름구름구름");
-
-
-				// SELECTED_DATA = Observable(x.SELECTED_DATA);
-				// CASH_IDX= Observable(x.CASH_IDX);
-				// BILL_IDX= Observable(x.BILL_IDX);
-				// INDEX= Observable(x.INDEX);
-				// DATE= Observable(x.DATE);
-				// TYPE= Observable(x.TYPE);
-				// MONEY= Observable(x.MONEY);
-				// SUBTYPECOLOR= Observable(x.SUBTYPECOLOR);
-				// ISBILL= Observable(x.ISBILL);
-				// SUBTYPE= Observable(x.SUBTYPE);
-				// NAME= Observable(x.NAME);
-				// REVERSE= Observable(x.REVERSE);
-				// RECEIPT= Observable(x.RECEIPT);
-				// MEMO= Observable(x.MEMO);
-				// showText.value = false;
-				// Backend.subject.name.value = "계정과목 선택";
-				// Backend.subject.isChoice.value = false;
-
-				// // console.log("DetailNote CASH_IDX: " + x.CASH_IDX);
-    // 			// console.log("DetailNote BILL_IDX: " + x.BILL_IDX);
-    // 			// console.log("DetailNote BILL_IDX: " + x.REVERSE);
-    			// console.log("SELECTED_DATA : " + JSON.stringify(SELECTED_DATA));
-			}
-		});
+		// 		// // console.log("DetailNote CASH_IDX: " + x.CASH_IDX);
+  //   // 			// console.log("DetailNote BILL_IDX: " + x.BILL_IDX);
+  //   // 			// console.log("DetailNote BILL_IDX: " + x.REVERSE);
+  //   			// console.log("SELECTED_DATA : " + JSON.stringify(SELECTED_DATA));
+		// 	}
+		// });
 
 
 
@@ -170,96 +171,64 @@ showText = Observable(false);;
 			this.memo = arg.BCASH_MEMO;
 		}
 		
-function getListDetailNote () {
-	console.log("2018.01.04 PLEASE PLEASE PLEASE");
-	
-
-	console.log("Backend.testArray.cash.value : " + Backend.testArray.cash.value);
-	console.log("Backend.testArray.bill.value : " + Backend.testArray.bill.value);
-
-
-	console.log("NoteManage.testValueToBe.CASH_IDX.value : " + NoteManage.testValueToBe.CASH_IDX.value);
-	console.log("NoteManage.testValueToBe.BILL_IDX.value : " + NoteManage.testValueToBe.BILL_IDX.value);
-
-
-
-	// console.log("NoteManage.pickedSelectOnlineBCashListIndividualDataInstance : " +NoteManage.pickedSelectOnlineBCashListIndividualDataInstance);
-	// console.log("NoteManage.pickedSelectOnlineBCashListIndividualDataInstance.BILL_IDX : " +NoteManage.pickedSelectOnlineBCashListIndividualDataInstance.value.BILL_IDX);
-
-
-
-
-	// CASH_IDX.value = NoteManage.pickedSelectOnlineBCashListIndividualDataInstance.value.CASH_IDX;
-	// BILL_IDX.value = NoteManage.pickedSelectOnlineBCashListIndividualDataInstance.value.BILL_IDX;
-
-
-
-
+		function getListDetailNote () {
+				// console.log("testAPI clicked ");
 
 				// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 				// var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
 				// var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
 				// 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
-			    
-
-
-			 //    var dsSearch = '{"SEARCH_BCASH":'+CASH_IDX.value+',"SEARCH_BILL_IDX": '+BILL_IDX.value+'}';
-				// // // console.log(" dsSearch : " + dsSearch);
-			 //    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-
-
-
-
-
+			    var dsSearch = '{"SEARCH_BCASH":'+CASH_IDX+',"SEARCH_BILL_IDX": '+BILL_IDX+'}';
+				// // console.log(" dsSearch : " + dsSearch);
+			    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
 			    // console.log('jsonParam : ' + jsonParam);
 			    // console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
-			    console.log("hahahahahahahahahah url : " + url);
 
-				// fetch(url, {
-				// 	method: 'POST',
-				// 	headers: {
-				// 		"Content-type": "application/json"
-				// 	},
-				// 	body: JSON.stringify(jsonParam)
-			 //        }).then(function(response) {
-				// 		var responseData = JSON.stringify(response);
+				fetch("http://112.218.172.44:52102/acusr/acc/bil/selectMobileOnlineBillList.do", {
+					method: 'POST',
+					headers: {
+						"Content-type": "application/json"
+					},
+					body: JSON.stringify(jsonParam)
+			        }).then(function(response) {
+						var responseData = JSON.stringify(response);
 
-				// 		console.log("2017.12.30 : responseData : "+ responseData);
+						console.log("2017.12.30 : responseData : "+ responseData);
 
-				// 		var responseHeaders = JSON.parse(response._bodyInit);
-				// 		// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
-				// 		// var damnIT = JSON.parse();
+						var responseHeaders = JSON.parse(response._bodyInit);
+						// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+						// var damnIT = JSON.parse();
 						
-				// 		// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
+						// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
 
 
-				// 		temp = responseHeaders.ds_billList[1];
+						temp = responseHeaders.ds_billList[1];
 						
-				// 		// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
+						// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
 
-				// 		notes.clear();
-
-
-				// 		// console.log("fefefefefe temp.length : " + temp.length);
+						notes.clear();
 
 
-				// 		for (var i = 0; i < temp.length; i++) {
-				// 			notes.add(new note(temp[i], i));
-				// 			// console.log(JSON.stringify(notes.value));
-				// 		}
+						// console.log("fefefefefe temp.length : " + temp.length);
 
-			 //        	var responseData = JSON.stringify(response);
+
+						for (var i = 0; i < temp.length; i++) {
+							notes.add(new note(temp[i], i));
+							// console.log(JSON.stringify(notes.value));
+						}
+
+			        	var responseData = JSON.stringify(response);
 			        	
-			 //            return response.json();
-			 //        }).then(function(jsonData) {
-			 //            var data = jsonData.results[0];
-			 //            // console.log("data : " + jsonData.results[0]);
-				// 		// console.log("Reg Succeeded[ios]: " + data.registration_token);
-				// 		// maintext.value = maintext.value + "/n" + data.registration_token;
-			 //        }).catch(function(err) {
-			 //            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
-			 //        });
+			            return response.json();
+			        }).then(function(jsonData) {
+			            var data = jsonData.results[0];
+			            // console.log("data : " + jsonData.results[0]);
+						// console.log("Reg Succeeded[ios]: " + data.registration_token);
+						// maintext.value = maintext.value + "/n" + data.registration_token;
+			        }).catch(function(err) {
+			            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+			        });
 			}
 
 		var selectedTemp;
@@ -668,10 +637,10 @@ function getListDetailNote () {
 
 
 
-		this.Parameter.onValueChanged(null, function(x) {
-			//viewWillAppear();
-			//getListDetailNote();
-		});
+		// this.Parameter.onValueChanged(null, function(x) {
+		// 	viewWillAppear();
+		// 	getListDetailNote();
+		// });
 
 
 		// var tempCode2 = Backend.ESTI_CODE;

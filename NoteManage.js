@@ -100,8 +100,6 @@ function selectOnlineBCashListIndividualData (args, index) {
 	this.BCASH_MONEY = args.BCASH_MONEY;
 }
 
-var pickedSelectOnlineBCashListIndividualDataInstance = Observable();
-
 function pickedSelectOnlineBCashListIndividualData (args) {
 	this.SUBJECT = args.SUBJECT;
 	this.BILL_NURIGB = args.BILL_NURIGB;
@@ -975,10 +973,7 @@ var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"",
 }
 
 
-var testValueToBe = {
-	CASH_IDX:Observable(),
-	BILL_IDX:Observable()
-}
+
 
 function goDetailNote2 (arg) {
 
@@ -988,27 +983,77 @@ function goDetailNote2 (arg) {
 		console.log("selectOnlineBCashListDatas[" +arg.data.index +"].CASH_IDX : " + JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX));
 		console.log("selectOnlineBCashListDatas[" +arg.data.index +"].BILL_IDX : " + JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX));
 
-		Backend.CASH_IDX = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX);
-		Backend.BILL_IDX = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX);
+		// Backend.CASH_IDX = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX);
+		// Backend.BILL_IDX = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX);
+	Backend.dataFromNoteManageToDetailNote.INDEX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].INDEX);
+	Backend.dataFromNoteManageToDetailNote.SUBJECT.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].SUBJECT);
+	Backend.dataFromNoteManageToDetailNote.BILL_NURIGB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_NURIGB);
+	Backend.dataFromNoteManageToDetailNote.BIGO.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BIGO);
+	Backend.dataFromNoteManageToDetailNote.CASH_IDX2.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX2);
+	Backend.dataFromNoteManageToDetailNote.GUBUN.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].GUBUN);
+	Backend.dataFromNoteManageToDetailNote.CASH_GB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_GB);
+	Backend.dataFromNoteManageToDetailNote.BILL_NUM.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_NUM);
+	Backend.dataFromNoteManageToDetailNote.BCASH_IDX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BCASH_IDX);
+	Backend.dataFromNoteManageToDetailNote.BILL_DATE.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_DATE);
+	Backend.dataFromNoteManageToDetailNote.CASH_PLACE.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_PLACE);
+	Backend.dataFromNoteManageToDetailNote.ESTI_SUB_NM.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].ESTI_SUB_NM);
+	Backend.dataFromNoteManageToDetailNote.SUM_MONEY.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].SUM_MONEY);
+	Backend.dataFromNoteManageToDetailNote.BILL_INPROGRAM.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_INPROGRAM);
+	Backend.dataFromNoteManageToDetailNote.BILL_ETC1.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_ETC1);
+	Backend.dataFromNoteManageToDetailNote.MEMO.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].MEMO);
+	Backend.dataFromNoteManageToDetailNote.BILL_ETC2.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_ETC2);
+	Backend.dataFromNoteManageToDetailNote.BILL_ETC3.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_ETC3);
+	Backend.dataFromNoteManageToDetailNote.ORG_BCASH_MEMO.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].ORG_BCASH_MEMO);
+	Backend.dataFromNoteManageToDetailNote.MONEY_OUT.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].MONEY_OUT);
+	Backend.dataFromNoteManageToDetailNote.FIRMNAME.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].FIRMNAME);
+	Backend.dataFromNoteManageToDetailNote.ACTION.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].ACTION);
+	Backend.dataFromNoteManageToDetailNote.BILL_ETC4.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_ETC4);
+	Backend.dataFromNoteManageToDetailNote.CASH_ORDER.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_ORDER);
+	Backend.dataFromNoteManageToDetailNote.MONEY_GB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].MONEY_GB);
+	Backend.dataFromNoteManageToDetailNote.EDITABLE.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].EDITABLE);
+	Backend.dataFromNoteManageToDetailNote.BILL_BOJOGB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_BOJOGB);
+	Backend.dataFromNoteManageToDetailNote.ESTI_CODE.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].ESTI_CODE);
+	Backend.dataFromNoteManageToDetailNote.CRED_SEQ.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CRED_SEQ);
+	Backend.dataFromNoteManageToDetailNote.ESTI_NAME.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].ESTI_NAME);
+	Backend.dataFromNoteManageToDetailNote.BOOK_GB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BOOK_GB);
+	Backend.dataFromNoteManageToDetailNote.BILL_IDX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX);
+	Backend.dataFromNoteManageToDetailNote.BILL_CANCELGB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_CANCELGB);
+	Backend.dataFromNoteManageToDetailNote.BILL_GB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_GB);
+	Backend.dataFromNoteManageToDetailNote.MEMO_ADD.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].MEMO_ADD);
+	Backend.dataFromNoteManageToDetailNote.ESTI_GB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].ESTI_GB);
+	Backend.dataFromNoteManageToDetailNote.BILL_DATE0.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_DATE0);
+	Backend.dataFromNoteManageToDetailNote.BILL_DATE1.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_DATE1);
+	Backend.dataFromNoteManageToDetailNote.BILL_DATE4.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_DATE4);
+	Backend.dataFromNoteManageToDetailNote.CASH_DATE.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_DATE);
+	Backend.dataFromNoteManageToDetailNote.BILL_DATE2.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_DATE2);
+	Backend.dataFromNoteManageToDetailNote.PURPOSE.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].PURPOSE);
+	Backend.dataFromNoteManageToDetailNote.BILL_DATE3.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_DATE3);
+	Backend.dataFromNoteManageToDetailNote.GRID_NURIGB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].GRID_NURIGB);
+	Backend.dataFromNoteManageToDetailNote.BILL_CLSS.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_CLSS);
+	Backend.dataFromNoteManageToDetailNote.CASH_MEMO.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_MEMO);
+	Backend.dataFromNoteManageToDetailNote.CHK.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CHK);
+	Backend.dataFromNoteManageToDetailNote.BILL_SUBCODE.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_SUBCODE);
+	Backend.dataFromNoteManageToDetailNote.BILL_NUMDETAIL.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_NUMDETAIL);
+	Backend.dataFromNoteManageToDetailNote.BILL_MONEY.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_MONEY);
+	Backend.dataFromNoteManageToDetailNote.GRID_BOJOGB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].GRID_BOJOGB);
+	Backend.dataFromNoteManageToDetailNote.CONTENTS.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CONTENTS);
+	Backend.dataFromNoteManageToDetailNote.BCASH_MEMO.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BCASH_MEMO);
+	Backend.dataFromNoteManageToDetailNote.CASH_IDX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX);
+	Backend.dataFromNoteManageToDetailNote.ESTI_DISPLAY.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].ESTI_DISPLAY);
+	Backend.dataFromNoteManageToDetailNote.PREV_IDX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].PREV_IDX);
+	Backend.dataFromNoteManageToDetailNote.MEMCODE.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].MEMCODE);
+	Backend.dataFromNoteManageToDetailNote.BILL_RECEIPT.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_RECEIPT);
+	Backend.dataFromNoteManageToDetailNote.ESTI_PART.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].ESTI_PART);
+	Backend.dataFromNoteManageToDetailNote.MONEY.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].MONEY);
+	Backend.dataFromNoteManageToDetailNote.REMAIN.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].REMAIN);
+	Backend.dataFromNoteManageToDetailNote.ESTI_SUB_YN.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].ESTI_SUB_YN);
+	Backend.dataFromNoteManageToDetailNote.BILL_KEEPCODE.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_KEEPCODE);
+	Backend.dataFromNoteManageToDetailNote.MONEY_IN.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].MONEY_IN);
+	Backend.dataFromNoteManageToDetailNote.BCASH_MONEY.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BCASH_MONEY);
 
-		Backend.testArray.cash.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX);
-		Backend.testArray.bill.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX);
-
-		testValueToBe.CASH_IDX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX);
-		testValueToBe.BILL_IDX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX);
 
 
 
-		console.log("Backend.testArray.CASH_IDX.value : " + Backend.CASH_IDX);
-		console.log("Backend.testArray.BILL_IDX.value : " + Backend.BILL_IDX);
-
-
-		console.log("Backend.testArray.cash.value : " + Backend.testArray.cash.value);
-		console.log("Backend.testArray.bill.value : " + Backend.testArray.bill.value);
-
-
-		console.log("testValueToBe.CASH_IDX.value : " + testValueToBe.CASH_IDX.value);
-		console.log("testValueToBe.BILL_IDX.value : " + testValueToBe.BILL_IDX.value);
 
 		// testValueToBe="TEST VALUE 2";
 		// pickedSelectOnlineBCashListIndividualDataInstance.add(new pickedSelectOnlineBCashListIndividualData(selectOnlineBCashListDatas._values[arg.data.index]));
@@ -1094,5 +1139,5 @@ module.exports = {
 		router.push("DetailNote", "new");
 	},goDetailNote2,
 	getBillCashInputLoad, billCashInputDataList	,pickerUp3, pickerDown3, selectOnlineBCashList, selectedbillCashInputDataList,
-	unRegisteredChecked, WhileInActive, pickedSelectOnlineBCashListIndividualDataInstance, testValueToBe
+	unRegisteredChecked, WhileInActive
 };

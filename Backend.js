@@ -54,13 +54,74 @@ var noteManageParamValuesForDetailNote = {
 	selected_data: Observable()
 }
 
-var CASH_INX = "";
-var BILL_INX = "";
 
 
-var testArray = {
-	cash:Observable(),
-	bill:Observable()
+var dataFromNoteManageToDetailNote = {
+	INDEX:Observable(),
+	SUBJECT:Observable(),
+	BILL_NURIGB:Observable(),
+	BIGO:Observable(),
+	CASH_IDX2:Observable(),
+	GUBUN:Observable(),
+	CASH_GB:Observable(),
+	BILL_NUM:Observable(),
+	BCASH_IDX:Observable(),
+	BILL_DATE:Observable(),
+	CASH_PLACE:Observable(),
+	ESTI_SUB_NM:Observable(),
+	SUM_MONEY:Observable(),
+	BILL_INPROGRAM:Observable(),
+	BILL_ETC1:Observable(),
+	MEMO:Observable(),
+	BILL_ETC2:Observable(),
+	BILL_ETC3:Observable(),
+	ORG_BCASH_MEMO:Observable(),
+	MONEY_OUT:Observable(),
+	FIRMNAME:Observable(),
+	ACTION:Observable(),
+	BILL_ETC4:Observable(),
+	CASH_ORDER:Observable(),
+	MONEY_GB:Observable(),
+	EDITABLE:Observable(),
+	BILL_BOJOGB:Observable(),
+	ESTI_CODE:Observable(),
+	CRED_SEQ:Observable(),
+	ESTI_NAME:Observable(),
+	BOOK_GB:Observable(),
+	BILL_IDX:Observable(),
+	BILL_CANCELGB:Observable(),
+	BILL_GB:Observable(),
+	MEMO_ADD:Observable(),
+	ESTI_GB:Observable(),
+	BILL_DATE0:Observable(),
+	BILL_DATE1:Observable(),
+	BILL_DATE4:Observable(),
+	CASH_DATE:Observable(),
+	BILL_DATE2:Observable(),
+	PURPOSE:Observable(),
+	BILL_DATE3:Observable(),
+	GRID_NURIGB:Observable(),
+	BILL_CLSS:Observable(),
+	CASH_MEMO:Observable(),
+	CHK:Observable(),
+	BILL_SUBCODE:Observable(),
+	BILL_NUMDETAIL:Observable(),
+	BILL_MONEY:Observable(),
+	GRID_BOJOGB:Observable(),
+	CONTENTS:Observable(),
+	BCASH_MEMO:Observable(),
+	CASH_IDX:Observable(),
+	ESTI_DISPLAY:Observable(),
+	PREV_IDX:Observable(),
+	MEMCODE:Observable(),
+	BILL_RECEIPT:Observable(),
+	ESTI_PART:Observable(),
+	MONEY:Observable(),
+	REMAIN:Observable(),
+	ESTI_SUB_YN:Observable(),
+	BILL_KEEPCODE:Observable(),
+	MONEY_IN:Observable(),
+	BCASH_MONEY:Observable()
 }
 
 
@@ -76,5 +137,5 @@ var testArray = {
 module.exports = {
 	subject, dsParam, noteManageParamValuesForDetailNote, choiceSubjectList, 
 	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, getBillCashInputLoad_URL,
-	selectMobileOnlineBillList_URL, CASH_INX, BILL_INX, testArray
+	selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote
 };
