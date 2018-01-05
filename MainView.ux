@@ -13,7 +13,7 @@
 		var Backend = require('Backend.js');
 		
 		var print = debug_log;
-		var uploadUrl = 'https://www.accgg.co.kr/Mobile/ReceiptImgUpload.do';// 서버 IP를 변경하세요.
+		var uploadUrl = 'http://61.97.121.199:8080/TEST/ImgUploadTest.jsp';// 서버 IP를 변경하세요.
 
 		var sendPictureBtnEnabled = Observable(false);
 		var targetImgPath = Observable();
@@ -49,7 +49,7 @@
 
 					savepanel3.save(imageName);
 					console.log("make image");
-					var saveDir = "t";
+					var saveDir = "";
 					if (Environment.ios) {
 						saveDir = FileSystem.iosPaths.documents;
 					} else if (Environment.android) {
@@ -58,7 +58,8 @@
 					}
 					var arrayBuff;
 
-
+					console.log("saveDir : " +saveDir);
+					
 					setTimeout(function() {
 
 						
@@ -73,17 +74,17 @@
 								// 흑백으로 변한사진 카메라롤에 저장
 								CameraRoll.publishImage(image).then(function(x) {
 									console.log("save success");
-
+									targetImgPath.value = saveDir + "/"+imageName;
+									sendPicture();
 									
 
 									FileSystem.delete(saveDir+"/"+imageName).then(function() {
 										console.log("delete success");
 									});
-									targetImgPath.value = saveDir + "./"+imageName;
-									// sendPicture();
+									
 									takedPicture.value = "";
 								}, function(error) {
-									console.log(error);
+									console.log("error : " );
 								});
 							});
 						}, function(error) {

@@ -112,124 +112,144 @@ showText = Observable(false);;
 
 		var notes = Observable();
 		
-		function note(arg, noteIndex) {
+function note(arg, noteIndex) {
+	this.index = noteIndex;
+	this.date = arg.CASH_DATE.substring(4,6) + "." + arg.CASH_DATE.substring(6,8);
+	this.CASH_IDX = arg.CASH_IDX;
 
-			this.index = noteIndex;
+	if (arg.CASH_GB == "1") {
+		this.type = "입금";
+		this.typeColor = "#4C9DFF";
+		this.money = arg.MONEY;
+		this.subTypeColor = "#8BBDFF";
+	} else {
+		this.type = "출금";
+		this.typeColor = "#FF4200";
+		this.money = arg.MONEY;
+		this.subTypeColor = "#FFBA85";
+	}
 
-			this.date = arg.CASH_DATE.substring(4,6) + "." + arg.CASH_DATE.substring(6,8);
+	this.money = arg.MONEY;
+	if(this.money != null) {
+		this.money = this.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+	}
+	if (arg.MONEY == "A02") {
+		this.isBill = true;
+	} else {
+		this.isBill = false;
+	}
+	if (arg.ESTI_SUB_YN == "Y") {
+		this.subType = "목";
+		this.name = arg.ESTI_NAME;
+	} else {
+		this.subType = "세목";
+		this.name = arg.ESTI_NAME;
+	}
 
-			this.CASH_IDX = arg.CASH_IDX;
-
-			if (arg.CASH_GB == "1") {
-				this.type = "입금";
-				this.typeColor = "#4C9DFF";
-				this.money = arg.MONEY;
-				this.subTypeColor = "#8BBDFF";
-			} else {
-				this.type = "출금";
-				this.typeColor = "#FF4200";
-				this.money = arg.MONEY;
-				this.subTypeColor = "#FFBA85";
-			}
-
-			this.money = arg.MONEY;
-
-			if(this.money != null) {
-				this.money = this.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
-			}
-			if (arg.MONEY == "A02") {
-				this.isBill = true;
-			} else {
-				this.isBill = false;
-			}
-			if (arg.ESTI_SUB_YN == "Y") {
-				this.subType = "목";
-				this.name = arg.ESTI_NAME;
-			} else {
-				this.subType = "세목";
-				this.name = arg.ESTI_NAME;
-			}
-
-			this.reverse = Observable(false);
-			if (arg.BILL_IDX !=null && arg.ESTI_GB !=null) {
-				if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
-					this.reverse=Observable(true);
-				}
-			}
-
-
-			if (arg.BILL_RECEIPT > 1) {
-				// console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
-
-				this.receipt = "2";
-			} else if (arg.BILL_RECEIPT == 1) {
-				this.receipt = "1";
-			} else {
-				this.receipt = "0";
-			}
-
-			this.memo = arg.BCASH_MEMO;
+	this.reverse = Observable(false);
+	if (arg.BILL_IDX !=null && arg.ESTI_GB !=null) {
+		if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
+			this.reverse=Observable(true);
 		}
+	}
+
+
+	if (arg.BILL_RECEIPT > 1) {
+		// console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
+
+		this.receipt = "2";
+	} else if (arg.BILL_RECEIPT == 1) {
+		this.receipt = "1";
+	} else {
+		this.receipt = "0";
+	}
+
+	this.memo = arg.BCASH_MEMO;
+
+}
 		
-		function getListDetailNote () {
-				// console.log("testAPI clicked ");
+var listDetailNotes = Observable();
 
-				// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
-				// var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
-				// var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
-				// 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
-			    var dsSearch = '{"SEARCH_BCASH":'+CASH_IDX+',"SEARCH_BILL_IDX": '+BILL_IDX+'}';
-				// // console.log(" dsSearch : " + dsSearch);
-			    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-			    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
-			    // console.log('jsonParam : ' + jsonParam);
-			    // console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+function listDetailNote (args, index) {
+	this.INDEX = index;
+	this.CASH_IDX2 = args.CASH_IDX2;
+	this.CASH_GB=args.CASH_GB;
+	this.CASH_IDX= args.CASH_IDX;
+	this.BCASH_MEMO = args.BCASH_MEMO;
+	this.ESTI_CODE = args.ESTI_CODE
+	this.CASH_DATE = args.CASH_DATE
+	this.ESTI_NAME = args.ESTI_NAME
+	this.BILL_CLSS = args.BILL_CLSS
+	this.SUM_MONEY = args.SUM_MONEY
+	this.BILL_RECEIPT = args.BILL_RECEIPT
+	this.MONEY = args.MONEY
+	this.ESTI_SUB_YN = args.ESTI_SUB_YN
+	this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO
+	this.ACTION = args.ACTION
+	this.BILL_SUBCODE = args.BILL_SUBCODE
+	this.BILL_IDX = args.BILL_IDX
+}
 
-				fetch("http://112.218.172.44:52102/acusr/acc/bil/selectMobileOnlineBillList.do", {
-					method: 'POST',
-					headers: {
-						"Content-type": "application/json"
-					},
-					body: JSON.stringify(jsonParam)
-			        }).then(function(response) {
-						var responseData = JSON.stringify(response);
+function getListDetailNote () {
+		// console.log("testAPI clicked ");
 
-						console.log("2017.12.30 : responseData : "+ responseData);
+		// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+		// var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
+		// var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
+		// 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
+	    var dsSearch = '{"SEARCH_BCASH":'+CASH_IDX+',"SEARCH_BILL_IDX": '+BILL_IDX+'}';
+		// // console.log(" dsSearch : " + dsSearch);
+	    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+	    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+	    // console.log('jsonParam : ' + jsonParam);
+	    // console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-						var responseHeaders = JSON.parse(response._bodyInit);
-						// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
-						// var damnIT = JSON.parse();
-						
-						// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
+		fetch("http://112.218.172.44:52102/acusr/acc/bil/selectMobileOnlineBillList.do", {
+			method: 'POST',
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify(jsonParam)
+	        }).then(function(response) {
+				var responseData = JSON.stringify(response);
+
+				console.log("2017.12.30 : responseData : "+ responseData);
+
+				var responseHeaders = JSON.parse(response._bodyInit);
+				// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+				// var damnIT = JSON.parse();
+				
+				// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
 
 
-						temp = responseHeaders.ds_billList[1];
-						
-						// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
+				temp = responseHeaders.ds_billList[1];
+				
+				console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
 
-						notes.clear();
-
-
-						// console.log("fefefefefe temp.length : " + temp.length);
+				notes.clear();
 
 
-						for (var i = 0; i < temp.length; i++) {
-							notes.add(new note(temp[i], i));
-							// console.log(JSON.stringify(notes.value));
-						}
+				// console.log("fefefefefe temp.length : " + temp.length);
 
-			        	var responseData = JSON.stringify(response);
-			        	
-			            return response.json();
-			        }).then(function(jsonData) {
-			            var data = jsonData.results[0];
-			            // console.log("data : " + jsonData.results[0]);
-						// console.log("Reg Succeeded[ios]: " + data.registration_token);
-						// maintext.value = maintext.value + "/n" + data.registration_token;
-			        }).catch(function(err) {
-			            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
-			        });
-			}
+
+				for (var i = 0; i < temp.length; i++) {
+					notes.add(new note(temp[i], i));
+					// console.log(JSON.stringify(notes.value));
+					listDetailNotes.add(new listDetailNote(temp[i], i));
+				}
+
+	        	var responseData = JSON.stringify(response);
+	        	
+	            return response.json();
+	        }).then(function(jsonData) {
+	            var data = jsonData.results[0];
+	            // console.log("data : " + jsonData.results[0]);
+				// console.log("Reg Succeeded[ios]: " + data.registration_token);
+				// maintext.value = maintext.value + "/n" + data.registration_token;
+	        }).catch(function(err) {
+	            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+	        });
+	}
 
 		var selectedTemp;
 		var selectedMemo = Observable();

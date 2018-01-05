@@ -19,12 +19,12 @@ public class Uploader : NativeModule
         debug_log "uploader started";
         // file path
         var path = (string)args[0];
-        debug_log path;
+        //debug_log path;
+        debug_log("Path : " + path);
 
         // uri where the image should be uploaded
         var uri = (string)args[1];
         debug_log uri;
-
         var fileName = Path.GetFileName(path);
         debug_log fileName;
         var fileExt = Path.GetExtension(path).ToLower();
@@ -32,8 +32,8 @@ public class Uploader : NativeModule
 
 
         var param = (string) args[2];
-        debug_log param;
-
+        //debug_log param;
+        debug_log("Uploader param : " + param);
 
 
 

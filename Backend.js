@@ -9,7 +9,7 @@ var BASE_URL = "http://112.218.172.44:52102";
 var LOGIN_URL = "/common/loginSigned.do";
 //NoteManage (전표관리에서 쓰이는 URL)
 var selectOnlineBCashList_URL = "/acusr/acc/bil/selectOnlineBCashList.do";
-var getBillCashInputLoad_URL ="/acusr/acc/bil/getBillCashInputLoad";
+var getBillCashInputLoad_URL ="/acusr/acc/bil/getBillCashInputLoad.do";
 
 //DetailNote [전표관리상세보기에 쓰이는 URL]
 var selectMobileOnlineBillList_URL = "/acusr/acc/bil/selectMobileOnlineBillList.do";

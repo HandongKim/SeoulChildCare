@@ -605,20 +605,9 @@ function note(arg, noteIndex) {
 			this.name = arg.ESTI_NAME + "[" + arg.ESTI_SUB_NM + "]";
 		} else {
 			this.name = arg.ESTI_NAME;	
-		}
-		
-
-
-		
+		}	
 	}
 
-	// if (arg.ESTI_CODE == null) {
-	// 	this.reverse = true;
-	// } else if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)) {
-	// 	this.reverse = true;
-	// } else {
-	// 	this.reverse = false;
-	// }
 	this.reverse = false;
 	if(arg.BILL_IDX != null) {
 		if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)) {
@@ -648,16 +637,17 @@ function note(arg, noteIndex) {
 		// 지금은 임시로 넣었지만, 파라메터 값의 조건에 따라 값들을 직접 지정해서 추가해주는 방식을 사용하는 것이 좋을 것 같습니다. ux단에서 구분해서 보여주기 보다는 조건판단은 자바스크립트에서 모두 하고 결과만 보여줄 수 있도록 속성값들을 추가하는 거죠. 함수를 사용하셔서 넣어도 좋고요. 그리고 전표상세로 넘어갈 때에는 파라미터에서 전표를 구분할 수 있는 값을 넘겨줘서, 그것을 가지고 다시 세부적으로 보이게 하는 방향을 사용하는 것이 좋지 않을까 합니다.
 
 
-		var billCashInputData = Observable();
-		var billCashInputDataList = Observable();
+var billCashInputData = Observable();
+var billCashInputDataList = Observable();
 
-		var selectedbillCashInputDataList = Observable("전체");
-		var billCashInputDataListTotal = Observable();
+var selectedbillCashInputDataList = Observable("전체");
+var billCashInputDataListTotal = Observable();
 
 
 function getBillCashInputLoad () {
 	//우선 리스트안에 있는 내용을 없얜다. 
 	billCashInputDataList.clear();
+	billCashInputDataListTotal.clear();
 	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 	// var dsParam = Backend.dsParam;
 	console.log("2018.01.01 9.20pm dsParam : " + dsParam);
