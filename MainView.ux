@@ -170,7 +170,7 @@
 					}, function(error) {
 						console.log(error);
 					});
-				}, 2000);
+				}, 6000);
 			}).catch(function(reason) {
 				console.log("Couldn't get image: "+reason);
 			});
