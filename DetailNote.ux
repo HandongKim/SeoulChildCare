@@ -10,7 +10,7 @@
 	</WhileTrue> -->
 
 
-	<!-- <WhileTrue Value="{pickerOn}">
+	<WhileTrue Value="{pickerOn}">
 		<Change page1PickerPanel2.Y="0" Duration=".2" />
 	</WhileTrue>
 
@@ -26,7 +26,7 @@
 		</Panel>
 
 		<MyPicker Selected="{selectedData}" Data="{pickerData}" />
-	</DockPanel> -->
+	</DockPanel>
 
 
 

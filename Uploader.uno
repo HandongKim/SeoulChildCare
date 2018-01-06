@@ -31,9 +31,12 @@ public class Uploader : NativeModule
         debug_log fileExt;
 
 
-        var param = (string) args[2];
+        var dsParam = (string) args[2];
+        var dsSearch = (string) args [3];
         //debug_log param;
-        debug_log("Uploader param : " + param);
+        debug_log("Uploader dsParam : " + dsParam);
+        debug_log("Uploader dsSearch : " + dsSearch);
+
 
         var imageData = Uno.IO.File.ReadAllBytes(path);
         var fileType = "image/png";
@@ -54,7 +57,9 @@ public class Uploader : NativeModule
         Dictionary<string, object> postParameters = new Dictionary<string, object>();
         postParameters.Add("filename", fileName);
         postParameters.Add("fileformat", fileExt);
-        postParameters.Add("file", new FormUpload.FileParameter(imageData, fileName, fileType));
+        postParameters.Add("dsParam", dsParam);
+        postParameters.Add("dsSearch", dsSearch);
+        postParameters.Add("file", new FormUpload.FileParameter(imageData, fileName, fileType, dsParam, dsSearch));
 
         // if there are multiple files, then simply add multiple post parameters. I didn't test it though, but it should work.
 
@@ -218,13 +223,27 @@ public static class FormUpload
         public byte[] File { get; set; }
         public string FileName { get; set; }
         public string ContentType { get; set; }
+        public string dsParam {get; set;}
+        public string dsSearch {get; set;}
         public FileParameter(byte[] file) : this(file, null) { }
         public FileParameter(byte[] file, string filename) : this(file, filename, null) { }
         public FileParameter(byte[] file, string filename, string contenttype)
         {
             File = file;
-            FileName = filename;
+            FileName = FileName;
             ContentType = contenttype;
         }
+
+        public FileParameter(byte[] file, string filename, string contentype, string dsparam, string dssearch) 
+        {
+            File = file;
+            FileName = FileName;
+            ContentType = contentype;
+            dsParam = dsparam;
+            dsSearch = dssearch;
+        }
+
+
+
     }
 }

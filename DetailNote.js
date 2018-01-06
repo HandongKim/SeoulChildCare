@@ -516,116 +516,114 @@ function datePickerDown() {
 
 
 
-		function saveData() {
-			// console.log("saveData was clicked");
-			var ACTION = "U";
-			var CASH_IDX = selectedTemp.CASH_IDX;
-			var CASH_DATE = selectedTemp.CASH_DATE;
-
-			var CASH_GB = selectedTemp.CASH_GB;
-			var CASH_IDX2  =selectedTemp.CASH_IDX2;
-			var MONEY = selectedTemp.MONEY;
-			var ORG_BCASH_MEMO = selectedTemp.ORG_BCASH_MEMO;
-			var BCASH_MEMO = selectedTemp.ORG_BCASH_MEMO;
-			
+function saveData() {
+	var ACTION = "U";
+	var CASH_IDX = selectedTemp.CASH_IDX;
+	var CASH_DATE = selectedTemp.CASH_DATE;
+	var CASH_GB = selectedTemp.CASH_GB;
+	var CASH_IDX2  =selectedTemp.CASH_IDX2;
+	var MONEY = selectedTemp.MONEY;
+	var ORG_BCASH_MEMO = selectedTemp.ORG_BCASH_MEMO;
+	var BCASH_MEMO = selectedTemp.ORG_BCASH_MEMO;
+	
 
 //이거 가져오고
 
-	// 	ESTI_CODE: Observable(),
-	// ESTI_GB: Observable(),
-	// ESTI_SUBCODE: Observable()
+// 	ESTI_CODE: Observable(),
+// ESTI_GB: Observable(),
+// ESTI_SUBCODE: Observable()
 
 
 
-			var ESTI_CODE = Backend.subject.ESTI_CODE;
-			var BILL_SUBCODE= selectedTemp.BILL_SUBCODE;
-			
+	var ESTI_CODE = Backend.subject.ESTI_CODE;
+	var BILL_SUBCODE= selectedTemp.BILL_SUBCODE;
+	
 
-			var BILL_IDX= selectedTemp.BILL_IDX;
+	var BILL_IDX= selectedTemp.BILL_IDX;
 
-			var BILL_CLSS=selectedTemp.BILL_CLSS;
-			var BILL_RECEIPT =selectedTemp.BILL_RECEIPT;
-			var ESTI_SUB_YN = selectedTemp.ESTI_SUB_YN;
-			var ESTI_NAME= selectedTemp.ESTI_NAME;
-			// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+	var BILL_CLSS=selectedTemp.BILL_CLSS;
+	var BILL_RECEIPT =selectedTemp.BILL_RECEIPT;
+	var ESTI_SUB_YN = selectedTemp.ESTI_SUB_YN;
+	var ESTI_NAME= selectedTemp.ESTI_NAME;
+	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 
-			var ds_bCash;
+	var ds_bCash;
 
-			if (BILL_IDX == "null") {
-				// console.log("BILL_IDX is null 1 " )
-				// console.log("BILL_IDX : " + BILL_IDX);
-				// console.log("moneyValue.value : " + moneyValue.value);
+	if (BILL_IDX == "null") {
+		// console.log("BILL_IDX is null 1 " )
+		// console.log("BILL_IDX : " + BILL_IDX);
+		// console.log("moneyValue.value : " + moneyValue.value);
 
-				ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'" }';
+		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'" }';
 
-				// console.log("BILL_IDX is null 2") 
-			} else {
-				// console.log("BILL_IDX is not null 1 ")
-				// console.log("BILL_IDX : " + BILL_IDX);
+		// console.log("BILL_IDX is null 2") 
+	} else {
+		// console.log("BILL_IDX is not null 1 ")
+		// console.log("BILL_IDX : " + BILL_IDX);
 
-				// console.log("moneyValue.value : " + moneyValue.value);
-
-
-				ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value +'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'" }';
-
-				// console.log("BILL_IDX is not null 2 ")
-			}
-
-			var temp_ds_bCash = '{"ds_bCash":' + ds_bCash+'}';
-
-			// // console.log("ds_bCash : " + temp_ds_bCash);
-
-			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+temp_ds_bCash+'}');
-
-			// console.log("jsonParam : " + JSON.stringify(jsonParam));
+		// console.log("moneyValue.value : " + moneyValue.value);
 
 
-			fetch("http://112.218.172.44:52102/acusr/acc/bil/updatebCashMobile.do", {
-					method: 'POST',
-					headers: {
-						"Content-type": "application/json"
-					},
-					body: JSON.stringify(jsonParam)
-			        }).then(function(response) {
-						var responseData = JSON.stringify(response);
+		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value +'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'" }';
 
-						// console.log("responseData : "+ responseData);
+		// console.log("BILL_IDX is not null 2 ")
+	}
 
-						var responseHeaders = JSON.parse(response._bodyInit);
-						// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
-						// var damnIT = JSON.parse();
-						
-						// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
+	var temp_ds_bCash = '{"ds_bCash":' + ds_bCash+'}';
+
+	// // console.log("ds_bCash : " + temp_ds_bCash);
+
+	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+temp_ds_bCash+'}');
+
+	// console.log("jsonParam : " + JSON.stringify(jsonParam));
 
 
-						temp = responseHeaders.ds_billList[1];
-						
-						// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
+	fetch("http://112.218.172.44:52102/acusr/acc/bil/updatebCashMobile.do", {
+			method: 'POST',
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify(jsonParam)
+	        }).then(function(response) {
+				var responseData = JSON.stringify(response);
 
-						notes.clear();
+				// console.log("responseData : "+ responseData);
+
+				var responseHeaders = JSON.parse(response._bodyInit);
+				// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+				// var damnIT = JSON.parse();
+				
+				// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
 
 
-						// console.log("fefefefefe temp.length : " + temp.length);
+				temp = responseHeaders.ds_billList[1];
+				
+				// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
+
+				notes.clear();
 
 
-						for (var i = 0; i < temp.length; i++) {
-							notes.add(new note(temp[i], i));
-							// console.log(JSON.stringify(notes.value));
-						}
+				// console.log("fefefefefe temp.length : " + temp.length);
 
-			        	var responseData = JSON.stringify(response);
-			        	
-			            return response.json();
-			        }).then(function(jsonData) {
-			            var data = jsonData.results[0];
-			            // console.log("data : " + jsonData.results[0]);
-						// console.log("Reg Succeeded[ios]: " + data.registration_token);
-						// maintext.value = maintext.value + "/n" + data.registration_token;
-			        }).catch(function(err) {
-			            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
-			        });
-				// console.log("saveData was clicked");
-		}
+
+				for (var i = 0; i < temp.length; i++) {
+					notes.add(new note(temp[i], i));
+					// console.log(JSON.stringify(notes.value));
+				}
+
+	        	var responseData = JSON.stringify(response);
+	        	
+	            return response.json();
+	        }).then(function(jsonData) {
+	            var data = jsonData.results[0];
+	            // console.log("data : " + jsonData.results[0]);
+				// console.log("Reg Succeeded[ios]: " + data.registration_token);
+				// maintext.value = maintext.value + "/n" + data.registration_token;
+	        }).catch(function(err) {
+	            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+	        });
+		// console.log("saveData was clicked");
+}
 
 
 
