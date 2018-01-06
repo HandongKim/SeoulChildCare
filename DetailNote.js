@@ -137,9 +137,6 @@ function note(arg, noteIndex) {
 		if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
 			this.reverse=Observable(true);
 		}
-		this.isShow = true;
-	} else {
-		this.isShow = false;
 	}
 	if (arg.BILL_RECEIPT > 1) {
 		// console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
@@ -279,6 +276,7 @@ var SELECTED_DATA;
 var moneyValue= Observable();
 
 
+var selectedDetailNoteVariable = null;
 function pickFromList(args) {
 	// console.log(JSON.stringify(args));
 	// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
@@ -293,7 +291,7 @@ function pickFromList(args) {
 	console.log(JSON.stringify(listDetailNotes._values[args.data.index]));
 
 	//서버에 쓰일 데이터.
-	var selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[args.data.index]);
+	selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[args.data.index]);
 	
 
 
@@ -740,7 +738,7 @@ function datePickerDown() {
 
 		function goChoiceSubject () {
 			var infoJSON = {
-					CASH_GB:CASH_GB.value
+					CASH_GB:selectedDetailNoteVariable.CASH_GB
 				}
 
 				router.push("ChoiceSubject", infoJSON);
