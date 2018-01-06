@@ -265,7 +265,7 @@
 			<SendWork ux:Template="SendWork" router="router" />
 			<Trash ux:Template="Trash" router="router" />
 		</Navigator>
-		<SavePanel ux:Name="savepanel3" Alignment="Bottom" Width="50">
+		<SavePanel ux:Name="savepanel3" Alignment="Bottom">
 			<Image File="{takedPicture}">
 				<Desaturate Amount="1" />
 			</Image>
