@@ -166,7 +166,7 @@
 						
 
 
-						// console.log("responseHeaders.ds_estiList[1] : "+ JSON.parse(temp) );
+						console.log("responseHeaders.ds_estiList[1] : "+ JSON.stringify(temp) );
 
 						// recievedData = temp;
 						for (var i = 0 ; i < temp.length ; i++) {
@@ -264,144 +264,169 @@
 // 	{"DISPLAY_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","DISPLAY_CODE":"912","ESTI_SUBNAME":null,"ESTI_YEAR":"2017","ESTI_GB":"31","ESTI_CODE":"1게90102","ESTI_DISPLAY":"912","ESTI_NAME":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","M_DISPLAY_NAME2":"Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","MEMCODE":"00000000000000000000","M_DISPLAY_NAME":"[912]Ï†ÑÎÖÑÎèÑ Ïù¥ÏõîÏÇ¨ÏóÖÎπÑ","MEMO":"Ï†ÑÎÖÑÎèÑÏóê Ï¢ÖÎ£åÎêòÏßÄ Î™ªÌïú Ïù¥ÏõîÏÇ¨ÏóÖ","SORT_GUBUN":"11","ESTI_PART":"D","ESTI_SUBCODE":null,"BOOK_GB":"01","ESTI_SUB_YN":"N"}
 // ];
 
-		function income(subject) {
-			if (subject.ESTI_GB == "31") {
-				if (subject.ESTI_SUBCODE == null) {
-					this.type = "1";
-				} else {
-					this.type = "2"
-				}
-			} else if (subject.ESTI_GB == "32") {
-				if (subject.ESTI_SUBCODE == null) {
-					this.type = "3";
-				} else {
-					this.type = "4"
-				}
-			}
-			this.text = " " + subject.M_DISPLAY_NAME;
-			this.name = subject.M_DISPLAY_NAME2;
-			this.ESTI_CODE = subject.ESTI_CODE;
-			this.ESTI_GB = subject.ESTI_GB;
-			this.ESTI_SUBCODE = subject.ESTI_SUBCODE;
-			this.ESTI_SUB_YN = subject.ESTI_SUB_YN;
-			console.log("add" + subject.DISPLAY_NAME);
+function income(subject) {
+	if (subject.ESTI_GB == "31") {
+		if (subject.ESTI_SUBCODE == null) {
+			this.type = "1";
+		} else {
+			this.type = "2"
 		}
-
-		var subjects = Observable();
-
-		// for (var i = 0 ; i < recievedData.length ; i++) {
-		// 	subjects.add(new income(recievedData[i]));
-		// }
-
-		function incomeClick() {
-			subjects.clear();
-			// for (var i = 0 ; i < incomeSubject.length ; i++) {
-			// 	subjects.add(incomeSubject[i]);
-			// }
-			// for (var i = 0 ; i < recievedData.length ; i++) {
-			// 	subjects.add(new income(recievedData[i]));
-			// }
-			searchTheSubjectList("31");
+	} else if (subject.ESTI_GB == "32") {
+		if (subject.ESTI_SUBCODE == null) {
+			this.type = "3";
+		} else {
+			this.type = "4"
 		}
+	}
+	this.text = " " + subject.M_DISPLAY_NAME;
+	this.name = subject.M_DISPLAY_NAME2;
+	this.ESTI_CODE = subject.ESTI_CODE;
+	this.ESTI_GB = subject.ESTI_GB;
+	this.ESTI_SUBCODE = subject.ESTI_SUBCODE;
+	this.ESTI_SUB_YN = subject.ESTI_SUB_YN;
+	console.log("add" + subject.DISPLAY_NAME);
+}
 
-		function outcomeClick() {
-			subjects.clear();
-			// for (var i = 0 ; i < outcomeSubject.length ; i++) {
-			// 	subjects.add(outcomeSubject[i]);
-			// }
-			searchTheSubjectList("32");
-		}
+var incomeDataFromServerList = Observable();
 
-		function selectSubject(arg) {
-			// console.log(arg.data.text);
-			if (arg.data.type == 1) {
-				Backend.subject.color.value = "#4C9DFF";
-				Backend.subject.type.value = "목";
-			} else if (arg.data.type == 2) {
-				Backend.subject.color.value = "#8BBDFF";
-				Backend.subject.type.value = "세목";
-			} else if (arg.data.type == 3) {
-				Backend.subject.color.value = "#FF4200";
-				Backend.subject.type.value = "목";
-			} else if (arg.data.type == 4) {
-				Backend.subject.color.value = "#FFBA85";
-				Backend.subject.type.value = "세목";
-			}
-			Backend.subject.isChoice.value = true;
-			Backend.subject.name.value = arg.data.name;
-			Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
-			Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
-			Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
-
-
-
-			console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
-			console.log("Backend.subject.name.value : " + Backend.subject.name.value);
-			console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
-			console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
-
-
-			var infoJSON = {
-				choicesubject_ischoice:Backend.subject.isChoice.value,
-				choicesubject_name:Backend.subject.name.value,
-				choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
-				choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
-			}
-
-			var str = JSON.stringify(infoJSON);
-			ValueFactory.setInfoJson(str);
-
-			router.goBack();
+function incomeDataFromServer(args, index) {
+	this.INDEX = index;
+	this.DISPLAY_NAME = args.DISPLAY_NAME;
+	this.DISPLAY_CODE = args.DISPLAY_CODE;
+	this.ESTI_SUBNAME = args.ESTI_SUBNAME;
+	this.ESTI_YEAR = args.ESTI_YEAR;
+	this.ESTI_GB = args.ESTI_GB;
+	this.ESTI_CODE = args.ESTI_CODE;
+	this.ESTI_DISPLAY = args.ESTI_DISPLAY;
+	this.ESTI_NAME = args.ESTI_NAME;
+	this.M_DISPLAY_NAME2 = args.M_DISPLAY_NAME2;
+	this.MEMCODE = args.MEMCODE;
+	this.M_DISPLAY_NAME = args.M_DISPLAY_NAME;
+	this.MEMO = args.MEMO;
+	this.SORT_GUBUN = args.SORT_GUBUN;
+	this.ESTI_PART = args.ESTI_PART;
+	this.ESTI_SUBCODE = args.ESTI_SUBCODE;
+	this.BOOK_GB = args.BOOK_GB;
+	this.ESTI_SUB_YN = args.ESTI_SUB_YN;
+}
 
 
 
-		}
+var subjects = Observable();
 
-		function getTheSubjectList() {
-			console.log("getTheSubjectList was called");
+// for (var i = 0 ; i < recievedData.length ; i++) {
+// 	subjects.add(new income(recievedData[i]));
+// }
 
-			// fetch("http://112.218.172.44:52102/acusr/acc/bil/getEstiSearchLoad.do", {
-			// 	method: 'POST',
-			// 	headers: {
-			// 		"Content-type": "application/json"
-			// 	},
-			// 	body: JSON.stringify({
-			// 		"SIGNGB":"1",
-			// 		"signedText":mSignedData
-		 //                })
-		 //        }).then(function(response) {
-		 //        	console.log("response.ok :"  + response.ok);
-		 //        	isConnected = response.ok;
+function incomeClick() {
+	subjects.clear();
+	// for (var i = 0 ; i < incomeSubject.length ; i++) {
+	// 	subjects.add(incomeSubject[i]);
+	// }
+	// for (var i = 0 ; i < recievedData.length ; i++) {
+	// 	subjects.add(new income(recievedData[i]));
+	// }
+	searchTheSubjectList("31");
+}
 
-			// 		// staticDsParam = JSON.parse(response._bodyInit);
-		 //   //      	// staticDsParam = staticDsParam.result;
-		 //   //      	staticParamStringValue = JSON.stringify(staticDsParam.dsParam);
-		 //   //      	console.log("staticDsParam : " + staticDsParam);
-			// 		// console.log("staticParamStringValue : " + staticParamStringValue);
-		 //        	if(isConnected == true) {
-		 //        		router.goto("MainPage");
-		 //        	}
-		 //        	console.log("isConnected : " + isConnected);
+function outcomeClick() {
+	subjects.clear();
+	// for (var i = 0 ; i < outcomeSubject.length ; i++) {
+	// 	subjects.add(outcomeSubject[i]);
+	// }
+	searchTheSubjectList("32");
+}
 
-		 //        	var responseData = JSON.stringify(response);
-			// 		console.log("responseData : "+ responseData);
-		 //            return response.json();
-		        	
-		 //        }).then(function(jsonData) {
-		 //            // var data = jsonData.results[0];
+function selectSubject(arg) {
+	// console.log(arg.data.text);
+	if (arg.data.type == 1) {
+		Backend.subject.color.value = "#4C9DFF";
+		Backend.subject.type.value = "목";
+	} else if (arg.data.type == 2) {
+		Backend.subject.color.value = "#8BBDFF";
+		Backend.subject.type.value = "세목";
+	} else if (arg.data.type == 3) {
+		Backend.subject.color.value = "#FF4200";
+		Backend.subject.type.value = "목";
+	} else if (arg.data.type == 4) {
+		Backend.subject.color.value = "#FFBA85";
+		Backend.subject.type.value = "세목";
+	}
+	Backend.subject.isChoice.value = true;
+	Backend.subject.name.value = arg.data.name;
+	Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
+	Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
+	Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
 
-		 //            // console.log("data : " + jsonData.results[0]);
-					
-		 //        }).catch(function(err) {
-		 //            console.log("Reg Succeeded[ios] Error!! : " + err.message);
-		 //        });
+
+
+	console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
+	console.log("Backend.subject.name.value : " + Backend.subject.name.value);
+	console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
+	console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
+
+
+	var infoJSON = {
+		choicesubject_ischoice:Backend.subject.isChoice.value,
+		choicesubject_name:Backend.subject.name.value,
+		choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
+		choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
+	}
+
+	var str = JSON.stringify(infoJSON);
+	ValueFactory.setInfoJson(str);
+
+	router.goBack();
+
+
+
+}
+
+function getTheSubjectList() {
+	console.log("getTheSubjectList was called");
+
+	// fetch("http://112.218.172.44:52102/acusr/acc/bil/getEstiSearchLoad.do", {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		"Content-type": "application/json"
+	// 	},
+	// 	body: JSON.stringify({
+	// 		"SIGNGB":"1",
+	// 		"signedText":mSignedData
+ //                })
+ //        }).then(function(response) {
+ //        	console.log("response.ok :"  + response.ok);
+ //        	isConnected = response.ok;
+
+	// 		// staticDsParam = JSON.parse(response._bodyInit);
+ //   //      	// staticDsParam = staticDsParam.result;
+ //   //      	staticParamStringValue = JSON.stringify(staticDsParam.dsParam);
+ //   //      	console.log("staticDsParam : " + staticDsParam);
+	// 		// console.log("staticParamStringValue : " + staticParamStringValue);
+ //        	if(isConnected == true) {
+ //        		router.goto("MainPage");
+ //        	}
+ //        	console.log("isConnected : " + isConnected);
+
+ //        	var responseData = JSON.stringify(response);
+	// 		console.log("responseData : "+ responseData);
+ //            return response.json();
+        	
+ //        }).then(function(jsonData) {
+ //            // var data = jsonData.results[0];
+
+ //            // console.log("data : " + jsonData.results[0]);
+			
+ //        }).catch(function(err) {
+ //            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+ //        });
 
 
 
 
 
 
-		}
+}
 
 
 

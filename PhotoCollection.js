@@ -69,7 +69,7 @@ function pickerDown() {
 
 
 
-	fetch("http://www.aseoul.co.kr/acusr/acc/bil/getMobileRciptList.do", {
+	fetch("http://112.218.172.44:52102/acusr/acc/bil/getMobileRciptList.do", {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"
