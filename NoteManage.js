@@ -716,7 +716,7 @@ function getBillCashInputLoad () {
 			
 
 			billCashInputDataListTotal.add(JSON.parse(array));
-			console.log("2017.12.31 billCashInputDataListTotal : " + billCashInputDataListTotal);
+			
 			console.log("2017.12.31 billCashInputDataListTotal.getAt(i).NAME : " + billCashInputDataListTotal.getAt(i).NAME);
 
 
@@ -968,13 +968,24 @@ var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"",
 function goDetailNote2 (arg) {
 
 		// pickedSelectOnlineBCashListIndividualDataInstance = Observable();
+	console.log("goDetailNote 2 was clicked");
 
-		console.log("[arg.data.index] : " + arg.data.index);
-		console.log("selectOnlineBCashListDatas[" +arg.data.index +"].CASH_IDX : " + JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX));
-		console.log("selectOnlineBCashListDatas[" +arg.data.index +"].BILL_IDX : " + JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX));
+
+	// console.log("[arg.data.index] : " + arg.data.index);
+	// console.log("selectOnlineBCashListDatas[" +arg.data.index +"].CASH_IDX : " + JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX));
+	// console.log("selectOnlineBCashListDatas[" +arg.data.index +"].BILL_IDX : " + JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX));
+	console.log(JSON.stringify(notes._values[arg.data.index]));
+
+
+
+
+
 
 		// Backend.CASH_IDX = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX);
 		// Backend.BILL_IDX = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_IDX);
+	
+	//선택 된 
+
 	Backend.dataFromNoteManageToDetailNote.INDEX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].INDEX);
 	Backend.dataFromNoteManageToDetailNote.SUBJECT.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].SUBJECT);
 	Backend.dataFromNoteManageToDetailNote.BILL_NURIGB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BILL_NURIGB);
@@ -1041,7 +1052,26 @@ function goDetailNote2 (arg) {
 	Backend.dataFromNoteManageToDetailNote.MONEY_IN.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].MONEY_IN);
 	Backend.dataFromNoteManageToDetailNote.BCASH_MONEY.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BCASH_MONEY);
 
+	Backend.dataFromNoteManageToDetailNote.note_index.value = notes._values[arg.data.index].index;
+	Backend.dataFromNoteManageToDetailNote.note_CASH_DATE.value = notes._values[arg.data.index].CASH_DATE;
+	Backend.dataFromNoteManageToDetailNote.note_type.value = notes._values[arg.data.index].type;
+	Backend.dataFromNoteManageToDetailNote.note_typeColor.value = notes._values[arg.data.index].typeColor;
+	Backend.dataFromNoteManageToDetailNote.note_subTypeColor.value = notes._values[arg.data.index].subTypeColor;
+	Backend.dataFromNoteManageToDetailNote.note_BCASH_MONEY.value = notes._values[arg.data.index].BCASH_MONEY;
+	Backend.dataFromNoteManageToDetailNote.note_isBill.value = notes._values[arg.data.index].isBill;
+	Backend.dataFromNoteManageToDetailNote.note_subType.value = notes._values[arg.data.index].subType;
+	Backend.dataFromNoteManageToDetailNote.note_name.value  = notes._values[arg.data.index].name;
+	Backend.dataFromNoteManageToDetailNote.note_reverse.value = notes._values[arg.data.index].reverse;
+	Backend.dataFromNoteManageToDetailNote.note_isShow.value = notes._values[arg.data.index].isShow;
+	Backend.dataFromNoteManageToDetailNote.note_receipt.value = notes._values[arg.data.index].receipt;
+	Backend.dataFromNoteManageToDetailNote.note_BCASH_MEMO.value = notes._values[arg.data.index].BCASH_MEMO;
 
+
+
+	
+
+
+	router.push("DetailNote");
 
 
 
@@ -1091,22 +1121,7 @@ function goDetailNote2 (arg) {
 			
 		// }
 
-		// Backend.noteManageParamValuesForDetailNote.index.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.bill_idx.value = temp[arg.data.index].BILL_IDX;
-		// Backend.noteManageParamValuesForDetailNote.cash_idx.value = temp[arg.data.index].CASH_IDX;
-		// Backend.noteManageParamValuesForDetailNote.cash_idx2.value = temp[arg.data.index].CASH_IDX2;
-		// Backend.noteManageParamValuesForDetailNote.org_bcash_memo.value = temp[arg.data.index].ORG_BCASH_MEMO;
-		// Backend.noteManageParamValuesForDetailNote.date.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.type.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.money.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.subtype.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.subtypecolor.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.isBill.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.name.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.reverse.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.receipt.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.memo.value = notes._values[arg.data.index].index;
-		// Backend.noteManageParamValuesForDetailNote.selected_data.value = notes._values[arg.data.index].index;
+
 		
 		// console.log("temp[arg.data.index].CASH_IDX : " + temp[arg.data.index].CASH_IDX);
 		// console.log("temp[arg.data.index].BILL_IDX : " + temp[arg.data.index].BILL_IDX);
@@ -1115,7 +1130,7 @@ function goDetailNote2 (arg) {
 
 
 		
-		router.push("DetailNote");
+		
 	}
 
 

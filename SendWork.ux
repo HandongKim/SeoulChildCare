@@ -1,7 +1,181 @@
 <Page ux:Class="SendWork">
 	<Router ux:Dependency="router"/>
 
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+
+		var years = Observable();
+		for (var i = 0 ; i < 30 ; i++) {
+			years.add(2010+i);
+		}
+
+		var months = Observable();
+		for (var i = 0 ; i < 12 ; i++) {
+			months.add(1+i);
+		}
+
+		var days = Observable();
+		for (var i = 0 ; i < 32 ; i++) {
+			days.add(1+i);
+		}
+
+		var recieveFromPickerPanelOn = Observable(false);
+		var fromDate = {
+			year: Observable(2017),
+			month: Observable(12),
+			day: Observable(1)
+		};
+
+		function recieveFromPickerUp() {
+			recieveFromPickerPanelOn.value = true;
+		}
+		function recieveFromPickerDown() {
+			recieveFromPickerPanelOn.value = false;
+		}
+
+		var recieveToPickerPanelOn = Observable(false);
+		var toDate = {
+			year: Observable(2018),
+			month: Observable(1),
+			day: Observable(1)
+		};
+
+		function recieveToPickerUp() {
+			recieveToPickerPanelOn.value = true;
+		}
+		function recieveToPickerDown() {
+			recieveToPickerPanelOn.value = false;
+		}
+
+		module.exports = {
+			years, months, days,
+			fromDate, recieveFromPickerPanelOn, recieveFromPickerUp, recieveFromPickerDown,
+			toDate, recieveToPickerPanelOn, recieveToPickerUp, recieveToPickerDown
+		};
+	</JavaScript>
+
+	<DockPanel ux:Name="recieveFromPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{recieveFromPickerDown}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Grid ColumnCount="6" Columns="4*, 1*, 2*, 1*, 2*, 1*" Width="100%" Dock="Fill" Color="#ddd">
+			<MyPicker Selected="{fromDate.year}" Data="{years}" />
+
+			<Text Value="년" Alignment="Center" FontSize="{margin}*1.5" />
+
+			<MyPicker Selected="{fromDate.month}" Data="{months}" />
+
+			<Text Value="월" Alignment="Center" FontSize="{margin}*1.5" />
+
+			<MyPicker Selected="{fromDate.day}" Data="{days}" />
+
+			<Text Value="일" Alignment="Center" FontSize="{margin}*1.5" />
+		</Grid>
+
+		<WhileTrue Value="{recieveFromPickerPanelOn}">
+			<Change recieveFromPickerPanel.Y="0" Duration=".2" />
+		</WhileTrue>
+	</DockPanel>
+
+	<DockPanel ux:Name="recieveToPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{recieveToPickerDown}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Grid ColumnCount="6" Columns="4*, 1*, 2*, 1*, 2*, 1*" Width="100%" Dock="Fill" Color="#ddd">
+			<MyPicker Selected="{toDate.year}" Data="{years}" />
+
+			<Text Value="년" Alignment="Center" FontSize="{margin}*1.5" />
+
+			<MyPicker Selected="{toDate.month}" Data="{months}" />
+
+			<Text Value="월" Alignment="Center" FontSize="{margin}*1.5" />
+
+			<MyPicker Selected="{toDate.day}" Data="{days}" />
+
+			<Text Value="일" Alignment="Center" FontSize="{margin}*1.5" />
+		</Grid>
+
+		<WhileTrue Value="{recieveToPickerPanelOn}">
+			<Change recieveToPickerPanel.Y="0" Duration=".2" />
+		</WhileTrue>
+	</DockPanel>
+
 	<DockPanel>
+		<!-- 상단바 -->
 		<topBar Dock="Top" />
+
+		<!-- 받은업무함 이름영역 -->
+		<Grid ColumnCount="1" Dock="Top" Color="#FFF">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="보낸업무함" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+		</Grid>
+
+		<!-- 날짜 선택 영역 -->
+		<Panel Color="#5771AA" Dock="Top">
+			<Grid ColumnCount="5" Columns="9*, 1*, 9*, 3*, 5*" Margin="{margin}, {margin}/2" CellSpacing="2">
+				<Rectangle Color="#FFF" Width="100%">
+					<Stroke Width="1" Color="#ddd" />
+					<Text Value="{fromDate.year}-{fromDate.month}-{fromDate.day}" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}/2" />
+
+					<Clicked>
+						<Callback Handler="{recieveFromPickerUp}" />
+					</Clicked>
+				</Rectangle>
+
+				<Text Value="~" Color="White" Alignment="Center" />
+
+				<Rectangle Color="#FFF" Width="100%">
+					<Stroke Width="1" Color="#ddd" />
+					<Text Value="{toDate.year}-{toDate.month}-{toDate.day}" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}/2" />
+
+					<Clicked>
+						<Callback Handler="{recieveToPickerUp}" />
+					</Clicked>
+				</Rectangle>
+
+				<Rectangle Width="100%" Height="100%" Color="#3477BE" CornerRadius="3" Margin="2">
+					<Text Value="검색" Color="White" FontSize="{margin}" Alignment="Center" />
+				</Rectangle>
+
+				<WrapPanel Margin="3" Alignment="CenterLeft">
+					<Text Value="v" Alignment="Center" Margin="2" Color="White" />
+					<Text Value="안읽음" Alignment="Center" FontSize="{margin}" Color="White" />
+				</WrapPanel>
+			</Grid>
+		</Panel>
+
+		<ScrollView ux:Name="recieveWorkScroll" SnapMaxTransform="false" SnapMinTransform="false">
+			<StackPanel Color="#ddd" ItemSpacing="1">
+				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
+					<Panel Width="100%" Height="100%" Color="#fcfcfc">
+						<Text Value="더보기(1/1)" Alignment="Center" />
+						<!-- <Clicked><Callback Handler="{nextPage}"/></Clicked> -->
+					</Panel>
+
+					<Panel Width="100%" Height="100%" Color="#fcfcfc">
+						<Text Value="맨위로" Alignment="Center" />
+						<Clicked>
+							<Set Target="recieveWorkScroll.ScrollPosition" Value="0" />
+						</Clicked>
+					</Panel>
+				</Grid>
+			</StackPanel>
+		</ScrollView>
 	</DockPanel>
 </Page>

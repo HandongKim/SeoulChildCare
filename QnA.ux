@@ -292,7 +292,10 @@
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			qnas.clear();
 
-			fetch("http://www.aseoul.co.kr/acusr/cmt/qnaList.do", {
+			var url = Backend.BASE_URL + Backend.qnaList;
+
+
+			fetch(url, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -358,7 +361,10 @@
 			var dsSearch = '{"AREA":"11110","commClss":"Q","page":"'+page.value+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			console.log("nextPage Call ! : " + dsSearch);
-			fetch("http://www.aseoul.co.kr/acusr/cmt/qnaList.do", {
+
+			var url = Backend.BASE_URL + Backend.qnaList;
+
+			fetch(url, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -404,7 +410,8 @@
 			console.log("dsSearch : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-			fetch("http://www.aseoul.co.kr/acusr/cmt/qnaListDtl.do", {
+			var url = Backend.BASE_URL + Backend.qnaListDtl;
+			fetch(url, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -641,7 +648,11 @@
 			var dsFileList = '{}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
 
-			fetch("http://www.aseoul.co.kr/acusr/cmt/qnaUserUpdate.do", {
+			var url = Backend.BASE_URL + Backend.qnaUserUpdate;
+
+
+
+			fetch(url, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -665,7 +676,9 @@
 			var dsFileList = '{}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
 
-			fetch("http://www.aseoul.co.kr/acusr/cmt/insertQnaCommList.do", {
+			var url = Backend.BASE_URL + Backend.insertQnaCommList;
+
+			fetch(url, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"

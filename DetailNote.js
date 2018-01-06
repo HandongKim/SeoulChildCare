@@ -19,37 +19,31 @@ showText = Observable(false);;
 		// 	}
 		// });
 		
-		var dsParam = Backend.dsParam;
+var dsParam = Backend.dsParam;
 
 
 
-		var	CASH_IDX = Backend.dataFromNoteManageToDetailNote.CASH_IDX.value;
-		var	BILL_IDX = Backend.dataFromNoteManageToDetailNote.BILL_IDX.value;
+var	CASH_IDX = Backend.dataFromNoteManageToDetailNote.CASH_IDX.value;
+var	BILL_IDX = Backend.dataFromNoteManageToDetailNote.BILL_IDX.value;
 
+var	INDEX;
+var	DATE;
+var	TYPE;
+var	MONEY;
+var	SUBTYPECOLOR;
+var	ISBILL;
+var	SUBTYPE;
+var	NAME;
+var	REVERSE;
+var	RECEIPT;
+var	MEMO;
+var SELECTED_DATA;
 
-
-
-
-
-
-		var	INDEX;
-		var	DATE;
-		var	TYPE;
-		var	MONEY;
-		var	SUBTYPECOLOR;
-		var	ISBILL;
-		var	SUBTYPE;
-		var	NAME;
-		var	REVERSE;
-		var	RECEIPT;
-		var	MEMO;
-		var SELECTED_DATA;
-
-		function viewWillAppear() {
-			console.log("Data Initialised");
-			moneyValue.value="";
-			selectedMemo.value="";
-		}
+function viewWillAppear() {
+	console.log("Data Initialised");
+	moneyValue.value="";
+	selectedMemo.value="";
+}
 
 
 
@@ -104,19 +98,23 @@ showText = Observable(false);;
 
 
 
-		var tempCode;
+var tempCode;
 
 
 
-		var temp;
+var temp;
 
-		var notes = Observable();
+var notes = Observable();
+
+var selectMobileOnlineBillList_URL = Backend.BASE_URL + Backend.selectMobileOnlineBillList_URL;
+
+
+
 		
 function note(arg, noteIndex) {
 	this.index = noteIndex;
 	this.date = arg.CASH_DATE.substring(4,6) + "." + arg.CASH_DATE.substring(6,8);
 	this.CASH_IDX = arg.CASH_IDX;
-
 	if (arg.CASH_GB == "1") {
 		this.type = "입금";
 		this.typeColor = "#4C9DFF";
@@ -128,7 +126,6 @@ function note(arg, noteIndex) {
 		this.money = arg.MONEY;
 		this.subTypeColor = "#FFBA85";
 	}
-
 	this.money = arg.MONEY;
 	if(this.money != null) {
 		this.money = this.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
@@ -139,33 +136,27 @@ function note(arg, noteIndex) {
 		this.isBill = false;
 	}
 	if (arg.ESTI_SUB_YN == "Y") {
-		this.subType = "목";
-		this.name = arg.ESTI_NAME;
-	} else {
 		this.subType = "세목";
 		this.name = arg.ESTI_NAME;
+	} else {
+		this.subType = "목";
+		this.name = arg.ESTI_NAME;
 	}
-
 	this.reverse = Observable(false);
 	if (arg.BILL_IDX !=null && arg.ESTI_GB !=null) {
 		if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
 			this.reverse=Observable(true);
 		}
 	}
-
-
 	if (arg.BILL_RECEIPT > 1) {
 		// console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
-
 		this.receipt = "2";
 	} else if (arg.BILL_RECEIPT == 1) {
 		this.receipt = "1";
 	} else {
 		this.receipt = "0";
 	}
-
 	this.memo = arg.BCASH_MEMO;
-
 }
 		
 var listDetailNotes = Observable();
@@ -190,13 +181,33 @@ function listDetailNote (args, index) {
 	this.BILL_IDX = args.BILL_IDX
 }
 
-function getListDetailNote () {
-		// console.log("testAPI clicked ");
+function selectedDetailNote(args) {
+	this.INDEX = args.INDEX;
+	this.CASH_IDX2 = args.CASH_IDX2;
+	this.CASH_GB=args.CASH_GB;
+	this.CASH_IDX= args.CASH_IDX;
+	this.BCASH_MEMO = args.BCASH_MEMO;
+	this.ESTI_CODE = args.ESTI_CODE
+	this.CASH_DATE = args.CASH_DATE
+	this.ESTI_NAME = args.ESTI_NAME
+	this.SUM_MONEY = args.SUM_MONEY
+	this.BILL_RECEIPT = args.BILL_RECEIPT
+	this.MONEY = args.MONEY
+	this.ESTI_SUB_YN = args.ESTI_SUB_YN
+	this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO
+	this.ACTION = args.ACTION
+	this.BILL_SUBCODE = args.BILL_SUBCODE
+	this.BILL_IDX = args.BILL_IDX
+}
 
-		// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
-		// var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
-		// var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
-		// 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
+
+
+function getListDetailNote () {
+// console.log("testAPI clicked ");
+// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
+// var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
+// var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
+// 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
 	    var dsSearch = '{"SEARCH_BCASH":'+CASH_IDX+',"SEARCH_BILL_IDX": '+BILL_IDX+'}';
 		// // console.log(" dsSearch : " + dsSearch);
 	    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
@@ -204,7 +215,9 @@ function getListDetailNote () {
 	    // console.log('jsonParam : ' + jsonParam);
 	    // console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-		fetch("http://112.218.172.44:52102/acusr/acc/bil/selectMobileOnlineBillList.do", {
+
+
+		fetch(selectMobileOnlineBillList_URL, {
 			method: 'POST',
 			headers: {
 				"Content-type": "application/json"
@@ -227,6 +240,7 @@ function getListDetailNote () {
 				console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
 
 				notes.clear();
+				listDetailNotes.clear();
 
 
 				// console.log("fefefefefe temp.length : " + temp.length);
@@ -257,33 +271,59 @@ function getListDetailNote () {
 		var selectedMoney = Observable();
 		var CASH_GB = Observable();
 
+
+
 		function pickFromList(args) {
 			// console.log(JSON.stringify(args));
-				// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
-				var selectedYear = temp[args.data.index].CASH_DATE.substr(0,4);
-				var selectedMonth = temp[args.data.index].CASH_DATE.substr(4,2);
-				var selectedDay = temp[args.data.index].CASH_DATE.substr(6,2);
+			// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
 
-				selectedTemp = temp[args.data.index];
-				var selectedSubject = temp[args.data.index].ESTI_NAME;
+			console.log("args.data.index : " + args.data.index);
+			console.log(JSON.stringify(listDetailNotes._values[args.data.index]));
 
-				CASH_GB.value = temp[args.data.index].CASH_GB;
 
-				console.log("temp[args.data.index].CASH_GB : " +  CASH_GB.value);
 
-				selectedMemo.clear();
-				selectedMemo.value= selectedTemp.BCASH_MEMO;
 
-				year.value=selectedYear;
-				month.value = selectedMonth;
-				day.value = selectedDay;
-				tempCode = args.data.ESTI_CODE;
-				Backend.subject.isChoice.value = true;
-				Backend.subject.color.value = args.data.subTypeColor;
-				Backend.subject.type.value = args.data.subType;
-				Backend.subject.name.value = selectedSubject;
 
-				moneyValue.value = temp[args.data.index].MONEY;
+			//서버에 쓰일 데이터.
+			var selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[args.data.index]);
+			
+
+
+			var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
+			var selectedMonth = selectedDetailNoteVariable.CASH_DATE.substr(4,2);
+			var selectedDay = selectedDetailNoteVariable.CASH_DATE.substr(6,2);
+			selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
+			selectedMoney.value = Backend.dataFromNoteManageToDetailNote.BCASH_MONEY;
+
+			year.value=selectedYear;
+			month.value = selectedMonth;
+			day.value = selectedDay;
+			
+
+			subType.isChoice.value = notes._values[args.data.index].isChoice;
+			subType.color.value = notes._values[args.data.index].color;
+			subType.type.value = notes._values[args.data.index].type;
+			subType.text.value = notes._values[args.data.index].text;
+
+
+			// selectedTemp = temp[args.data.index];
+			// var selectedSubject = temp[args.data.index].ESTI_NAME;
+
+			// CASH_GB.value = temp[args.data.index].CASH_GB;
+
+			// console.log("temp[args.data.index].CASH_GB : " +  CASH_GB.value);
+
+			// selectedMemo.clear();
+			// selectedMemo.value= selectedTemp.BCASH_MEMO;
+
+			 
+			// tempCode = args.data.ESTI_CODE;
+			// Backend.subject.isChoice.value = true;
+			// Backend.subject.color.value = args.data.subTypeColor;
+			// Backend.subject.type.value = args.data.subType;
+			// Backend.subject.name.value = selectedSubject;
+
+			// moneyValue.value = temp[args.data.index].MONEY;
 
 
 				// console.log("selectedTemp : " + JSON.stringify(selectedTemp));
@@ -299,71 +339,71 @@ function getListDetailNote () {
 		
 
 
-		var uploadOn = Observable(false);
+var uploadOn = Observable(false);
 
-		function tryUpload() {
-			uploadOn.value = true;
-		}
+function tryUpload() {
+	uploadOn.value = true;
+}
 
-		function cancelUpload() {
-			uploadOn.value = false;
-		}
+function cancelUpload() {
+	uploadOn.value = false;
+}
 
-		var pickerOn = Observable(false);
-		var selectedData = Observable("직접등록");
-		var pickerData = Observable("직접등록", "계좌등록", "카드등록", "모바일등록", "급여등록", "수납등록");
+var pickerOn = Observable(false);
+var selectedData = Observable("직접등록");
+var pickerData = Observable("직접등록", "계좌등록", "카드등록", "모바일등록", "급여등록", "수납등록");
 
-		function pickerUp() {
-			pickerOn.value = true;
-		}
-		function pickerDown() {
-			pickerOn.value = false;
-		}
+function pickerUp() {
+	pickerOn.value = true;
+}
+function pickerDown() {
+	pickerOn.value = false;
+}
 
-		var subType = {
-			isChoice: Backend.subject.isChoice,
-			color: Backend.subject.color,
-			type: Backend.subject.type,
-			text: Backend.subject.name
-		};
+var subType = {
+	isChoice: Backend.subject.isChoice,
+	color: Backend.subject.color,
+	type: Backend.subject.type,
+	text: Backend.subject.name
+};
 
-		var choiceSubjectPanelOn = Observable(false);
-		function choiceSubjectPanelUp() {
+var choiceSubjectPanelOn = Observable(false);
+function choiceSubjectPanelUp() {
 
-			// console.log("huh?????????? ");
+	// console.log("huh?????????? ");
 
-			// searchTheSubjectList();
-			choiceSubjectPanelOn.value = true;
-		}
-		function choiceSubjectPanelDown() {
-			choiceSubjectPanelOn.value = false;
-		}
+	// searchTheSubjectList();
+	choiceSubjectPanelOn.value = true;
+}
+function choiceSubjectPanelDown() {
+	choiceSubjectPanelOn.value = false;
+}
 
-		var year = Observable(2017);
-		var years = Observable();
-		for (var i = 0 ; i < 30 ; i++) {
-			years.add(2002+i);
-		}
-		var month = Observable(11);
-		var months = Observable();
-		for (var i = 0 ; i < 12 ; i++) {
-			months.add(1+i);
-		}
-		var day = Observable(11);
-		var days = Observable();
-		for (var i = 0 ; i < 31 ; i++) {
-			days.add(1+i);
-		}
+var year = Observable(2017);
+var years = Observable();
+for (var i = 0 ; i < 30 ; i++) {
+	years.add(2002+i);
+}
+var month = Observable(11);
+var months = Observable();
+for (var i = 0 ; i < 12 ; i++) {
+	months.add(1+i);
+}
+var day = Observable(11);
+var days = Observable();
+for (var i = 0 ; i < 31 ; i++) {
+	days.add(1+i);
+}
 
-		var moneyValue= Observable();
+var moneyValue= Observable();
 
-		var datePickerOn = Observable(false);
-		function datePickerUp() {
-			datePickerOn.value = true;
-		}
-		function datePickerDown() {
-			datePickerOn.value = false;
-		}
+var datePickerOn = Observable(false);
+function datePickerUp() {
+	datePickerOn.value = true;
+}
+function datePickerDown() {
+	datePickerOn.value = false;
+}
 
 
 
@@ -675,6 +715,14 @@ function getListDetailNote () {
 		// 	}
 		// });
 
+		function goChoiceSubject () {
+			var infoJSON = {
+					CASH_GB:CASH_GB.value
+				}
+
+				router.push("ChoiceSubject", infoJSON);
+		}
+
 
 
 		module.exports = {
@@ -688,15 +736,7 @@ function getListDetailNote () {
 				router.push("PhotoCollection", {type: "upload"});
 				uploadOn.value = false;
 			},
-			goChoiceSubject: function() {
-
-				// searchTheSubjectList();
-				var infoJSON = {
-					CASH_GB:CASH_GB.value
-				}
-
-				router.push("ChoiceSubject", infoJSON);
-			},
+			goChoiceSubject,
 			getListDetailNote,pickFromList, moneyValue,viewWillAppear, saveData,  deleteData, selectedMemo,
 
 			goShowFile: function() {

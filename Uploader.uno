@@ -35,15 +35,6 @@ public class Uploader : NativeModule
         //debug_log param;
         debug_log("Uploader param : " + param);
 
-
-
-
-
-
-
-
-
-
         var imageData = Uno.IO.File.ReadAllBytes(path);
         var fileType = "image/png";
         if (fileExt == ".jpg" || fileExt == ".jpeg")

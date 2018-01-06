@@ -15,6 +15,19 @@ var getBillCashInputLoad_URL ="/acusr/acc/bil/getBillCashInputLoad.do";
 var selectMobileOnlineBillList_URL = "/acusr/acc/bil/selectMobileOnlineBillList.do";
 
 
+//Notice [공지사항 URL]
+var notiUserMipList = "/acusr/cmt/notiUserMipList.do";
+var noticeUserMipDetailList = "/acusr/cmt/noticeUserMipDetailList.do";
+
+
+//QnA [질의응답 URL]
+var qnaList = "/acusr/cmt/qnaList.do";
+var qnaListDtl = "/acusr/cmt/qnaListDtl.do"
+var qnaUserUpdate = "/acusr/cmt/qnaUserUpdate.do"
+var insertQnaCommList = "/acusr/cmt/insertQnaCommList.do";
+
+
+
 
 
 var subject = {
@@ -121,7 +134,22 @@ var dataFromNoteManageToDetailNote = {
 	ESTI_SUB_YN:Observable(),
 	BILL_KEEPCODE:Observable(),
 	MONEY_IN:Observable(),
-	BCASH_MONEY:Observable()
+	BCASH_MONEY:Observable(),
+
+	note_index:Observable(),
+	note_CASH_DATE:Observable(),
+	note_type:Observable(),
+	note_typeColor:Observable(),
+	note_subTypeColor:Observable(),
+	note_BCASH_MONEY:Observable(),
+	note_isBill:Observable(),
+	note_subType:Observable(),
+	note_name:Observable(),
+	note_reverse:Observable(),
+	note_isShow:Observable(),
+	note_receipt:Observable(),
+	note_BCASH_MEMO:Observable()
+
 }
 
 
@@ -137,5 +165,6 @@ var dataFromNoteManageToDetailNote = {
 module.exports = {
 	subject, dsParam, noteManageParamValuesForDetailNote, choiceSubjectList, 
 	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, getBillCashInputLoad_URL,
-	selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote
+	selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList,
+	noticeUserMipDetailList, qnaList, qnaListDtl,qnaUserUpdate
 };

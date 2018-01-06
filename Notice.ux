@@ -70,12 +70,17 @@
 			notices.clear();
 
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+
+			var url = Backend.BASE_URL + Backend.notiUserMipList;
+
+
+
 			var dsSearch = '{"AREA":"11110","commClss":"N","fCombo":"ALL","page":"1","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
 
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-			fetch("http://www.aseoul.co.kr/acusr/cmt/notiUserMipList.do", {
+			fetch(url, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -221,8 +226,9 @@
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
 			notices.clear();
+			var url = Backend.BASE_URL + Backend.notiUserMipList;
 
-			fetch("http://www.aseoul.co.kr/acusr/cmt/notiUserMipList.do", {
+			fetch(url, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -296,8 +302,11 @@
 			var dsSearch = '{"AREA":"11110","commClss":"N","fCombo":"ALL","page":"'+page.value+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
 			// console.log("nextPage : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+			var url = Backend.BASE_URL + Backend.notiUserMipList;
 
-			fetch("http://www.aseoul.co.kr/acusr/cmt/notiUserMipList.do", {
+			var url = Backend.BASE_URL + Backend.notiUserMipList;
+
+			fetch(url, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -475,7 +484,9 @@
 			console.log("dsSearch : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-			fetch("http://www.aseoul.co.kr/acusr/cmt/noticeUserMipDetailList.do", {
+			var url = Backend.BASE_URL + Backend.noticeUserMipDetailList;
+
+			fetch(url, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"

@@ -104,13 +104,14 @@
 		function sendPicture()
 		{
 			console.log("sendPicture was called");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			var dsSearch = '{"ATCHMNFL_YM":"11110","FILE_SE":"N","DOWN_LVL":"ALL"}';
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
 
-			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"dsSearch": '+dsSearch+'}');
 
+			console.log("2018.01.05 jsonParam : " + JSON.stringify(jsonParam));
 
 
 
