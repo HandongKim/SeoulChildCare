@@ -37,9 +37,26 @@ function viewWillAppear() {
 
 
 
+// this.Parameter.onValueChanged(null,function(x) {
+// 	if (x == null) {
 
+// 	}else {
+// 		CASH_GB = Observable(x.CASH_GB);
+// 		if (CASH_GB.value == "1") {
+// 			incomeTF.value = false;
+// 		} else {
+// 			incomeTF.value = true;
+// 		}
+		
+// 		console.log("2018.01.01 CASH_GB : " + CASH_GB.value);
+// 		searchTheSubjectList("3"+CASH_GB.value);
+// 	}
+// });
 
-
+this.Parameter.onValueChanged(null, function(args) {
+	console.log(JSON.stringify(args));
+	console.log("parameter was changed");
+});
 
 
 
@@ -282,6 +299,7 @@ var moneyValue= Observable();
 
 
 var selectedDetailNoteVariable = null;
+
 function pickFromList(args) {
 	// console.log(JSON.stringify(args));
 	// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);

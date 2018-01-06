@@ -384,7 +384,7 @@ function selectSubject(arg) {
 	var str = JSON.stringify(infoJSON);
 	ValueFactory.setInfoJson(str);
 
-	// router.goBack();
+	router.goBack();
 
 
 
