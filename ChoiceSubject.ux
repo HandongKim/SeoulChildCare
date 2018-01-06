@@ -94,6 +94,7 @@
 			{type: "3", text: " [811] 과년도 지출"}
 		];
 
+		var incomeTF = Observable(true);
 
 		var CASH_GB;
 
@@ -101,6 +102,11 @@
 			if (x == null) {
 			}else {
 				CASH_GB = Observable(x.CASH_GB);
+				if (CASH_GB.value == "1") {
+					incomeTF.value = false;
+				} else {
+					incomeTF.value = true;
+				}
 				console.log("2018.01.01 CASH_GB : " + CASH_GB.value);
 				searchTheSubjectList("3"+CASH_GB.value);
 			}
@@ -405,7 +411,7 @@
 
 
 		module.exports = {
-			subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList
+			subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList, incomeTF
 		};
 	</JavaScript>
 
@@ -430,7 +436,7 @@
 						<Toggle Target="changeSubject" />
 					</Clicked>
 
-					<WhileTrue ux:Name="changeSubject">
+					<WhileTrue ux:Name="changeSubject" Value="{incomeTF}">
 						<Change incomePanel.Color="#FFFFFF" />
 						<Change incomeText.Color="#333333" />
 						<Change outcomePanel.Color="#333333" />
