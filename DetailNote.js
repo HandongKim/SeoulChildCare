@@ -149,10 +149,16 @@ function note(arg, noteIndex) {
 		this.name = arg.ESTI_NAME;
 	}
 
-	this.reverse = Observable(false);
-	if (arg.BILL_IDX !=null && arg.ESTI_GB !=null) {
-		if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
-			this.reverse = Observable(true);
+	this.reverse = false;
+	if (noteIndex == tempIndex) {
+		if (Backend.subject.ESTI_CODE.value.substr(0,1) != arg.ESTI_CODE.substr(0,1)) {
+			this.reverse = true;
+		}
+	} else {
+		if (arg.BILL_IDX !=null && arg.ESTI_GB !=null) {
+			if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
+				this.reverse = true;
+			}
 		}
 	}
 	if(arg.BILL_IDX != null) {
@@ -772,18 +778,18 @@ function saveData() {
 				router.push("ChoiceSubject", infoJSON);
 		}
 
-		Backend.subject.ESTI_CODE.onValueChanged(function(x) {
-			if (x != null) {
-				if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
-					notes._values[tempIndex].reverse.value = true;
-				} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
-					notes._values[tempIndex].reverse.value = true;
-				}
-				console.log("now type : " + notes._values[tempIndex].type);
-				console.log("ESTI_CODE Changed : " + x.substr(0,1));
-				console.log("reverse state : " + notes._values[tempIndex].reverse.value);
-			}
-		});
+		// Backend.subject.ESTI_CODE.onValueChanged(function(x) {
+		// 	if (x != null) {
+		// 		if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
+		// 			notes._values[tempIndex].reverse.value = true;
+		// 		} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
+		// 			notes._values[tempIndex].reverse.value = true;
+		// 		}
+		// 		console.log("now type : " + notes._values[tempIndex].type);
+		// 		console.log("ESTI_CODE Changed : " + x.substr(0,1));
+		// 		console.log("reverse state : " + notes._values[tempIndex].reverse.value);
+		// 	}
+		// });
 
 
 
