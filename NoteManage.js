@@ -1069,7 +1069,8 @@ function goDetailNote2 (arg) {
 
 
 	
-
+	Backend.subject.name.value = "게정과목 선택";
+    Backend.subject.isChoice.value = false;
 
 	router.push("DetailNote");
 
@@ -1141,6 +1142,8 @@ module.exports = {
 	unReg, checkClick,
 	year, month, years, months, pickerOn, pickerUp, pickerDown, preClick, nextClick, pickerOn2, pickerOn3, pickerUp2, pickerDown2, selectedType, type, notes,
 	goDetailNote1: function(arg) {
+		Backend.subject.name.value = "게정과목 선택";
+        Backend.subject.isChoice.value = false;
 		router.push("DetailNote", "new");
 	},goDetailNote2,
 	getBillCashInputLoad, billCashInputDataList	,pickerUp3, pickerDown3, selectOnlineBCashList, selectedbillCashInputDataList,

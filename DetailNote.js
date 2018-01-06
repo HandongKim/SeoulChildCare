@@ -275,6 +275,8 @@ function getListDetailNote () {
 	        }).catch(function(err) {
 	            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
 	        });
+
+	        
 	}
 
 		var selectedTemp;
@@ -305,10 +307,10 @@ function pickFromList(args) {
 	// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
 
 	moneyValue.clear();
-	subType.isChoice.clear();
-	subType.color.clear();
-	subType.type.clear();
-	subType.text.clear();
+	// subType.isChoice.clear();
+	// subType.color.clear();
+	// subType.type.clear();
+	// subType.text.clear();
 
 	console.log("args.data.index : " + args.data.index);
 	console.log(JSON.stringify(listDetailNotes._values[args.data.index]));
@@ -341,11 +343,13 @@ console.log("notes._values[args.data.index].text : " + notes._values[args.data.i
 
 
 
+	
 
-	subType.isChoice.value = true;
-	subType.color.value = notes._values[args.data.index].subTypeColor;
-	subType.type.value = notes._values[args.data.index].subType;
-	subType.text.value = notes._values[args.data.index].name;
+
+Backend.subject.isChoice.value = true;
+Backend.subject.name.value = notes._values[args.data.index].name;
+Backend.subject.color.value = notes._values[args.data.index].subTypeColor;
+Backend.subject.type.value = notes._values[args.data.index].subType;
 
 
 
@@ -405,10 +409,10 @@ function pickerDown() {
 }
 
 var subType = {
-	isChoice: Observable(),
-	color: Observable(),
-	type: Observable(),
-	text: Observable()
+	isChoice: Backend.subject.isChoice,
+	color: Backend.subject.color,
+	type: Backend.subject.type,
+	text: Backend.subject.name
 };
 
 var choiceSubjectPanelOn = Observable(false);
