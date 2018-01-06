@@ -67,8 +67,6 @@ var noteManageParamValuesForDetailNote = {
 	selected_data: Observable()
 }
 
-
-
 var dataFromNoteManageToDetailNote = {
 	INDEX:Observable(),
 	SUBJECT:Observable(),
@@ -135,7 +133,6 @@ var dataFromNoteManageToDetailNote = {
 	BILL_KEEPCODE:Observable(),
 	MONEY_IN:Observable(),
 	BCASH_MONEY:Observable(),
-
 	note_index:Observable(),
 	note_CASH_DATE:Observable(),
 	note_type:Observable(),
@@ -152,7 +149,15 @@ var dataFromNoteManageToDetailNote = {
 
 }
 
-
+var dataFromChoiceSubjectToDetailNote = {
+	type:Observable(),
+	text:Observable(),
+	name:Observable(),
+	ESTI_CODE:Observable(),
+	ESTI_GB:Observable(),
+	ESTI_SUBCODE:Observable(),
+	ESTI_SUB_YN:Observable()
+}
 
 
 
@@ -166,5 +171,5 @@ module.exports = {
 	subject, dsParam, noteManageParamValuesForDetailNote, choiceSubjectList, 
 	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, getBillCashInputLoad_URL,
 	selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList,
-	noticeUserMipDetailList, qnaList, qnaListDtl,qnaUserUpdate
+	noticeUserMipDetailList, qnaList, qnaListDtl,qnaUserUpdate, dataFromChoiceSubjectToDetailNote
 };

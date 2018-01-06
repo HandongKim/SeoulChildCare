@@ -171,6 +171,7 @@
 						// recievedData = temp;
 						for (var i = 0 ; i < temp.length ; i++) {
 							subjects.add(new income(temp[i]));
+							incomeDataFromServerList.add(new incomeDataFromServer(temp[i], i));
 						}
 
 			            return response.json();
@@ -339,6 +340,11 @@ function outcomeClick() {
 
 function selectSubject(arg) {
 	// console.log(arg.data.text);
+
+	console.log(JSON.stringify(arg));
+
+
+
 	if (arg.data.type == 1) {
 		Backend.subject.color.value = "#4C9DFF";
 		Backend.subject.type.value = "목";
@@ -352,6 +358,8 @@ function selectSubject(arg) {
 		Backend.subject.color.value = "#FFBA85";
 		Backend.subject.type.value = "세목";
 	}
+
+	
 	Backend.subject.isChoice.value = true;
 	Backend.subject.name.value = arg.data.name;
 	Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
@@ -376,7 +384,7 @@ function selectSubject(arg) {
 	var str = JSON.stringify(infoJSON);
 	ValueFactory.setInfoJson(str);
 
-	router.goBack();
+	// router.goBack();
 
 
 
