@@ -118,7 +118,7 @@
 
 
 
-			Uploader.send(targetImgPath.value, uploadUrl, JSON.stringify(jsonParam)).then(function(response) {
+			Uploader.send(targetImgPath.value, uploadUrl, Backend.dsParam, dsSearch).then(function(response) {
 				console.log("upload complete.");
 				console.log(JSON.stringify(response));
 			});
