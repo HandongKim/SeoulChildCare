@@ -122,7 +122,7 @@
 		<StackPanel Margin="{margin}">
 			<Text Value="인증서 가져오는 방법" FontSize="{margin}*1.1" Color="Black" Alignment="CenterLeft" />
 			<Text Value="1. 한국전자인증 공인인증서 페이지에 접속합니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
-			<Text Value="    (http://www.unisign.go.kr)" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+			<Text Value="    (http://www.unisign.co.kr)" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
 			<WrapPanel>
 				<Text Value="2. 공인인증서" FontSize="{margin}*0.8" Alignment="CenterLeft" />
 				<Text Value=" 이동 버튼" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
@@ -234,7 +234,7 @@
 		<StackPanel Margin="{margin}">
 			<Text Value="인증서 내보내는 방법" FontSize="{margin}*1.1" Color="Black" Alignment="CenterLeft" />
 			<Text Value="1. 한국전자인증 공인인증서 페이지에 접속합니다." FontSize="{margin}*0.8" Alignment="CenterLeft" />
-			<Text Value="    (http://www.unisign.go.kr)" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
+			<Text Value="    (http://www.unisign.co.kr)" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
 			<WrapPanel>
 				<Text Value="2. 공인인증서" FontSize="{margin}*0.8" Alignment="CenterLeft" />
 				<Text Value=" 이동 버튼" FontSize="{margin}*0.8" Color="Black" Alignment="CenterLeft" />
