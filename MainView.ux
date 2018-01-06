@@ -30,10 +30,12 @@
 			Camera.takePicture().then(function(image)
 			{
 				// 찍은 사진 리사이징하기
-				var args = { desiredWidth:480, desiredHeight:640 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
-				ImageTools.resize(image, args).then(function(resizedImage) {
+				// 이미지 사이즈 다시 줄이실 때는 아래 두줄 주석 지우세요.
+				// var args = { desiredWidth:480, desiredHeight:640 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
+				// ImageTools.resize(image, args).then(function(resizedImage) {
 					// 리사이징한 사진 savepanel3에 표시
-					takedPicture.value = resizedImage.path;
+					// 다시 사이즈 줄이실 때는 image.path 를 resizedImage.path로 바꾸세요.
+					takedPicture.value = image.path;
 					// targetImgPath.value = resizedImage.path;
 					sendPictureBtnEnabled.value = true;
 					// 리사이징한 사진 저정부분은 삭제
@@ -93,9 +95,10 @@
 					}, 2000);
 
 					// sendPicture();
-				}).catch(function(reason) {
-					console.log("Couldn't resize image: " + reason);
-				});
+				// 이미지 사이즈 다시 줄이실 때는 아래 세줄 주석 지우세요.
+				// }).catch(function(reason) {
+				// 	console.log("Couldn't resize image: " + reason);
+				// });
 			}).catch(function(reason) {
 				console.log("Couldn't take picture: " + reason);
 			});
