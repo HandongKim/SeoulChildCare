@@ -53,10 +53,10 @@ function viewWillAppear() {
 // 	}
 // });
 
-this.Parameter.onValueChanged(null, function(args) {
-	console.log(JSON.stringify(args));
-	console.log("parameter was changed");
-});
+// this.Parameter.onValueChanged(null, function(args) {
+// 	console.log(JSON.stringify(args));
+// 	console.log("parameter was changed");
+// });
 
 
 
@@ -305,7 +305,12 @@ var selectedDetailNoteVariable = null;
 var tempIndex;
 
 function pickFromList(args) {
+
+	console.log("args.data.index : " + args.data.index);
+
 	tempIndex = args.data.index;
+
+	console.log("tempIndex : " + tempIndex);
 	// console.log(JSON.stringify(args));
 	// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
 
@@ -335,24 +340,16 @@ function pickFromList(args) {
 	day.value = selectedDay;
 	
 	moneyValue.value = notes._values[args.data.index].money;
-
 	
 	console.log("notes._values[args.data.index] : " + JSON.stringify(notes._values[args.data.index]));
+	console.log("notes._values[args.data.index].color : " + notes._values[args.data.index].color);
+	console.log("notes._values[args.data.index].type : " + notes._values[args.data.index].type);
+	console.log("notes._values[args.data.index].text : " + notes._values[args.data.index].text);
 
-
-console.log("notes._values[args.data.index].color : " + notes._values[args.data.index].color);
-console.log("notes._values[args.data.index].type : " + notes._values[args.data.index].type);
-console.log("notes._values[args.data.index].text : " + notes._values[args.data.index].text);
-
-
-
-	
-
-
-Backend.subject.isChoice.value = true;
-Backend.subject.name.value = notes._values[args.data.index].name;
-Backend.subject.color.value = notes._values[args.data.index].subTypeColor;
-Backend.subject.type.value = notes._values[args.data.index].subType;
+	Backend.subject.isChoice.value = true;
+	Backend.subject.name.value = notes._values[args.data.index].name;
+	Backend.subject.color.value = notes._values[args.data.index].subTypeColor;
+	Backend.subject.type.value = notes._values[args.data.index].subType;
 
 
 
@@ -773,8 +770,12 @@ function saveData() {
 				router.push("ChoiceSubject", infoJSON);
 		}
 
-		Backend.subject.ESTI_CODE.onValueChanged(function(x) {
+		Backend.subject.ESTI_CODE.onValueChanged(null, function(x) {
+
+			console.log("x.stringify 2018.01.06 : " + JSON.stringify(x));
 			if (x != null) {
+				console.log("notes._values[tempIndex].type : " + notes._values[tempIndex].type);	
+
 				if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 					subType.reverse.value = true;
 				} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
