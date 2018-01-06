@@ -111,7 +111,7 @@
 		var recievedData;
 
 		function searchTheSubjectList (esti_gb) {
-			var esti_gb = "";
+			// var esti_gb = "";
 			// if (CASH_GB.value == "1") {
 			// 		esti_gb = "31"
 			// } else if (CASH_GB.value =="2") {
