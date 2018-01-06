@@ -384,7 +384,26 @@ function selectSubject(arg) {
 	var str = JSON.stringify(infoJSON);
 	ValueFactory.setInfoJson(str);
 
-	// router.goBack();
+	router.getRoute(function(route) {
+		console.log("goBackToPrevious From " + route[0]);
+		if (route[0] == "NoteManage") {
+			router.goto("MainPage");
+		} else if (route[0] == "DetailNote") {
+			router.goto("NoteManage");
+		} else if (route[0] == "ShowFile") {
+			router.goto("DetailNote");
+		} else if (route[0] == "ChoiceSubject") {
+			router.goto("DetailNote");
+		} else if (route[0] == "Notice") {
+			router.goto("MainPage");
+		} else if (route[0] == "ApplyEdu") {
+			router.goto("MainPage");
+		} else if (route[0] == "QnA") {
+			router.goto("MainPage");
+		} else {
+			router.goBack();
+		}
+	});
 
 
 
