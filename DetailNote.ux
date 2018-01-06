@@ -432,6 +432,13 @@
 					<Stroke Width="1" Color="#ccc" />
 					<WrapPanel Alignment="CenterLeft">
 						<WhileTrue Value="{subType.isChoice}">
+							<WhileTrue Value="{subType.reverse}">
+								<Rectangle BoxSizing="FillAspect" Aspect="1" CornerRadius="3" Width="{margin}*1.5" Color="#F00" Alignment="Center" Margin="1,0">
+									<RegularPolygon Sides="3" Width="90%" Height="90%">
+										<Stroke Width="2" Color="White" />
+									</RegularPolygon>
+								</Rectangle>
+							</WhileTrue>
 							<Rectangle Margin="2,0" CornerRadius="3" Color="{subType.color}">
 								<Text Value="{subType.type}" Color="White" Alignment="Center" Margin="2" />
 							</Rectangle>
