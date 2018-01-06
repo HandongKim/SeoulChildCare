@@ -138,6 +138,11 @@ function note(arg, noteIndex) {
 			this.reverse=Observable(true);
 		}
 	}
+	if(arg.BILL_IDX != null) {
+		this.isShow = true;
+	} else {
+		this.isShow = false;
+	}
 	if (arg.BILL_RECEIPT > 1) {
 		// console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
 		this.receipt = "2";
