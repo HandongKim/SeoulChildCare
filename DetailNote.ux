@@ -42,7 +42,8 @@
 
 
 
-	<StackPanel ux:Class="Note2" Width="100%" Color="White">
+	
+<StackPanel ux:Class="Note2" Width="100%" Color="White">
 		<Clicked>
 			<Callback Handler="{pickFromList}" />
 		</Clicked>
@@ -130,7 +131,6 @@
 		</Grid>
 		<Text Value="{memo}" Margin="{margin}/2" /> -->
 	</StackPanel>
-
 
 	<!-- <DockPanel ux:Name="choiceSubjectPanel" Width="100%" Height="100%" X="100%" Color="White">
 		<Panel Dock="Top">
@@ -420,7 +420,7 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF">
 					<Stroke Width="1" Color="#ccc" />
-					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" />
+					<TextInput Value="{moneyValue}원" Alignment="Right" PlaceholderText="금액" />
 				</Rectangle>
 
 				<Image File="Images/btn_02.png" Alignment="Center" RowSpan="3">

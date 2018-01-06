@@ -131,6 +131,7 @@ function note(arg, noteIndex) {
 		this.subType = "목";
 		this.name = arg.ESTI_NAME;
 	}
+
 	this.reverse = Observable(false);
 	if (arg.BILL_IDX !=null && arg.ESTI_GB !=null) {
 		if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
@@ -272,10 +273,18 @@ var	REVERSE;
 var	RECEIPT;
 var	MEMO;
 var SELECTED_DATA;
+var moneyValue= Observable();
+
 
 function pickFromList(args) {
 	// console.log(JSON.stringify(args));
 	// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
+
+	moneyValue.clear();
+	subType.isChoice.clear();
+	subType.color.clear();
+	subType.type.clear();
+	subType.text.clear();
 
 	console.log("args.data.index : " + args.data.index);
 	console.log(JSON.stringify(listDetailNotes._values[args.data.index]));
@@ -296,14 +305,25 @@ function pickFromList(args) {
 	month.value = selectedMonth;
 	day.value = selectedDay;
 	
+	moneyValue.value = notes._values[args.data.index].money;
 
-
+	
 	console.log("notes._values[args.data.index] : " + JSON.stringify(notes._values[args.data.index]));
 
+
+console.log("notes._values[args.data.index].color : " + notes._values[args.data.index].color);
+console.log("notes._values[args.data.index].type : " + notes._values[args.data.index].type);
+console.log("notes._values[args.data.index].text : " + notes._values[args.data.index].text);
+
+
+
+
 	subType.isChoice.value = true;
-	subType.color.value = notes._values[args.data.index].color;
-	subType.type.value = notes._values[args.data.index].type;
-	subType.text.value = notes._values[args.data.index].text;
+	subType.color.value = notes._values[args.data.index].subTypeColor;
+	subType.type.value = notes._values[args.data.index].subType;
+	subType.text.value = notes._values[args.data.index].name;
+
+
 
 
 	// selectedTemp = temp[args.data.index];
@@ -361,10 +381,10 @@ function pickerDown() {
 }
 
 var subType = {
-	isChoice: Backend.subject.isChoice,
-	color: Backend.subject.color,
-	type: Backend.subject.type,
-	text: Backend.subject.name
+	isChoice: Observable(),
+	color: Observable(),
+	type: Observable(),
+	text: Observable()
 };
 
 var choiceSubjectPanelOn = Observable(false);
@@ -395,7 +415,7 @@ for (var i = 0 ; i < 31 ; i++) {
 	days.add(1+i);
 }
 
-var moneyValue= Observable();
+
 
 var datePickerOn = Observable(false);
 function datePickerUp() {
