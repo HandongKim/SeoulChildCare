@@ -137,6 +137,9 @@ function note(arg, noteIndex) {
 		if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
 			this.reverse=Observable(true);
 		}
+		this.isShow = true;
+	} else {
+		this.isShow = false;
 	}
 	if (arg.BILL_RECEIPT > 1) {
 		// console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
