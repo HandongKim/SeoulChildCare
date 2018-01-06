@@ -26,18 +26,7 @@ var dsParam = Backend.dsParam;
 var	CASH_IDX = Backend.dataFromNoteManageToDetailNote.CASH_IDX.value;
 var	BILL_IDX = Backend.dataFromNoteManageToDetailNote.BILL_IDX.value;
 
-var	INDEX;
-var	DATE;
-var	TYPE;
-var	MONEY;
-var	SUBTYPECOLOR;
-var	ISBILL;
-var	SUBTYPE;
-var	NAME;
-var	REVERSE;
-var	RECEIPT;
-var	MEMO;
-var SELECTED_DATA;
+
 
 function viewWillAppear() {
 	console.log("Data Initialised");
@@ -271,69 +260,80 @@ function getListDetailNote () {
 		var selectedMoney = Observable();
 		var CASH_GB = Observable();
 
+var	INDEX;
+var	DATE;
+var	TYPE;
+var	MONEY;
+var	SUBTYPECOLOR;
+var	ISBILL;
+var	SUBTYPE;
+var	NAME;
+var	REVERSE;
+var	RECEIPT;
+var	MEMO;
+var SELECTED_DATA;
+
+function pickFromList(args) {
+	// console.log(JSON.stringify(args));
+	// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
+
+	console.log("args.data.index : " + args.data.index);
+	console.log(JSON.stringify(listDetailNotes._values[args.data.index]));
+
+	//서버에 쓰일 데이터.
+	var selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[args.data.index]);
+	
 
 
-		function pickFromList(args) {
-			// console.log(JSON.stringify(args));
-			// console.log("temp[arg.data.index].CASH_DATE : " + temp[args.data.index].CASH_DATE);
+	var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
+	var selectedMonth = selectedDetailNoteVariable.CASH_DATE.substr(4,2);
+	var selectedDay = selectedDetailNoteVariable.CASH_DATE.substr(6,2);
 
-			console.log("args.data.index : " + args.data.index);
-			console.log(JSON.stringify(listDetailNotes._values[args.data.index]));
+	selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
+	selectedMoney.value = Backend.dataFromNoteManageToDetailNote.BCASH_MONEY;
 
-
-
-
-
-			//서버에 쓰일 데이터.
-			var selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[args.data.index]);
-			
+	year.value =selectedYear;
+	month.value = selectedMonth;
+	day.value = selectedDay;
+	
 
 
-			var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
-			var selectedMonth = selectedDetailNoteVariable.CASH_DATE.substr(4,2);
-			var selectedDay = selectedDetailNoteVariable.CASH_DATE.substr(6,2);
-			selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
-			selectedMoney.value = Backend.dataFromNoteManageToDetailNote.BCASH_MONEY;
+	console.log("notes._values[args.data.index] : " + JSON.stringify(notes._values[args.data.index]));
 
-			year.value=selectedYear;
-			month.value = selectedMonth;
-			day.value = selectedDay;
-			
-
-			subType.isChoice.value = notes._values[args.data.index].isChoice;
-			subType.color.value = notes._values[args.data.index].color;
-			subType.type.value = notes._values[args.data.index].type;
-			subType.text.value = notes._values[args.data.index].text;
+	subType.isChoice.value = true;
+	subType.color.value = notes._values[args.data.index].color;
+	subType.type.value = notes._values[args.data.index].type;
+	subType.text.value = notes._values[args.data.index].text;
 
 
-			// selectedTemp = temp[args.data.index];
-			// var selectedSubject = temp[args.data.index].ESTI_NAME;
+	// selectedTemp = temp[args.data.index];
+	// var selectedSubject = temp[args.data.index].ESTI_NAME;
 
-			// CASH_GB.value = temp[args.data.index].CASH_GB;
+	// CASH_GB.value = temp[args.data.index].CASH_GB;
 
-			// console.log("temp[args.data.index].CASH_GB : " +  CASH_GB.value);
+	// console.log("temp[args.data.index].CASH_GB : " +  CASH_GB.value);
 
-			// selectedMemo.clear();
-			// selectedMemo.value= selectedTemp.BCASH_MEMO;
+	// selectedMemo.clear();
+	// selectedMemo.value= selectedTemp.BCASH_MEMO;
 
-			 
-			// tempCode = args.data.ESTI_CODE;
-			// Backend.subject.isChoice.value = true;
-			// Backend.subject.color.value = args.data.subTypeColor;
-			// Backend.subject.type.value = args.data.subType;
-			// Backend.subject.name.value = selectedSubject;
+	 
+	// tempCode = args.data.ESTI_CODE;
+	// Backend.subject.isChoice.value = true;
+	// Backend.subject.color.value = args.data.subTypeColor;
+	// Backend.subject.type.value = args.data.subType;
+	// Backend.subject.name.value = selectedSubject;
 
-			// moneyValue.value = temp[args.data.index].MONEY;
+	// moneyValue.value = temp[args.data.index].MONEY;
 
 
-				// console.log("selectedTemp : " + JSON.stringify(selectedTemp));
+		// console.log("selectedTemp : " + JSON.stringify(selectedTemp));
 
 
 
 
 
-				// console.log("temp[arg.data.index].MONEY : " + temp[args.data.index].MONEY);
-		}
+		// console.log("temp[arg.data.index].MONEY : " + temp[args.data.index].MONEY);
+}
 
 
 		
