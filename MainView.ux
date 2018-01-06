@@ -142,34 +142,17 @@
 				} else if (Environment.android) {
 					saveDir = FileSystem.androidPaths.files;
 				}
-				var arrayBuff;
 
 				setTimeout(function() {
-					FileSystem.readBufferFromFile(saveDir+"/"+imageName).then(function(image) {
-						console.log("read success");
-						arrayBuff = image;
-						// console.log(JSON.stringify(arrayBuff));
-						ImageTools.getImageFromBuffer(arrayBuff).then(function(image) {
-							console.log("Scratch image path is: " + image.path);
-							// 흑백으로 변한사진 카메라롤에 저장
-							CameraRoll.publishImage(image).then(function(x) {
-								console.log("save success");
-								targetImgPath.value = saveDir + "/"+imageName;
-								sendPicture();
-								
+					targetImgPath.value = saveDir + "/"+imageName;
+					sendPicture();
+					
 
-								FileSystem.delete(saveDir+"/"+imageName).then(function() {
-									console.log("delete success");
-								});
-								
-								takedPicture.value = "";
-							}, function(error) {
-								console.log("error : " );
-							});
-						});
-					}, function(error) {
-						console.log(error);
+					FileSystem.delete(saveDir+"/"+imageName).then(function() {
+						console.log("delete success");
 					});
+					
+					takedPicture.value = "";
 				}, 6000);
 			}).catch(function(reason) {
 				console.log("Couldn't get image: "+reason);
