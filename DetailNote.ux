@@ -10,14 +10,6 @@
 	</WhileTrue> -->
 
 
-
-	<WhileActive>
-		<!-- <Callback Handler="{viewWillAppear}" /> -->
-	</WhileActive>
-
-
-
-
 	<!-- <WhileTrue Value="{pickerOn}">
 		<Change page1PickerPanel2.Y="0" Duration=".2" />
 	</WhileTrue>
