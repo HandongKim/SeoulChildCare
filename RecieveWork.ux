@@ -47,6 +47,8 @@
 			recieveToPickerPanelOn.value = false;
 		}
 
+		var ricieveWorks = Observable();
+
 		module.exports = {
 			years, months, days,
 			fromDate, recieveFromPickerPanelOn, recieveFromPickerUp, recieveFromPickerDown,
@@ -54,6 +56,104 @@
 		};
 	</JavaScript>
 
+	<!-- 세부내용 보여지는 패널 -->
+	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
+		<!-- Top Pannel -->
+		<Panel Dock="Top">
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked>
+						<Toggle Target="detailRecieveWork" />
+					</Clicked>
+				</Image>
+
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+				<Image File="Images/btn_home.png">
+					<Clicked>
+						<Toggle Target="detailRecieveWork" />
+						<Callback Handler="{goMainPageFromAnywhere}" />
+					</Clicked>
+				</Image>
+			</Grid>
+
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
+		</Panel>
+		<!-- 내용 디자인 정의  -->
+		<ScrollView SnapMinTransform="false" SnapMaxTransform="false" Width="100%">
+			<StackPanel Color="#eee">
+				<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
+					<StackPanel Width="100%" Color="White">
+						<Text Value="{noticeDetail.title}" FontSize="{margin}" Color="Black" Alignment="CenterLeft" Margin="{margin}" />				
+						<Text Value="{noticeDetail.regDate2}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+						<Text Value="{noticeDetail.regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+					</StackPanel>
+					<Panel Width="100%" Color="White">
+						<Text Value="{noticeDetail.cont}" Alignment="TopLeft" TextWrapping="Wrap" Margin="{margin}" />
+					</Panel>
+				</Grid>
+			</StackPanel>
+		</ScrollView>
+
+		<Panel Dock="Bottom" Color="#5079DB">
+			<StackPanel Margin="{margin}" ItemSpacing="6">
+				<WhileTrue Value="{noticeFiles.hasFile}">
+					<Text Value="파일첨부" Color="White" Alignment="CenterLeft" />
+					<Rectangle Width="100%" Color="White">
+						<StackPanel Margin="{margin}">
+							<Each Items="{noticeFiles}">
+								<WrapPanel>
+									<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+									<Text Value="{noticeFiles.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Text Value="{noticeFiles.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+								</WrapPanel>
+							</Each>
+						</StackPanel>
+					</Rectangle>
+				</WhileTrue>
+				<Rectangle Width="100%" BoxSizing="FillAspect" Aspect="8" Color="#f80" CornerRadius="3">
+					<Text Value="목록으로" Color="White" Alignment="Center">
+					<Clicked>
+						<Toggle Target="detailRecieveWork" />
+					</Clicked>
+
+					</Text>
+				</Rectangle>
+			</StackPanel>
+		</Panel>
+
+		<WhileTrue ux:Name="detailRecieveWork">
+			<Move X="-1" RelativeTo="Size" />
+		</WhileTrue>
+	</DockPanel>
+	<!-- 받은 업무들 -->
+	<StackPanel ux:InnerClass="RecieveWork" Width="100%" Color="White">
+		<Grid Alignment="Center" ColumnCount="2" Columns="7*, 2*" Margin="{margin}" Width="100%" >
+			<WrapPanel Alignment="CenterLeft" Width="100%">
+				<Text Value="{title}" TextWrapping="Wrap" Alignment="CenterLeft" />
+
+				<WhileTrue Value="{fileNm}">
+					<Image File="Images/ico_file.png" Width="30%" Alignment="CenterLeft" />
+				</WhileTrue>
+			</WrapPanel>
+
+			<Grid ColumnCount="1" RowCount="2">
+				<Text Value="{regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterRight" />
+				<Text Value="{regDate2}" FontSize="{margin}*0.9" Color="#888" Alignment="CenterRight" />
+			</Grid>
+		</Grid>
+
+		<Clicked>
+			<Callback Handler="{recieveFromPickerDown}" />
+			<Callback Handler="{recieveToPickerDown}" />
+			<Toggle Target="detailRecieveWork" />
+			<!-- <Callback Handler="{getClickListValue}" /> -->
+		</Clicked>
+	</StackPanel>
+
+	<!-- 시작 날짜 선택 패널 -->
 	<DockPanel ux:Name="recieveFromPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
@@ -84,6 +184,7 @@
 		</WhileTrue>
 	</DockPanel>
 
+	<!-- 종료 날짜 선택 패널 -->
 	<DockPanel ux:Name="recieveToPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
@@ -114,6 +215,7 @@
 		</WhileTrue>
 	</DockPanel>
 
+	<!-- 보여지는 영역 -->
 	<DockPanel>
 		<!-- 상단바 -->
 		<topBar Dock="Top" />
@@ -162,6 +264,10 @@
 
 		<ScrollView ux:Name="recieveWorkScroll" SnapMaxTransform="false" SnapMinTransform="false">
 			<StackPanel Color="#ddd" ItemSpacing="1">
+				<Each Items="{recieveWorks}">
+					<RecieveWork />
+				</Each>
+
 				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
 						<Text Value="더보기(1/1)" Alignment="Center" />
