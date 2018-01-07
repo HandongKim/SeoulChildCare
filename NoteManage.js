@@ -1082,7 +1082,7 @@ function goDetailNote2 (arg) {
 
 
 
-	
+	Backend.subject.ESTI_CODE.clear();
 	Backend.subject.name.value = "계정과목 선택";
     Backend.subject.isChoice.value = false;
 
@@ -1090,7 +1090,7 @@ function goDetailNote2 (arg) {
 		isFromNoteManage:true
 	}
 
-	Backend.subject.ESTI_CODE.clear();
+	
 
 	router.push("DetailNote", infoJSON);
 
