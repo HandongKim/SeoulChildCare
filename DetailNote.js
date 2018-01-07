@@ -183,6 +183,7 @@ function listDetailNote (args, index) {
 	this.ACTION = args.ACTION
 	this.BILL_SUBCODE = args.BILL_SUBCODE
 	this.BILL_IDX = args.BILL_IDX
+	this.BCASH_BILL_SEQ = args.BCASH_BILL_SEQ
 }
 
 function selectedDetailNote(args) {
@@ -202,6 +203,7 @@ function selectedDetailNote(args) {
 	this.ACTION = args.ACTION
 	this.BILL_SUBCODE = args.BILL_SUBCODE
 	this.BILL_IDX = args.BILL_IDX
+	this.BCASH_BILL_SEQ = args.BCASH_BILL_SEQ
 }
 
 
@@ -289,7 +291,7 @@ var	REVERSE;
 var	RECEIPT;
 var	MEMO;
 var SELECTED_DATA;
-var moneyValue= Observable();
+var moneyValue = Observable();
 
 
 var selectedDetailNoteVariable = null;
@@ -331,7 +333,7 @@ function pickFromList(args) {
 	month.value = selectedMonth;
 	day.value = selectedDay;
 	
-	moneyValue.value = notes._values[args.data.index].money;
+	moneyValue.value = notes._values[args.data.index].money.toString() + "원";
 	
 	console.log("notes._values[args.data.index] : " + JSON.stringify(notes._values[args.data.index]));
 	console.log("notes._values[args.data.index].color : " + notes._values[args.data.index].color);
@@ -535,7 +537,7 @@ function datePickerDown() {
 
 
 function saveData() {
-	var ACTION = "U";
+	var ACTION = selectedDetailNoteVariable.CASH_IDX;
 	var CASH_IDX = selectedDetailNoteVariable.CASH_IDX;
 	var CASH_DATE = selectedDetailNoteVariable.CASH_DATE;
 	var CASH_GB = selectedDetailNoteVariable.CASH_GB;
@@ -543,7 +545,7 @@ function saveData() {
 	var MONEY = selectedDetailNoteVariable.MONEY;
 	var ORG_BCASH_MEMO = selectedDetailNoteVariable.ORG_BCASH_MEMO;
 	var BCASH_MEMO = selectedDetailNoteVariable.ORG_BCASH_MEMO;
-	
+	var BCASH_BILL_SEQ = selectedDetailNoteVariable.BCASH_BILL_SEQ;
 
 //이거 가져오고
 
@@ -566,36 +568,36 @@ function saveData() {
 	var BILL_GB = "A04";
 	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 
-
-
+	console.log("so cold........................ dsParam : " + dsParam);
+	console.log("moneyValue.value : " + moneyValue.value);
 
 	var ds_bCash;
 
-	if (BILL_IDX == "null") {
+	// if (BILL_IDX == "null") {
 		// console.log("BILL_IDX is null 1 " )
 		// console.log("BILL_IDX : " + BILL_IDX);
-		console.log("moneyValue.value : " + moneyValue.value);
+		// console.log("moneyValue.value : " + moneyValue.value);
 
-		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'"}';
-
-		// console.log("BILL_IDX is null 2") 
-	} else {
+	ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ+'"}';
+	console.log("ds_bCash : " + ds_bCash);
+		
+	// } else {
 		// console.log("BILL_IDX is not null 1 ")
 		// console.log("BILL_IDX : " + BILL_IDX);
 
-		console.log("moneyValue.value : " + moneyValue.value);
+		// console.log("moneyValue.value : " + moneyValue.value);
 
 
-		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value +'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'"}';
+		// ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value +'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'"}';
 
 		// console.log("BILL_IDX is not null 2 ")
-	}
+	// }
 
-	var temp_ds_bCash = '{"ds_bCash":' + ds_bCash+'}';
+	// var temp_ds_bCash = '{"ds_bCash":' + ds_bCash+'}';
 
 	// // console.log("ds_bCash : " + temp_ds_bCash);
 
-	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+temp_ds_bCash+'}');
+	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
 
 	// console.log("jsonParam : " + JSON.stringify(jsonParam));
 

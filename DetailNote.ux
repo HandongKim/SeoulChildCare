@@ -415,7 +415,7 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF">
 					<Stroke Width="1" Color="#ccc" />
-					<TextInput Value="{moneyValue}원" Alignment="Right" PlaceholderText="금액" />
+					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" />
 				</Rectangle>
 
 				<Image File="Images/btn_02.png" Alignment="Center" RowSpan="3">
