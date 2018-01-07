@@ -321,6 +321,11 @@ function pickFromList(args) {
 	selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[args.data.index]);
 	
 
+	console.log("BILL_IDX VALUE IS  : " + selectedDetailNoteVariable.BILL_IDX );
+
+
+
+
 
 	var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
 	var selectedMonth = selectedDetailNoteVariable.CASH_DATE.substr(4,2);
@@ -399,7 +404,7 @@ function pickerUp() {
 	pickerOn.value = true;
 }
 
-var selected_BILL_CLSS = Observable();
+var selected_BILL_CLSS = Observable("10");
 
 function pickerDown() {
 	console.log("selectedData : " + selectedData.value);
@@ -537,7 +542,7 @@ function datePickerDown() {
 
 
 function saveData() {
-	var ACTION = selectedDetailNoteVariable.CASH_IDX;
+	var ACTION = selectedDetailNoteVariable.ACTION;
 	var CASH_IDX = selectedDetailNoteVariable.CASH_IDX;
 	var CASH_DATE = selectedDetailNoteVariable.CASH_DATE;
 	var CASH_GB = selectedDetailNoteVariable.CASH_GB;
@@ -552,19 +557,50 @@ function saveData() {
 // 	ESTI_CODE: Observable(),
 // ESTI_GB: Observable(),
 // ESTI_SUBCODE: Observable()
+	var ESTI_CODE;
+
+	if (Backend.subject.ESTI_CODE == null) {
+		ESTI_CODE = selectedDetailNoteVariable.ESTI_CODE;
+	} else {
+		ESTI_CODE = Backend.subject.ESTI_CODE.value;
+	}
+	
 
 
 
-	var ESTI_CODE = Backend.subject.ESTI_CODE;
 	var BILL_SUBCODE= selectedDetailNoteVariable.BILL_SUBCODE;
 	
 
 	var BILL_IDX= selectedDetailNoteVariable.BILL_IDX;
 
-	var BILL_CLSS=selected_BILL_CLSS .value;
+
+	console.log("BIL_IDX from saveData : " + BILL_IDX);
+
+
+	var BILL_CLSS=selected_BILL_CLSS.value;
 	var BILL_RECEIPT =selectedDetailNoteVariable.BILL_RECEIPT;
-	var ESTI_SUB_YN = Backend.subject.ESTI_SUB_YN;
-	var ESTI_NAME= Backend.subject.ESTI_NAME;
+	
+	var ESTI_SUB_YN;
+
+	if(Backend.subject.ESTI_SUB_YN == null) {
+		ESTI_SUB_YN = selectedDetailNoteVariable.ESTI_SUB_YN;
+	}else {
+		ESTI_SUB_YN = Backend.subject.ESTI_SUB_YN.value;
+	}
+	
+	var ESTI_NAME;	
+
+	if (Backend.subject.ESTI_NAME == null) {
+		ESTI_NAME = selectedDetailNoteVariable.ESTI_NAME;
+	} else {
+		ESTI_NAME = Backend.subject.ESTI_NAME.value;	
+	}
+
+	
+
+
+
+
 	var BILL_GB = "A04";
 	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 
@@ -578,7 +614,7 @@ function saveData() {
 		// console.log("BILL_IDX : " + BILL_IDX);
 		// console.log("moneyValue.value : " + moneyValue.value);
 
-	ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ+'"}';
+	ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ+'"}';
 	console.log("ds_bCash : " + ds_bCash);
 		
 	// } else {
@@ -630,10 +666,7 @@ function saveData() {
 				// console.log("fefefefefe temp.length : " + temp.length);
 
 
-				for (var i = 0; i < temp.length; i++) {
-					notes.add(new note(temp[i], i));
-					// console.log(JSON.stringify(notes.value));
-				}
+				
 
 	        	var responseData = JSON.stringify(response);
 	        	
