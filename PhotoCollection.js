@@ -40,6 +40,10 @@ function pickerUp() {
 var dsParam = Backend.dsParam;
 
 
+var getMobileRciptListUrl = Backend.BASE_URL + Backend.getMobileRciptList;
+var mImgViewUrl = Backend.BASE_URL + Backend.mImgView;
+
+
 function pickerDown() {
 	photoListFromServer = new Array;
 	pictures.clear();
@@ -69,7 +73,7 @@ function pickerDown() {
 
 
 
-	fetch("http://112.218.172.44:52102/acusr/acc/bil/getMobileRciptList.do", {
+	fetch(getMobileRciptListUrl, {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"
@@ -101,7 +105,7 @@ function pickerDown() {
 					var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';					
 					var dsSearch = '{"ATCHMNFL_IDX":"'+photoListFromServer[i]+'"}';
 
-					var baseURL= "http://www.aseoul.co.kr/acusr/acc/bil/mImgView.do?";
+					var baseURL= mImgViewUrl;
 
 					var GVMEMCODE = "SEOUL000000000000121";
 
@@ -386,7 +390,7 @@ function getPhotoList () {
 
 
 
-	fetch("http://www.aseoul.co.kr/acusr/acc/bil/getMobileRciptList.do", {
+	fetch(getMobileRciptListUrl, {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"
@@ -425,7 +429,7 @@ function getPhotoList () {
 					var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';					
 					var dsSearch = '{"ATCHMNFL_IDX":"'+photoListFromServer[i]+'"}';
 
-					var baseURL= "http://www.aseoul.co.kr/acusr/acc/bil/mImgView.do?";
+					var baseURL= "http://112.218.172.44:52102/acusr/acc/bil/mImgView.do?";
 
 					var GVMEMCODE = "SEOUL000000000000121";
 
@@ -475,7 +479,7 @@ function getPhotoList () {
 		console.log('jsonParam : ' + jsonParam);
 		console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-		fetch("http://www.aseoul.co.kr/acusr/acc/bil/DeleteMapngReceipt.do", {
+		fetch("http://112.218.172.44:52102/acusr/acc/bil/DeleteMapngReceipt.do", {
 			method: 'POST',
 			headers: {
 				"Content-type": "application/json"

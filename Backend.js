@@ -27,6 +27,15 @@ var qnaUserUpdate = "/acusr/cmt/qnaUserUpdate.do"
 var insertQnaCommList = "/acusr/cmt/insertQnaCommList.do";
 
 
+//ApplyEdu [교육신청]
+var educationMain = "/mobile/education/main.do";
+var eduapply = "/mobile/education/eduapply.do"
+
+
+
+//PhotoCollection
+var getMobileRciptList = "/acusr/acc/bil/getMobileRciptList.do";
+var mImgView = "/acusr/acc/bil/mImgView.do?";
 
 
 
@@ -171,5 +180,6 @@ module.exports = {
 	subject, dsParam, noteManageParamValuesForDetailNote, choiceSubjectList, 
 	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, getBillCashInputLoad_URL,
 	selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList,
-	noticeUserMipDetailList, qnaList, qnaListDtl,qnaUserUpdate, dataFromChoiceSubjectToDetailNote
+	noticeUserMipDetailList, qnaList, qnaListDtl,qnaUserUpdate, dataFromChoiceSubjectToDetailNote, educationMain,
+	eduapply, getMobileRciptList,mImgView
 };

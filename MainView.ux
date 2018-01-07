@@ -1,5 +1,5 @@
-<App>
-<!-- <App ux:AutoCtor="false"> -->
+<!-- <App> -->
+<App ux:AutoCtor="false">
 	<Router ux:Name="router" />
 
 	<JavaScript>
@@ -13,7 +13,11 @@
 		var Backend = require('Backend.js');
 		
 		var print = debug_log;
-		var uploadUrl = 'http://61.97.121.199:8080/TEST/ImgUploadTest.jsp';// 서버 IP를 변경하세요.
+		 "/acusr/acc/bil/MobileReceiptImgUpload.do"
+
+		// var uploadUrl = 'http://61.97.121.199:8080/TEST/ImgUploadTest.jsp';// 서버 IP를 변경하세요.
+
+		var uploadUrl = Backend.BASE_URL + "/acusr/acc/bil/MobileReceiptImgUpload.do" ;// 서버 IP를 변경하세요.
 
 		var sendPictureBtnEnabled = Observable(false);
 		var targetImgPath = Observable();
@@ -112,7 +116,7 @@
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
 
-			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"dsSearch": '+dsSearch+'}');
+			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"ds_search": '+dsSearch+'}');
 
 			console.log("2018.01.05 jsonParam : " + JSON.stringify(jsonParam));
 
