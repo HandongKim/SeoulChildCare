@@ -13,7 +13,11 @@
 		var Backend = require('Backend.js');
 		
 		var print = debug_log;
-		var uploadUrl = 'http://61.97.121.199:8080/TEST/ImgUploadTest.jsp';// 서버 IP를 변경하세요.
+		 "/acusr/acc/bil/MobileReceiptImgUpload.do"
+
+		// var uploadUrl = 'http://61.97.121.199:8080/TEST/ImgUploadTest.jsp';// 서버 IP를 변경하세요.
+
+		var uploadUrl = Backend.BASE_URL + "/acusr/acc/bil/MobileReceiptImgUpload.do" ;// 서버 IP를 변경하세요.
 
 		var sendPictureBtnEnabled = Observable(false);
 		var targetImgPath = Observable();

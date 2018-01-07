@@ -122,13 +122,21 @@
 			this.seoulYn = eduIntoList.SEOUL_YN;
 		}
 
+
+		var educationMainUrl = Backend.BASE_URL + Backend.educationMain;
+		var eduApplyUrl = Backend.BASE_URL + Backend.eduapply;
+
 		function getEducationMain(){
 			console.log("getEducationMain function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
-			var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
+			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+'}');
 			edus.clear();
 			type.clear();
-			fetch("http://www.aseoul.co.kr/mobile/education/main.do", {
+			
+
+			console.log("educationMainUrl : " + educationMainUrl);
+
+			fetch(educationMainUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -174,10 +182,13 @@
 
 		function getDetailEdu(eduSeq){
 			console.log("getEducationMain function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			var dsSearch = '{"eduyear":"'+selectedType.value+'","eduseq":"'+eduSeq+'"}';
-			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-			fetch("http://www.aseoul.co.kr/mobile/education/eduapply.do", {
+			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"dsSearch": '+dsSearch+'}');
+
+			
+
+			fetch(eduApplyUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -209,12 +220,15 @@
 
 		function searchContent(){
 			console.log("search Content function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			console.log("검색조건 : " + JSON.stringify(selectedType.value));
 			var dsSearch = '{"eduyear":"'+selectedType.value+'"}';
-			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch":'+dsSearch+'}');
+			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"dsSearch":'+dsSearch+'}');
 			edus.clear();
-			fetch("http://www.aseoul.co.kr/mobile/education/main.do", {
+
+			
+
+			fetch(educationMainUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
