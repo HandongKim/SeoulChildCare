@@ -105,17 +105,9 @@ function viewWillAppear() {
 
 
 var tempCode;
-
-
-
 var temp;
-
 var notes = Observable();
-
 var selectMobileOnlineBillList_URL = Backend.BASE_URL + Backend.selectMobileOnlineBillList_URL;
-
-
-
 		
 function note(arg, noteIndex) {
 	this.index = noteIndex;
@@ -774,7 +766,7 @@ function saveData() {
 
 			console.log("x.stringify 2018.01.06 : " + JSON.stringify(x));
 
-			console.log("notes._values : " + JSON.stringify(notes._values));
+			console.log("notes._values[tempIndex] : " + JSON.stringify(notes._values[tempIndex]));
 
 
 
@@ -793,8 +785,6 @@ function saveData() {
 				console.log("reverse state : " + subType.reverse.value);
 			}
 		});
-
-
 
 		module.exports = {
 			detailText, showText, uploadOn, tryUpload, cancelUpload,
