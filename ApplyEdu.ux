@@ -282,6 +282,7 @@
 				<Image File="Images/btn_home.png">
 					<Clicked>
 						<Callback Handler="{goMainPage}" />
+						<Toggle Target="detailApplyEdu" />
 						<!-- <Toggle Target="" /> -->
 					</Clicked>
 				</Image>

@@ -580,6 +580,7 @@
 						<Callback Handler="{selectedTypes}" />	
 						<Callback Handler="{pickerDown}" />
 						<Callback Handler="{goMainPageFromAnywhere}" />
+						<Toggle Target="detailNotice" />
 					</Clicked>
 				</Image>
 			</Grid>
