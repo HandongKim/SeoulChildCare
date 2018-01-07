@@ -225,7 +225,7 @@ function getListDetailNote () {
 
     moneyValue.value="";
     selectedData.value="카드결제";
-    subType.isChoice.value=false;
+    // subType.isChoice.value=false;
 
 
 
