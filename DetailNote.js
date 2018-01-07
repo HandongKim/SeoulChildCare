@@ -773,6 +773,11 @@ function saveData() {
 		Backend.subject.ESTI_CODE.onValueChanged(null, function(x) {
 
 			console.log("x.stringify 2018.01.06 : " + JSON.stringify(x));
+
+			console.log("notes._values : " + JSON.stringify(notes._values));
+
+
+
 			if (x != null) {
 				console.log("notes._values[tempIndex].type : " + notes._values[tempIndex].type);	
 

@@ -178,6 +178,7 @@ var selectOnlineBCashList_URL = Backend.BASE_URL + Backend.selectOnlineBCashList
 
 function pickerDown() {
 	notes.clear();
+	selectOnlineBCashListDatas.clear();
 	var tempMonth;
 	console.log("MONTH.VALUE : " + month.value);
 
@@ -261,6 +262,7 @@ function pickerDown() {
 
 			for (var i = 0; i < temp.length; i++) {
 				notes.add(new note(temp[i], i));
+				selectOnlineBCashListDatas.add( new selectOnlineBCashListIndividualData(temp[i], i));
 			}
 
 			//2017.12.18 끝

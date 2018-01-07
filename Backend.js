@@ -35,6 +35,7 @@ var eduapply = "/mobile/education/eduapply.do"
 
 //PhotoCollection
 var getMobileRciptList = "/acusr/acc/bil/getMobileRciptList.do";
+var mImgView = "/acusr/acc/bil/mImgView.do?";
 
 
 
@@ -180,5 +181,5 @@ module.exports = {
 	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, getBillCashInputLoad_URL,
 	selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList,
 	noticeUserMipDetailList, qnaList, qnaListDtl,qnaUserUpdate, dataFromChoiceSubjectToDetailNote, educationMain,
-	eduapply
+	eduapply, getMobileRciptList,mImgView
 };
