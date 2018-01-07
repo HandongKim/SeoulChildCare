@@ -223,8 +223,8 @@ function getListDetailNote () {
 
     console.log("getListDetailNote was called");
 
-    moneyValue.value="";
-    selectedData.value="카드결제";
+    // moneyValue.value="";
+    // selectedData.value="카드결제";
     // subType.isChoice.value=false;
 
 
@@ -618,7 +618,17 @@ function saveData() {
 		// console.log("BILL_IDX : " + BILL_IDX);
 		// console.log("moneyValue.value : " + moneyValue.value);
 
-	ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":'+BILL_IDX+',"BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":'+BILL_RECEIPT+',"ESTI_SUB_YN":'+ESTI_SUB_YN+',"ESTI_NAME":'+ESTI_NAME+',"BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":'+BCASH_BILL_SEQ+'}';
+
+
+	if (ACTION == "I") {
+		//insert할때 쓰이는 ds_bCash값
+		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":'+BILL_IDX+',"BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":'+BILL_RECEIPT+',"ESTI_SUB_YN":'+ESTI_SUB_YN+',"ESTI_NAME":'+ESTI_NAME+',"BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":'+BCASH_BILL_SEQ+'}';	
+	} else if (ACTION =="U") {
+		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":'+BILL_IDX+',"BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":'+BILL_RECEIPT+',"ESTI_SUB_YN":'+ESTI_SUB_YN+',"ESTI_NAME":'+ESTI_NAME+',"BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ+'"}';	
+	}
+
+	
+	
 	console.log("ds_bCash : " + ds_bCash);
 		
 	// } else {
@@ -664,7 +674,7 @@ function saveData() {
 				
 				// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
 
-				notes.clear();
+				// notes.clear();
 
 
 				// console.log("fefefefefe temp.length : " + temp.length);
