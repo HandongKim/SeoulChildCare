@@ -221,7 +221,9 @@ function getListDetailNote () {
     // console.log('jsonParam : ' + jsonParam);
     // console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-
+    moneyValue.clear();
+    selectedData.value="카드결제";
+    subType.isChoice.value=
 
 	fetch(selectMobileOnlineBillList_URL, {
 		method: 'POST',
@@ -565,9 +567,6 @@ function saveData() {
 		ESTI_CODE = Backend.subject.ESTI_CODE.value;
 	}
 	
-
-
-
 	var BILL_SUBCODE= selectedDetailNoteVariable.BILL_SUBCODE;
 	
 
@@ -614,7 +613,7 @@ function saveData() {
 		// console.log("BILL_IDX : " + BILL_IDX);
 		// console.log("moneyValue.value : " + moneyValue.value);
 
-	ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ+'"}';
+	ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":'+BILL_IDX+',"BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":'+BILL_RECEIPT+',"ESTI_SUB_YN":'+ESTI_SUB_YN+',"ESTI_NAME":'+ESTI_NAME+',"BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":'+BCASH_BILL_SEQ+'}';
 	console.log("ds_bCash : " + ds_bCash);
 		
 	// } else {
