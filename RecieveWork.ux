@@ -52,13 +52,13 @@
 		module.exports = {
 			years, months, days,
 			fromDate, recieveFromPickerPanelOn, recieveFromPickerUp, recieveFromPickerDown,
-			toDate, recieveToPickerPanelOn, recieveToPickerUp, recieveToPickerDown
+			toDate, recieveToPickerPanelOn, recieveToPickerUp, recieveToPickerDown,
+			ricieveWorks
 		};
 	</JavaScript>
 
 	<!-- 세부내용 보여지는 패널 -->
-	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
-		<!-- Top Pannel -->
+	<!-- <DockPanel Width="100%" Height="100%" X="100%" Color="White">
 		<Panel Dock="Top">
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
 				<Image File="Images/btn_pre.png" Alignment="Left">
@@ -81,17 +81,17 @@
 				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
 			</Rectangle>
 		</Panel>
-		<!-- 내용 디자인 정의  -->
+
 		<ScrollView SnapMinTransform="false" SnapMaxTransform="false" Width="100%">
 			<StackPanel Color="#eee">
 				<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
 					<StackPanel Width="100%" Color="White">
-						<Text Value="{noticeDetail.title}" FontSize="{margin}" Color="Black" Alignment="CenterLeft" Margin="{margin}" />				
-						<Text Value="{noticeDetail.regDate2}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
-						<Text Value="{noticeDetail.regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+						<Text Value="{recieveworkDetail.title}" FontSize="{margin}" Color="Black" Alignment="CenterLeft" Margin="{margin}" />				
+						<Text Value="{recieveworkDetail.regDate2}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+						<Text Value="{recieveworkDetail.regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
 					</StackPanel>
 					<Panel Width="100%" Color="White">
-						<Text Value="{noticeDetail.cont}" Alignment="TopLeft" TextWrapping="Wrap" Margin="{margin}" />
+						<Text Value="{recieveworkDetail.cont}" Alignment="TopLeft" TextWrapping="Wrap" Margin="{margin}" />
 					</Panel>
 				</Grid>
 			</StackPanel>
@@ -99,15 +99,15 @@
 
 		<Panel Dock="Bottom" Color="#5079DB">
 			<StackPanel Margin="{margin}" ItemSpacing="6">
-				<WhileTrue Value="{noticeFiles.hasFile}">
+				<WhileTrue Value="{recieveWorkFiles.hasFile}">
 					<Text Value="파일첨부" Color="White" Alignment="CenterLeft" />
 					<Rectangle Width="100%" Color="White">
 						<StackPanel Margin="{margin}">
-							<Each Items="{noticeFiles}">
+							<Each Items="{recieveWorkFiles}">
 								<WrapPanel>
 									<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
-									<Text Value="{noticeFiles.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-									<Text Value="{noticeFiles.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Text Value="{recieveWorkFiles.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Text Value="{recieveWorkFiles.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
 								</WrapPanel>
 							</Each>
 						</StackPanel>
@@ -127,9 +127,9 @@
 		<WhileTrue ux:Name="detailRecieveWork">
 			<Move X="-1" RelativeTo="Size" />
 		</WhileTrue>
-	</DockPanel>
+	</DockPanel> -->
 	<!-- 받은 업무들 -->
-	<StackPanel ux:InnerClass="RecieveWork" Width="100%" Color="White">
+	<!-- <StackPanel ux:InnerClass="RecieveWork" Width="100%" Color="White">
 		<Grid Alignment="Center" ColumnCount="2" Columns="7*, 2*" Margin="{margin}" Width="100%" >
 			<WrapPanel Alignment="CenterLeft" Width="100%">
 				<Text Value="{title}" TextWrapping="Wrap" Alignment="CenterLeft" />
@@ -149,9 +149,8 @@
 			<Callback Handler="{recieveFromPickerDown}" />
 			<Callback Handler="{recieveToPickerDown}" />
 			<Toggle Target="detailRecieveWork" />
-			<!-- <Callback Handler="{getClickListValue}" /> -->
 		</Clicked>
-	</StackPanel>
+	</StackPanel> -->
 
 	<!-- 시작 날짜 선택 패널 -->
 	<DockPanel ux:Name="recieveFromPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
@@ -264,9 +263,9 @@
 
 		<ScrollView ux:Name="recieveWorkScroll" SnapMaxTransform="false" SnapMinTransform="false">
 			<StackPanel Color="#ddd" ItemSpacing="1">
-				<Each Items="{recieveWorks}">
+				<!-- <Each Items="{recieveWorks}">
 					<RecieveWork />
-				</Each>
+				</Each> -->
 
 				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
