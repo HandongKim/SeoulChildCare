@@ -454,7 +454,7 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF" ColumnSpan="3">
 					<Stroke Width="1" Color="#ccc" />
-					<Text Value="모바일등록" Alignment="CenterLeft" />
+					<Text Value="{selectedData}" Alignment="CenterLeft" />
 					<Clicked>
 						<Callback Handler="{pickerUp}" />
 					</Clicked>

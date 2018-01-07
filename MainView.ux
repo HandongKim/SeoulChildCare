@@ -1,5 +1,5 @@
-<App>
-<!-- <App ux:AutoCtor="false"> -->
+<!-- <App> -->
+<App ux:AutoCtor="false">
 	<Router ux:Name="router" />
 
 	<JavaScript>
@@ -116,7 +116,7 @@
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
 
-			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"dsSearch": '+dsSearch+'}');
+			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"ds_search": '+dsSearch+'}');
 
 			console.log("2018.01.05 jsonParam : " + JSON.stringify(jsonParam));
 
