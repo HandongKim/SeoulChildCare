@@ -221,9 +221,14 @@ function getListDetailNote () {
     // console.log('jsonParam : ' + jsonParam);
     // console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-    moneyValue.clear();
+    console.log("getListDetailNote was called");
+
+    moneyValue.value="";
     selectedData.value="카드결제";
-    subType.isChoice.value=
+    subType.isChoice.value=false;
+
+
+
 
 	fetch(selectMobileOnlineBillList_URL, {
 		method: 'POST',
