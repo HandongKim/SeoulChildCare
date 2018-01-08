@@ -4,6 +4,7 @@ var UniSign = require("UniSign");
 var settings = require('UserSettings');
 var Device = require('Device');
 var Backend = require('Backend.js');
+var Environment = require('FuseJS/Environment');
 
 
 var corSelected = Observable(false);
@@ -131,11 +132,16 @@ var alert = {
 
 
 function getLicenseInfo () {
-		setLicense();
-		console.log("getLicenseInfo was clicked");
-		console.log("UniSign.getLicenseInfo() : " +  UniSign.getLicenseInfo());
+	setLicense();
+	console.log("getLicenseInfo was clicked");
+	console.log("UniSign.getLicenseInfo() : " +  UniSign.getLicenseInfo());
+	console.log("after getLicenseInfo was clicked");
 
-		console.log("after getLicenseInfo was clicked");
+	if (Environment.ios) {
+		console.log("This device is iPhone");
+	} else if (Environment.android) {
+		console.log("This device is Android");
+	}
 };
 
 

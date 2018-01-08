@@ -5,43 +5,30 @@ var Observable = require('FuseJS/Observable');
 //기본 도메인 주소 (개발) 운영으로 할땐 주석 처리
 // var BASE_URL = "http://112.218.172.44:52102";
 var BASE_URL = "http://112.218.172.44:51442";
-
 //로그인 URL
 var LOGIN_URL = "/common/loginSigned.do";
 //NoteManage (전표관리에서 쓰이는 URL)
 var selectOnlineBCashList_URL = "/acusr/acc/bil/selectOnlineBCashList.do";
 var getBillCashInputLoad_URL ="/acusr/acc/bil/getBillCashInputLoad.do";
-
 //DetailNote [전표관리상세보기에 쓰이는 URL]
 var selectMobileOnlineBillList_URL = "/acusr/acc/bil/selectMobileOnlineBillList.do";
 var updatebCashMobile_URL = "/acusr/acc/bil/updatebCashMobile.do";
 var deleteMobileBillList_URL = "/acusr/acc/bil/deleteMobileBillList.do"
-
-
 //Notice [공지사항 URL]
 var notiUserMipList_URL = "/acusr/cmt/notiUserMipList.do";
 var noticeUserMipDetailList_URL = "/acusr/cmt/noticeUserMipDetailList.do";
-
-
 //QnA [질의응답 URL]
 var qnaList_URL = "/acusr/cmt/qnaList.do";
 var qnaListDtl_URL = "/acusr/cmt/qnaListDtl.do"
 var qnaUserUpdate_URL = "/acusr/cmt/qnaUserUpdate.do"
 var insertQnaCommList_URL = "/acusr/cmt/insertQnaCommList.do";
-
-
 //ApplyEdu [교육신청]
 var educationMain_URL = "/mobile/education/main.do";
 var eduapply_URL = "/mobile/education/eduapply.do"
-
-
-
 //PhotoCollection [증빙자료모음]
 var getMobileRciptList_URL = "/acusr/acc/bil/getMobileRciptList.do";
 var mImgView_URL = "/acusr/acc/bil/mImgView.do?";
 var deleteMapngReceipt_URL = "/acusr/acc/bil/DeleteMapngReceipt.do"
-
-
 //ChoiceSubject [계정과목 선택]
 var getEstiSearchLoad_URL = "/acusr/acc/bil/getEstiSearchLoad.do";
 

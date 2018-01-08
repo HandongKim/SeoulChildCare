@@ -341,12 +341,12 @@ namespace Fuse.UniSign.Android
 		static void ChangePassword (string oldPassword, string newPassword, Java.Object cert) 
 		@{
 
-			//String errorMsg = CertToolkitMgr.getInstance().logicChangeCertPW((Cert)cert , oldPassword, newPassword);
-           //  if (errorMsg != null) {
-			//	System.out.println("입력오류");
-		//	} else {
-			//	System.out.println("비밀번호 변경 성공");
-		//	}
+			String errorMsg = CertToolkitMgr.getInstance().logicChangeCertPW((com.crosscert.android.core.Cert)cert , oldPassword, newPassword);
+             if (errorMsg != null) {
+				System.out.println("입력오류");
+			} else {
+				System.out.println("비밀번호 변경 성공");
+			}
 		@}
 
 
