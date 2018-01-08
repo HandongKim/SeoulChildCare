@@ -899,9 +899,10 @@ function deleteData () {
 			getListDetailNote,pickFromList, moneyValue,viewWillAppear, saveData,  deleteData, selectedMemo,
 
 			goShowFile: function() {
-
+				console.log("goShowFile : goShowFile");
+				console.log("selectedDetailNoteVariable : " + selectedDetailNoteVariable.BILL_IDX);
 				var infoJSON = {
-					BILL_IDX:BILL_IDX.value				
+					BILL_IDX:selectedDetailNoteVariable.BILL_IDX
 				}
 
 
