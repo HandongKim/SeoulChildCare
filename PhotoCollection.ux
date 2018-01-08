@@ -98,7 +98,7 @@
 				<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
 			</Panel>
 
-			<Grid ColumnCount="3" Columns="4*, 1*, 1*" Dock="Top">
+			<Grid ColumnCount="3" Columns="4*, 1*, 1*" Dock="Top" Color="White">
 				<Image File="Images/tx19.png" Alignment="CenterLeft" Margin="{margin}" Width="56%">
 				</Image>
 
