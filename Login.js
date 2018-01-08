@@ -432,7 +432,7 @@ function setLicense () {
 
 function getLogicSignedData () {
 	var value = certPw.value;
-	value = "1q2w3e4r!@";
+	// value = "1q2w3e4r!@";
 	mSignedData = UniSign.getLogicSignedData(value, certificateIndexValue);
 	return mSignedData;
 }

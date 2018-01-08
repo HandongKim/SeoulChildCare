@@ -301,7 +301,7 @@ namespace Fuse.UniSign.Android
 			byte[] inputData = data.getBytes();
                 // 서명 결과 데이터 : Base64 문자열로 인코딩 된다.
              String inputbase64 = "NOT YET TESTED";
-
+ 
 			// 인증서 비밀번호
             try {
 				byte[] resultData = CertToolkitMgr.getInstance().logicCMSSignedData((com.crosscert.android.core.Cert)certificate, inputData, password.getBytes());
@@ -309,8 +309,6 @@ namespace Fuse.UniSign.Android
             } catch (Exception e) {
 
 			}
-
-
 			System.out.println("inputbase64 : " + inputbase64);
 
 			if (inputbase64.equals("NOT YET TESTED")) {
@@ -322,12 +320,31 @@ namespace Fuse.UniSign.Android
 				System.out.println("ret is true");				
 				ret = true;
 			}
-
     		return ret;
 		@}
 
 
 
+		public static bool removeCertificate(Java.Object certificate) {
+			return RemoveCertificate(certificate);
+		}
+
+		[Foreign(Language.Java)]
+		static bool RemoveCertificate (Java.Object certificate) 
+		@{
+			
+			try {
+				CertListMgr.getInstance().deleteCert((com.crosscert.android.core.Cert) certificate);
+				System.out.println("인증서를 삭제 했습니다");
+				return true;
+			}catch (Exception e){
+				e.printStackTrace();
+				System.out.println("인증서 삭제 중 오류가 발생했습니다.");
+				return false;	
+			}
+
+			
+		@}
 
 
 

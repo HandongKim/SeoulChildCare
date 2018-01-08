@@ -163,7 +163,19 @@ namespace Fuse.UniSign
 			}
 			else if defined(Android) 
 			{
-				return false;	
+
+				debug_log("Android Removed Certificate started");
+				Certificate certificate = ToolkitMgr.GetUserCertificateAtIndex(certIndex);
+
+
+
+
+				return ToolkitMgr.removeCertificate(certificate.Handle);
+
+
+
+
+
 			} else {
 				return false;
 			}
