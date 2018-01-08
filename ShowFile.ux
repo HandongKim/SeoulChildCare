@@ -66,7 +66,7 @@
 
 
 
-			fetch("http://www.aseoul.co.kr/acusr/acc/bil/getMobileRciptList.do", {
+			fetch("http://112.218.172.44:51442/acusr/acc/bil/getMobileRciptList.do", {
 				method: 'POST',
 				headers: {
 					"Content-type": "application/json"

@@ -129,7 +129,7 @@
 
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-			fetch("http://www.aseoul.co.kr/acusr/cmt/qnaList.do", {
+			fetch("http://112.218.172.44:51442/acusr/cmt/qnaList.do", {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"

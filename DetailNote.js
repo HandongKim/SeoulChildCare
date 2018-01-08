@@ -518,7 +518,7 @@ function datePickerDown() {
 		// 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
 
 
-		// 	fetch("http://112.218.172.44:52102/acusr/acc/bil/getEstiSearchLoad.do", {
+		// 	fetch("http://112.218.172.44:51442/acusr/acc/bil/getEstiSearchLoad.do", {
 		// 			method: 'POST',
 		// 			headers: {
 		// 				"Content-type": "application/json"
@@ -558,6 +558,7 @@ function saveData() {
 	var ORG_BCASH_MEMO = selectedDetailNoteVariable.ORG_BCASH_MEMO;
 	var BCASH_MEMO = selectedDetailNoteVariable.ORG_BCASH_MEMO;
 	var BCASH_BILL_SEQ = selectedDetailNoteVariable.BCASH_BILL_SEQ;
+	var BCASH_MONEY = selectedDetailNoteVariable.MONEY;
 
 //이거 가져오고
 
@@ -622,7 +623,8 @@ function saveData() {
 
 	if (ACTION == "I") {
 		//insert할때 쓰이는 ds_bCash값
-		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":'+BILL_IDX+',"BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":'+BILL_RECEIPT+',"ESTI_SUB_YN":'+ESTI_SUB_YN+',"ESTI_NAME":'+ESTI_NAME+',"BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":'+BCASH_BILL_SEQ+'}';	
+		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":'+BILL_IDX+',"BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":'+BILL_RECEIPT+',"ESTI_SUB_YN":'+ESTI_SUB_YN+',"ESTI_NAME":'+ESTI_NAME+',"BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":'+BCASH_BILL_SEQ+', "BCASH_MONEY":"'+BCASH_MONEY+'"}';	
+
 	} else if (ACTION =="U") {
 		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+moneyValue.value+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ+'"}';	
 	}
@@ -652,7 +654,7 @@ function saveData() {
 	// console.log("jsonParam : " + JSON.stringify(jsonParam));
 
 
-	fetch("http://112.218.172.44:52102/acusr/acc/bil/updatebCashMobile.do", {
+	fetch("http://112.218.172.44:51442/acusr/acc/bil/updatebCashMobile.do", {
 			method: 'POST',
 			headers: {
 				"Content-type": "application/json"
@@ -800,7 +802,7 @@ function deleteData () {
 
 	
 	
-			fetch("http://112.218.172.44:52102/acusr/acc/bil/deleteMobileBillList.do", {
+			fetch("http://112.218.172.44:51442/acusr/acc/bil/deleteMobileBillList.do", {
 				method: 'POST',
 				headers: {
 					"Content-type": "application/json"

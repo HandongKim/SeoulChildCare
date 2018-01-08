@@ -3,7 +3,8 @@ var Observable = require('FuseJS/Observable');
 //기본 도메인 주소 (운영) 개발할땐 주석처리
 // var BASE_URL = "http://www.aseoul.co.kr";
 //기본 도메인 주소 (개발) 운영으로 할땐 주석 처리
-var BASE_URL = "http://112.218.172.44:52102";
+// var BASE_URL = "http://112.218.172.44:52102";
+var BASE_URL = "http://112.218.172.44:51442";
 
 //로그인 URL
 var LOGIN_URL = "/common/loginSigned.do";
