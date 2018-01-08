@@ -123,8 +123,8 @@
 		}
 
 
-		var educationMainUrl = Backend.BASE_URL + Backend.educationMain;
-		var eduApplyUrl = Backend.BASE_URL + Backend.eduapply;
+		var educationMainUrl = Backend.BASE_URL + Backend.educationMain_URL;
+		var eduApplyUrl = Backend.BASE_URL + Backend.eduapply_URL;
 
 		function getEducationMain(){
 			console.log("getEducationMain function Call ");

@@ -14,29 +14,36 @@ var getBillCashInputLoad_URL ="/acusr/acc/bil/getBillCashInputLoad.do";
 
 //DetailNote [전표관리상세보기에 쓰이는 URL]
 var selectMobileOnlineBillList_URL = "/acusr/acc/bil/selectMobileOnlineBillList.do";
+var updatebCashMobile_URL = "/acusr/acc/bil/updatebCashMobile.do";
+var deleteMobileBillList_URL = "/acusr/acc/bil/deleteMobileBillList.do"
 
 
 //Notice [공지사항 URL]
-var notiUserMipList = "/acusr/cmt/notiUserMipList.do";
-var noticeUserMipDetailList = "/acusr/cmt/noticeUserMipDetailList.do";
+var notiUserMipList_URL = "/acusr/cmt/notiUserMipList.do";
+var noticeUserMipDetailList_URL = "/acusr/cmt/noticeUserMipDetailList.do";
 
 
 //QnA [질의응답 URL]
-var qnaList = "/acusr/cmt/qnaList.do";
-var qnaListDtl = "/acusr/cmt/qnaListDtl.do"
-var qnaUserUpdate = "/acusr/cmt/qnaUserUpdate.do"
-var insertQnaCommList = "/acusr/cmt/insertQnaCommList.do";
+var qnaList_URL = "/acusr/cmt/qnaList.do";
+var qnaListDtl_URL = "/acusr/cmt/qnaListDtl.do"
+var qnaUserUpdate_URL = "/acusr/cmt/qnaUserUpdate.do"
+var insertQnaCommList_URL = "/acusr/cmt/insertQnaCommList.do";
 
 
 //ApplyEdu [교육신청]
-var educationMain = "/mobile/education/main.do";
-var eduapply = "/mobile/education/eduapply.do"
+var educationMain_URL = "/mobile/education/main.do";
+var eduapply_URL = "/mobile/education/eduapply.do"
 
 
 
-//PhotoCollection
-var getMobileRciptList = "/acusr/acc/bil/getMobileRciptList.do";
-var mImgView = "/acusr/acc/bil/mImgView.do?";
+//PhotoCollection [증빙자료모음]
+var getMobileRciptList_URL = "/acusr/acc/bil/getMobileRciptList.do";
+var mImgView_URL = "/acusr/acc/bil/mImgView.do?";
+var deleteMapngReceipt_URL = "/acusr/acc/bil/DeleteMapngReceipt.do"
+
+
+//ChoiceSubject [계정과목 선택]
+var getEstiSearchLoad_URL = "/acusr/acc/bil/getEstiSearchLoad.do";
 
 
 
@@ -169,18 +176,11 @@ var dataFromChoiceSubjectToDetailNote = {
 	ESTI_SUB_YN:Observable()
 }
 
-
-
-
-
-
-
-
-
 module.exports = {
 	subject, dsParam, noteManageParamValuesForDetailNote, choiceSubjectList, 
-	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, getBillCashInputLoad_URL,
-	selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList,
-	noticeUserMipDetailList, qnaList, qnaListDtl,qnaUserUpdate, dataFromChoiceSubjectToDetailNote, educationMain,
-	eduapply, getMobileRciptList,mImgView
+	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, updatebCashMobile_URL, deleteMobileBillList_URL,
+	getBillCashInputLoad_URL, selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList_URL,
+	noticeUserMipDetailList_URL, qnaList_URL, qnaListDtl_URL,qnaUserUpdate_URL, insertQnaCommList_URL,
+	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
+	getEstiSearchLoad_URL
 };

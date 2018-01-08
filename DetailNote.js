@@ -544,9 +544,7 @@ function datePickerDown() {
 
 
 
-
-
-
+var updatebCashMobileUrl;
 
 function saveData() {
 	var ACTION = selectedDetailNoteVariable.ACTION;
@@ -655,8 +653,9 @@ function saveData() {
 
 	// console.log("jsonParam : " + JSON.stringify(jsonParam));
 
+	updatebCashMobileUrl = Backend.BASE_URL + Backend.updatebCashMobile_URL;
 
-	fetch("http://112.218.172.44:51442/acusr/acc/bil/updatebCashMobile.do", {
+	fetch(updatebCashMobileUrl, {
 			method: 'POST',
 			headers: {
 				"Content-type": "application/json"
@@ -709,11 +708,7 @@ function saveData() {
 
 
 
-
-
-
-
-
+var deleteMobileBillListUrl;
 function deleteData () {
 	var ACTION = selectedDetailNoteVariable.ACTION;
 	var CASH_IDX = selectedDetailNoteVariable.CASH_IDX;
@@ -739,17 +734,10 @@ function deleteData () {
 	}
 	
 	var BILL_SUBCODE= selectedDetailNoteVariable.BILL_SUBCODE;
-	
-
 	var BILL_IDX= selectedDetailNoteVariable.BILL_IDX;
-
-
 	console.log("BIL_IDX from saveData : " + BILL_IDX);
-
-
 	var BILL_CLSS=selected_BILL_CLSS.value;
 	var BILL_RECEIPT =selectedDetailNoteVariable.BILL_RECEIPT;
-	
 	var ESTI_SUB_YN;
 
 	if(Backend.subject.ESTI_SUB_YN == null) {
@@ -766,14 +754,8 @@ function deleteData () {
 		ESTI_NAME = Backend.subject.ESTI_NAME.value;	
 	}
 
-	
-
-
-
-
+	//모바일 결제로 하기 때문에 BILL_GB는 "A04"로 고정
 	var BILL_GB = "A04";
-	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
-
 	console.log("so cold........................ dsParam : " + dsParam);
 	console.log("moneyValue.value : " + moneyValue.value);
 
@@ -806,28 +788,25 @@ function deleteData () {
 
 	console.log("jsonParam : " + JSON.stringify(jsonParam));
 
+	deleteMobileBillListUrl = Backend.BASE_URL + Backend.deleteMobileBillList_URL;
 	
-	
-			fetch("http://112.218.172.44:51442/acusr/acc/bil/deleteMobileBillList.do", {
-				method: 'POST',
-				headers: {
-					"Content-type": "application/json"
-				},
-				body: JSON.stringify(jsonParam)
-		        }).then(function(response) {
-		        	var responseData = JSON.stringify(response);
-		            return response.json();
-		        }).then(function(jsonData) {
-		            var data = jsonData.results[0];
-		            // console.log("data : " + jsonData.results[0]);
-					// console.log("Reg Succeeded[ios]: " + data.registration_token);
-					// maintext.value = maintext.value + "/n" + data.registration_token;
-		        }).catch(function(err) {
-		            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
-		        });
-		
-
-
+	fetch(deleteMobileBillListUrl, {
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+        }).then(function(response) {
+        	var responseData = JSON.stringify(response);
+            return response.json();
+        }).then(function(jsonData) {
+            var data = jsonData.results[0];
+            // console.log("data : " + jsonData.results[0]);
+			// console.log("Reg Succeeded[ios]: " + data.registration_token);
+			// maintext.value = maintext.value + "/n" + data.registration_token;
+        }).catch(function(err) {
+            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+        });
 }
 
 

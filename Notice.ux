@@ -52,6 +52,10 @@
 
 		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
+
+		var notiUserMipListUrl = Backend.BASE_URL + Backend.notiUserMipList_URL;
+		var noticeUserMipDetailListUrl = Backend.BASE_URL + Backend.noticeUserMipDetailList_URL;
+		
 		function searchContent(){
 			//조회시 AREA 값은 GVAREACODE 값과 동일 하다. 나중에 서버에서 데이터 받아올 경우 그렇게 세팅 해야 한다.
 			pageCount.value = 1;
@@ -71,7 +75,7 @@
 
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 
-			var url = Backend.BASE_URL + Backend.notiUserMipList;
+			
 
 
 
@@ -80,7 +84,7 @@
 			console.log("searchContent ds Search : " + dsSearch);
 
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-			fetch(url, {
+			fetch(notiUserMipListUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -226,9 +230,9 @@
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
 			notices.clear();
-			var url = Backend.BASE_URL + Backend.notiUserMipList;
+			
 
-			fetch(url, {
+			fetch(notiUserMipListUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -302,11 +306,9 @@
 			var dsSearch = '{"AREA":"11110","commClss":"N","fCombo":"ALL","page":"'+page.value+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
 			// console.log("nextPage : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-			var url = Backend.BASE_URL + Backend.notiUserMipList;
+			
 
-			var url = Backend.BASE_URL + Backend.notiUserMipList;
-
-			fetch(url, {
+			fetch(notiUserMipListUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -484,9 +486,9 @@
 			console.log("dsSearch : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-			var url = Backend.BASE_URL + Backend.noticeUserMipDetailList;
+			
 
-			fetch(url, {
+			fetch(noticeUserMipDetailListUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"

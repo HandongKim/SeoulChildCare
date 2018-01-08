@@ -6,14 +6,12 @@
 		</WhileActive>	
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
+		var Backend = require('Backend.js');
 
 		var type = Observable("제목", "내용");
 		var selectedType = Observable("제목");
 
 		pickerOn = Observable(false);
-
-		var Backend = require('Backend.js');
-		
 		function pickerUp() {
 			pickerOn.value = true;
 		}
@@ -41,6 +39,15 @@
 		var qnaDetailValue = Observable(); 
 		var qnaFileValue = Observable();
 		var qnaIsCorrect = Observable();
+
+
+		//Url List
+		var qnaListUrl = Backend.BASE_URL + Backend.qnaList_URL;
+		var qnaListDtlUrl = Backend.BASE_URL + Backend.qnaListDtl_URL;
+		var insertQnaCommListUrl = Backend.BASE_URL + Backend.insertQnaCommList_URL;
+		var qnaUserUpdateUrl = Backend.BASE_URL + Backend.qnaUserUpdate_URL;
+
+
 
 		function detailDataClear(){
 			console.log("문의하기 디테일 " + JSON.stringify(qnaDetailValue.value));
@@ -129,7 +136,7 @@
 
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-			fetch("http://112.218.172.44:51442/acusr/cmt/qnaList.do", {
+			fetch(qnaListUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -292,10 +299,7 @@
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			qnas.clear();
 
-			var url = Backend.BASE_URL + Backend.qnaList;
-
-
-			fetch(url, {
+			fetch(qnaListUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -362,9 +366,7 @@
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			console.log("nextPage Call ! : " + dsSearch);
 
-			var url = Backend.BASE_URL + Backend.qnaList;
-
-			fetch(url, {
+			fetch(qnaListUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -410,8 +412,7 @@
 			console.log("dsSearch : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-			var url = Backend.BASE_URL + Backend.qnaListDtl;
-			fetch(url, {
+			fetch(qnaListDtlUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -648,11 +649,7 @@
 			var dsFileList = '{}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
 
-			var url = Backend.BASE_URL + Backend.qnaUserUpdate;
-
-
-
-			fetch(url, {
+			fetch(qnaUserUpdateUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -671,14 +668,15 @@
 
 		function registerSend(){
 			console.log("registerSend function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsParam = Backend.dsParam;
 			var dsDetail = '{"CONT":"'+qnaDetailValue.value.cont.value+'","TITLE":"'+qnaDetailValue.value.title.value+'"}';
 			var dsFileList = '{}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
 
-			var url = Backend.BASE_URL + Backend.insertQnaCommList;
+			
 
-			fetch(url, {
+			fetch(insertQnaCommListUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"

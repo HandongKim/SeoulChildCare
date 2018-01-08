@@ -40,8 +40,8 @@ function pickerUp() {
 var dsParam = Backend.dsParam;
 
 
-var getMobileRciptListUrl = Backend.BASE_URL + Backend.getMobileRciptList;
-var mImgViewUrl = Backend.BASE_URL + Backend.mImgView;
+var getMobileRciptListUrl = Backend.BASE_URL + Backend.getMobileRciptList_URL;
+var mImgViewUrl = Backend.BASE_URL + Backend.mImgView_URL;
 
 
 function pickerDown() {
