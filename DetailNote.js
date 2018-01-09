@@ -26,8 +26,6 @@ var dsParam = Backend.dsParam;
 var	CASH_IDX = Backend.dataFromNoteManageToDetailNote.CASH_IDX.value;
 var	BILL_IDX = Backend.dataFromNoteManageToDetailNote.BILL_IDX.value;
 
-
-
 function viewWillAppear() {
 	console.log("Data Initialised");
 	moneyValue.value="";

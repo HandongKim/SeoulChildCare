@@ -12,7 +12,7 @@ var onPanel = Observable(false);
 var mSignedData = null;
 
 // var licenseKey = "ikdt8CleK1HVv3Qa0temFA==";
-var licenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
+// var licenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
 
 function friSelect() {
 	corSelected.value = false;
@@ -265,6 +265,13 @@ var chgPassword = {
 
 
 
+var test = function (a, b) {
+	console.log("2018.01.09 test variable value");
+	return a * b;
+
+}
+
+
 
 
 
@@ -425,6 +432,20 @@ function startTimer() {
 
 function setLicense () {
 	console.log("setLicense was clicked");
+
+
+	console.log(test(10,  20));
+	
+
+
+
+	if(Environment.ios) {
+		licenseKey = Backend.iOSLicenseKey;
+		console.log("Environment is iOS and icenseKey is " + licenseKey);
+	}else if (Environment.android) {
+		licenseKey = Backend.AndroidLicenseKey;
+		console.log("Environment is Android and license key is " + licenseKey);
+	}
 	UniSign.setLicense(licenseKey);
 };
 

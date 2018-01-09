@@ -32,8 +32,6 @@ var deleteMapngReceipt_URL = "/acusr/acc/bil/DeleteMapngReceipt.do"
 //ChoiceSubject [계정과목 선택]
 var getEstiSearchLoad_URL = "/acusr/acc/bil/getEstiSearchLoad.do";
 
-
-
 var subject = {
 	isChoice: Observable(),
 	color: Observable(),
@@ -47,6 +45,13 @@ var subject = {
 
 var dsParam="";
 var choiceSubjectList = Observable();
+
+var AndroidLicenseKey = "ikdt8CleK1HVv3Qa0temFA==";
+var iOSLicenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
+
+
+
+
 
 
 
@@ -169,5 +174,5 @@ module.exports = {
 	getBillCashInputLoad_URL, selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList_URL,
 	noticeUserMipDetailList_URL, qnaList_URL, qnaListDtl_URL,qnaUserUpdate_URL, insertQnaCommList_URL,
 	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
-	getEstiSearchLoad_URL
+	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey
 };

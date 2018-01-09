@@ -235,11 +235,7 @@ function outcomeClick() {
 
 function selectSubject(arg) {
 	// console.log(arg.data.text);
-
 	console.log(JSON.stringify(arg));
-
-
-
 	if (arg.data.type == 1) {
 		Backend.subject.color.value = "#4C9DFF";
 		Backend.subject.type.value = "목";
@@ -253,7 +249,6 @@ function selectSubject(arg) {
 		Backend.subject.color.value = "#FFBA85";
 		Backend.subject.type.value = "세목";
 	}
-
 	
 	Backend.subject.isChoice.value = true;
 	Backend.subject.name.value = arg.data.name;
@@ -261,13 +256,10 @@ function selectSubject(arg) {
 	Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
 	Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
 
-
-
 	console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
 	console.log("Backend.subject.name.value : " + Backend.subject.name.value);
 	console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
 	console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
-
 
 	var infoJSON = {
 		choicesubject_ischoice:Backend.subject.isChoice.value,
@@ -299,9 +291,6 @@ function selectSubject(arg) {
 			router.goBack();
 		}
 	});
-
-
-
 }
 
 function getTheSubjectList() {
@@ -350,16 +339,9 @@ function getTheSubjectList() {
 
 }
 
-
-
-
-
-
-
-
-		module.exports = {
-			subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList, incomeTF
-		};
+	module.exports = {
+		subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList, incomeTF
+	};
 	</JavaScript>
 
 	<DockPanel ux:Name="choiceSubjectPanel" Width="100%" Height="100%" Color="White">
