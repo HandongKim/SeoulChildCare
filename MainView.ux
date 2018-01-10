@@ -22,14 +22,60 @@
 		var sendPictureBtnEnabled = Observable(false);
 		var targetImgPath = Observable();
 		var takedPicture = Observable();
+		var dateTime = "";
+
+
+
+		function getDatesInString () {
+			var today = new Date();
+			var yearInString = today.getFullYear().toString();
+			var monthInString = "";
+			var dateInString = "";
+			var hourInString = "";
+			var minuteInString = "";
+			var secondInString = ""; 
+
+			if( (today.getMonth()+1) < 10 ) {
+				monthInString = "0" + (today.getMonth()+1).toString();
+			} else {
+				monthInString = (today.getMonth()+1).toString();
+			}
+			
+			if(today.getDate() < 10) {
+				dateInString = "0" +today.getDate().toString();
+			}else {
+				dateInString = today.getDate().toString();
+			}
+
+			if (today.getHours() < 10) {
+				hourInString = "0" +  today.getHours().toString();
+			} else {
+				hourInString = today.getHours().toString();
+			}
+
+			if (today.getMinutes() < 10) {
+				minuteInString = "0" +  today.getMinutes().toString();
+			} else {
+				minuteInString = today.getMinutes().toString();
+			}
+
+			if (today.getSeconds() < 10) {
+				secondInString = "0" +  today.getSeconds().toString();
+			} else {
+				secondInString = today.getSeconds().toString();
+			}
+
+    		var date = yearInString + "-" + monthInString + "-" + dateInString;
+			var time = hourInString + "-" + minuteInString + "-" + secondInString;
+			var dateTime = date+'-'+time;
+
+			return dateTime;
+		}
 
 
 		function takePicture()
 		{
-			var today = new Date();
-    		var date = today.getFullYear()+''+(today.getMonth()+1)+''+today.getDate();
-			var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
-			var dateTime = date+''+time;
+			dateTime = getDatesInString();			
 
 			Camera.takePicture().then(function(image)
 			{
@@ -51,7 +97,9 @@
 
 					console.log("dateTime : " + dateTime);
 
-					var imageName = dateTime + ".png";
+					// var imageName = dateTime + ".png";
+					var imageName = dateTime + ".jpg";
+					console.log("Image Name : " + imageName);
 
 					savepanel3.save(imageName);
 					console.log("make image");
@@ -110,9 +158,11 @@
 
 		function sendPicture()
 		{
+							
+
 			console.log("sendPicture was called");
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
-			var dsSearch = '{"ATCHMNFL_YM":"11110","FILE_SE":"N","DOWN_LVL":"ALL"}';
+			var dsSearch = '{"ATCHMNFL_YM":"'+dateTime+'","FILE_SE":"N","DOWN_LVL":"ALL"}';
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
 

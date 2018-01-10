@@ -111,7 +111,7 @@ public static class FormUpload
     private static readonly Encoding encoding = Encoding.UTF8;
     public static HttpMessageHandlerRequest MultipartFormDataPost(string postUrl, string postMethod, Dictionary<string,string> headers, Dictionary<string, object> postParameters, out byte[] formData)
     {
-        string formDataBoundary = String.Format("SomeText");
+        string formDataBoundary = String.Format("SpecificString");
         string contentType = "multipart/form-data; boundary=" + formDataBoundary;
         debug_log "about to request multipart data";
         formData = GetMultipartFormData(postParameters, formDataBoundary);
@@ -159,18 +159,34 @@ public static class FormUpload
     {
         Stream formDataStream = new Uno.IO.MemoryStream();
         bool needsCLRF = false;
+        int count = 1;
 
         foreach (var param in postParameters)
         {
             // Thanks to feedback from commenters, add a CRLF to allow multiple parameters to be added.
             // Skip it on the first parameter, add it to subsequent parameters.
-            if (needsCLRF)
-            {
-                var bytes = Utf8.GetBytes("\r\n");
+            debug_log("postParameters : " + postParameters.Count);
+
+            debug_log("for each param : " + param.Key);
+
+
+            //if (needsCLRF)
+            //{
+            //  debug_log("needsCLRF : " + needsCLRF);
+            //    var bytes = Utf8.GetBytes("\r\n");
+            //    formDataStream.Write(bytes, 0, bytes.Length);
+            //}
+
+            // needsCLRF = true;
+
+            if (count ==  1) {
+                string starter = string.Format("\r\n--{0}\r\n",  boundary);
+                var bytes = Utf8.GetBytes(starter);
                 formDataStream.Write(bytes, 0, bytes.Length);
             }
 
-            needsCLRF = true;
+            debug_log("formDataStream : " + formDataStream);
+
 
             if (param.Value is FileParameter)
             {
@@ -182,6 +198,10 @@ public static class FormUpload
                     param.Key,
                     fileToUpload.FileName ?? param.Key,
                     fileToUpload.ContentType ?? "application/octet-stream");
+
+                debug_log("Uploader.uno string header : " + header);
+
+
                     var bytes = Utf8.GetBytes(header);
 
                 formDataStream.Write(bytes, 0, bytes.Length);
@@ -195,9 +215,24 @@ public static class FormUpload
                     boundary,
                     param.Key,
                     param.Value);
+
+                debug_log("Uploader.uno string postData : " + postData);
+
+
                     var bytes = Utf8.GetBytes(postData);
                 formDataStream.Write(bytes, 0, bytes.Length);
             }
+
+            if (count < postParameters.Count) {
+                 string starter = string.Format("\r\n--{0}\r\n",  boundary);
+                var bytes = Utf8.GetBytes(starter);
+                formDataStream.Write(bytes, 0, bytes.Length);
+            }
+
+
+            count++;
+
+            debug_log("counted number : " + count);
         }
 
 

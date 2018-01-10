@@ -11,7 +11,7 @@ var corSelected = Observable(false);
 var onPanel = Observable(false);
 var mSignedData = null;
 
-// var licenseKey = "ikdt8CleK1HVv3Qa0temFA==";
+var licenseKey = "ikdt8CleK1HVv3Qa0temFA==";
 // var licenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
 
 function friSelect() {
@@ -453,7 +453,7 @@ function setLicense () {
 
 function getLogicSignedData () {
 	var value = certPw.value;
-	// value = "1q2w3e4r!@";
+	value = "1q2w3e4r!@";
 	mSignedData = UniSign.getLogicSignedData(value, certificateIndexValue);
 	return mSignedData;
 }
