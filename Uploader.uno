@@ -46,7 +46,7 @@ public class Uploader : NativeModule
         debug_log("Uploader dsParam : " + dsParam);
         debug_log("Uploader dsSearch : " + dsSearch);
 
-        debug_log("Uploader gvmemcode : " + gvmemcode);
+        debug_log("Uploader gvmemcode : " + GVMEMCODE);
         debug_log("Uploader ATCHMNFL_YM : " + ATCHMNFL_YM);
         debug_log("Uploader FILE_SE : " + FILE_SE);
         debug_log("Uploader DOWN_LVL : " + DOWN_LVL);
@@ -79,7 +79,8 @@ public class Uploader : NativeModule
         postParameters.Add("ATCHMNFL_YM", ATCHMNFL_YM);
         postParameters.Add("FILE_SE", FILE_SE);
         postParameters.Add("DOWN_LVL", DOWN_LVL);
-        postParameters.Add("file", new FormUpload.FileParameter(imageData, fileName, fileType, dsParam, dsSearch));
+        //postParameters.Add("file", new FormUpload.FileParameter(imageData, fileName, fileType, dsParam, dsSearch));
+        postParameters.Add("file", new FormUpload.FileParameter(imageData, fileName, fileType, dsParam, dsSearch, GVMEMCODE, ATCHMNFL_YM, FILE_SE, DOWN_LVL));
 
         // if there are multiple files, then simply add multiple post parameters. I didn't test it though, but it should work.
 
@@ -280,6 +281,10 @@ public static class FormUpload
         public string ContentType { get; set; }
         public string dsParam {get; set;}
         public string dsSearch {get; set;}
+        public string gvmemcode {get; set;}
+        public string atchmnfl_yn {get;set;}
+        public string file_se {get; set;}
+        public string down_lvl {get; set;}
         public FileParameter(byte[] file) : this(file, null) { }
         public FileParameter(byte[] file, string filename) : this(file, filename, null) { }
         public FileParameter(byte[] file, string filename, string contenttype)
@@ -289,13 +294,18 @@ public static class FormUpload
             ContentType = contenttype;
         }
 
-        public FileParameter(byte[] file, string filename, string contentype, string dsparam, string dssearch) 
+        public FileParameter(byte[] file, string filename, string contentype, string dsparam, string dssearch, string GVMEMCODE,  string ATCHMNFL_YM, string FILE_SE, string DOWN_LVL) 
         {
             File = file;
             FileName = FileName;
             ContentType = contentype;
             dsParam = dsparam;
             dsSearch = dssearch;
+            gvmemcode = GVMEMCODE;
+            atchmnfl_yn = ATCHMNFL_YM;
+            file_se = FILE_SE;
+            down_lvl = DOWN_LVL;
+
         }
 
 
