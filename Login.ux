@@ -318,7 +318,7 @@
 
 									<Grid ColumnCount="1" RowCount="3" Rows="Auto" Alignment="CenterLeft" Width="100%">
 										<Text Value="{PolicyHumanReadableForm}" Alignment="CenterLeft" Color="#333" FontSize="{margin}*1.1" />
-										<Text Value="{CommonName}" Alignment="CenterLeft" Color="#000" FontSize="{margin}*1.4" />
+										<Text Font="BoldText" Value="{CommonName}" Alignment="CenterLeft" Color="#000" FontSize="{margin}*1.4" />
 										<Grid ColumnCount="2">
 											<Text Value="발급자: {Organization}" Alignment="CenterLeft" Color="#aaa" FontSize="{margin}*0.9"/>
 											<Text Value="만료일: {ValidityEndDate}" Alignment="CenterRight" Color="#aaa" FontSize="{margin}*0.9" Margin="{margin}/2,0" />
