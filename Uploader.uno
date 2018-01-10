@@ -33,9 +33,25 @@ public class Uploader : NativeModule
 
         var dsParam = (string) args[2];
         var dsSearch = (string) args [3];
+
+        var GVMEMCODE = (string) args[4];
+        var ATCHMNFL_YM = (string) args[5];
+        var FILE_SE = (string) args[6];
+        var DOWN_LVL = (string) args[7];
+
+
+
+
         //debug_log param;
         debug_log("Uploader dsParam : " + dsParam);
         debug_log("Uploader dsSearch : " + dsSearch);
+
+        debug_log("Uploader gvmemcode : " + gvmemcode);
+        debug_log("Uploader ATCHMNFL_YM : " + ATCHMNFL_YM);
+        debug_log("Uploader FILE_SE : " + FILE_SE);
+        debug_log("Uploader DOWN_LVL : " + DOWN_LVL);
+
+
 
 
         var imageData = Uno.IO.File.ReadAllBytes(path);
@@ -59,6 +75,10 @@ public class Uploader : NativeModule
         postParameters.Add("fileformat", fileExt);
         postParameters.Add("dsParam", dsParam);
         postParameters.Add("dsSearch", dsSearch);
+        postParameters.Add("GVMEMCODE", GVMEMCODE);
+        postParameters.Add("ATCHMNFL_YM", ATCHMNFL_YM);
+        postParameters.Add("FILE_SE", FILE_SE);
+        postParameters.Add("DOWN_LVL", DOWN_LVL);
         postParameters.Add("file", new FormUpload.FileParameter(imageData, fileName, fileType, dsParam, dsSearch));
 
         // if there are multiple files, then simply add multiple post parameters. I didn't test it though, but it should work.

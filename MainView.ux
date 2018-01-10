@@ -166,13 +166,20 @@
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
 
-			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"ds_search": '+dsSearch+'}');
+			// var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"ds_search": '+dsSearch+'}');
 
-			console.log("2018.01.05 jsonParam : " + JSON.stringify(jsonParam));
+			// console.log("2018.01.05 jsonParam : " + JSON.stringify(jsonParam));
+
+
+			var gvmemcode = JSON.parse(Backend.dsParam).GVMEMCODE;
+			console.log("gvmemcode : " + gvmemcode);
 
 
 
-			Uploader.send(targetImgPath.value, uploadUrl, Backend.dsParam, dsSearch).then(function(response) {
+
+
+
+			Uploader.send(targetImgPath.value, uploadUrl, Backend.dsParam, dsSearch, gvmemcode,  dateTime, "N", "ALL").then(function(response) {
 				console.log("upload complete.");
 				console.log(JSON.stringify(response));
 			});
