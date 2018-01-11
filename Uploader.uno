@@ -182,6 +182,10 @@ public static class FormUpload
         //bool needsCLRF = false;
         int count = 1;
 
+         String filename = postParameters["filename"].ToString();
+         debug_log("2018.01.11 filename : " + filename);
+
+
         foreach (var param in postParameters)
         {
             // Thanks to feedback from commenters, add a CRLF to allow multiple parameters to be added.
@@ -221,7 +225,7 @@ public static class FormUpload
 
                     boundary,
                     "profile_photo",
-                    "2018-01-10-17-58-23.jpg",
+                    filename,
                     //fileToUpload.FileName ?? param.Key,
                     "application/octet-stream");
 
@@ -231,7 +235,7 @@ public static class FormUpload
                 debug_log("Uploader.uno string header : " + header);
 
 
-                    var bytes = Utf8.GetBytes(header);
+                var bytes = Utf8.GetBytes(header);
 
                 formDataStream.Write(bytes, 0, bytes.Length);
 
