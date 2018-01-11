@@ -296,7 +296,7 @@
 			goQnA: function() {
 				router.push("QnA");
 			},
-			goRecieveWork: function() {
+			goReceiveWork: function() {
 				router.push("ReceieveWork");
 			},
 			goSendWork: function() {
@@ -374,7 +374,7 @@
 			<Notice ux:Template="Notice" router="router" />
 			<ApplyEdu ux:Template="ApplyEdu" router="router" />
 			<QnA ux:Template="QnA" router="router" />
-			<RecieveWork ux:Template="RecieveWork" router="router" />
+			<ReceiveWork ux:Template="ReceiveWork" router="router" />
 			<SendWork ux:Template="SendWork" router="router" />
 			<Trash ux:Template="Trash" router="router" />
 		</Navigator>
