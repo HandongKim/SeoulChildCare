@@ -90,7 +90,7 @@
 				dateInString = today.getDate().toString();
 			}
 
-			var date = yearInString + "-" + monthInString + "-" + dateInString;
+			var date = yearInString  + monthInString;
 			return date;
 		}
 
@@ -297,7 +297,7 @@
 				router.push("QnA");
 			},
 			goRecieveWork: function() {
-				router.push("RecieveWork");
+				router.push("ReceieveWork");
 			},
 			goSendWork: function() {
 				router.push("SendWork");
