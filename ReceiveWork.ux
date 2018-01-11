@@ -79,14 +79,24 @@
 						</StackPanel>
 					</Rectangle>
 				</WhileTrue>
-				<Rectangle Width="100%" BoxSizing="FillAspect" Aspect="8" Color="#f80" CornerRadius="3">
-					<Text Value="목록으로" Color="White" Alignment="Center">
-					<Clicked>
-						<Toggle Target="detailReceiveWork" />
-					</Clicked>
+				<Grid ColumnCount="2" CellSpacing="5">
+					<Rectangle Width="100%" Height="{margin}*3" Color="#000" CornerRadius="3">
+						<Text Value="삭제" Color="White" Alignment="Center">
+						<Clicked>
+							<Toggle Target="detailReceiveWork" />
+						</Clicked>
 
-					</Text>
-				</Rectangle>
+						</Text>
+					</Rectangle>
+					<Rectangle Width="100%" Height="{margin}*3" Color="#f80" CornerRadius="3">
+						<Text Value="목록으로" Color="White" Alignment="Center">
+						<Clicked>
+							<Toggle Target="detailReceiveWork" />
+						</Clicked>
+
+						</Text>
+					</Rectangle>
+				</Grid>
 			</StackPanel>
 		</Panel>
 

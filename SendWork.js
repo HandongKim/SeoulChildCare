@@ -15,37 +15,37 @@ for (var i = 0 ; i < 32 ; i++) {
 	days.add(1+i);
 }
 
-var receiveFromPickerPanelOn = Observable(false);
+var sendFromPickerPanelOn = Observable(false);
 var fromDate = {
 	year: Observable(2017),
 	month: Observable(12),
 	day: Observable(1)
 };
 
-function receiveFromPickerUp() {
-	receiveFromPickerPanelOn.value = true;
+function sendFromPickerUp() {
+	sendFromPickerPanelOn.value = true;
 }
-function receiveFromPickerDown() {
-	receiveFromPickerPanelOn.value = false;
+function sendFromPickerDown() {
+	sendFromPickerPanelOn.value = false;
 }
 
-var receiveToPickerPanelOn = Observable(false);
+var sendToPickerPanelOn = Observable(false);
 var toDate = {
 	year: Observable(2018),
 	month: Observable(1),
 	day: Observable(1)
 };
 
-function receiveToPickerUp() {
-	receiveToPickerPanelOn.value = true;
+function sendToPickerUp() {
+	sendToPickerPanelOn.value = true;
 }
-function receiveToPickerDown() {
-	receiveToPickerPanelOn.value = false;
+function sendToPickerDown() {
+	sendToPickerPanelOn.value = false;
 }
 
-var receiveWorks = Observable();
+var sendWorks = Observable();
 for (var i = 0 ; i < 5 ; i++) {
-	receiveWorks.add({
+	sendWorks.add({
 		sender: "노성순",
 		title: "업무연락 부탁드립니다.",
 		regDate1: "오후 06:46",
@@ -53,8 +53,8 @@ for (var i = 0 ; i < 5 ; i++) {
 	});
 }
 
-var receiveworkDetail = Observable();
-receiveworkDetail.add({
+var sendworkDetail = Observable();
+sendworkDetail.add({
 	title: "업무연락 부탁드립니다.",
 	sender: "노성순",
 	regDate1: "18:46:21",
@@ -64,7 +64,7 @@ receiveworkDetail.add({
 
 module.exports = {
 	years, months, days,
-	fromDate, receiveFromPickerPanelOn, receiveFromPickerUp, receiveFromPickerDown,
-	toDate, receiveToPickerPanelOn, receiveToPickerUp, receiveToPickerDown,
-	receiveWorks, receiveworkDetail
+	fromDate, sendFromPickerPanelOn, sendFromPickerUp, sendFromPickerDown,
+	toDate, sendToPickerPanelOn, sendToPickerUp, sendToPickerDown,
+	sendWorks, sendworkDetail
 };

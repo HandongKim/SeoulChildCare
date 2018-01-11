@@ -1,59 +1,134 @@
 <Page ux:Class="SendWork">
 	<Router ux:Dependency="router"/>
 
-	<JavaScript>
-		var Observable = require('FuseJS/Observable');
+	<JavaScript File="SendWork.js" />
 
-		var years = Observable();
-		for (var i = 0 ; i < 30 ; i++) {
-			years.add(2010+i);
-		}
+	<!-- 세부내용 보여지는 패널 -->
+	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
+		<Panel Dock="Top">
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked>
+						<Toggle Target="detailSendWork" />
+					</Clicked>
+				</Image>
 
-		var months = Observable();
-		for (var i = 0 ; i < 12 ; i++) {
-			months.add(1+i);
-		}
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
 
-		var days = Observable();
-		for (var i = 0 ; i < 32 ; i++) {
-			days.add(1+i);
-		}
+				<Image File="Images/btn_home.png">
+					<Clicked>
+						<Toggle Target="detailSendWork" />
+						<Callback Handler="{goMainPageFromAnywhere}" />
+					</Clicked>
+				</Image>
+			</Grid>
 
-		var sendFromPickerPanelOn = Observable(false);
-		var fromDate = {
-			year: Observable(2017),
-			month: Observable(12),
-			day: Observable(1)
-		};
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
+		</Panel>
+		<Panel Width="100%" Dock="Top">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="보낸업무함" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+			<Rectangle Width="100%" Color="#4069C2" Height="1" Alignment="Bottom" />
+		</Panel>
 
-		function sendFromPickerUp() {
-			sendFromPickerPanelOn.value = true;
-		}
-		function sendFromPickerDown() {
-			sendFromPickerPanelOn.value = false;
-		}
+		<Grid Color="#5771AA" Dock="Top" ColumnCount="2" Columns="5*, 1*">
+			<Panel />
+			<OrangeButton CornerRadius="3" Margin="5">
+				<Text Value="답장" Color="White" Alignment="Center" />
+			</OrangeButton>
+		</Grid>
 
-		var sendToPickerPanelOn = Observable(false);
-		var toDate = {
-			year: Observable(2018),
-			month: Observable(1),
-			day: Observable(1)
-		};
+		<ScrollView SnapMinTransform="false" SnapMaxTransform="false" Width="100%">
+			<StackPanel Color="#eee">
+				<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
+					<StackPanel Width="100%" Color="White">
+						<Text Value="{sendworkDetail.title}" Font="BoldText" FontSize="{margin}*1.2" Color="Black" Alignment="CenterLeft" Margin="{margin}" />
+						<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+							<Text Value="{sendworkDetail.sender}" FontSize="{margin}*1.1" Color="#18f" Font="BoldText" />
+							<Text Value="님이 보냈습니다." FontSize="{margin}" Color="Black" />
+						</WrapPanel>
+						<WrapPanel Alignment="CenterLeft">
+							<Text Value="{sendworkDetail.regDate2}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+							<Text Value="{sendworkDetail.regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+						</WrapPanel>
+					</StackPanel>
+					<Panel Width="100%" Color="White">
+						<Text Value="{sendworkDetail.cont}" Alignment="TopLeft" TextWrapping="Wrap" Margin="{margin}" />
+					</Panel>
+				</Grid>
+			</StackPanel>
+		</ScrollView>
 
-		function sendToPickerUp() {
-			sendToPickerPanelOn.value = true;
-		}
-		function sendToPickerDown() {
-			sendToPickerPanelOn.value = false;
-		}
+		<Panel Dock="Bottom" Color="#5079DB">
+			<StackPanel Margin="{margin}" ItemSpacing="6">
+				<WhileTrue Value="{sendWorkFiles.hasFile}">
+					<Text Value="파일첨부" Color="White" Alignment="CenterLeft" />
+					<Rectangle Width="100%" Color="White">
+						<StackPanel Margin="{margin}">
+							<Each Items="{sendWorkFiles}">
+								<WrapPanel>
+									<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+									<Text Value="{sendWorkFiles.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Text Value="{sendWorkFiles.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+								</WrapPanel>
+							</Each>
+						</StackPanel>
+					</Rectangle>
+				</WhileTrue>
+				<Grid ColumnCount="2" CellSpacing="5">
+					<Rectangle Width="100%" Height="{margin}*3" Color="#000" CornerRadius="3">
+						<Text Value="삭제" Color="White" Alignment="Center">
+						<Clicked>
+							<Toggle Target="detailSendWork" />
+						</Clicked>
 
-		module.exports = {
-			years, months, days,
-			fromDate, sendFromPickerPanelOn, sendFromPickerUp, sendFromPickerDown,
-			toDate, sendToPickerPanelOn, sendToPickerUp, sendToPickerDown
-		};
-	</JavaScript>
+						</Text>
+					</Rectangle>
+					<Rectangle Width="100%" Height="{margin}*3" Color="#f80" CornerRadius="3">
+						<Text Value="목록으로" Color="White" Alignment="Center">
+						<Clicked>
+							<Toggle Target="detailSendWork" />
+						</Clicked>
 
+						</Text>
+					</Rectangle>
+				</Grid>
+			</StackPanel>
+		</Panel>
+
+		<WhileTrue ux:Name="detailSendWork">
+			<Move X="-1" RelativeTo="Size" />
+		</WhileTrue>
+	</DockPanel>
+	<!-- 받은 업무들 -->
+	<StackPanel ux:InnerClass="MySendWork" Width="100%" Color="White">
+		<Grid Alignment="Center" ColumnCount="2" Columns="7*, 2*" Margin="{margin}" Width="100%" >
+			<Grid ColumnCount="1" RowCount="2">
+				<WrapPanel Alignment="CenterLeft">
+					<Text Value="{sender}" Font="BoldText" Color="#888" Alignment="CenterLeft" />
+					<Text Value="님이 보냈습니다." FontSize="{margin}" Color="#888" Alignment="CenterLeft" />
+				</WrapPanel>
+				<Text Value="{title}" Color="#888" Alignment="CenterLeft" />
+			</Grid>
+
+			<Grid ColumnCount="1" RowCount="2">
+				<Text Value="{regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterRight" />
+				<Text Value="{regDate2}" FontSize="{margin}*0.9" Color="#888" Alignment="CenterRight" />
+			</Grid>
+		</Grid>
+
+		<Clicked>
+			<Callback Handler="{sendFromPickerDown}" />
+			<Callback Handler="{sendToPickerDown}" />
+			<Toggle Target="detailSendWork" />
+		</Clicked>
+	</StackPanel>
+
+	<!-- 시작 날짜 선택 패널 -->
 	<DockPanel ux:Name="sendFromPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
@@ -84,6 +159,7 @@
 		</WhileTrue>
 	</DockPanel>
 
+	<!-- 종료 날짜 선택 패널 -->
 	<DockPanel ux:Name="sendToPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
@@ -114,6 +190,7 @@
 		</WhileTrue>
 	</DockPanel>
 
+	<!-- 보여지는 영역 -->
 	<DockPanel>
 		<!-- 상단바 -->
 		<topBar Dock="Top" />
@@ -162,6 +239,10 @@
 
 		<ScrollView ux:Name="sendWorkScroll" SnapMaxTransform="false" SnapMinTransform="false">
 			<StackPanel Color="#ddd" ItemSpacing="1">
+				<Each Items="{sendWorks}">
+					<MySendWork />
+				</Each>
+
 				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
 						<Text Value="더보기(1/1)" Alignment="Center" />
