@@ -89,12 +89,9 @@
 					<Image File="Images/btn_pre.png" Alignment="Left">
 						<Clicked><Callback Handler="{cancelSelectedMode}" /></Clicked>
 					</Image>
-
 					<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
-
 					<Panel />
 				</Grid>
-
 				<Image File="Images/top_bg.png" StretchMode="UniformToFill" />
 			</Panel>
 

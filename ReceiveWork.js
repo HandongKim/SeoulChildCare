@@ -68,24 +68,38 @@ function initReceiveList() {
 	commClss = "D";
 	var srch_Type = "";
 	var srch_Text = "";
-	getReceiveList(srch_Type, srch_Text);
+
+	getReceivedMessageList(srch_Type, srch_Text);
 }
 
-function getReceiveList(srch_Type, srch_Text) {
+var receiveMessages = Observable();
+
+function receivedMessage (args, index) {
+	this.INDEX = index
+	this.REGID = args.REGID
+	this.INFO_CONF_DATE = args.INFO_CONF_DATE
+	this.SITE_CLSS_SND = args.SITE_CLSS_SND
+	this.REPLY_DEPTH = args.REPLY_DEPTH
+	this.REGDATE = args.REGDATE
+	this.WRITER_NM = args.WRITER_NM
+	this.BOD_COM_YN = args.BOD_COM_YN
+	this.CHK = args.CHK
+	this.COMM_SEQ = args.COMM_SEQ
+	this.WRITER_ORG = args.WRITER_ORG
+	this.BOD_FORM_CLSS = args.BOD_FORM_CLSS
+	this.TITLE = args.TITLE
+}
+
+function getReceivedMessageList(srch_Type, srch_Text) {
 	var INFO_CDHD_NO = JSON.parse(Backend.dsParam).GVMEMID;
-	
 	var srchType = srch_Type;
 	var srchText = srch_Text;
-
 	var dsParam = Backend.dsParam;
-
 	var dsSearch = '{"commClss":"'+commClss+'","srchType":"'+srchType+'","srchText":"'+srchText+'","INFO_CDHD_NO":"'+INFO_CDHD_NO+'"}';
-	console.log("dsSearch : " + dsSearch);
-
 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-
 	var selectBusiSendAdminList_URL = Backend.BASE_URL + Backend.selectBusiSendAdminList_URL;
 
+	receiveMessages.clear();
 
 	fetch(selectBusiSendAdminList_URL, {
 		method: 'POST',
@@ -94,19 +108,17 @@ function getReceiveList(srch_Type, srch_Text) {
 		},
 		body: JSON.stringify(jsonParam)
         }).then(function(response) {
-			var responseData = JSON.stringify(response);
-			
-			console.log("receive work responseData : " + responseData);
+			var bodyInit = JSON.parse(response._bodyInit);
+			var messageList = bodyInit.ds_CommList[1];
+			for (var i = 0; i < messageList.length; i++) {
+				receiveMessages.add(new receivedMessage(messageList[i], i)); 
+			}	
             return response.json();
         }).then(function(jsonData) {
-            var data = jsonData.results[0];
-            // console.log("data : " + jsonData.results[0]);
-			// console.log("Reg Succeeded[ios]: " + data.registration_token);
-			// maintext.value = maintext.value + "/n" + data.registration_token;
+        
         }).catch(function(err) {
-            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
-        });
 
+        });
 }
 
 
