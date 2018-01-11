@@ -1,4 +1,4 @@
-<Page ux:Class="Trash">
+<Page ux:Class="OfficialDutiesList">
 	<Router ux:Dependency="router"/>
 
 	<DockPanel>

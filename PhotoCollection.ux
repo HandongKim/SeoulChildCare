@@ -110,7 +110,6 @@
 					<Clicked>
 						<Callback Handler="{deleteThePicture}" />
 					</Clicked>
-
 				</Image>
 			</Grid>
 

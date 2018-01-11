@@ -373,7 +373,7 @@
 			<QnA ux:Template="QnA" router="router" />
 			<ReceiveWork ux:Template="ReceiveWork" router="router" />
 			<SendWork ux:Template="SendWork" router="router" />
-			<Trash ux:Template="Trash" router="router" />
+			<OfficialDutiesList ux:Template="OfficialDutiesList" router="router" />
 		</Navigator>
 		<SavePanel ux:Name="savepanel3" Alignment="Bottom">
 			<Image File="{takedPicture}">

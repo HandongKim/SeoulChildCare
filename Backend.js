@@ -38,7 +38,7 @@ var offDocTransList_URL = "/acadm/offDocMng/offDocTransList.do"
 
 
 //업무연락 [받은업무함]
-var selectBusiSendAdminList_URL = "/acadm/cmt/selectBusiSendAdminList.do";
+var selectBusiSendAdminList_URL = "/acadm/cmt/selectBusiReceiveAdminList.do";
 
 
 

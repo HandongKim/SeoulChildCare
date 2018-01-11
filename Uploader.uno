@@ -30,7 +30,6 @@ public class Uploader : NativeModule
         var fileExt = Path.GetExtension(path).ToLower();
         debug_log fileExt;
 
-
         var dsParam = (string) args[2];
         var dsSearch = (string) args [3];
 
@@ -38,9 +37,6 @@ public class Uploader : NativeModule
         var ATCHMNFL_YM = (string) args[5];
         var FILE_SE = (string) args[6];
         var DOWN_LVL = (string) args[7];
-
-
-
 
         //debug_log param;
         debug_log("Uploader dsParam : " + dsParam);
@@ -193,16 +189,8 @@ public static class FormUpload
             debug_log("postParameters : " + postParameters.Count);
 
             debug_log("for each param : " + param.Key);
-
-
-            //if (needsCLRF)
-            //{
-            //  debug_log("needsCLRF : " + needsCLRF);
-            //    var bytes = Utf8.GetBytes("\r\n");
-            //    formDataStream.Write(bytes, 0, bytes.Length);
-            //}
-            // needsCLRF = true;
-
+            
+            //첫번째 파라미터값이 넘어가기전에, 시작을 여는 Boundary 셋팅
             if (count ==  1) {
                 string starter = string.Format("\r\n--{0}\r\n",  boundary);
                 var bytes = Utf8.GetBytes(starter);
@@ -210,7 +198,6 @@ public static class FormUpload
             }
 
             debug_log("formDataStream : " + formDataStream);
-
 
             if (param.Value is FileParameter)
             {
@@ -256,21 +243,19 @@ public static class FormUpload
                 formDataStream.Write(bytes, 0, bytes.Length);
             }
 
+            //각 파라미터간의 구분을 해주기 위한 Boundary 셋팅
             if (count < postParameters.Count) {
                  string starter = string.Format("\r\n--{0}\r\n",  boundary);
                 var bytes = Utf8.GetBytes(starter);
                 formDataStream.Write(bytes, 0, bytes.Length);
             }
 
-
-            count++;
-
-            debug_log("counted number : " + count);
+           count++;
+           debug_log("counted number : " + count);
         }
 
-
-
         // Add the end of the request.  Start with a newline
+        //마지막 파라미터값이 넘어가기전에, 닫아주는 Boundary 셋팅
         string footer = "\r\n--" + boundary + "--\r\n";
         var fbytes = Utf8.GetBytes(footer);
         formDataStream.Write(fbytes, 0, fbytes.Length);
