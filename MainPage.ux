@@ -32,7 +32,7 @@
 		<Panel Dock="Bottom" Height="8%">
 			<Grid ColumnCount="3">
 				<Image File="Images/main_btn7.png">
-					<Clicked><Callback Handler="{goRecieveWork}" /></Clicked>
+					<Clicked><Callback Handler="{goReceiveWork}" /></Clicked>
 				</Image>
 
 				<Image File="Images/main_btn8.png">

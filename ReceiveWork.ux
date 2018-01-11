@@ -27,10 +27,13 @@
 				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
 			</Rectangle>
 		</Panel>
-		<WrapPanel Margin="{margin}" Alignment="CenterLeft" Dock="Top">
-			<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
-			<Text Value="받은업무함" FontSize="{margin}*1.2" Color="Black" />
-		</WrapPanel>
+		<Panel Width="100%" Dock="Top">
+			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="받은업무함" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+			<Rectangle Width="100%" Color="#4069C2" Height="1" Alignment="Bottom" />
+		</Panel>
 
 		<Grid Dock="Top" ColumnCount="2" Columns="5*, 1*">
 			<Panel />
