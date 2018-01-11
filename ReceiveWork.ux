@@ -1,69 +1,7 @@
-<Page ux:Class="RecieveWork">
+<Page ux:Class="ReceiveWork">
 	<Router ux:Dependency="router"/>
 
-	<JavaScript>
-		var Observable = require('FuseJS/Observable');
-
-		var years = Observable();
-		for (var i = 0 ; i < 30 ; i++) {
-			years.add(2010+i);
-		}
-
-		var months = Observable();
-		for (var i = 0 ; i < 12 ; i++) {
-			months.add(1+i);
-		}
-
-		var days = Observable();
-		for (var i = 0 ; i < 32 ; i++) {
-			days.add(1+i);
-		}
-
-		var recieveFromPickerPanelOn = Observable(false);
-		var fromDate = {
-			year: Observable(2017),
-			month: Observable(12),
-			day: Observable(1)
-		};
-
-		function recieveFromPickerUp() {
-			recieveFromPickerPanelOn.value = true;
-		}
-		function recieveFromPickerDown() {
-			recieveFromPickerPanelOn.value = false;
-		}
-
-		var recieveToPickerPanelOn = Observable(false);
-		var toDate = {
-			year: Observable(2018),
-			month: Observable(1),
-			day: Observable(1)
-		};
-
-		function recieveToPickerUp() {
-			recieveToPickerPanelOn.value = true;
-		}
-		function recieveToPickerDown() {
-			recieveToPickerPanelOn.value = false;
-		}
-
-		var recieveWorks = Observable();
-		for (var i = 0 ; i < 5 ; i++) {
-			recieveWorks.add({
-				sender: "노성순",
-				title: "업무연락 부탁드립니다.",
-				regDate1: "오후 06:46",
-				regDate2: "2018-01-01"
-			});
-		}
-
-		module.exports = {
-			years, months, days,
-			fromDate, recieveFromPickerPanelOn, recieveFromPickerUp, recieveFromPickerDown,
-			toDate, recieveToPickerPanelOn, recieveToPickerUp, recieveToPickerDown,
-			recieveWorks
-		};
-	</JavaScript>
+	<JavaScript File="ReceiveWork.js" />
 
 	<!-- 세부내용 보여지는 패널 -->
 	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
@@ -71,7 +9,7 @@
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
 				<Image File="Images/btn_pre.png" Alignment="Left">
 					<Clicked>
-						<Toggle Target="detailRecieveWork" />
+						<Toggle Target="detailReceiveWork" />
 					</Clicked>
 				</Image>
 
@@ -79,7 +17,7 @@
 
 				<Image File="Images/btn_home.png">
 					<Clicked>
-						<Toggle Target="detailRecieveWork" />
+						<Toggle Target="detailReceiveWork" />
 						<Callback Handler="{goMainPageFromAnywhere}" />
 					</Clicked>
 				</Image>
@@ -105,12 +43,12 @@
 			<StackPanel Color="#eee">
 				<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
 					<StackPanel Width="100%" Color="White">
-						<Text Value="{recieveworkDetail.title}" FontSize="{margin}" Color="Black" Alignment="CenterLeft" Margin="{margin}" />				
-						<Text Value="{recieveworkDetail.regDate2}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
-						<Text Value="{recieveworkDetail.regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+						<Text Value="{receiveworkDetail.title}" FontSize="{margin}" Color="Black" Alignment="CenterLeft" Margin="{margin}" />				
+						<Text Value="{receiveworkDetail.regDate2}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+						<Text Value="{receiveworkDetail.regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
 					</StackPanel>
 					<Panel Width="100%" Color="White">
-						<Text Value="{recieveworkDetail.cont}" Alignment="TopLeft" TextWrapping="Wrap" Margin="{margin}" />
+						<Text Value="{receiveworkDetail.cont}" Alignment="TopLeft" TextWrapping="Wrap" Margin="{margin}" />
 					</Panel>
 				</Grid>
 			</StackPanel>
@@ -118,15 +56,15 @@
 
 		<Panel Dock="Bottom" Color="#5079DB">
 			<StackPanel Margin="{margin}" ItemSpacing="6">
-				<WhileTrue Value="{recieveWorkFiles.hasFile}">
+				<WhileTrue Value="{receiveWorkFiles.hasFile}">
 					<Text Value="파일첨부" Color="White" Alignment="CenterLeft" />
 					<Rectangle Width="100%" Color="White">
 						<StackPanel Margin="{margin}">
-							<Each Items="{recieveWorkFiles}">
+							<Each Items="{receiveWorkFiles}">
 								<WrapPanel>
 									<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
-									<Text Value="{recieveWorkFiles.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-									<Text Value="{recieveWorkFiles.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Text Value="{receiveWorkFiles.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Text Value="{receiveWorkFiles.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
 								</WrapPanel>
 							</Each>
 						</StackPanel>
@@ -135,7 +73,7 @@
 				<Rectangle Width="100%" BoxSizing="FillAspect" Aspect="8" Color="#f80" CornerRadius="3">
 					<Text Value="목록으로" Color="White" Alignment="Center">
 					<Clicked>
-						<Toggle Target="detailRecieveWork" />
+						<Toggle Target="detailReceiveWork" />
 					</Clicked>
 
 					</Text>
@@ -143,12 +81,12 @@
 			</StackPanel>
 		</Panel>
 
-		<WhileTrue ux:Name="detailRecieveWork">
+		<WhileTrue ux:Name="detailReceiveWork">
 			<Move X="-1" RelativeTo="Size" />
 		</WhileTrue>
 	</DockPanel>
 	<!-- 받은 업무들 -->
-	<StackPanel ux:InnerClass="MyRecieveWork" Width="100%" Color="White">
+	<StackPanel ux:InnerClass="MyReceiveWork" Width="100%" Color="White">
 		<Grid Alignment="Center" ColumnCount="2" Columns="7*, 2*" Margin="{margin}" Width="100%" >
 			<Grid ColumnCount="1" RowCount="2">
 				<WrapPanel Alignment="CenterLeft">
@@ -165,18 +103,18 @@
 		</Grid>
 
 		<Clicked>
-			<Callback Handler="{recieveFromPickerDown}" />
-			<Callback Handler="{recieveToPickerDown}" />
-			<Toggle Target="detailRecieveWork" />
+			<Callback Handler="{receiveFromPickerDown}" />
+			<Callback Handler="{receiveToPickerDown}" />
+			<Toggle Target="detailReceiveWork" />
 		</Clicked>
 	</StackPanel>
 
 	<!-- 시작 날짜 선택 패널 -->
-	<DockPanel ux:Name="recieveFromPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+	<DockPanel ux:Name="receiveFromPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
 				<Clicked>
-					<Callback Handler="{recieveFromPickerDown}" />
+					<Callback Handler="{receiveFromPickerDown}" />
 				</Clicked>
 			</Text>
 
@@ -197,17 +135,17 @@
 			<Text Value="일" Alignment="Center" FontSize="{margin}*1.5" />
 		</Grid>
 
-		<WhileTrue Value="{recieveFromPickerPanelOn}">
-			<Change recieveFromPickerPanel.Y="0" Duration=".2" />
+		<WhileTrue Value="{receiveFromPickerPanelOn}">
+			<Change receiveFromPickerPanel.Y="0" Duration=".2" />
 		</WhileTrue>
 	</DockPanel>
 
 	<!-- 종료 날짜 선택 패널 -->
-	<DockPanel ux:Name="recieveToPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+	<DockPanel ux:Name="receiveToPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
 				<Clicked>
-					<Callback Handler="{recieveToPickerDown}" />
+					<Callback Handler="{receiveToPickerDown}" />
 				</Clicked>
 			</Text>
 
@@ -228,8 +166,8 @@
 			<Text Value="일" Alignment="Center" FontSize="{margin}*1.5" />
 		</Grid>
 
-		<WhileTrue Value="{recieveToPickerPanelOn}">
-			<Change recieveToPickerPanel.Y="0" Duration=".2" />
+		<WhileTrue Value="{receiveToPickerPanelOn}">
+			<Change receiveToPickerPanel.Y="0" Duration=".2" />
 		</WhileTrue>
 	</DockPanel>
 
@@ -254,7 +192,7 @@
 					<Text Value="{fromDate.year}-{fromDate.month}-{fromDate.day}" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}/2" />
 
 					<Clicked>
-						<Callback Handler="{recieveFromPickerUp}" />
+						<Callback Handler="{receiveFromPickerUp}" />
 					</Clicked>
 				</Rectangle>
 
@@ -265,7 +203,7 @@
 					<Text Value="{toDate.year}-{toDate.month}-{toDate.day}" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}/2" />
 
 					<Clicked>
-						<Callback Handler="{recieveToPickerUp}" />
+						<Callback Handler="{receiveToPickerUp}" />
 					</Clicked>
 				</Rectangle>
 
@@ -280,10 +218,10 @@
 			</Grid>
 		</Panel>
 
-		<ScrollView ux:Name="recieveWorkScroll" SnapMaxTransform="false" SnapMinTransform="false">
+		<ScrollView ux:Name="receiveWorkScroll" SnapMaxTransform="false" SnapMinTransform="false">
 			<StackPanel Color="#ddd" ItemSpacing="1">
-				<Each Items="{recieveWorks}">
-					<MyRecieveWork />
+				<Each Items="{receiveWorks}">
+					<MyReceiveWork />
 				</Each>
 
 				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
@@ -295,7 +233,7 @@
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
 						<Text Value="맨위로" Alignment="Center" />
 						<Clicked>
-							<Set Target="recieveWorkScroll.ScrollPosition" Value="0" />
+							<Set Target="receiveWorkScroll.ScrollPosition" Value="0" />
 						</Clicked>
 					</Panel>
 				</Grid>
