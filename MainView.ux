@@ -72,6 +72,29 @@
 			return dateTime;
 		}
 
+		function getDaysInString () { 
+			var today = new Date();
+			var yearInString = today.getFullYear().toString();
+			var monthInString = "";
+			
+
+			if( (today.getMonth()+1) < 10 ) {
+				monthInString = "0" + (today.getMonth()+1).toString();
+			} else {
+				monthInString = (today.getMonth()+1).toString();
+			}
+			
+			if(today.getDate() < 10) {
+				dateInString = "0" +today.getDate().toString();
+			}else {
+				dateInString = today.getDate().toString();
+			}
+
+			var date = yearInString + "-" + monthInString + "-" + dateInString;
+			return date;
+		}
+
+
 
 		function takePicture()
 		{
@@ -158,11 +181,13 @@
 
 		function sendPicture()
 		{
-							
+			
+			var atchmnfl_ym = getDaysInString();
+
 
 			console.log("sendPicture was called");
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
-			var dsSearch = '{"ATCHMNFL_YM":"'+dateTime+'","FILE_SE":"N","DOWN_LVL":"ALL"}';
+			var dsSearch = '{"ATCHMNFL_YM":"'+atchmnfl_ym+'","FILE_SE":"N","DOWN_LVL":"ALL"}';
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
 
@@ -179,7 +204,7 @@
 
 
 
-			Uploader.send(targetImgPath.value, uploadUrl, Backend.dsParam, dsSearch, gvmemcode,  dateTime, "N", "ALL").then(function(response) {
+			Uploader.send(targetImgPath.value, uploadUrl, Backend.dsParam, dsSearch, gvmemcode,  atchmnfl_ym, "N", "ALL").then(function(response) {
 				console.log("upload complete.");
 				console.log(JSON.stringify(response));
 			});
