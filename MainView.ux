@@ -297,7 +297,7 @@
 				router.push("QnA");
 			},
 			goReceiveWork: function() {
-				router.push("ReceieveWork");
+				router.push("ReceiveWork");
 			},
 			goSendWork: function() {
 				router.push("SendWork");

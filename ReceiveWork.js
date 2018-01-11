@@ -53,6 +53,15 @@ for (var i = 0 ; i < 5 ; i++) {
 	});
 }
 
+var receiveworkDetail = Observable();
+receiveworkDetail.add({
+	title: "업무연락 부탁드립니다.",
+	sender: "노성순",
+	regDate1: "18:46:21",
+	regDate2: "2018-01-01",
+	cont: "테스트입니다."
+});
+
 module.exports = {
 	years, months, days,
 	fromDate, receiveFromPickerPanelOn, receiveFromPickerUp, receiveFromPickerDown,
