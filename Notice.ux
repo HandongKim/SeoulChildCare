@@ -591,6 +591,10 @@
 				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
 			</Rectangle>
 		</Panel>
+		<WrapPanel Margin="{margin}" Alignment="CenterLeft" Dock="Top">
+			<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+			<Text Value="공지사항" FontSize="{margin}*1.2" Color="Black" />
+		</WrapPanel>
 		<!-- 내용 디자인 정의  -->
 		<ScrollView SnapMinTransform="false" SnapMaxTransform="false" Width="100%">
 			<StackPanel Color="#eee">
