@@ -32,6 +32,17 @@ var deleteMapngReceipt_URL = "/acusr/acc/bil/DeleteMapngReceipt.do"
 //ChoiceSubject [계정과목 선택]
 var getEstiSearchLoad_URL = "/acusr/acc/bil/getEstiSearchLoad.do";
 
+//공무송수신함
+var offDocTransList_URL = "/acadm/offDocMng/offDocTransList.do"
+
+
+
+//업무연락 [받은업무함]
+var selectBusiSendAdminList_URL = "/acadm/cmt/selectBusiSendAdminList.do";
+
+
+
+
 var subject = {
 	isChoice: Observable(),
 	color: Observable(),
@@ -174,5 +185,5 @@ module.exports = {
 	getBillCashInputLoad_URL, selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList_URL,
 	noticeUserMipDetailList_URL, qnaList_URL, qnaListDtl_URL,qnaUserUpdate_URL, insertQnaCommList_URL,
 	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
-	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey
+	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, selectBusiSendAdminList_URL
 };

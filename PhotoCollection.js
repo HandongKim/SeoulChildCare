@@ -30,19 +30,13 @@ for (var i = 0 ; i < 12 ; i++) {
 
 var pickerOn = Observable(false);
 
-
-
-
 function pickerUp() {
 	pickerOn.value = true;
 }
 
 var dsParam = Backend.dsParam;
-
-
 var getMobileRciptListUrl = Backend.BASE_URL + Backend.getMobileRciptList_URL;
 var mImgViewUrl = Backend.BASE_URL + Backend.mImgView_URL;
-
 
 function pickerDown() {
 	photoListFromServer = new Array;

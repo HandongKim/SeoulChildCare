@@ -3,6 +3,10 @@
 
 	<JavaScript File="ReceiveWork.js" />
 
+	<WhileActive>
+		<Callback Handler="{initReceiveList}" />
+	</WhileActive>
+
 	<!-- 세부내용 보여지는 패널 -->
 	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
 		<Panel Dock="Top">
