@@ -153,12 +153,9 @@
 									console.log("save success");
 									targetImgPath.value = saveDir + "/"+imageName;
 									sendPicture();
-									
-
 									FileSystem.delete(saveDir+"/"+imageName).then(function() {
 										console.log("delete success");
-									});
-									
+									});								
 									takedPicture.value = "";
 								}, function(error) {
 									console.log("error : " );
