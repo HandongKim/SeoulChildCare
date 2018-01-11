@@ -13,6 +13,8 @@
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
 				<Image File="Images/btn_pre.png" Alignment="Left">
 					<Clicked>
+						<Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" />
 						<Toggle Target="detailReceiveWork" />
 					</Clicked>
 				</Image>
@@ -21,6 +23,8 @@
 
 				<Image File="Images/btn_home.png">
 					<Clicked>
+						<Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" />
 						<Toggle Target="detailReceiveWork" />
 						<Callback Handler="{goMainPageFromAnywhere}" />
 					</Clicked>
@@ -95,6 +99,8 @@
 					<Rectangle Width="100%" Height="{margin}*3" Color="#f80" CornerRadius="3">
 						<Text Value="목록으로" Color="White" Alignment="Center">
 						<Clicked>
+							<Callback Handler="{selectedTypes}" />	
+							<Callback Handler="{pickerDown}" />
 							<Toggle Target="detailReceiveWork" />
 						</Clicked>
 
@@ -126,72 +132,27 @@
 		</Grid>
 
 		<Clicked>
-			<Callback Handler="{receiveFromPickerDown}" />
-			<Callback Handler="{receiveToPickerDown}" />
 			<Toggle Target="detailReceiveWork" />
 		</Clicked>
 	</StackPanel>
 
-	<!-- 시작 날짜 선택 패널 -->
-	<DockPanel ux:Name="receiveFromPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+	<!-- 피커패널 -->
+	<WhileTrue Value="{pickerOn}">
+		<Change receiveWorkPickerPanel.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="receiveWorkPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
 				<Clicked>
-					<Callback Handler="{receiveFromPickerDown}" />
+					<Callback Handler="{pickerDown}" />
 				</Clicked>
 			</Text>
 
 			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
 		</Panel>
 
-		<Grid ColumnCount="6" Columns="4*, 1*, 2*, 1*, 2*, 1*" Width="100%" Dock="Fill" Color="#ddd">
-			<MyPicker Selected="{fromDate.year}" Data="{years}" />
-
-			<Text Value="년" Alignment="Center" FontSize="{margin}*1.5" />
-
-			<MyPicker Selected="{fromDate.month}" Data="{months}" />
-
-			<Text Value="월" Alignment="Center" FontSize="{margin}*1.5" />
-
-			<MyPicker Selected="{fromDate.day}" Data="{days}" />
-
-			<Text Value="일" Alignment="Center" FontSize="{margin}*1.5" />
-		</Grid>
-
-		<WhileTrue Value="{receiveFromPickerPanelOn}">
-			<Change receiveFromPickerPanel.Y="0" Duration=".2" />
-		</WhileTrue>
-	</DockPanel>
-
-	<!-- 종료 날짜 선택 패널 -->
-	<DockPanel ux:Name="receiveToPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
-		<Panel Dock="Top" Width="100%" Height="25%">
-			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
-				<Clicked>
-					<Callback Handler="{receiveToPickerDown}" />
-				</Clicked>
-			</Text>
-
-			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
-		</Panel>
-
-		<Grid ColumnCount="6" Columns="4*, 1*, 2*, 1*, 2*, 1*" Width="100%" Dock="Fill" Color="#ddd">
-			<MyPicker Selected="{toDate.year}" Data="{years}" />
-
-			<Text Value="년" Alignment="Center" FontSize="{margin}*1.5" />
-
-			<MyPicker Selected="{toDate.month}" Data="{months}" />
-
-			<Text Value="월" Alignment="Center" FontSize="{margin}*1.5" />
-
-			<MyPicker Selected="{toDate.day}" Data="{days}" />
-
-			<Text Value="일" Alignment="Center" FontSize="{margin}*1.5" />
-		</Grid>
-
-		<WhileTrue Value="{receiveToPickerPanelOn}">
-			<Change receiveToPickerPanel.Y="0" Duration=".2" />
-		</WhileTrue>
+		<MyPicker Data="{type}" Selected="{selectedType}" />
 	</DockPanel>
 
 	<!-- 보여지는 영역 -->
@@ -208,36 +169,24 @@
 		</Grid>
 
 		<!-- 날짜 선택 영역 -->
-		<Panel Color="#5771AA" Dock="Top">
-			<Grid ColumnCount="5" Columns="9*, 1*, 9*, 3*, 5*" Margin="{margin}, {margin}/2" CellSpacing="2">
-				<Rectangle Color="#FFF" Width="100%">
-					<Stroke Width="1" Color="#ddd" />
-					<Text Value="{fromDate.year}-{fromDate.month}-{fromDate.day}" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}/2" />
+		<Panel Color="#5771AA" Height="{margin}*4" Dock="Top">
+			<Grid ColumnCount="3" Columns="2*, 5*, 3*" Margin="{margin}" Width="100%" CellSpacing="{margin}/2">
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="2" Color="#888" />
+					<Clicked><Callback Handler="{pickerUp}" /></Clicked>
 
-					<Clicked>
-						<Callback Handler="{receiveFromPickerUp}" />
-					</Clicked>
+					<Text Value="{selectedType}" FontSize="{margin}" Margin="{margin}/2, 0" Alignment="CenterLeft" />
+
+					<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
 				</Rectangle>
-
-				<Text Value="~" Color="White" Alignment="Center" />
-
-				<Rectangle Color="#FFF" Width="100%">
-					<Stroke Width="1" Color="#ddd" />
-					<Text Value="{toDate.year}-{toDate.month}-{toDate.day}" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}/2" />
-
-					<Clicked>
-						<Callback Handler="{receiveToPickerUp}" />
-					</Clicked>
+				<TextBox Width="100%" Background="White" Value="{searchText}"/>
+				<Rectangle Width="60%" BoxSizing="FillAspect" Aspect="1.5" CornerRadius="3" Color="#3477BE" Alignment="CenterLeft">
+					<Text Value="검색" Alignment="Center" Color="White" >
+						<Clicked>
+							<Callback Handler="{searchContent}" />
+						</Clicked>
+					</Text>
 				</Rectangle>
-
-				<Rectangle Width="100%" Height="100%" Color="#3477BE" CornerRadius="3" Margin="2">
-					<Text Value="검색" Color="White" FontSize="{margin}" Alignment="Center" />
-				</Rectangle>
-
-				<WrapPanel Margin="3" Alignment="CenterLeft">
-					<Text Value="v" Alignment="Center" Margin="2" Color="White" />
-					<Text Value="안읽음" Alignment="Center" FontSize="{margin}" Color="White" />
-				</WrapPanel>
 			</Grid>
 		</Panel>
 

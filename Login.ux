@@ -10,13 +10,6 @@
 		<Callback Handler="{getList}" />
 	</WhileActive>
 
-	<WhileTrue Value="{corSelected}">
-		<Change tab1_over.Opacity="0" />
-		<Change tab1.Opacity="1" />
-		<Change tab2.Opacity="0" />
-		<Change tab2_on.Opacity="1" />
-	</WhileTrue>
-
 	<WhileTrue Value="{onPanel}">
 		<Change bgPanel.Opacity="0.5" />
 		<Change bgPanel.ZOffset="1.2" />
@@ -151,8 +144,6 @@
 	</StackPanel>
 
 	<!-- 인증서 내보내기 하기 전 비밀번호 입력 패널 -->
-	
-
 	<StackPanel ux:Name="enterPw" Width="100%" Color="White" Alignment="TopCenter" ZOffset="1.3" Y="-100%">
 		<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="6">
 			<Image File="Images/top_tx4.png" Margin="{margin}*1.5, {margin}" Alignment="CenterLeft" Width="40%" />
@@ -183,12 +174,6 @@
 			<Change enterPw.Y="0" Duration=".3" />
 		</WhileTrue>
 	</StackPanel>
-
-
-
-
-
-
 
 	<!-- 인증서 내보내기 할 때 보여지는 패널 -->
 	<StackPanel ux:Name="exportPanel" Width="100%" Y="-100%" Color="White" Alignment="TopCenter" ZOffset="1.3">
@@ -273,24 +258,11 @@
 			</Rectangle>
 		</Panel>
 
-		<DockPanel >
-			<Grid ColumnCount="2" Margin="20" Dock="Top">
-				<Panel>
-					<Clicked><Callback Handler="{friSelect}" /></Clicked>
-					<Image ux:Name="tab1_over" File="Images/tab1_on.png" />
-					<Image ux:Name="tab1" File="Images/tab1.png" Opacity="0" />
-				</Panel>
-
-				<Panel>
-					<Clicked><Callback Handler="{corSelect}" /></Clicked>
-					<Image ux:Name="tab2" File="Images/tab2.png" />
-					<Image ux:Name="tab2_on" File="Images/tab2_on.png" Opacity="0" />
-				</Panel>
-			</Grid>
+		<DockPanel>
 			<ScrollView SnapMinTransform="false" SnapMaxTransform="false">
 				<StackPanel Color="#eee" ItemSpacing="1">
 					<Each Items="{data}">
-						<Rectangle ux:Name="cBox" Width="100%" BoxSizing="FillAspect" Aspect="4" Color="White">
+						<Rectangle ux:Name="cBox" Width="100%" BoxSizing="FillAspect" Aspect="3.5" Color="White">
 							<WhileTrue Value="{isSelected}">
 								<Change cBox.Color="#ddd" />
 							</WhileTrue>

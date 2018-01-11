@@ -44,6 +44,24 @@ function receiveToPickerDown() {
 	receiveToPickerPanelOn.value = false;
 }
 
+var type = Observable("제목", "내용");
+var selectedType = Observable("제목");
+
+pickerOn = Observable(false);
+
+function pickerUp() {
+	pickerOn.value = true;
+}
+
+function pickerDown() {
+	pickerOn.value = false;
+}
+
+function selectedTypes(){
+	searchText.clear();
+	selectedType.value = "제목";
+}
+
 var receiveWorks = Observable();
 for (var i = 0 ; i < 5 ; i++) {
 	receiveWorks.add({
@@ -124,6 +142,7 @@ function getReceivedMessageList(srch_Type, srch_Text) {
 
 module.exports = {
 	years, months, days,
+	type, selectedType, pickerOn, pickerUp, pickerDown, selectedTypes,
 	fromDate, receiveFromPickerPanelOn, receiveFromPickerUp, receiveFromPickerDown,
 	toDate, receiveToPickerPanelOn, receiveToPickerUp, receiveToPickerDown,
 	receiveWorks, receiveworkDetail, initReceiveList
