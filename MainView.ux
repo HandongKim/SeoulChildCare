@@ -132,11 +132,11 @@
 									sendPicture();
 									
 
-									FileSystem.delete(saveDir+"/"+imageName).then(function() {
-										console.log("delete success");
-									});
+									// FileSystem.delete(saveDir+"/"+imageName).then(function() {
+									// 	console.log("delete success");
+									// });
 									
-									takedPicture.value = "";
+									// takedPicture.value = "";
 								}, function(error) {
 									console.log("error : " );
 								});

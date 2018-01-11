@@ -197,7 +197,6 @@ public static class FormUpload
             //    var bytes = Utf8.GetBytes("\r\n");
             //    formDataStream.Write(bytes, 0, bytes.Length);
             //}
-
             // needsCLRF = true;
 
             if (count ==  1) {
@@ -217,8 +216,12 @@ public static class FormUpload
                 string header = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
                     boundary,
                     param.Key,
-                    fileToUpload.FileName ?? param.Key,
-                    fileToUpload.ContentType ?? "application/octet-stream");
+                    //fileToUpload.FileName ?? param.Key,
+                    //fileToUpload.ContentType ?? "application/octet-stream");
+                    //"profile_photo",
+                    "2018-01-10-17-58-23.jpg",
+                    
+                "application/octet-stream");
 
                 debug_log("Uploader.uno string header : " + header);
 
