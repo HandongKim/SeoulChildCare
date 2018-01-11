@@ -179,7 +179,7 @@ public static class FormUpload
     private static byte[] GetMultipartFormData(Dictionary<string, object> postParameters, string boundary)
     {
         Stream formDataStream = new Uno.IO.MemoryStream();
-        bool needsCLRF = false;
+        //bool needsCLRF = false;
         int count = 1;
 
         foreach (var param in postParameters)
@@ -214,17 +214,19 @@ public static class FormUpload
 
                 // Add just the first part of this param, since we will write the file data directly to the Stream
                 string header = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
-                    boundary,
+                    // boundary,
                     //param.Key,
-                   // fileToUpload.FileName ?? param.Key,
+                    // fileToUpload.FileName ?? param.Key,
                     //fileToUpload.ContentType ?? "application/octet-stream");
-                    
 
-
+                    boundary,
                     "profile_photo",
                     "2018-01-10-17-58-23.jpg",
-                    
-                "application/octet-stream");
+                    //fileToUpload.FileName ?? param.Key,
+                    "application/octet-stream");
+
+
+                debug_log("param.Value : " + param.Value);
 
                 debug_log("Uploader.uno string header : " + header);
 
