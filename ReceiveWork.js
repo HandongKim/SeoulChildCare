@@ -97,11 +97,11 @@ function getReceivedMessageList(srch_Type, srch_Text) {
 	var dsParam = Backend.dsParam;
 	var dsSearch = '{"commClss":"'+commClss+'","srchType":"'+srchType+'","srchText":"'+srchText+'","INFO_CDHD_NO":"'+INFO_CDHD_NO+'"}';
 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-	var selectBusiSendAdminList_URL = Backend.BASE_URL + Backend.selectBusiSendAdminList_URL;
+	var selectBusiReceiveAdminList_URL = Backend.BASE_URL + Backend.selectBusiReceiveAdminList_URL;
 
 	receiveMessages.clear();
 
-	fetch(selectBusiSendAdminList_URL, {
+	fetch(selectBusiReceiveAdminList_URL, {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"
@@ -112,7 +112,8 @@ function getReceivedMessageList(srch_Type, srch_Text) {
 			var messageList = bodyInit.ds_CommList[1];
 			for (var i = 0; i < messageList.length; i++) {
 				receiveMessages.add(new receivedMessage(messageList[i], i)); 
-			}	
+			}
+			console.log("receiveMessages : " + JSON.stringify(receiveMessages));
             return response.json();
         }).then(function(jsonData) {
         
@@ -120,12 +121,6 @@ function getReceivedMessageList(srch_Type, srch_Text) {
 
         });
 }
-
-
-
-
-
-
 
 module.exports = {
 	years, months, days,

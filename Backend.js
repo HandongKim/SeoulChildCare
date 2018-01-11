@@ -37,10 +37,12 @@ var offDocTransList_URL = "/acadm/offDocMng/offDocTransList.do"
 
 
 
-//업무연락 [받은업무함]
-var selectBusiSendAdminList_URL = "/acadm/cmt/selectBusiReceiveAdminList.do";
+//업무연락 [받은업무함 전체리스트 및 Search URL]
+var selectBusiReceiveAdminList_URL = "/acadm/cmt/selectBusiReceiveAdminList.do";
 
 
+//업무연락 [보낸업무함 전체리스트 및 Search URL]
+var selectBusiSendAdminList_URL = "/acadm/cmt/selectBusiSendAdminList.do";
 
 
 var subject = {
@@ -185,5 +187,5 @@ module.exports = {
 	getBillCashInputLoad_URL, selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList_URL,
 	noticeUserMipDetailList_URL, qnaList_URL, qnaListDtl_URL,qnaUserUpdate_URL, insertQnaCommList_URL,
 	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
-	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, selectBusiSendAdminList_URL
+	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL
 };
