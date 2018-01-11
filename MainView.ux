@@ -299,8 +299,8 @@
 			goSendWork: function() {
 				router.push("SendWork");
 			},
-			goTrash: function() {
-				router.push("Trash");
+			goOfficialDutiesList: function() {
+				router.push("OfficialDutiesList");
 			},
 			takePicture,
 			getImage, placed, margin,
