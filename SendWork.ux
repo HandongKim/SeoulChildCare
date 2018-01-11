@@ -19,46 +19,46 @@
 			days.add(1+i);
 		}
 
-		var recieveFromPickerPanelOn = Observable(false);
+		var sendFromPickerPanelOn = Observable(false);
 		var fromDate = {
 			year: Observable(2017),
 			month: Observable(12),
 			day: Observable(1)
 		};
 
-		function recieveFromPickerUp() {
-			recieveFromPickerPanelOn.value = true;
+		function sendFromPickerUp() {
+			sendFromPickerPanelOn.value = true;
 		}
-		function recieveFromPickerDown() {
-			recieveFromPickerPanelOn.value = false;
+		function sendFromPickerDown() {
+			sendFromPickerPanelOn.value = false;
 		}
 
-		var recieveToPickerPanelOn = Observable(false);
+		var sendToPickerPanelOn = Observable(false);
 		var toDate = {
 			year: Observable(2018),
 			month: Observable(1),
 			day: Observable(1)
 		};
 
-		function recieveToPickerUp() {
-			recieveToPickerPanelOn.value = true;
+		function sendToPickerUp() {
+			sendToPickerPanelOn.value = true;
 		}
-		function recieveToPickerDown() {
-			recieveToPickerPanelOn.value = false;
+		function sendToPickerDown() {
+			sendToPickerPanelOn.value = false;
 		}
 
 		module.exports = {
 			years, months, days,
-			fromDate, recieveFromPickerPanelOn, recieveFromPickerUp, recieveFromPickerDown,
-			toDate, recieveToPickerPanelOn, recieveToPickerUp, recieveToPickerDown
+			fromDate, sendFromPickerPanelOn, sendFromPickerUp, sendFromPickerDown,
+			toDate, sendToPickerPanelOn, sendToPickerUp, sendToPickerDown
 		};
 	</JavaScript>
 
-	<DockPanel ux:Name="recieveFromPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+	<DockPanel ux:Name="sendFromPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
 				<Clicked>
-					<Callback Handler="{recieveFromPickerDown}" />
+					<Callback Handler="{sendFromPickerDown}" />
 				</Clicked>
 			</Text>
 
@@ -79,16 +79,16 @@
 			<Text Value="일" Alignment="Center" FontSize="{margin}*1.5" />
 		</Grid>
 
-		<WhileTrue Value="{recieveFromPickerPanelOn}">
-			<Change recieveFromPickerPanel.Y="0" Duration=".2" />
+		<WhileTrue Value="{sendFromPickerPanelOn}">
+			<Change sendFromPickerPanel.Y="0" Duration=".2" />
 		</WhileTrue>
 	</DockPanel>
 
-	<DockPanel ux:Name="recieveToPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+	<DockPanel ux:Name="sendToPickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
 				<Clicked>
-					<Callback Handler="{recieveToPickerDown}" />
+					<Callback Handler="{sendToPickerDown}" />
 				</Clicked>
 			</Text>
 
@@ -109,8 +109,8 @@
 			<Text Value="일" Alignment="Center" FontSize="{margin}*1.5" />
 		</Grid>
 
-		<WhileTrue Value="{recieveToPickerPanelOn}">
-			<Change recieveToPickerPanel.Y="0" Duration=".2" />
+		<WhileTrue Value="{sendToPickerPanelOn}">
+			<Change sendToPickerPanel.Y="0" Duration=".2" />
 		</WhileTrue>
 	</DockPanel>
 
@@ -134,7 +134,7 @@
 					<Text Value="{fromDate.year}-{fromDate.month}-{fromDate.day}" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}/2" />
 
 					<Clicked>
-						<Callback Handler="{recieveFromPickerUp}" />
+						<Callback Handler="{sendFromPickerUp}" />
 					</Clicked>
 				</Rectangle>
 
@@ -145,7 +145,7 @@
 					<Text Value="{toDate.year}-{toDate.month}-{toDate.day}" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}/2" />
 
 					<Clicked>
-						<Callback Handler="{recieveToPickerUp}" />
+						<Callback Handler="{sendToPickerUp}" />
 					</Clicked>
 				</Rectangle>
 
@@ -160,7 +160,7 @@
 			</Grid>
 		</Panel>
 
-		<ScrollView ux:Name="recieveWorkScroll" SnapMaxTransform="false" SnapMinTransform="false">
+		<ScrollView ux:Name="sendWorkScroll" SnapMaxTransform="false" SnapMinTransform="false">
 			<StackPanel Color="#ddd" ItemSpacing="1">
 				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
@@ -171,7 +171,7 @@
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
 						<Text Value="맨위로" Alignment="Center" />
 						<Clicked>
-							<Set Target="recieveWorkScroll.ScrollPosition" Value="0" />
+							<Set Target="sendWorkScroll.ScrollPosition" Value="0" />
 						</Clicked>
 					</Panel>
 				</Grid>

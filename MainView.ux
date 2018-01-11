@@ -330,6 +330,8 @@
 	<Rectangle ux:Class="BlackButton" Width="100%" Height="{margin}*2.4" Color="#333333" />
 	<Rectangle ux:Class="GrayButton2" Width="100%" Height="{margin}*2.4" Color="#959595" />
 
+	<SystemFont Family="Baskerville" Style="Normal" Weight="Bold" ux:Global="BoldText" />
+
 	<iOS.StatusBarConfig Style="Dark" Animation="Slide" IsVisible="True" />
 	<Android.StatusBarConfig Color="#000f" IsVisible="True" />
 	<MemoryPolicy ux:Global="MyUnload" UnloadInBackground="true" UnusedTimeout="0.5" UnpinInvisible="true"/>
