@@ -537,7 +537,9 @@ function datePickerDown() {
 
 
 
-
+function validationCheck () {
+	return false;
+}
 
 
 
@@ -602,7 +604,7 @@ function saveData() {
 	
 
 
-
+ 	var validateChecked = validationCheck();
 
 	var BILL_GB = "A04";
 	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
@@ -653,48 +655,51 @@ function saveData() {
 
 	updatebCashMobileUrl = Backend.BASE_URL + Backend.updatebCashMobile_URL;
 
+if (validateChecked == true) {
 	fetch(updatebCashMobileUrl, {
-			method: 'POST',
-			headers: {
-				"Content-type": "application/json"
-			},
-			body: JSON.stringify(jsonParam)
-	        }).then(function(response) {
-				var responseData = JSON.stringify(response);
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+	    }).then(function(response) {
+			var responseData = JSON.stringify(response);
 
-				// console.log("responseData : "+ responseData);
+			// console.log("responseData : "+ responseData);
 
-				var responseHeaders = JSON.parse(response._bodyInit);
-				// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
-				// var damnIT = JSON.parse();
-				
-				// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
-
-
-				temp = responseHeaders.ds_billList[1];
-				
-				// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
-
-				// notes.clear();
+			var responseHeaders = JSON.parse(response._bodyInit);
+			// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+			// var damnIT = JSON.parse();
+			
+			// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
 
 
-				// console.log("fefefefefe temp.length : " + temp.length);
+			temp = responseHeaders.ds_billList[1];
+			
+			// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
+
+			// notes.clear();
 
 
-				
+			// console.log("fefefefefe temp.length : " + temp.length);
 
-	        	var responseData = JSON.stringify(response);
-	        	
-	            return response.json();
-	        }).then(function(jsonData) {
-	            var data = jsonData.results[0];
-	            // console.log("data : " + jsonData.results[0]);
-				// console.log("Reg Succeeded[ios]: " + data.registration_token);
-				// maintext.value = maintext.value + "/n" + data.registration_token;
-	        }).catch(function(err) {
-	            // console.log("Reg Succeeded[ios] Error!! : " + err.message);
-	        });
-		// console.log("saveData was clicked");
+
+			
+
+	    	var responseData = JSON.stringify(response);
+	    	
+	        return response.json();
+	    }).then(function(jsonData) {
+	        var data = jsonData.results[0];
+	        // console.log("data : " + jsonData.results[0]);
+			// console.log("Reg Succeeded[ios]: " + data.registration_token);
+			// maintext.value = maintext.value + "/n" + data.registration_token;
+	    }).catch(function(err) {
+	        // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+	    });
+			// console.log("saveData was clicked");
+}
+
 }
 
 

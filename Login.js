@@ -50,7 +50,8 @@ function goMainPage() {
 			isPasswordCorrect = true;
 			if(isPasswordCorrect == true) {
 				alert.layer.value="Background";
-				connectToServer();
+				var temp = connectToServer();
+				console.log("temp : " + temp);
 				settings.setString('key', '20171212121212');
 			} else {
 				alert.title.value = "비밀번호 오류";
@@ -780,72 +781,48 @@ var staticParamStringValue = "";
 function connectToServer() {
 	getLogicSignedData();
 	console.log("mSignedData : " + mSignedData);
-	var isConnected = false;
-
 	var url = Backend.BASE_URL + Backend.LOGIN_URL;
 	console.log("connect To server Url : " + url);
+
+	var responseValue = null;
 
 	fetch(url, {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"
-		},
+	},
 		body: JSON.stringify({
 			"SIGNGB":"1",
 			"signedText":mSignedData
-                })
-        }).then(function(response) {
-        	console.log("response.resultCode :"  + response.resultCode);
-        	
-        	
+	})
+	}).then(function(response) {
+		console.log("response.resultCode :"  + response.resultCode);
+		var responseHeaders = JSON.parse(response._bodyInit);
+        var dsParam = responseHeaders.dsParam;
+        var reulstCode = responseHeaders.resultCode;
 
-        	
-
-			// staticDsParam = JSON.parse(response._bodyInit);
-   //      	// staticDsParam = staticDsParam.result;
-   //      	staticParamStringValue = JSON.stringify(staticDsParam.dsParam);
-   //      	console.log("staticDsParam : " + staticDsParam);
-			// console.log("staticParamStringValue : " + staticParamStringValue);
-
-
-			var responseHeaders = JSON.parse(response._bodyInit);
-
-        	var dsParam = responseHeaders.dsParam;
+        if(reulstCode == "000") {
+			alert.title.value = "비밀번호 입력";
+			alert.message.value = "비밀번호를 입력하세요.";
+			alert.type.value = "Check";
+			alert.layer.value = "Overlay";
 
 
-        	var reulstCode = responseHeaders.resultCode;
-
-        	if(reulstCode == "000") {
-        		isConnected = true;
-        	} 
-
-        	// console.log("dsParam : " + JSON.stringify(dsParam));
 
         	Backend.dsParam = JSON.stringify(dsParam);
+			router.goto("MainPage");
+        } 
 
-        	console.log("Backend.dsParam : "  + Backend.dsParam);
+		console.log("isConnected : " + isConnected);
+		var responseData = JSON.stringify(response);
+		return response.json();
+	}).then(function(jsonData) {
 
+	}).catch(function(err) {
 
-        	if(isConnected == true) {
-        		router.goto("MainPage");
-        	}
-        	
-
-        	console.log("isConnected : " + isConnected);
-
-        	var responseData = JSON.stringify(response);
-			console.log("responseData : "+ responseData);
-            return response.json();
-        	
-        }).then(function(jsonData) {
-            // var data = jsonData.results[0];
-
-            // console.log("data : " + jsonData.results[0]);
-			
-        }).catch(function(err) {
-            console.log("Reg Succeeded[ios] Error!! : " + err.message);
-        });
+	});
         
+       
 }
 
 

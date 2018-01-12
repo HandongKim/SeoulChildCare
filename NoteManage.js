@@ -24,10 +24,19 @@ function pickerUp() {
 
 var dsParam = Backend.dsParam;
 
+function clearBackendSubjectValues() {
+	Backend.subject.isChoice.clear();
+	Backend.subject.color.clear();
+	Backend.subject.type.clear();
+	Backend.subject.name.clear();
+	Backend.subject.text.clear();
+	Backend.subject.ESTI_CODE.clear();
+	Backend.subject.ESTI_GB.clear();
+	Backend.subject.ESTI_SUBCODE.clear();
+};
 
-
-function WhileInActive() {
-	console.log("2018.01.03 WhileInactive ");
+function WhileInActive () {
+	console.log("2018.01.03 WhileInactive");
 }
 
 var selectOnlineBCashListDatas = Observable();
@@ -575,14 +584,42 @@ function getBillCashInputLoad () {
 	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 	// var dsParam = Backend.dsParam;
 	console.log("2018.01.01 9.20pm dsParam : " + dsParam);
+	
+	var SEARCH_GB = "Y";
+	var SEARCH_TO = "";
+	var GVMEMCODE = JSON.parse(dsParam).GVMEMCODE;
+	var GVBOOKGB = JSON.parse(dsParam).GVBOOKGB;
+	var SEARCH_BILLGB = "";
+	var SEARCH_ESTISUB = "";
+	var SEARCH_ESTI = "";
+	var SEARCH_FROM = "";
+	var GVMEMID = JSON.parse(dsParam).GVMEMID;
+	var SEARCH_MONTH = "201712";
+	var SEARCH_BIGO = "";
+	var GVESTIYEAR = JSON.parse(dsParam).GVESTIYEAR;
+	var SEARCH_MEMO = "";
 
+	var dsSearch = '{' 
+			+ '"SEARCH_GB":"'+SEARCH_GB+ '",' 
+			+ '"SEARCH_TO":"'+SEARCH_TO+'",' 
+			+ '"GVMEMCODE":"'+GVMEMCODE+'",'
+			+ '"GVBOOKGB":"'+GVBOOKGB+'",'
+			+ '"SEARCH_BILLGB":"'+SEARCH_BILLGB +'",'
+			+ '"SEARCH_ESTISUB":"' +SEARCH_ESTISUB+ '",' 
+			+ '"SEARCH_ESTI":"' +SEARCH_ESTI +'",'
+			+ '"SEARCH_FROM":"'+SEARCH_FROM+'",'
+			+ '"GVMEMID":"'+GVMEMID+'",'
+			+ '"SEARCH_MONTH":"'+SEARCH_MONTH+'",'
+			+ '"SEARCH_BIGO":"'+SEARCH_BIGO+ '",'
+			+ '"GVESTIYEAR":"'+GVESTIYEAR+'",'
+			+ '"SEARCH_MEMO":"'+SEARCH_MEMO+'"' 
+			+ '}';
 
-	var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
+	
+	console.log("20180112 dsSearch2 : " + dsSearch);
 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-
 	var url = Backend.BASE_URL + Backend.getBillCashInputLoad_URL;
-
 	console.log("=========================== 2018.01.04===========================");
 	console.log("getBillCashInputLoad URL : " + url);
 	console.log("=========================== 2018.01.04===========================");
@@ -596,78 +633,36 @@ function getBillCashInputLoad () {
 	}).then(function (response) {
 		var responseData = JSON.stringify(response);
 		var responseHeaders = JSON.parse(response._bodyInit);
-		console.log("responseData : " + JSON.stringify(responseData));
-		// responseHeaders = JSON.parse(responseHeaders);
-		// var responseHeaderString = JSON.stringify(responseHeaders);
+
 		var responseDsCashCodeList = JSON.stringify(responseHeaders.ds_bCashCodeList);
-
-		// var responseHeaderString = JSON.stringify(responseDsSearch);
-
 		responseDsCashCodeList = responseDsCashCodeList.split('],')[1];
-
-		
 		responseDsCashCodeList = responseDsCashCodeList.substr(0, responseDsCashCodeList.length-1);
-
-
-
-
-
-
-		console.log("2017.12.31 response.header 1 : " + responseDsCashCodeList);
-
 		billCashInputData.replaceAll(JSON.parse(responseDsCashCodeList));
-
-		console.log("billCashInputData.length : " + billCashInputData.length);
-		
-		// responseHeaderString = responseHeaderString.replaceAll(']', '}');
-
-
-
-
-
-
-
 		billCashInputDataList.add("전체");
 
 		for (var i =0; i < billCashInputData.length; i++) {
-
 			var name = billCashInputData.getAt(i).NAME;
 			var code = billCashInputData.getAt(i).BCASH_IDX;
-
 			var array = '{"INDEX":"'+i+'","NAME":"'+name+'","BCASH_IDX":"'+code+'"}';
-
-			console.log(" 2017.12.31 ..... array : " + array);
-			
-
 			billCashInputDataListTotal.add(JSON.parse(array));
-			
-			console.log("2017.12.31 billCashInputDataListTotal.getAt(i).NAME : " + billCashInputDataListTotal.getAt(i).NAME);
-
-
 			billCashInputDataList.add(billCashInputDataListTotal.getAt(i).NAME);
 		}
-
-
-
-		console.log("billCashInputDataList : " + billCashInputDataList);
-
-
-
-	        //console.log("responseData : "+ responseData);
 			return response.json();
-		}).then(function(jsonData) {
+	}).then(function(jsonData) {
 
-		}).catch(function(err) {
-			console.log("ERROR : " + err.message);
-		});
-	}
+	}).catch(function(err) {
+		console.log("ERROR : " + err.message);
+	});
+}
 
 
-	var selectOnlineBCashListData = Observable();
-	var temp;
-
+var selectOnlineBCashListData = Observable();
+var temp;
 
 function selectOnlineBCashList () {
+	//뒷단에 저장해둔 선택한 계정과목 값 초기화
+	clearBackendSubjectValues();
+	//
 	getBillCashInputLoad();
 	notes.clear(); 
 	console.log("testAPI clicked ");
@@ -749,21 +744,13 @@ function selectOnlineBCashList () {
 			var money1;
 			var moneyColor1;
 			var contents1;
-
-
 			//2017.12.18 시작 
 			// 
-
 			for (var i = 0; i < temp.length; i++) {
 				notes.add(new note(temp[i], i));
 				selectOnlineBCashListDatas.add( new selectOnlineBCashListIndividualData(temp[i], i));
 			}
-
-
-
 			console.log("selectOnlineBCashListDatas : " + JSON.stringify(selectOnlineBCashListDatas));
-
-
 			//2017.12.18 끝
         	var responseData = JSON.stringify(response);
         	
@@ -827,8 +814,8 @@ function unRegisteredChecked() {
 	
 
 
-var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"","search_cashgb":"'+ esti_code+'","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
- // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
+	var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"","search_cashgb":"'+ esti_code+'","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+ 	// var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
     var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
     // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
     
@@ -1065,6 +1052,9 @@ function goDetailNote2 (arg) {
 		
 		
 	}
+
+
+
 
 
 
