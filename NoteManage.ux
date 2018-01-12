@@ -1,7 +1,7 @@
 <Page ux:Class="NoteManage">
 	<Router ux:Dependency="router"/>
 	<WhileActive>
-		<!-- <Callback Handler="{getBillCashInputLoad}" /> -->
+		<Callback Handler="{getBillCashInputLoad}" />
 		<Callback Handler="{selectOnlineBCashList}"/>
 	</WhileActive>
 
