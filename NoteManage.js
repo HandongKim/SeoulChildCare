@@ -204,6 +204,8 @@ function pickerDown() {
 	var yearAndMonth = year.value.toString() + tempMonth.toString();
 	selectedYearAndMonth = year.value.toString() + tempMonth.toString();
 
+
+
 	console.log("yearAndMonth : " + yearAndMonth);
 	var esti_code = "";
 	console.log("selectedType = " +  selectedType);
@@ -219,12 +221,6 @@ function pickerDown() {
 	if(unReg.value == true) {
 		searchGubun = "N";
 	}
-
-	// console.log("testAPI clicked ");
-	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
-
-	// var dsParam = Backend.dsParam;
-
 
  	var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"","search_cashgb":"'+ esti_code+'","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
  // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
@@ -375,7 +371,6 @@ function pickerUp3() {
 }
 
 function pickerDown3(args) {
-
 	var BCASH_IDX = "";
 	console.log("args : " + JSON.stringify(args));
 
@@ -406,10 +401,6 @@ function pickerDown3(args) {
 
 
 	var yearAndMonth = year.value.toString() + tempMonth.toString();
-
-
-
-
 
 	console.log("yearAndMonth : " + yearAndMonth);
 
@@ -659,69 +650,31 @@ function getBillCashInputLoad () {
 var selectOnlineBCashListData = Observable();
 var temp;
 
-function selectOnlineBCashList () {
-	//뒷단에 저장해둔 선택한 계정과목 값 초기화
-	clearBackendSubjectValues();
-	//
-	getBillCashInputLoad();
-	notes.clear(); 
-	console.log("testAPI clicked ");
+function commonGetNoteList (searchGubun, BCASH_IDX, esti_code, search_month) {
+	notes.clear();
+	selectOnlineBCashListDatas.clear();
 
-	var currentTime;
-	var tempYear;
-	var monthTemp;
-	var tempMonth;
-	var yearAndMonth;
+	// var dsSearch = '{"BOOK_GB":"01","search_gubun":"'+searchGubun+'","BCASH_IDX":"'+BCASH_IDX+'","search_cashgb":"'+ esti_code+'","search_month":"'+search_month+'","search_gb":"Y"}';
+	
+	var BOOK_GB = "01";
+	var search_gb = "Y";
 
-	console.log("hasBeenSearched.value : " + hasBeenSearched.value );
-
-	if (hasBeenSearched.value == false) {
-		currentTime = new Date()
-		tempYear = currentTime.getFullYear();
-		console.log("date : " + typeof(tempYear));
-		monthTemp = currentTime.getMonth() + 1;
-		console.log("month : " + month);
-		year.value = tempYear;
-		month.value = monthTemp;
-		tempMonth = monthTemp.toString();
-		if(monthTemp < 10) {
-			tempMonth = "0" +monthTemp.toString();
-		}
-		yearAndMonth = tempYear + tempMonth;
-		console.log("yearAndMonth : " +yearAndMonth);
-		console.log("year.value : " + year.value);
-		console.log("month.value : " + month.value);
-	} else {
-		yearAndMonth = selectedYearAndMonth;
-		// hasBeenSearched.value = false;
-	}
-
-
-	console.log("yearAndMonthyearAndMonthyearAndMonthyearAndMonth : " + yearAndMonth);
+	var dsSearch = '{' 
+			+ '"BOOK_GB":"'+BOOK_GB+ '",' 
+			+ '"search_gubun":"'+searchGubun+'",' 
+			+ '"BCASH_IDX":"'+BCASH_IDX+'",'
+			+ '"search_cashgb":"'+esti_code+'",'
+			+ '"search_month":"'+search_month +'",'
+			+ '"search_gb":"' +search_gb+ '"' 
+			+ '}';
 
 
 
 
-    // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
+	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
-    var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
-
-
-    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
-    
     console.log('jsonParam : ' + jsonParam);
-    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
-
-
-     
-
-    console.log("=========================== 2018.01.04===========================");
-	console.log("selectOnlineBCashList_URL URL : " + selectOnlineBCashList_URL);
-	console.log("=========================== 2018.01.04===========================");
-
-
-
+    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));  
 
 	fetch(selectOnlineBCashList_URL, {
 		method: 'POST',
@@ -732,28 +685,26 @@ function selectOnlineBCashList () {
         }).then(function(response) {
 			var responseData = JSON.stringify(response);
 			var responseHeaders = JSON.parse(response._bodyInit);
-			// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+			console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
 			temp = responseHeaders.ds_bCashList[1];
 			console.log("");
 			console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
 			//
-			var date1;
-			var type1;
-			var typeColor1;
-			var isBill1;
-			var money1;
-			var moneyColor1;
-			var contents1;
-			//2017.12.18 시작 
-			// 
+			// var date1;
+			// var type1;
+			// var typeColor1;
+			// var isBill1;
+			// var money1;
+			// var moneyColor1;
+			// var contents1;
+
 			for (var i = 0; i < temp.length; i++) {
 				notes.add(new note(temp[i], i));
 				selectOnlineBCashListDatas.add( new selectOnlineBCashListIndividualData(temp[i], i));
 			}
-			console.log("selectOnlineBCashListDatas : " + JSON.stringify(selectOnlineBCashListDatas));
+
 			//2017.12.18 끝
-        	var responseData = JSON.stringify(response);
-        	
+        	var responseData = JSON.stringify(response);       	
             return response.json();
         }).then(function(jsonData) {
             var data = jsonData.results[0];
@@ -766,11 +717,175 @@ function selectOnlineBCashList () {
 }
 
 
+function getCurrentDate () {
+	var currentTime;
+	var tempYear;
+	var monthTemp;
+	var tempMonth;
+	var yearAndMonth;
+
+	currentTime = new Date()
+	tempYear = currentTime.getFullYear();
+	console.log("date : " + typeof(tempYear));
+	monthTemp = currentTime.getMonth() + 1;
+	console.log("month : " + month);
+	year.value = tempYear;
+	month.value = monthTemp;
+	tempMonth = monthTemp.toString();
+
+	if(monthTemp < 10) {
+		tempMonth = "0" +monthTemp.toString();
+	}
+
+	yearAndMonth = tempYear + tempMonth;
+	console.log("yearAndMonth : " +yearAndMonth);
+	console.log("year.value : " + year.value);
+	console.log("month.value : " + month.value);
+
+	return yearAndMonth;
+}
+
+
+
+function selectOnlineBCashList () {
+	//뒷단에 저장해둔 선택한 계정과목 값 초기화
+	clearBackendSubjectValues();
+	//
+	getBillCashInputLoad();
+
+	var yearAndMonth = "";
+
+	console.log("hasBeenSearched.value : " + hasBeenSearched.value );
+
+	if (hasBeenSearched.value == false) {
+		yearAndMonth = getCurrentDate();
+	} else {
+		yearAndMonth = selectedYearAndMonth;		  
+	}
+
+	console.log("yearAndMonthyearAndMonthyearAndMonthyearAndMonth : " + yearAndMonth);
+
+	//새로운 소스 시자
+	var BCASH_IDX = "";
+	// console.log("args : " + JSON.stringify(args));
+
+	console.log("pickerDown3 was clicked bank type");
+
+	console.log("selectedbillCashInputDataList.value : " + selectedbillCashInputDataList.value);
+
+	for (var i = 0; i < billCashInputDataListTotal.length; i++) {
+		if(selectedbillCashInputDataList.value == billCashInputDataListTotal.getAt(i).NAME){
+			BCASH_IDX = billCashInputDataListTotal.getAt(i).BCASH_IDX;
+		}
+	}
+
+	console.log("BCASH_BANKNUM : " + BCASH_IDX);
+	notes.clear();
+	selectOnlineBCashListDatas.clear();
+	var tempMonth;
+
+
+	// console.log("MONTH.VALUE : " + month.value);
+
+	// if(month.value <10) {
+	// 	tempMonth = "0" +month.value.toString();
+	// } else {
+	// 	tempMonth = month.value
+	// }
+
+	// console.log("tempMonth : " +tempMonth);
+
+
+	// var yearAndMonth = year.value.toString() + tempMonth.toString();
+
+	// console.log("yearAndMonth : " + yearAndMonth);
+
+	var esti_code = "";
+	console.log("selectedType = " +  selectedType);
+	if(selectedType.value == "전체") {
+		esti_code="";
+	} else if (selectedType.value == "입금") {
+		esti_code="1";
+	} else if (selectedType.value == "출금") {
+		esti_code="2";
+	}
+
+	var searchGubun = "A";
+	if(unReg.value == true) {
+		searchGubun = "N";
+	}
+
+	//새로운 소스 시자 끝
+
+	commonGetNoteList(searchGubun, BCASH_IDX, esti_code, yearAndMonth);
+
+    // var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"201706","search_gb":"Y"}';
+
+ //    var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
+
+
+ //    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+ //    // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
+    
+ //    console.log('jsonParam : ' + jsonParam);
+ //    console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+
+     
+
+ //    console.log("=========================== 2018.01.04===========================");
+	// console.log("selectOnlineBCashList_URL URL : " + selectOnlineBCashList_URL);
+	// console.log("=========================== 2018.01.04===========================");
+
+
+
+
+	// fetch(selectOnlineBCashList_URL, {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		"Content-type": "application/json"
+	// 	},
+	// 	body: JSON.stringify(jsonParam)
+ //        }).then(function(response) {
+	// 		var responseData = JSON.stringify(response);
+	// 		var responseHeaders = JSON.parse(response._bodyInit);
+	// 		// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+	// 		temp = responseHeaders.ds_bCashList[1];
+	// 		console.log("");
+	// 		console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
+	// 		//
+	// 		var date1;
+	// 		var type1;
+	// 		var typeColor1;
+	// 		var isBill1;
+	// 		var money1;
+	// 		var moneyColor1;
+	// 		var contents1;
+	// 		//2017.12.18 시작 
+	// 		// 
+	// 		for (var i = 0; i < temp.length; i++) {
+	// 			notes.add(new note(temp[i], i));
+	// 			selectOnlineBCashListDatas.add( new selectOnlineBCashListIndividualData(temp[i], i));
+	// 		}
+	// 		console.log("selectOnlineBCashListDatas : " + JSON.stringify(selectOnlineBCashListDatas));
+	// 		//2017.12.18 끝
+ //        	var responseData = JSON.stringify(response);
+        	
+ //            return response.json();
+ //        }).then(function(jsonData) {
+ //            var data = jsonData.results[0];
+ //            console.log("data : " + jsonData.results[0]);
+	// 		console.log("Reg Succeeded[ios]: " + data.registration_token);
+	// 		// maintext.value = maintext.value + "/n" + data.registration_token;
+ //        }).catch(function(err) {
+ //            console.log("Reg Succeeded[ios] Error!! : " + err.message);
+ //        });
+}
+
+
 function unRegisteredChecked() {
 		// alert("pLease ");
-
 	notes.clear();
-	
 	var tempMonth;
 
 	console.log("MONTH.VALUE : " + month.value);
@@ -874,6 +989,8 @@ function unRegisteredChecked() {
 
 
 }
+
+
 
 
 

@@ -54,7 +54,7 @@
 				</WhileTrue>
 			</Grid>
 
-			<Text Value="{BCASH_MONEY}" Margin="0,0,{margin}*1.5,0" FontSize="{margin}*1.5" Color="{typeColor}" Alignment="CenterRight" />
+			<Text Value="{BCASH_MONEY}" Margin="0,0,{margin}*1.5,0" FontSize="{margin}*1.5" Color="{typeColor}" Alignment="CenterRight" Font="BoldText"/>
 			<Text Value="원" Alignment="BottomRight" />
 
 		</Panel>
