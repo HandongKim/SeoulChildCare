@@ -207,7 +207,6 @@
 			});
 		}
 
-
 		function getImage() {
 			CameraRoll.getImage().then(function(image) {
 				takedPicture.value = image.path;
