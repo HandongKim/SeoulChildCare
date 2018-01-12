@@ -603,7 +603,7 @@
 			<StackPanel Color="#eee">
 				<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
 					<StackPanel Width="100%" Color="White">
-						<Text Value="{noticeDetail.title}" FontSize="{margin}" Color="Black" Alignment="CenterLeft" Margin="{margin}" />				
+						<Text Value="{noticeDetail.title}" FontSize="{margin}" Color="Black" Alignment="CenterLeft" Margin="{margin}" TextWrapping="Wrap" />				
 						<Text Value="{noticeDetail.regDate2}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
 						<Text Value="{noticeDetail.regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
 					</StackPanel>

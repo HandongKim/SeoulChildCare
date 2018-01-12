@@ -55,7 +55,7 @@
 			<StackPanel Color="#eee">
 				<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
 					<StackPanel Width="100%" Color="White">
-						<Text Value="{sendworkDetail.title}" Font="BoldText" FontSize="{margin}*1.2" Color="Black" Alignment="CenterLeft" Margin="{margin}" />
+						<Text Value="{sendworkDetail.title}" Font="BoldText" FontSize="{margin}*1.2" Color="Black" Alignment="CenterLeft" Margin="{margin}" TextWrapping="Wrap" />
 						<WrapPanel Margin="{margin}" Alignment="CenterLeft">
 							<Text Value="{sendworkDetail.sender}" FontSize="{margin}*1.1" Color="#18f" Font="BoldText" />
 							<Text Value="님이 보냈습니다." FontSize="{margin}" Color="Black" />

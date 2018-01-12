@@ -259,6 +259,7 @@
 		</Panel>
 
 		<DockPanel>
+			<Panel Height="40" Dock="Top" />
 			<ScrollView SnapMinTransform="false" SnapMaxTransform="false">
 				<StackPanel Color="#eee" ItemSpacing="1">
 					<Each Items="{data}">

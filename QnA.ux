@@ -838,7 +838,7 @@
 		<Grid Color="#ccc" CellSpacing="1" Rows="Auto">
 			<Panel Color="White" Width="100%" Height="100%">
 				<StackPanel Margin="{margin}">
-					<Text Value="{qnaDetailValue.title}" FontSize="{margin}*1.2" Color="Black" />
+					<Text Value="{qnaDetailValue.title}" FontSize="{margin}*1.2" Color="Black" TextWrapping="Wrap" />
 					<Text Value="{qnaDetailValue.writerNm}" FontSize="{margin}*1.2" Color="#4395D6" />
 					<Text Value="{qnaDetailValue.regDate1} {qnaDetailValue.regDate2}"  Color="#888" />
 				</StackPanel>
