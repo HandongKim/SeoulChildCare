@@ -56,6 +56,19 @@ var subject = {
 	ESTI_SUBCODE: Observable()
 };
 
+
+var choiceSubject = {
+	isChoice:null,
+	color:null,
+	type:null,
+	name:null,
+	text:null,
+	ESTI_CODE:null,
+	ESTI_GB:null,
+	ESTI_SUBCODE:null
+};
+
+
 var dsParam="";
 var choiceSubjectList = Observable();
 
@@ -187,5 +200,5 @@ module.exports = {
 	getBillCashInputLoad_URL, selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList_URL,
 	noticeUserMipDetailList_URL, qnaList_URL, qnaListDtl_URL,qnaUserUpdate_URL, insertQnaCommList_URL,
 	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
-	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL
+	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, choiceSubject
 };
