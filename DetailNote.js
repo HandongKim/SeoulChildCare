@@ -28,6 +28,7 @@ var	BILL_IDX = Backend.dataFromNoteManageToDetailNote.BILL_IDX.value;
 
 function viewWillAppear() {
 	console.log("Data Initialised");
+	selectedData.value = "결제방법";
 	moneyValue.value="";
 	selectedMemo.value="";
 }
@@ -41,8 +42,8 @@ var alert = {
 
 
 var alertWithConfirm = {
-	title: Observable(),
-	message: Observable(),
+	title: Observable("수정완료"),
+	message: Observable("수정되었습니다."),
 	type: Observable("Check"),
 	layer: Observable("Background")
 };
@@ -218,6 +219,7 @@ function selectedDetailNote(args) {
 
 
 function getListDetailNote () {
+	alertWithConfirm.layer.value = "Background";
 // console.log("testAPI clicked ");
 // var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 // var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
@@ -733,9 +735,6 @@ if (validateChecked == true) {
 		   	console.log("MiResultMsg  : "   + MiResultMsg);
 
 		   	if (MiResultMsg == "success") {
-				alertWithConfirm.title.value = "";
-				alertWithConfirm.message.value = "수정ㄷ러ㅑㅑ절댜습니다.";
-				alertWithConfirm.type.value = "Check";
 				alertWithConfirm.layer.value = "Overlay";
 
 				// getListDetailNote();

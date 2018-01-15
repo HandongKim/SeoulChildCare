@@ -500,43 +500,18 @@
 		</Panel>
 
 		<Panel Margin="{margin}*5/7">
-			<Text Value="{alertWithConfirm.title}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			<Text Value="{alertWithConfirm.message}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
 		</Panel>
 
 		<Panel Margin="{margin}">
-			<Match Value="{alertWithConfirm.type}">
-				<Case String="Check">
-					<BlueButton>
-						<Text Value="확인" Alignment="Center" Color="White" />
+			<BlueButton>
+				<Text Value="확인" Alignment="Center" Color="White" />
 
-						<Clicked>
-							<Set Target="this.Layer" Value="Background" />
-							<Callback Handler="{getListDetailNote}" />
-						</Clicked>
-					</BlueButton>
-				</Case>
-
-				<Case String="EnCancel">
-					<Grid ColumnCount="2" CellSpacing="5">
-						<GrayButton>
-							<Text Value="취소" Alignment="Center" Color="White" />
-
-							<Clicked>
-								<Set Target="this.Layer" Value="Background" />
-								<Callback Handler="{logOut}"/>
-							</Clicked>
-						</GrayButton>
-
-						<BlueButton>
-							<Text Value="확인" Alignment="Center" Color="White" />
-
-							<Clicked>
-								<Set Target="this.Layer" Value="Background" />
-							</Clicked>
-						</BlueButton>
-					</Grid>
-				</Case>
-			</Match>
+				<Clicked>
+					<Callback Handler="{getListDetailNote}" />
+					<Callback Handler="{viewWillAppear}" />
+				</Clicked>
+			</BlueButton>
 		</Panel>
 	</StackPanel>
 </Rectangle>
