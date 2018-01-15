@@ -407,7 +407,7 @@ function cancelUpload() {
 }
 
 var pickerOn = Observable(false);
-var selectedData = Observable("카드결제");
+var selectedData = Observable("결제방법");
 var pickerData = Observable("카드결제", "아이행복카드", "계좌이체", "자동이체", "지로", "현금결제", "기타");
 
 function pickerUp() {
@@ -433,6 +433,8 @@ function pickerDown() {
 		selected_BILL_CLSS.value = "60";
 	} else if (selectedData.value == "기타") {
 		selected_BILL_CLSS.value = "70";
+	} else if (selectedData.value = "결제방법") {
+		selected_BILL_CLSS.value = null
 	}
 
 
@@ -542,12 +544,54 @@ function datePickerDown() {
 
 
 
-function validationCheck () {
-	return false;
+function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
+ 	var allChecked = false;
+
+ 	var isMoneyChecked = false;
+ 	var isBillClssChecked = false;
+ 	var isEstiCodeChecked = false;
+
+
+ 	if (tempMoneyValue == null) {
+		console.log("money empty");
+		alert.title.value = "금액 입력";
+		alert.message.value = "금액을 입력하세요.";
+		alert.type.value = "Check";
+		alert.layer.value = "Overlay";
+		// break;
+	} else {
+		isMoneyChecked = true;
+	}
+
+
+	if (BILL_CLSS == null) {
+		console.log("doesn't select card");
+		alert.title.value = "결제 수단";
+		alert.message.value = "결제 수단을 선택해주세요.";
+		alert.type.value = "Check";
+		alert.layer.value = "Overlay";
+		// break;
+	} else {
+		isBillClssChecked  = true;
+	}
+
+	if (ESTI_CODE == null) {
+		console.log("doesn't select subject");
+		alert.title.value = "계정과목";
+		alert.message.value = "계정과목을 입력해주세요.";
+		alert.type.value = "Check";
+		alert.layer.value = "Overlay";
+		// break;
+	} else {
+		isEstiCodeChecked = true;
+	}
+
+	if ((isMoneyChecked == true) && (isBillClssChecked == true ) && (isEstiCodeChecked == true)) {
+		allChecked = true;
+	} 
+
+	return allChecked;
 }
-
-
-
 
 var updatebCashMobileUrl;
 
@@ -568,7 +612,7 @@ function saveData() {
 // 	ESTI_CODE: Observable(),
 // ESTI_GB: Observable(),
 // ESTI_SUBCODE: Observable()
-	var ESTI_CODE;
+	var ESTI_CODE = null;
 
 	if (Backend.subject.ESTI_CODE == null) {
 		ESTI_CODE = selectedDetailNoteVariable.ESTI_CODE;
@@ -585,7 +629,9 @@ function saveData() {
 	console.log("BIL_IDX from saveData : " + BILL_IDX);
 
 
-	var BILL_CLSS=selected_BILL_CLSS.value;
+	var BILL_CLSS  = null;
+
+	BILL_CLSS = selected_BILL_CLSS.value;
 	var BILL_RECEIPT =selectedDetailNoteVariable.BILL_RECEIPT;
 	
 	var ESTI_SUB_YN;
@@ -604,12 +650,14 @@ function saveData() {
 		ESTI_NAME = Backend.subject.ESTI_NAME.value;	
 	}
 
-	var tempMoneyValue = moneyValue.value;
+	var tempMoneyValue = null;
+
+	tempMoneyValue = moneyValue.value;
  	tempMoneyValue = tempMoneyValue.replace(/,/g , "");
 	
 
 
- 	var validateChecked = validationCheck();
+ 	
 
 	var BILL_GB = "A04";
 	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
@@ -659,73 +707,49 @@ function saveData() {
 	// console.log("jsonParam : " + JSON.stringify(jsonParam));
 
 	updatebCashMobileUrl = Backend.BASE_URL + Backend.updatebCashMobile_URL;
+	
+
+var validateChecked = validationCheck(tempMoneyValue, BILL_CLSS, ESTI_CODE);
+
 
 if (validateChecked == true) {
 	console.log("check: " + tempMoneyValue + ", " + BILL_CLSS +", " + ESTI_CODE);
 
-	if (tempMoneyValue == null) {
-		console.log("money empty");
-		alert.title.value = "금액 입력";
-		alert.message.value = "금액을 입력하세요.";
-		alert.type.value = "Check";
-		alert.layer.value = "Overlay";
-	} else if (BILL_CLSS == null) {
-		console.log("doesn't select card");
-		alert.title.value = "결제 수단";
-		alert.message.value = "결제 수단을 선택해주세요.";
-		alert.type.value = "Check";
-		alert.layer.value = "Overlay";
-	} else if (ESTI_CODE == null) {
-		console.log("doesn't select subject");
-		alert.title.value = "계정과목";
-		alert.message.value = "계정과목을 입력해주세요.";
-		alert.type.value = "Check";
-		alert.layer.value = "Overlay";
-	} else {
-		fetch(updatebCashMobileUrl, {
-			method: 'POST',
-			headers: {
-				"Content-type": "application/json"
-			},
-			body: JSON.stringify(jsonParam)
-		    }).then(function(response) {
-				var responseData = JSON.stringify(response);
+	fetch(updatebCashMobileUrl, {
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+		 
+		}).then(function(response) {
+			var responseData = JSON.stringify(response);
+			console.log("20180115 responseDatas : " + responseData);
 
-				// console.log("responseData : "+ responseData);
+			var responseHeaders = JSON.parse(response._bodyInit);
+			var MiResultMsg = responseHeaders.MiResultMsg;		
+		   	
+		   	console.log("MiResultMsg  : "   + MiResultMsg);
 
-				var responseHeaders = JSON.parse(response._bodyInit);
-				// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
-				// var damnIT = JSON.parse();
-				
-				// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
+		   	if (MiResultMsg == "success") {
+				alert.title.value = "";
+				alert.message.value = "수정 됐습니다.";
+				alert.type.value = "Check";
+				alert.layer.value = "Overlay";
+		   	} else {
+		   		alert.title.value = "";
+				alert.message.value = "수정됐습니다.";
+				alert.type.value = "Check";
+				alert.layer.value = "Overlay";
+		   	}
 
+	    	
 
-				temp = responseHeaders.ds_billList[1];
-				
-				// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
-
-				// notes.clear();
-
-
-				// console.log("fefefefefe temp.length : " + temp.length);
-
-
-				
-
-		    	var responseData = JSON.stringify(response);
-		    	
-		        return response.json();
-		    }).then(function(jsonData) {
-		        var data = jsonData.results[0];
-		        // console.log("data : " + jsonData.results[0]);
-				// console.log("Reg Succeeded[ios]: " + data.registration_token);
-				// maintext.value = maintext.value + "/n" + data.registration_token;
-		    }).catch(function(err) {
-		        // console.log("Reg Succeeded[ios] Error!! : " + err.message);
-		    });
-				// console.log("saveData was clicked");
-		}
-
+		       return response.json();
+		   }).then(function(jsonData) {
+		       var data = jsonData.results[0];
+		   }).catch(function(err) {
+		   });
 	}
 }
 
@@ -739,6 +763,7 @@ if (validateChecked == true) {
 
 
 var deleteMobileBillListUrl;
+
 function deleteData () {
 	var ACTION = selectedDetailNoteVariable.ACTION;
 	var CASH_IDX = selectedDetailNoteVariable.CASH_IDX;

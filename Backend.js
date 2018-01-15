@@ -57,7 +57,7 @@ var subject = {
 };
 
 
-var choiceSubject = {
+var chosenSubject = {
 	isChoice:null,
 	color:null,
 	type:null,
@@ -200,5 +200,5 @@ module.exports = {
 	getBillCashInputLoad_URL, selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList_URL,
 	noticeUserMipDetailList_URL, qnaList_URL, qnaListDtl_URL,qnaUserUpdate_URL, insertQnaCommList_URL,
 	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
-	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, choiceSubject
+	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject
 };

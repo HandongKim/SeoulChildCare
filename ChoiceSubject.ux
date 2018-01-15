@@ -256,6 +256,14 @@ function selectSubject(arg) {
 	Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
 	Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
 
+	Backend.chosenSubject.isChoice = true;
+	Backend.chosenSubject.name = arg.data.name;
+	Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
+	Backend.chosenSubject.ESTI_GB = arg.data.ESTI_GB;
+	Backend.chosenSubject.ESTI_SUBCODE = arg.data.ESTI_SUBCODE;	
+
+
+
 	console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
 	console.log("Backend.subject.name.value : " + Backend.subject.name.value);
 	console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
