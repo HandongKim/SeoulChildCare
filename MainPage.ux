@@ -5,7 +5,11 @@
 		<Panel Dock="Top" Width="100%" BoxSizing="FillAspect" Aspect="1" Color="#eee0">
 			<Grid RowCount="3" ColumnCount="2" Alignment="TopCenter" CellSpacing="12" Width="100%" Margin="{margin}">
 				<Image File="Images/main_btn1.png">
-					<Clicked><Callback Handler="{goNoteManage}" /></Clicked>
+					<Clicked>
+						<Callback Handler="{goNoteManage}" />
+						<Callback Handler="{connecting}" />
+						<Callback Handler="{disConnecting}" Delay="0.5" />
+					</Clicked>
 				</Image>
 
 				<Image File="Images/main_btn2.png">

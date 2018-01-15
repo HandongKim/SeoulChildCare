@@ -11,6 +11,9 @@
 		var ImageTools = require('FuseJS/ImageTools');
 		var Uploader = require("Uploader");
 		var Backend = require('Backend.js');
+
+		var connectingPanelLayout = Observable("Background");
+		var enableClick = Observable("LocalBoundsAndChildren");
 		
 		var print = debug_log;
 		 "/acusr/acc/bil/MobileReceiptImgUpload.do"
@@ -308,7 +311,16 @@
 
 			targetImgPath,
 			sendPicture,
-			sendPictureBtnEnabled, takedPicture
+			sendPictureBtnEnabled, takedPicture,
+			connectingPanelLayout, enableClick,
+			connecting: function() {
+				connectingPanelLayout.value = "Overlay";
+				enableClick.value = "None";
+			},
+			disConnecting: function() {
+				connectingPanelLayout.value = "Background";
+				enableClick.value = "LocalBoundsAndChildren";
+			}
 		};
 	</JavaScript>
 
@@ -351,12 +363,14 @@
 	<Rectangle ux:Class="BlackButton" Width="100%" Height="{margin}*2.4" Color="#333333" />
 	<Rectangle ux:Class="GrayButton2" Width="100%" Height="{margin}*2.4" Color="#959595" />
 
-	<SystemFont Family="Baskerville" Style="Normal" Weight="Bold" ux:Global="BoldText" />
+	<SystemFont Family="Courier" Style="Normal" Weight="Bold" ux:Global="BoldText" />
 
 	<iOS.StatusBarConfig Style="Dark" Animation="Slide" IsVisible="True" />
 	<Android.StatusBarConfig Color="#000f" IsVisible="True" />
 	<MemoryPolicy ux:Global="MyUnload" UnloadInBackground="true" UnusedTimeout="0.5" UnpinInvisible="true"/>
-	<ClientPanel Placed="{placed}">
+
+	<ClientPanel Placed="{placed}" HitTestMode="{enableClick}">
+		<Panel Width="100%" Height="100%" Color="#FFF8" Layer="{connectingPanelLayout}" HitTestMode="None" />
 		<Navigator DefaultPath="Intro">
 			<Intro ux:Template="Intro" router="router" />
 			<Login ux:Template="Login" router="router" />
