@@ -33,7 +33,12 @@ function viewWillAppear() {
 }
 
 
-
+var alert = {
+	title: Observable(),
+	message: Observable(),
+	type: Observable("Check"),
+	layer: Observable("Background")
+};
 
 // this.Parameter.onValueChanged(null,function(x) {
 // 	if (x == null) {
@@ -656,50 +661,71 @@ function saveData() {
 	updatebCashMobileUrl = Backend.BASE_URL + Backend.updatebCashMobile_URL;
 
 if (validateChecked == true) {
-	fetch(updatebCashMobileUrl, {
-		method: 'POST',
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify(jsonParam)
-	    }).then(function(response) {
-			var responseData = JSON.stringify(response);
 
-			// console.log("responseData : "+ responseData);
+	if (tempMoneyValue == null) {
+		console.log("금액 빔");
+		alert.title.value = "금액 입력";
+		alert.message.value = "금액을 입력하세요.";
+		alert.type.value = "Check";
+		alert.layer.value = "Overlay";
+	} else if (BILL_CLSS == null) {
+		console.log("카드결제 빔");
+		alert.title.value = "결제 수단";
+		alert.message.value = "결제 수단을 선택해주세요.";
+		alert.type.value = "Check";
+		alert.layer.value = "Overlay";
+	} else if (ESTI_CODE == null) {
+		console.log("계정과목 빔");
+		alert.title.value = "계정과목";
+		alert.message.value = "계정과목을 입력해주세요.";
+		alert.type.value = "Check";
+		alert.layer.value = "Overlay";
+	} else {
+		fetch(updatebCashMobileUrl, {
+			method: 'POST',
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify(jsonParam)
+		    }).then(function(response) {
+				var responseData = JSON.stringify(response);
 
-			var responseHeaders = JSON.parse(response._bodyInit);
-			// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
-			// var damnIT = JSON.parse();
-			
-			// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
+				// console.log("responseData : "+ responseData);
+
+				var responseHeaders = JSON.parse(response._bodyInit);
+				// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+				// var damnIT = JSON.parse();
+				
+				// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(responseHeaders.ds_billList[1]));
 
 
-			temp = responseHeaders.ds_billList[1];
-			
-			// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
+				temp = responseHeaders.ds_billList[1];
+				
+				// console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
 
-			// notes.clear();
-
-
-			// console.log("fefefefefe temp.length : " + temp.length);
+				// notes.clear();
 
 
-			
+				// console.log("fefefefefe temp.length : " + temp.length);
 
-	    	var responseData = JSON.stringify(response);
-	    	
-	        return response.json();
-	    }).then(function(jsonData) {
-	        var data = jsonData.results[0];
-	        // console.log("data : " + jsonData.results[0]);
-			// console.log("Reg Succeeded[ios]: " + data.registration_token);
-			// maintext.value = maintext.value + "/n" + data.registration_token;
-	    }).catch(function(err) {
-	        // console.log("Reg Succeeded[ios] Error!! : " + err.message);
-	    });
-			// console.log("saveData was clicked");
-}
 
+				
+
+		    	var responseData = JSON.stringify(response);
+		    	
+		        return response.json();
+		    }).then(function(jsonData) {
+		        var data = jsonData.results[0];
+		        // console.log("data : " + jsonData.results[0]);
+				// console.log("Reg Succeeded[ios]: " + data.registration_token);
+				// maintext.value = maintext.value + "/n" + data.registration_token;
+		    }).catch(function(err) {
+		        // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+		    });
+				// console.log("saveData was clicked");
+		}
+
+	}
 }
 
 
@@ -889,5 +915,5 @@ function deleteData () {
 
 
 				router.push("ShowFile", infoJSON);
-			}
+			}, alert
 		};

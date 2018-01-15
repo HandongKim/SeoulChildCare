@@ -9,6 +9,8 @@
 		<Change choiceSubjectPanel.X="0" Duration="0.2" />
 	</WhileTrue> -->
 
+	<Alert ux:Name="detailNoteAlert" Title="{alert.title}" MainText="{alert.message}" Type="{alert.type}" Layer="{alert.layer}" />
+
 
 	<WhileTrue Value="{pickerOn}">
 		<Change page1PickerPanel2.Y="0" Duration=".2" />
