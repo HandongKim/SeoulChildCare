@@ -24,7 +24,7 @@
 				</Clicked>
 			</Text>
 
-			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+			<Recta법gle Width="100%" Height="1" Color="#888" Alignment="Top" />
 		</Panel>
 
 		<MyPicker Selected="{selectedData}" Data="{pickerData}" />
