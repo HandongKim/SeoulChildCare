@@ -661,21 +661,22 @@ function saveData() {
 	updatebCashMobileUrl = Backend.BASE_URL + Backend.updatebCashMobile_URL;
 
 if (validateChecked == true) {
+	console.log("check: " + tempMoneyValue + ", " + BILL_CLSS +", " + ESTI_CODE);
 
 	if (tempMoneyValue == null) {
-		console.log("금액 빔");
+		console.log("money empty");
 		alert.title.value = "금액 입력";
 		alert.message.value = "금액을 입력하세요.";
 		alert.type.value = "Check";
 		alert.layer.value = "Overlay";
 	} else if (BILL_CLSS == null) {
-		console.log("카드결제 빔");
+		console.log("doesn't select card");
 		alert.title.value = "결제 수단";
 		alert.message.value = "결제 수단을 선택해주세요.";
 		alert.type.value = "Check";
 		alert.layer.value = "Overlay";
 	} else if (ESTI_CODE == null) {
-		console.log("계정과목 빔");
+		console.log("doesn't select subject");
 		alert.title.value = "계정과목";
 		alert.message.value = "계정과목을 입력해주세요.";
 		alert.type.value = "Check";
