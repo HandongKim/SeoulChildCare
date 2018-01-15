@@ -802,10 +802,10 @@ function connectToServer() {
         var reulstCode = responseHeaders.resultCode;
 
         if(reulstCode == "000") {
-			alert.title.value = "비밀번호 입력";
-			alert.message.value = "비밀번호를 입력하세요.";
-			alert.type.value = "Check";
-			alert.layer.value = "Overlay";
+			// alert.title.value = "비밀번호 입력";
+			// alert.message.value = "비밀번호를 입력하세요.";
+			// alert.type.value = "Check";
+			// alert.layer.value = "Overlay";
 
 
 

@@ -28,13 +28,19 @@
 			</Rectangle>
 
 			<Rectangle Color="White" Width="100%">
-				<Clicked><Callback Handler="{takePicture}" /></Clicked>
+				<Clicked>
+					<Callback Handler="{takePicture}" />
+					<Callback Handler="{cancelUpload}" />
+				</Clicked>
 
 				<Text Value="사진촬영" Alignment="Center" FontSize="{margin}*1.2" Margin="{margin}" Color="Black" />
 			</Rectangle>
 
 			<Rectangle Color="White" CornerRadius="0, 0, 10, 10" Width="100%">
-				<Clicked><Callback Handler="{getImage}" /></Clicked>
+				<Clicked>
+					<Callback Handler="{getImage}" />
+					<Callback Handler="{cancelUpload}" />
+				</Clicked>
 
 				<Text Value="앨범선택" Alignment="Center" FontSize="{margin}*1.2" Margin="{margin}" Color="Black" />
 			</Rectangle>

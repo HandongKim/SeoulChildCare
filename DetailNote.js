@@ -285,16 +285,12 @@ function getListDetailNote () {
         }).catch(function(err) {
             // console.log("Reg Succeeded[ios] Error!! : " + err.message);
         });
-
-
 }
 
-	var selectedTemp;
-	var selectedMemo = Observable();
-
-	var selectedMoney = Observable();
-	var CASH_GB = Observable();
-
+var selectedTemp;
+var selectedMemo = Observable();
+var selectedMoney = Observable();
+var CASH_GB = Observable();
 var	INDEX;
 var	DATE;
 var	TYPE;
@@ -740,6 +736,11 @@ if (validateChecked == true) {
 				alertWithConfirm.message.value = "수정ㄷ러ㅑㅑ절댜습니다.";
 				alertWithConfirm.type.value = "Check";
 				alertWithConfirm.layer.value = "Overlay";
+
+				getListDetailNote();
+
+
+
 		   	} else {
 		   		alert.title.value = "";
 				alert.message.value = "수정 안 됐습니다.";
@@ -918,6 +919,7 @@ function deleteData () {
 
 
 
+			// if ((x != null) && (notes._values[tempIndex] != null)) {
 			if (x != null) {
 				console.log("notes._values[tempIndex].type : " + notes._values[tempIndex].type);	
 

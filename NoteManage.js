@@ -467,6 +467,9 @@ function getCurrentDate () {
 	var tempMonth;
 	var yearAndMonth;
 
+	year.clear();
+	month.clear();
+
 	currentTime = new Date()
 	tempYear = currentTime.getFullYear();
 	console.log("date : " + typeof(tempYear));
