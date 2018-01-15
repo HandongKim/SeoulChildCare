@@ -414,7 +414,7 @@ function pickerUp() {
 	pickerOn.value = true;
 }
 
-var selected_BILL_CLSS = Observable("10");
+var selected_BILL_CLSS = Observable();
 
 function pickerDown() {
 	console.log("selectedData : " + selectedData.value);
@@ -733,7 +733,7 @@ if (validateChecked == true) {
 
 		   	if (MiResultMsg == "success") {
 				alert.title.value = "";
-				alert.message.value = "수정 됐습니다.";
+				alert.message.value = "수정 됬습니다.";
 				alert.type.value = "Check";
 				alert.layer.value = "Overlay";
 		   	} else {
