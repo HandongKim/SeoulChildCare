@@ -491,8 +491,6 @@
 
 <AlertWithConfirmButton ux:Name="detailNoteAlertWithConfirm" Title="{alertWithConfirm.title}" MainText="{alertWithConfirm.message}" Type="{alertWithConfirm.type}" Layer="{alertWithConfirm.layer}" />
 
-
-
 <Rectangle ux:Class="AlertWithConfirmButton" Width="{margin}*23" Alignment="Center" Color="White">
 	<string ux:Property="Title" />
 	<string ux:Property="MainText" />
@@ -546,16 +544,4 @@
 		</Panel>
 	</StackPanel>
 </Rectangle>
-
-
-
-
-
-
-
-
-
-
-
-
 </Page>

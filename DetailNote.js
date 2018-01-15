@@ -32,7 +32,6 @@ function viewWillAppear() {
 	selectedMemo.value="";
 }
 
-
 var alert = {
 	title: Observable(),
 	message: Observable(),

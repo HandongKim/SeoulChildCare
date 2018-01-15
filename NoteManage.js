@@ -184,7 +184,7 @@ var selectOnlineBCashList_URL = Backend.BASE_URL + Backend.selectOnlineBCashList
 
 
 var hasBeenSearched = Observable(false);
-var selectedYearAndMonth;
+var selectedYearAndMonth = null;
 
 function pickerDown() {
 	hasBeenSearched.value = true;
@@ -495,13 +495,37 @@ function selectOnlineBCashList () {
 	clearBackendSubjectValues();
 
 	var yearAndMonth = "";
-	console.log("hasBeenSearched.value : " + hasBeenSearched.value );
+	// console.log("hasBeenSearched.value : " + hasBeenSearched.value );
 
 	if (hasBeenSearched.value == false) {
+
+		console.log("20180115  hasBeenSearched.value == false hasBeenSearched.value : " + hasBeenSearched.value );
+
+
 		yearAndMonth = getCurrentDate();
+
+		console.log("20180115 hasBeenSearched.value == false  yearAndMonth : " + yearAndMonth);
+
 	} else {
-		yearAndMonth = selectedYearAndMonth;		  
+		yearAndMonth = selectedYearAndMonth;
+
+		console.log("20180115  hasBeenSearched.value == true selectedYearAndMonth : " + selectedYearAndMonth);
+		console.log("20180115 hasBeenSearched.value == true  yearAndMonth : " + yearAndMonth);
+
+		if (selectedYearAndMonth == null) {
+
+		console.log("20180115 hasBeenSearched.value == true  selectedYearAndMonth == null selectedYearAndMonth : " + selectedYearAndMonth);			
+
+		yearAndMonth = getCurrentDate();
+		console.log("20180115 hasBeenSearched.value == true  selectedYearAndMonth == null yearAndMonth : " + yearAndMonth);			
+		}
+
 	}
+
+
+
+
+
 
 	console.log("yearAndMonthyearAndMonthyearAndMonthyearAndMonth : " + yearAndMonth);
 
