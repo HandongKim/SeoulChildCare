@@ -417,7 +417,7 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF">
 					<Stroke Width="1" Color="#ccc" />
-					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" />
+					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" InputHint="Number" />
 				</Rectangle>
 
 				<Image File="Images/btn_02.png" Alignment="Center" RowSpan="3">
@@ -490,34 +490,28 @@
 	</DockPanel>
 
 
-
-<AlertWithConfirmButton ux:Name="detailNoteAlertWithConfirm" Title="{alertWithConfirm.title}" MainText="{alertWithConfirm.message}" Type="{alertWithConfirm.type}" Layer="{alertWithConfirm.layer}" />
-
-<Rectangle ux:Class="AlertWithConfirmButton" Width="{margin}*23" Alignment="Center" Color="White">
-	<string ux:Property="Title" />
-	<string ux:Property="MainText" />
-	<string ux:Property="Type" />
-
+<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{alertWithConfirm.layer}">
 	<Stroke Width="1" Color="Black" />
 	<StackPanel>
 		<Panel>
-			<Text Value="{Property Title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+			<Text Value="{alertWithConfirm.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
 
 			<Image File="Images/alert_top.png" Alignment="TopCenter" />
 		</Panel>
 
 		<Panel Margin="{margin}*5/7">
-			<Text Value="{Property MainText}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			<Text Value="{alertWithConfirm.title}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
 		</Panel>
 
 		<Panel Margin="{margin}">
-			<Match Value="{Property Type}">
+			<Match Value="{alertWithConfirm.type}">
 				<Case String="Check">
 					<BlueButton>
 						<Text Value="확인" Alignment="Center" Color="White" />
 
 						<Clicked>
 							<Set Target="this.Layer" Value="Background" />
+							<Callback Handler="{getListDetailNote}" />
 						</Clicked>
 					</BlueButton>
 				</Case>

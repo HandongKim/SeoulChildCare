@@ -413,6 +413,7 @@ var selectedData = Observable("결제방법");
 var pickerData = Observable("카드결제", "아이행복카드", "계좌이체", "자동이체", "지로", "현금결제", "기타");
 
 function pickerUp() {
+	selectedData.value = "카드결제";
 	pickerOn.value = true;
 }
 
@@ -737,7 +738,7 @@ if (validateChecked == true) {
 				alertWithConfirm.type.value = "Check";
 				alertWithConfirm.layer.value = "Overlay";
 
-				getListDetailNote();
+				// getListDetailNote();
 
 
 
