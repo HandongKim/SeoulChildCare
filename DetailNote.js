@@ -40,6 +40,13 @@ var alert = {
 	layer: Observable("Background")
 };
 
+
+var alertWithConfirm = {
+	title: Observable(),
+	message: Observable(),
+	type: Observable("Check"),
+	layer: Observable("Background")
+};
 // this.Parameter.onValueChanged(null,function(x) {
 // 	if (x == null) {
 
@@ -682,8 +689,6 @@ function saveData() {
 		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+tempMoneyValue+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ+'"}';	
 	}
 
-	
-	
 	console.log("ds_bCash : " + ds_bCash);
 		
 	// } else {
@@ -732,13 +737,13 @@ if (validateChecked == true) {
 		   	console.log("MiResultMsg  : "   + MiResultMsg);
 
 		   	if (MiResultMsg == "success") {
-				alert.title.value = "";
-				alert.message.value = "수정 됬습니다.";
-				alert.type.value = "Check";
-				alert.layer.value = "Overlay";
+				alertWithConfirm.title.value = "";
+				alertWithConfirm.message.value = "수정ㄷ러ㅑㅑ절댜습니다.";
+				alertWithConfirm.type.value = "Check";
+				alertWithConfirm.layer.value = "Overlay";
 		   	} else {
 		   		alert.title.value = "";
-				alert.message.value = "수정됐습니다.";
+				alert.message.value = "수정 안 됐습니다.";
 				alert.type.value = "Check";
 				alert.layer.value = "Overlay";
 		   	}
@@ -754,7 +759,19 @@ if (validateChecked == true) {
 }
 
 
-
+function logOut() {
+	console.log("console log out");
+	console.log("console log out");
+	console.log("console log out");
+	console.log("console log out");
+	console.log("console log out");
+	console.log("console log out");
+	console.log("console log out");
+	console.log("console log out");
+	console.log("console log out");
+	console.log("console log out");
+	console.log("console log out");
+}
 
 
 
@@ -941,5 +958,5 @@ function deleteData () {
 
 
 				router.push("ShowFile", infoJSON);
-			}, alert
+			}, alert, alertWithConfirm, logOut
 		};
