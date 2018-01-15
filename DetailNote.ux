@@ -466,7 +466,7 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF" ColumnSpan="5">
 					<Stroke Width="1" Color="#ccc" />
-					<TextView Value="{selectedMemo}"/>
+					<TextView Value="{selectedMemo}" TextWrapping="Wrap"/>
 				</Rectangle>
 
 				<Grid ColumnCount="2" ColumnSpan="5" CellSpacing="2">
