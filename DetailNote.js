@@ -917,7 +917,9 @@ function deleteData () {
 
 			console.log("notes._values[tempIndex] : " + JSON.stringify(notes._values[tempIndex]));
 
-
+			if (notes == null) {
+				getListDetailNote();
+			}
 
 			// if ((x != null) && (notes._values[tempIndex] != null)) {
 			if (x != null) {
