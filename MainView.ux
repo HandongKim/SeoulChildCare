@@ -371,7 +371,7 @@
 
 	<ClientPanel Placed="{placed}" HitTestMode="{enableClick}">
 		<Panel Width="100%" Height="100%" Color="#FFF8" Layer="{connectingPanelLayout}" HitTestMode="None" />
-		<Navigator DefaultPath="Intro">
+		<Navigator DefaultPath="Intro" Color="White">
 			<Intro ux:Template="Intro" router="router" />
 			<Login ux:Template="Login" router="router" />
 			<MainPage ux:Template="MainPage" router="router" />

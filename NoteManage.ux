@@ -160,7 +160,7 @@
 
 
 
-	<DockPanel>
+	<DockPanel Color="White">
 		<topBar Dock="Top" />
 
 		<Grid ColumnCount="1" Rows="Auto" Dock="Top">
