@@ -280,7 +280,19 @@
 			},
 
 			goMainPageFromAnywhere:function () {
-				router.goto("MainPage");
+				router.getRoute(function (route) {
+
+					for (var i = 0; i < route.length; i++) {
+						console.log("route[" + i + "] : "  + route[i]);
+						console.log(JSON.stringify(route[i]) );
+					}
+ 
+					if (route[0] == "PhotoCollection") {
+						router.push("MainPage");
+					} else {
+						router.goto("MainPage");		
+					}
+				})
 			},
 
 			goPhotoCollection: function() {
@@ -306,8 +318,6 @@
 			},
 			takePicture,
 			getImage, placed, margin,
-
-
 
 			targetImgPath,
 			sendPicture,

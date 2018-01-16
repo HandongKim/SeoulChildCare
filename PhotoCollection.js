@@ -521,7 +521,7 @@ function deleteThePicture() {
 
 module.exports = {
 	panelType,
-	year, years, month, months, pickerOn, pickerUp, pickerDown,
+	month, months, pickerOn, pickerUp, pickerDown,year, years, 
 	uploadOn, tryUpload, cancelUpload,
 	pictures, selectionMode, goToSelectionMode, cancelSelectionMode, toggleSelect, header, deleteSelected,
 	selectedMode, cancelSelectedMode, selectedPicture, activeIndex,
