@@ -436,7 +436,7 @@ function requestToGetNoteList (searchGubun, BCASH_IDX, esti_code, search_month) 
         }).then(function(response) {
 			var responseData = JSON.stringify(response);
 			var responseHeaders = JSON.parse(response._bodyInit);
-			console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
+			// console.log("2017.12.18 1 responseData : "+ JSON.stringify(responseHeaders));
 			temp = responseHeaders.ds_bCashList[1];
 			console.log("");
 			console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));

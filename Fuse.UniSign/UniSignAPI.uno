@@ -388,8 +388,12 @@ namespace Fuse.UniSign
 		{
 			string error = null;
 			_mgr = TransferMgr.TryCreate(out error);
-			if (error != null)
+			if (error != null) {
+				debug_log("20180116 _mgr = TransferMgr.TryCreate(out error)");
+
+
 				throw new Exception("Failed to create TransferMgr: " + error);
+			}
 		}
 
 		public override string GenerateCertNum(TransDirection direction, string uniqueInfo)

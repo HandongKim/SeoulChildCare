@@ -325,6 +325,10 @@ var photoListFromServer;
 var tempList1;
 
 function getPhotoList () {
+	year.clear();
+	month.clear();
+
+		
 
 
 	photoListFromServer = new Array;
@@ -343,8 +347,16 @@ function getPhotoList () {
 	console.log("month : " + month);
 
 
+	console.log("20180116 tempYear : " +tempYear);
+	console.log("20180116 monthTemp : " +monthTemp);
+
 	year.value = tempYear;
 	month.value = monthTemp;
+
+
+
+	console.log("20180116 year.value : " +year.value);
+	console.log("20180116 month.value : " +month.value);
 
 
 	var tempMonth = monthTemp.toString();
@@ -468,7 +480,10 @@ function deleteThePicture() {
 	console.log('jsonParam : ' + jsonParam);
 	console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-	fetch("http://112.218.172.44:51442/acusr/acc/bil/DeleteMapngReceipt.do", {
+
+	var deleteMapngReceipt_URL = Backend.BASE_URL + Backend.deleteMapngReceipt_URL;
+
+	fetch(deleteMapngReceipt_URL, {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"

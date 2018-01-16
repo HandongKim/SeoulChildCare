@@ -310,7 +310,7 @@ var moneyValue = Observable();
 
 var selectedDetailNoteVariable = null;
 
-var tempIndex;
+var tempIndex = null;
 
 function pickFromList(args) {
 
