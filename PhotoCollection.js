@@ -13,6 +13,8 @@ this.Parameter.onValueChanged(null, function(x) {
 		panelType.value = "normal";
 	} else if (x.type == "upload") {
 		panelType.value = "upload";
+	} else if (x.type == null) {
+		panelType.value = "normal";
 	}
 });
 
