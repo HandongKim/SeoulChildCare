@@ -911,6 +911,7 @@ function deleteData () {
 				router.push("ChoiceSubject", infoJSON);
 		}
 
+		//2018.01.16 기존 소스 시작
 		Backend.subject.ESTI_CODE.onValueChanged(null, function(x) {
 
 			console.log("x.stringify 2018.01.06 : " + JSON.stringify(x));
@@ -938,6 +939,7 @@ function deleteData () {
 			}
 		});
 
+		//2018.01.16 기존 소스 끝
 		module.exports = {
 			detailText, showText, uploadOn, tryUpload, cancelUpload,
 			pickerOn, selectedData, pickerData, pickerUp, pickerDown,

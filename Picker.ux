@@ -1,4 +1,4 @@
-<Panel ux:Class="MyPicker">
+<Panel ux:Class="MyPicker" ux:AutoBind="false">
 	<object ux:Property="Data" />
 	<string ux:Property="Selected" />
 

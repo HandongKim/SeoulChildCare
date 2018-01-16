@@ -12,7 +12,8 @@
 	<Alert ux:Name="detailNoteAlert" Title="{alert.title}" MainText="{alert.message}" Type="{alert.type}" Layer="{alert.layer}" />
 
 
-	<WhileTrue Value="{pickerOn}">
+<!-- 2018.01.16 기존 소스 시작 -->
+	<!-- <WhileTrue Value="{pickerOn}">
 		<Change page1PickerPanel2.Y="0" Duration=".2" />
 	</WhileTrue>
 
@@ -28,8 +29,8 @@
 		</Panel>
 
 		<MyPicker Selected="{selectedData}" Data="{pickerData}" />
-	</DockPanel>
-
+	</DockPanel> -->
+<!-- 2018.01.16 기존 소스 끝 -->
 
 
 
@@ -182,9 +183,13 @@
 		</ScrollView>
 	</DockPanel> -->
 
+<!-- 2018.01.16 기존 소스 시작 -->
+	<!-- 
 	<WhileTrue Value="{datePickerOn}">
 		<Change datePickerPanel.Y="0" Duration="0.2" />
 	</WhileTrue>
+
+
 
 	<DockPanel ux:Name="datePickerPanel"  Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
@@ -210,7 +215,10 @@
 
 			<Text Value="일" Alignment="Center" FontSize="{margin}*1.5" />
 		</Grid>
-	</DockPanel>
+	</DockPanel> -->
+<!-- 2018.01.16 기존 소스 끝 -->
+
+
 
 <!-- 	<WhileTrue Value="{pickerOn}">
 		<Change detailNotePickerPanel.Y="0" />

@@ -252,28 +252,32 @@
 
 		module.exports = {
 			goBackToPrevious: function() {
-				router.getRoute(function(route) {
-					console.log("goBackToPrevious From " + route[0]);
-					if (route[0] == "NoteManage") {
-						router.goto("MainPage");
-					} else if (route[0] == "DetailNote") {
-						router.goto("NoteManage");
-					} else if (route[0] == "ShowFile") {
-						router.goto("DetailNote");
-					} else if (route[0] == "ChoiceSubject") {
-						router.goto("DetailNote");
-					} else if (route[0] == "Notice") {
-						router.goto("MainPage");
-					} else if (route[0] == "ApplyEdu") {
-						router.goto("MainPage");
-					} else if (route[0] == "QnA") {
-						router.goto("MainPage");
-					} else {
-						router.goBack();
-					}
-				});
-				// console.log("goBackToPrevious");
-				// router.goBack();
+
+				//2018.01.16 기존소스 시작
+				// router.getRoute(function(route) {
+				// 	console.log("goBackToPrevious From " + route[0]);
+				// 	if (route[0] == "NoteManage") {
+				// 		router.goto("MainPage");
+				// 	} else if (route[0] == "DetailNote") {
+				// 		router.goto("NoteManage");
+				// 	} else if (route[0] == "ShowFile") {
+				// 		router.goto("DetailNote");
+				// 	} else if (route[0] == "ChoiceSubject") {
+				// 		router.goto("DetailNote");
+				// 	} else if (route[0] == "Notice") {
+				// 		router.goto("MainPage");
+				// 	} else if (route[0] == "ApplyEdu") {
+				// 		router.goto("MainPage");
+				// 	} else if (route[0] == "QnA") {
+				// 		router.goto("MainPage");
+				// 	} else {
+				// 		router.goBack();
+				// 	}
+				// });
+				//2018.01.16 기존소스 끝
+
+				router.goBack();
+
 			},
 			goNoteManage: function() {
 				router.push("NoteManage");
@@ -284,7 +288,7 @@
 
 					for (var i = 0; i < route.length; i++) {
 						console.log("route[" + i + "] : "  + route[i]);
-						console.log(JSON.stringify(route[i]) );
+						console.log(JSON.stringify() );
 					}
  
 					if (route[0] == "PhotoCollection") {
@@ -299,7 +303,10 @@
 				router.push("PhotoCollection", {type: "normal"});
 			},
 			goNotice: function() {
-				router.goto("Notice");
+				//2018.01.16 기존소스 시작
+				// router.goto("Notice");
+				//2018.01.16 기존소스 끝
+				router.push("Notice");
 			},
 			goApplyEdu: function() {
 				router.push("ApplyEdu");

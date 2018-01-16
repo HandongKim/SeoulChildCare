@@ -1,5 +1,7 @@
 <Page ux:Class="NoteManage">
 	<Router ux:Dependency="router"/>
+
+
 	<WhileActive>
 		<Callback Handler="{getBillCashInputLoad}" />
 		<Callback Handler="{selectOnlineBCashList}"/>
@@ -89,11 +91,13 @@
 	</StackPanel>
 
 
-
+<!-- 2018.01.16 기존 소스 시작 -->
+	<!-- 
 
 	<WhileTrue Value="{pickerOn}">
 		<Change page1PickerPanel.Y="0" Duration=".2" />
 	</WhileTrue>
+
 
 	<DockPanel ux:Name="page1PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
@@ -117,11 +121,16 @@
 			<Text Value="월" Alignment="Center" FontSize="{margin}*1.5" />
 			<Panel />
 		</Grid>
-	</DockPanel>
+	</DockPanel> -->
+	<!-- 2018.01.16 기존 소스 끝-->
 
+
+<!-- 2018.01.16 기존 소스 시작 -->
+	<!-- 
 	<WhileTrue Value="{pickerOn2}">
 		<Change page1PickerPanel2.Y="0" Duration=".2" />
 	</WhileTrue>
+
 
 	<DockPanel ux:Name="page1PickerPanel2" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
@@ -135,16 +144,20 @@
 		</Panel>
 
 		<MyPicker Selected="{selectedType}" Data="{type}" />
-	</DockPanel>
+	</DockPanel> -->
+	<!-- 2018.01.16 기존 소스 끝-->
 
 
+<!-- 2018.01.16 기존 소스 시작 -->
+<!-- 
 	<WhileTrue Value="{pickerOn3}">
 		<Change page1PickerPanel3.Y="0" Duration=".2" />
-	</WhileTrue>
+	</WhileTrue> -->
 
 
 <!-- 전체 부분 선 -->
-	<DockPanel ux:Name="page1PickerPanel3" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+
+	<!-- <DockPanel ux:Name="page1PickerPanel3" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="완료" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
 				<Clicked>
@@ -156,8 +169,8 @@
 		</Panel>
 
 		<MyPicker Selected="{selectedbillCashInputDataList}" Data="{billCashInputDataList}"/>
-	</DockPanel>
-
+	</DockPanel> -->
+<!-- 2018.01.16 기존 소스 끝 -->
 
 
 	<DockPanel Color="White">
