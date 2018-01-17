@@ -275,7 +275,7 @@
 				// 	}
 				// });
 				//2018.01.16 기존소스 끝
-
+				console.log("router.goBack was callled");
 				router.goBack();
 
 			},
@@ -284,19 +284,20 @@
 			},
 
 			goMainPageFromAnywhere:function () {
-				router.getRoute(function (route) {
+				// router.getRoute(function (route) {
 
-					for (var i = 0; i < route.length; i++) {
-						console.log("route[" + i + "] : "  + route[i]);
-						console.log(JSON.stringify() );
-					}
+				// 	for (var i = 0; i < route.length; i++) {
+				// 		console.log("route[" + i + "] : "  + route[i]);
+				// 		// console.log(JSON.stringify() );
+				// 	}
  
-					if (route[0] == "PhotoCollection") {
-						router.push("MainPage");
-					} else {
-						router.goto("MainPage");		
-					}
-				})
+				// 	if (route[0] == "PhotoCollection") {
+				// 		router.push("MainPage");
+				// 	} else {
+				// 		router.goto("MainPage");		
+				// 	}
+				// })
+				router.goto("MainPage");		
 			},
 
 			goPhotoCollection: function() {
