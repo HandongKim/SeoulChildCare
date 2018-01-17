@@ -213,12 +213,23 @@ activeIndex.onValueChanged(null, function(x) {
 var currentPictureIndex = Observable();
 
 
+var selectedPictureList = Observable();
+
+
+
 function toggleSelect(args) {
 	if (selectionMode.value === false) {
 		selectedMode.value = true;
 		activeIndex.value = args.data.index;
 
+
+
+
+
 		currentPictureIndex.value = args.data.index;
+
+
+		console.log("currentPictureIndex.value : " + currentPictureIndex.value);
 
 		spicture.value = args.data.resource;
 
@@ -236,8 +247,21 @@ function toggleSelect(args) {
 	}
 	if (args.data.isSelected.value === false) {
 		numberOfSelected.value = numberOfSelected.value + 1;
+		console.log(" args.data.isSelected.value === false currentPictureIndex.value : " + args.data.index);
+
+		selectedPictureList.add(tempList1[args.data.index].ATCHMNFL_IDX.toString());
+
+
+
+		console.log(JSON.stringify(selectedPictureList));
+
+
 	} else {
 		numberOfSelected.value = numberOfSelected.value - 1;
+
+
+
+
 		if (numberOfSelected.value === 0) {
 			selectionMode.value = false;
 		}
@@ -324,7 +348,7 @@ function clicked(args) {
 
 
 var photoListFromServer;
-var tempList1;
+var tempList1 = null;
 
 function getPhotoList () {
 	year.clear();
@@ -422,15 +446,15 @@ function getPhotoList () {
 		
 			}
 
+			var baseURL = Backend.BASE_URL + Backend.mImgView_URL;
+
 			if (isSuccess =="success") {
 				console.log("wjifjwoejfoijo");
 				for (var i = 0; i <photoListFromServer.length ; i++) {
 					var dsParam = Backend.dsParam;
 					var dsSearch = '{"ATCHMNFL_IDX":"'+photoListFromServer[i]+'"}';
-
-					var baseURL= "http://112.218.172.44:51442/acusr/acc/bil/mImgView.do?";
-
-					var GVMEMCODE = "SEOUL000000000000121";
+					// var baseURL= "http://112.218.172.44:51442/acusr/acc/bil/mImgView.do?";
+					var GVMEMCODE = JSON.parse(dsParam).GVMEMCODE;
 
 					var requestParameter = "GVMEMCODE=" + GVMEMCODE+ "&ATCHMNFL_IDX=" + photoListFromServer[i];
 

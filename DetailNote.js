@@ -307,7 +307,11 @@ function getListDetailNote () {
 			}
 
 
-			initialDataSetting();
+
+			// initialDataSetting();
+
+
+
         	var responseData = JSON.stringify(response);
         	
 
@@ -321,6 +325,7 @@ function getListDetailNote () {
             // console.log("Reg Succeeded[ios] Error!! : " + err.message);
         });
 }
+
 
 function initialDataSetting () {
 	moneyValue.clear();
@@ -686,9 +691,37 @@ function saveData() {
 	var CASH_IDX2  =selectedDetailNoteVariable.CASH_IDX2;
 	var MONEY = selectedDetailNoteVariable.MONEY;
 	var ORG_BCASH_MEMO = selectedDetailNoteVariable.ORG_BCASH_MEMO;
-	var BCASH_MEMO = selectedDetailNoteVariable.ORG_BCASH_MEMO;
+	var BCASH_MEMO = selectedDetailNoteVariable.BCASH_MEMO;
+
+
+
+
+
+
+
+
+
 	var BCASH_BILL_SEQ = selectedDetailNoteVariable.BCASH_BILL_SEQ;
 	var BCASH_MONEY = selectedDetailNoteVariable.MONEY;
+
+
+	console.log("ACTION : "  + ACTION);
+	console.log("CASH_IDX : "  + CASH_IDX);
+	console.log("CASH_DATE : "  + CASH_DATE);
+	console.log("CASH_GB : "  + CASH_GB);
+	console.log("CASH_IDX2 : "  + CASH_IDX2);
+	console.log("MONEY : "  + MONEY);
+	console.log("ORG_BCASH_MEMO : "  + ORG_BCASH_MEMO);
+
+
+	console.log("BCASH_MEMO : "  + BCASH_MEMO);
+	console.log("BCASH_BILL_SEQ : "  + BCASH_BILL_SEQ);
+	console.log("BCASH_MONEY : "  + BCASH_MONEY);
+	
+
+
+
+
 
 //이거 가져오고
 

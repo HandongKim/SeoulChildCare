@@ -192,7 +192,10 @@
 							</Image>
 
 							<Image File="Images/btn_apply.png" Width="80%" Alignment="CenterRight">
-								<Clicked></Clicked>
+								<Clicked>
+									<Callback Handler="{cancelSelectionMode}" />
+									<Callback Handler="{goBackToPrevious}" />
+								</Clicked>
 							</Image>
 						</Grid>
 					</Case>
