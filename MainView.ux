@@ -207,6 +207,12 @@
 			Uploader.send(targetImgPath.value, uploadUrl, Backend.dsParam, dsSearch, gvmemcode,  atchmnfl_ym, "N", "ALL").then(function(response) {
 				console.log("upload complete.");
 				console.log(JSON.stringify(response));
+
+				console.log("response.MiResultMsg : " + response.MiResultMsg);
+
+
+
+
 			});
 		}
 

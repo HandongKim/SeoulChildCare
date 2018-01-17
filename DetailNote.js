@@ -306,8 +306,11 @@ function getListDetailNote () {
 				listDetailNotes.add(new listDetailNote(temp[i], i));
 			}
 
+
+			initialDataSetting();
         	var responseData = JSON.stringify(response);
         	
+
             return response.json();
         }).then(function(jsonData) {
             var data = jsonData.results[0];
@@ -318,6 +321,52 @@ function getListDetailNote () {
             // console.log("Reg Succeeded[ios] Error!! : " + err.message);
         });
 }
+
+function initialDataSetting () {
+	moneyValue.clear();
+	// subType.isChoice.clear();
+	// subType.color.clear();
+	// subType.type.clear();
+	// subType.text.clear();
+
+	// console.log("args.data.index : " + args.data.index);
+	console.log(JSON.stringify(listDetailNotes._values[0]));
+
+	//서버에 쓰일 데이터.
+	selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[0]);
+	
+
+	console.log("BILL_IDX VALUE IS  : " + selectedDetailNoteVariable.BILL_IDX );
+
+
+
+
+
+	var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
+	var selectedMonth = selectedDetailNoteVariable.CASH_DATE.substr(4,2);
+	var selectedDay = selectedDetailNoteVariable.CASH_DATE.substr(6,2);
+
+	selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
+	selectedMoney.value = Backend.dataFromNoteManageToDetailNote.BCASH_MONEY;
+
+	year.value =selectedYear;
+	month.value = selectedMonth;
+	day.value = selectedDay;
+	
+	moneyValue.value = notes._values[0].money;
+	
+	console.log("notes._values[args.data.index] : " + JSON.stringify(notes._values[0]));
+	console.log("notes._values[args.data.index].color : " + notes._values[0].color);
+	console.log("notes._values[args.data.index].type : " + notes._values[0].type);
+	console.log("notes._values[args.data.index].text : " + notes._values[0].text);
+
+	Backend.subject.isChoice.value = true;
+	Backend.subject.name.value = notes._values[0].name;
+	Backend.subject.color.value = notes._values[0].subTypeColor;
+	Backend.subject.type.value = notes._values[0].subType;
+}
+
+
 
 var selectedTemp;
 var selectedMemo = Observable();
@@ -393,9 +442,6 @@ function pickFromList(args) {
 	Backend.subject.name.value = notes._values[args.data.index].name;
 	Backend.subject.color.value = notes._values[args.data.index].subTypeColor;
 	Backend.subject.type.value = notes._values[args.data.index].subType;
-
-
-
 
 	// selectedTemp = temp[args.data.index];
 	// var selectedSubject = temp[args.data.index].ESTI_NAME;
@@ -657,6 +703,16 @@ function saveData() {
 		ESTI_CODE = Backend.subject.ESTI_CODE.value;
 	}
 	
+	var ESTI_SUBCODE = null;
+
+	if (Backend.subject.ESTI_SUBCODE == null) {
+		ESTI_SUBCODE = selectedDetailNoteVariable.ESTI_SUBCODE;
+	} else {
+		ESTI_SUBCODE = Backend.subject.ESTI_SUBCODE.value;
+	}
+
+
+
 	var BILL_SUBCODE= selectedDetailNoteVariable.BILL_SUBCODE;
 	
 
@@ -713,10 +769,47 @@ function saveData() {
 
 	if (ACTION == "I") {
 		//insert할때 쓰이는 ds_bCash값
-		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+tempMoneyValue+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":'+BILL_IDX+',"BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":'+BILL_RECEIPT+',"ESTI_SUB_YN":'+ESTI_SUB_YN+',"ESTI_NAME":'+ESTI_NAME+',"BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":'+BCASH_BILL_SEQ+', "BCASH_MONEY":"'+BCASH_MONEY+'"}';	
+		ds_bCash ='{"ACTION":"' + ACTION 
+		+'","CASH_IDX":"'+CASH_IDX
+		+'","CASH_DATE":"'+CASH_DATE
+		+'","CASH_GB":"'+CASH_GB
+		+'","CASH_IDX2":"'+CASH_IDX2
+		+'","MONEY":"'+tempMoneyValue
+		+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO
+		+'","BCASH_MEMO":"'+BCASH_MEMO
+		+'","ESTI_CODE":"'+ESTI_CODE
+		+'","BILL_SUBCODE":'+BILL_SUBCODE
+		+',"BILL_IDX":'+BILL_IDX
+		+',"BILL_CLSS":"'+BILL_CLSS
+		+'","BILL_RECEIPT":'+BILL_RECEIPT
+		+',"ESTI_SUB_YN":'+ESTI_SUB_YN
+		+',"ESTI_NAME":'+ESTI_NAME
+		+',"BILL_GB":"'+BILL_GB
+		+'","ESTI_SUBCODE":"'+ESTI_SUBCODE
+		+'","BCASH_BILL_SEQ":'+BCASH_BILL_SEQ
+		+', "BCASH_MONEY":"'+BCASH_MONEY
+		+'"}';	
 
 	} else if (ACTION =="U") {
-		ds_bCash ='{"ACTION":"' + ACTION +'","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+tempMoneyValue+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ+'"}';	
+		ds_bCash ='{"ACTION":"' + ACTION 
+		+'","CASH_IDX":"'+CASH_IDX
+		+'","CASH_DATE":"'+CASH_DATE
+		+'","CASH_GB":"'+CASH_GB
+		+'","CASH_IDX2":"'+CASH_IDX2
+		+'","MONEY":"'+tempMoneyValue
+		+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO
+		+'","BCASH_MEMO":"'+BCASH_MEMO
+		+'","ESTI_CODE":"'+ESTI_CODE
+		+'","ESTI_SUBCODE":"'+ESTI_SUBCODE
+		+'","BILL_SUBCODE":'+BILL_SUBCODE
+		+',"BILL_IDX":"'+BILL_IDX
+		+'","BILL_CLSS":"'+BILL_CLSS
+		+'","BILL_RECEIPT":"'+BILL_RECEIPT
+		+'","ESTI_SUB_YN":"'+ESTI_SUB_YN
+		+'","ESTI_NAME":"'+ESTI_NAME
+		+'","BILL_GB":"'+BILL_GB
+		+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ
+		+'"}';	
 	}
 
 	console.log("ds_bCash : " + ds_bCash);
