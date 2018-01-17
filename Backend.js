@@ -81,6 +81,7 @@ var iOSLicenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
 
 var selectedPhotoCollectionPictureListFromDetailNote = Observable();
 
+var yearAndMonthFromPhotoCollection = Observable("");
 
 
 //NoteMangae에서 DetailNote로 넘기는 파람 값
@@ -207,5 +208,5 @@ module.exports = {
 	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, 
 	getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
 	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, 
-	selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject
+	selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject, yearAndMonthFromPhotoCollection
 };

@@ -106,7 +106,9 @@
 				</Image>
 
 				<Image File="Images/btn_down.png" Alignment="CenterRight" Margin="{margin}">
-					<Clicked><Callback Handler="{save}" /></Clicked>
+					<Clicked>
+						<Callback Handler="{save}" />
+					</Clicked>
 				</Image>
 
 				<Image File="Images/btn_delete.png" Alignment="CenterRight" Margin="{margin}">
@@ -240,4 +242,7 @@
 			</Grid>
 		</ScrollView>
 	</DockPanel>
+
+	<Alert ux:Name="detailNoteAlert" Title="{alert.title}" MainText="{alert.message}" Type="{alert.type}" Layer="{alert.layer}" />
+
 </Page>

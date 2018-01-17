@@ -182,7 +182,14 @@
 		function sendPicture()
 		{
 			
+
 			var atchmnfl_ym = getDaysInString();
+
+			if (Backend.yearAndMonthFromPhotoCollection.value !="") {
+				atchmnfl_ym = Backend.yearAndMonthFromPhotoCollection.value;
+			}
+			
+			Backend.yearAndMonthFromPhotoCollection.value = "";
 
 
 			console.log("sendPicture was called");

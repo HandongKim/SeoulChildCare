@@ -52,6 +52,8 @@ function pickerDown() {
 		tempMonth = "0" +month.value.toString();
 	}
 	var yearAndMonth = year.value.toString() + tempMonth;
+
+	Backend.yearAndMonthFromPhotoCollection.value = yearAndMonth;
 	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 	// var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
 	var dsSearch = '{"ATCHMNFL_YM":"'+yearAndMonth+'"}';
@@ -245,27 +247,24 @@ function toggleSelect(args) {
 		// console.log(JSON.stringify(selectedPicture));
 		return;
 	}
+
 	if (args.data.isSelected.value === false) {
 		numberOfSelected.value = numberOfSelected.value + 1;
 		console.log(" args.data.isSelected.value === false currentPictureIndex.value : " + args.data.index);
-
 		Backend.selectedPhotoCollectionPictureListFromDetailNote.add(tempList1[args.data.index].ATCHMNFL_IDX.toString());
-
 		console.log(JSON.stringify(Backend.selectedPhotoCollectionPictureListFromDetailNote));
-
-
 	} else {
 		numberOfSelected.value = numberOfSelected.value - 1;
 
 		Backend.selectedPhotoCollectionPictureListFromDetailNote.remove(tempList1[args.data.index].ATCHMNFL_IDX.toString());
 		console.log(JSON.stringify(Backend.selectedPhotoCollectionPictureListFromDetailNote));
-
-
 		if (numberOfSelected.value === 0) {
 			selectionMode.value = false;
 		}
 	}
+
 	args.data.isSelected.value = !args.data.isSelected.value;
+save
 }
 
 function cancelSelectedMode() {
@@ -280,6 +279,14 @@ function deleteSelected(args) {
 	numberOfSelected.value = 0;
 	selectionMode.value = false;
 }
+
+var alert = {
+	title: Observable(),
+	message: Observable(),
+	type: Observable("Check"),
+	layer: Observable("Background")
+};
+
 
 function save() {
 
@@ -330,11 +337,19 @@ function save() {
 					FileSystem.delete(saveDir+"/"+imageName).then(function() {
 						console.log("delete success");
 					});
+
+					alert.message.value="저장되었습니다";
+					alert.layer.value = "Overlay";
+
 				}, function(error) {
 					console.log(error);
 				});
 			});
 			// resource.value = saveDir+"/test.png";
+
+
+
+
 		}, function(error) {
 			console.log(error);
 		});
@@ -350,18 +365,27 @@ var photoListFromServer;
 var tempList1 = null;
 
 function getPhotoList () {
+	alert.layer.value = "Background";
 	year.clear();
 	month.clear();
 
-		
+	years.clear();
+	months.clear();
 
 
+	for (var i = 0 ; i < 30 ; i++) {
+		years.add(2010+i);
+	}
+
+	for (var i = 0 ; i < 12 ; i++) {
+		months.add(1+i);
+	}
+	
 	photoListFromServer = new Array;
 
 	pictures.clear();
 
 	console.log("getPhotoList");
-
 
 	var currentTime = new Date()
 	var tempYear = currentTime.getFullYear();
@@ -393,6 +417,9 @@ function getPhotoList () {
 	var yearAndMonth = tempYear + tempMonth;
 
 	console.log("yearAndMonth : " +yearAndMonth);
+
+
+
 
 
 
@@ -548,5 +575,5 @@ module.exports = {
 	uploadOn, tryUpload, cancelUpload,
 	pictures, selectionMode, goToSelectionMode, cancelSelectionMode, toggleSelect, header, deleteSelected,
 	selectedMode, cancelSelectedMode, selectedPicture, activeIndex,
-	save, clicked, spicture, getPhotoList,deleteThePicture
+	save, clicked, spicture, getPhotoList,deleteThePicture, alert
 };
