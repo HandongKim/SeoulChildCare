@@ -79,7 +79,7 @@ var iOSLicenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
 
 
 
-
+var selectedPhotoCollectionPictureListFromDetailNote = Observable();
 
 
 
@@ -196,10 +196,16 @@ var dataFromChoiceSubjectToDetailNote = {
 }
 
 module.exports = {
-	subject, dsParam, noteManageParamValuesForDetailNote, choiceSubjectList, 
-	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, updatebCashMobile_URL, deleteMobileBillList_URL,
-	getBillCashInputLoad_URL, selectMobileOnlineBillList_URL, dataFromNoteManageToDetailNote,notiUserMipList_URL,
-	noticeUserMipDetailList_URL, qnaList_URL, qnaListDtl_URL,qnaUserUpdate_URL, insertQnaCommList_URL,
-	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
-	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject
+	subject, dsParam, noteManageParamValuesForDetailNote, 
+	choiceSubjectList, selectedPhotoCollectionPictureListFromDetailNote,
+	BASE_URL, LOGIN_URL, selectOnlineBCashList_URL, 
+	updatebCashMobile_URL, deleteMobileBillList_URL,
+	getBillCashInputLoad_URL, selectMobileOnlineBillList_URL, 
+	dataFromNoteManageToDetailNote,notiUserMipList_URL,
+	noticeUserMipDetailList_URL, qnaList_URL, 
+	qnaListDtl_URL,qnaUserUpdate_URL, insertQnaCommList_URL,
+	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, 
+	getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
+	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, 
+	selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject
 };

@@ -213,7 +213,7 @@ activeIndex.onValueChanged(null, function(x) {
 var currentPictureIndex = Observable();
 
 
-var selectedPictureList = Observable();
+
 
 
 
@@ -249,17 +249,16 @@ function toggleSelect(args) {
 		numberOfSelected.value = numberOfSelected.value + 1;
 		console.log(" args.data.isSelected.value === false currentPictureIndex.value : " + args.data.index);
 
-		selectedPictureList.add(tempList1[args.data.index].ATCHMNFL_IDX.toString());
+		Backend.selectedPhotoCollectionPictureListFromDetailNote.add(tempList1[args.data.index].ATCHMNFL_IDX.toString());
 
-
-
-		console.log(JSON.stringify(selectedPictureList));
+		console.log(JSON.stringify(Backend.selectedPhotoCollectionPictureListFromDetailNote));
 
 
 	} else {
 		numberOfSelected.value = numberOfSelected.value - 1;
 
-
+		Backend.selectedPhotoCollectionPictureListFromDetailNote.remove(tempList1[args.data.index].ATCHMNFL_IDX.toString());
+		console.log(JSON.stringify(Backend.selectedPhotoCollectionPictureListFromDetailNote));
 
 
 		if (numberOfSelected.value === 0) {

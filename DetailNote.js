@@ -241,6 +241,48 @@ function getListDetailNote () {
 // var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
 // var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
 // 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
+		
+
+	// router.getRoute(function(route) {
+	// 	console.log("goBackToPrevious From " + route[0]);
+	// 	if (route[0] == "NoteManage") {
+	// 		console.log("2018.01.17 NoteManage");
+	// 	} else if (route[0] == "DetailNote") {
+	// 		console.log("2018.01.17 DetailNote");
+	// 	} else if (route[0] == "ShowFile") {
+	// 		console.log("2018.01.17 ShowFile");
+	// 	} else if (route[0] == "ChoiceSubject") {
+	// 		console.log("2018.01.17 ChoiceSubject");
+	// 	} else if (route[0] == "Notice") {
+	// 		console.log("2018.01.17 Notice");
+	// 	} else if (route[0] == "ApplyEdu") {
+	// 		console.log("2018.01.17 ApplyEdu");
+	// 	} else if (route[0] == "QnA") {
+	// 		console.log("2018.01.17 QnA");
+	// 	} else {
+			
+	// 	}
+	// });
+	router.getRoute(function(route) {
+	 	for (var i = 0; i < route.length; i++) {
+			console.log("=============== 2018.01.17 route[" + i + "] : "  + route[i]);
+		}
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	CASH_IDX = Backend.dataFromNoteManageToDetailNote.CASH_IDX.value;
@@ -307,8 +349,10 @@ function getListDetailNote () {
 			}
 
 
-
-			// initialDataSetting();
+			if (cameFromChoiceSubject == false){
+				 initialDataSetting();
+			}
+				
 
 
 
@@ -369,6 +413,8 @@ function initialDataSetting () {
 	Backend.subject.name.value = notes._values[0].name;
 	Backend.subject.color.value = notes._values[0].subTypeColor;
 	Backend.subject.type.value = notes._values[0].subType;
+
+	cameFromChoiceSubject = false;
 }
 
 
@@ -1076,13 +1122,14 @@ function deleteData () {
 		// 		});
 		// 	}
 		// });
+		var cameFromChoiceSubject = false;
 
 		function goChoiceSubject () {
 			var infoJSON = {
 					CASH_GB:selectedDetailNoteVariable.CASH_GB
 				}
-
-				router.push("ChoiceSubject", infoJSON);
+			router.push("ChoiceSubject", infoJSON);
+			cameFromChoiceSubject = true;
 		}
 
 		//2018.01.16 기존 소스 시작
@@ -1098,7 +1145,7 @@ function deleteData () {
 
 			// if ((x != null) && (notes._values[tempIndex] != null)) {
 			if (x != null) {
-				console.log("notes._values[tempIndex].type : " + notes._values[tempIndex].type);	
+				// console.log("notes._values[tempIndex].type : " + notes._values[tempIndex].type);	
 
 				if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 					subType.reverse.value = true;

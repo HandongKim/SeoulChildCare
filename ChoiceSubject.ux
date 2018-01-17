@@ -101,6 +101,8 @@
 		this.Parameter.onValueChanged(null,function(x) {
 			if (x == null) {
 			}else {
+				
+				
 				CASH_GB = Observable(x.CASH_GB);
 				if (CASH_GB.value == "1") {
 					incomeTF.value = false;
@@ -328,7 +330,7 @@ var choiceSubjectAlertWithConfirm = {
 function getTheSubjectList() {
 	console.log("getTheSubjectList was called");
 
-	choiceSubjectAlertWithConfirm.layer.value = "Background";
+choiceSubjectAlertWithConfirm.layer.value = "Background";
 
 	// fetch("http://112.218.172.44:51442/acusr/acc/bil/getEstiSearchLoad.do", {
 	// 	method: 'POST',
