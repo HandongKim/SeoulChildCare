@@ -349,9 +349,9 @@ function getListDetailNote () {
 			}
 
 
-			if (cameFromChoiceSubject == false){
-				 initialDataSetting();
-			}
+			// if (cameFromChoiceSubject == false){
+			// 	 initialDataSetting();
+			// }
 				
 
 
@@ -443,6 +443,7 @@ var selectedDetailNoteVariable = null;
 var tempIndex = null;
 
 function pickFromList(args) {
+	subType.reverse.value=false;
 
 	console.log("args.data.index : " + args.data.index);
 
@@ -1146,17 +1147,22 @@ function deleteData () {
 			// if ((x != null) && (notes._values[tempIndex] != null)) {
 			if (x != null) {
 				// console.log("notes._values[tempIndex].type : " + notes._values[tempIndex].type);	
+				try {
+					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
+						subType.reverse.value = true;
+					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
+						subType.reverse.value = true;
+					} else {
+						subType.reverse.value = false;
+					}
+					console.log("now type : " + notes._values[tempIndex].type);
+					console.log("ESTI_CODE Changed : " + x.substr(0,1));
+					console.log("reverse state : " + subType.reverse.value);
+				}catch (err){
+					console.log(err);
+				}finally {
 
-				if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
-					subType.reverse.value = true;
-				} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
-					subType.reverse.value = true;
-				} else {
-					subType.reverse.value = false;
 				}
-				console.log("now type : " + notes._values[tempIndex].type);
-				console.log("ESTI_CODE Changed : " + x.substr(0,1));
-				console.log("reverse state : " + subType.reverse.value);
 			}
 		});
 

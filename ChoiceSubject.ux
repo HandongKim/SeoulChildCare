@@ -100,17 +100,11 @@
 
 		this.Parameter.onValueChanged(null,function(x) {
 			if (x == null) {
+
 			}else {
-				
-				
+
 				CASH_GB = Observable(x.CASH_GB);
-				if (CASH_GB.value == "1") {
-					incomeTF.value = false;
-				} else {
-					incomeTF.value = true;
-				}
-				console.log("2018.01.01 CASH_GB : " + CASH_GB.value);
-				searchTheSubjectList("3"+CASH_GB.value);
+				
 			}
 		});
 
@@ -118,11 +112,16 @@
 		var temp;
 		var recievedData;
 
-
 var getEstiSearchLoadUrl;
 function searchTheSubjectList (esti_gb) {
 	getEstiSearchLoadUrl = Backend.BASE_URL + Backend.getEstiSearchLoad_URL;
 	var dsParam = Backend.dsParam.substring(0, Backend.dsParam.length -1);
+
+	console.log("esti_gb : " + esti_gb);
+
+	subjects.clear();
+	incomeDataFromServerList.clear();
+
 	dsParam = dsParam + ', "ESTI_GB":"' + esti_gb + '", "BOOKGB":"01"}';
 	console.log("20180101 dsParam1 : " + dsParam);
 	console.log("getEstiSearchLoadUrl ==> " + getEstiSearchLoadUrl);
@@ -318,7 +317,6 @@ function selectSubject(arg) {
 	}
 }
 
-
 var choiceSubjectAlertWithConfirm = {
 	title: Observable(""),
 	message: Observable(""),
@@ -330,7 +328,16 @@ var choiceSubjectAlertWithConfirm = {
 function getTheSubjectList() {
 	console.log("getTheSubjectList was called");
 
-choiceSubjectAlertWithConfirm.layer.value = "Background";
+	choiceSubjectAlertWithConfirm.layer.value = "Background";
+ 	
+	if (CASH_GB.value == "1") {
+			incomeTF.value = false;
+	} else {
+		incomeTF.value = true;
+	}
+		console.log("2018.01.01 CASH_GB : " + CASH_GB.value);
+		searchTheSubjectList("3"+CASH_GB.value);
+
 
 	// fetch("http://112.218.172.44:51442/acusr/acc/bil/getEstiSearchLoad.do", {
 	// 	method: 'POST',
