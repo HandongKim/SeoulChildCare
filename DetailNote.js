@@ -1140,6 +1140,9 @@ function deleteData () {
 
 			console.log("notes._values[tempIndex] : " + JSON.stringify(notes._values[tempIndex]));
 
+
+
+
 			if (notes == null) {
 				getListDetailNote();
 			}
@@ -1150,8 +1153,10 @@ function deleteData () {
 				try {
 					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 						subType.reverse.value = true;
+						moneyValue.value = "-" + moneyValue.value;
 					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
 						subType.reverse.value = true;
+						moneyValue.value = "-" +  moneyValue.value;
 					} else {
 						subType.reverse.value = false;
 					}
