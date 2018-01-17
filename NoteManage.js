@@ -782,7 +782,31 @@ function goDetailNote2 (arg) {
 	Backend.dataFromNoteManageToDetailNote.GRID_BOJOGB.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].GRID_BOJOGB);
 	Backend.dataFromNoteManageToDetailNote.CONTENTS.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CONTENTS);
 	Backend.dataFromNoteManageToDetailNote.BCASH_MEMO.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].BCASH_MEMO);
+	
+
+
+
+
+
+
+
 	Backend.dataFromNoteManageToDetailNote.CASH_IDX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].CASH_IDX);
+	console.log("2018.01.17 Backend.dataFromNoteManageToDetailNote.CASH_IDX.value : " + Backend.dataFromNoteManageToDetailNote.CASH_IDX.value);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	Backend.dataFromNoteManageToDetailNote.ESTI_DISPLAY.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].ESTI_DISPLAY);
 	Backend.dataFromNoteManageToDetailNote.PREV_IDX.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].PREV_IDX);
 	Backend.dataFromNoteManageToDetailNote.MEMCODE.value = JSON.stringify(selectOnlineBCashListDatas._values[arg.data.index].MEMCODE);

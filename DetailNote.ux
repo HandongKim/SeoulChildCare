@@ -13,7 +13,7 @@
 
 
 <!-- 2018.01.16 기존 소스 시작 -->
-	<!-- <WhileTrue Value="{pickerOn}">
+	<WhileTrue Value="{pickerOn}">
 		<Change page1PickerPanel2.Y="0" Duration=".2" />
 	</WhileTrue>
 
@@ -29,7 +29,7 @@
 		</Panel>
 
 		<MyPicker Selected="{selectedData}" Data="{pickerData}" />
-	</DockPanel> -->
+	</DockPanel>
 <!-- 2018.01.16 기존 소스 끝 -->
 
 
@@ -516,8 +516,10 @@
 				<Text Value="확인" Alignment="Center" Color="White" />
 
 				<Clicked>
-					<Callback Handler="{getListDetailNote}" />
-					<Callback Handler="{viewWillAppear}" />
+					<!-- <Callback Handler="{getListDetailNote}" />
+					<Callback Handler="{viewWillAppear}" /> -->
+					<Callback Handler="{goBackToPrevious}" />
+
 				</Clicked>
 			</BlueButton>
 		</Panel>

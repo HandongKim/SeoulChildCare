@@ -41,12 +41,28 @@ var alert = {
 };
 
 
+//2018.01.17 기존소스 시작
+// var alertWithConfirm = {
+// 	title: Observable("수정완료"),
+// 	message: Observable("수정되었습니다."),
+// 	type: Observable("Check"),
+// 	layer: Observable("Background")
+// };
+//2018.01.17 기존소스 끝
+
+
+//2018.01.17 새로운 소스 시작
 var alertWithConfirm = {
-	title: Observable("수정완료"),
-	message: Observable("수정되었습니다."),
+	title: Observable(""),
+	message: Observable(""),
 	type: Observable("Check"),
 	layer: Observable("Background")
 };
+//2018.01.17 새로운 소스 끝
+
+
+
+
 // this.Parameter.onValueChanged(null,function(x) {
 // 	if (x == null) {
 
@@ -225,7 +241,21 @@ function getListDetailNote () {
 // var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
 // var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
 // 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
+
+
+	CASH_IDX = Backend.dataFromNoteManageToDetailNote.CASH_IDX.value;
+	BILL_IDX = Backend.dataFromNoteManageToDetailNote.BILL_IDX.value;
+
+
+
     var dsSearch = '{"SEARCH_BCASH":'+CASH_IDX+',"SEARCH_BILL_IDX": '+BILL_IDX+'}';
+
+    console.log("CASH_IDX : " + CASH_IDX);
+    console.log("SEARCH_BILL_IDX : " + BILL_IDX);
+
+
+
+
 	// // console.log(" dsSearch : " + dsSearch);
     var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
     // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
@@ -600,6 +630,8 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
 
 var updatebCashMobileUrl;
 
+
+
 function saveData() {
 	var ACTION = selectedDetailNoteVariable.ACTION;
 	var CASH_IDX = selectedDetailNoteVariable.CASH_IDX;
@@ -712,50 +744,48 @@ function saveData() {
 	updatebCashMobileUrl = Backend.BASE_URL + Backend.updatebCashMobile_URL;
 	
 
-var validateChecked = validationCheck(tempMoneyValue, BILL_CLSS, ESTI_CODE);
+	var validateChecked = validationCheck(tempMoneyValue, BILL_CLSS, ESTI_CODE);
 
 
-if (validateChecked == true) {
-	console.log("check: " + tempMoneyValue + ", " + BILL_CLSS +", " + ESTI_CODE);
+	if (validateChecked == true) {
+		console.log("check: " + tempMoneyValue + ", " + BILL_CLSS +", " + ESTI_CODE);
 
-	fetch(updatebCashMobileUrl, {
-		method: 'POST',
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify(jsonParam)
-		 
-		}).then(function(response) {
-			var responseData = JSON.stringify(response);
-			console.log("20180115 responseDatas : " + responseData);
+		fetch(updatebCashMobileUrl, {
+			method: 'POST',
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify(jsonParam)
+			 
+			}).then(function(response) {
+				var responseData = JSON.stringify(response);
+				console.log("20180115 responseDatas : " + responseData);
 
-			var responseHeaders = JSON.parse(response._bodyInit);
-			var MiResultMsg = responseHeaders.MiResultMsg;		
-		   	
-		   	console.log("MiResultMsg  : "   + MiResultMsg);
+				var responseHeaders = JSON.parse(response._bodyInit);
+				var MiResultMsg = responseHeaders.MiResultMsg;		
+			   	
+			   	console.log("MiResultMsg  : "   + MiResultMsg);
 
-		   	if (MiResultMsg == "success") {
-				alertWithConfirm.layer.value = "Overlay";
+			   	if (MiResultMsg == "success") {
+			   		console.log("수정완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			   		alertWithConfirm.message.value = "수정되었습니다.";
+					alertWithConfirm.layer.value = "Overlay";
 
-				// getListDetailNote();
+			   	} else {
+			   		alert.title.value = "";
+					alert.message.value = "수정 안 됐습니다.";
+					alert.type.value = "Check";
+					alert.layer.value = "Overlay";
+			   	}
 
+		    	
 
-
-		   	} else {
-		   		alert.title.value = "";
-				alert.message.value = "수정 안 됐습니다.";
-				alert.type.value = "Check";
-				alert.layer.value = "Overlay";
-		   	}
-
-	    	
-
-		       return response.json();
-		   }).then(function(jsonData) {
-		       var data = jsonData.results[0];
-		   }).catch(function(err) {
-		   });
-	}
+			       return response.json();
+			   }).then(function(jsonData) {
+			       var data = jsonData.results[0];
+			   }).catch(function(err) {
+			   });
+		}
 }
 
 
@@ -869,7 +899,25 @@ function deleteData () {
 		},
 		body: JSON.stringify(jsonParam)
         }).then(function(response) {
-        	var responseData = JSON.stringify(response);
+			var responseData = JSON.stringify(response);
+			console.log("20180115 responseDatas : " + responseData);
+
+			var responseHeaders = JSON.parse(response._bodyInit);
+			var MiResultMsg = responseHeaders.MiResultMsg;		
+		   	
+		   	console.log("MiResultMsg  : "   + MiResultMsg);
+
+		   	if (MiResultMsg == "success") {
+		   		console.log("수정완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		   		alertWithConfirm.message.value = "삭제 되었습니다.";
+				alertWithConfirm.layer.value = "Overlay";
+
+		   	} else {
+		   		alert.title.value = "";
+				alert.message.value = "수정 안 됐습니다.";
+				alert.type.value = "Check";
+				alert.layer.value = "Overlay";
+		   	} 	
             return response.json();
         }).then(function(jsonData) {
             var data = jsonData.results[0];
