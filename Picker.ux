@@ -53,12 +53,26 @@
 		</WhileActive>
 	</Panel>
 
-	<Panel Height="100%" Color="#ddd">
+	<!-- <Panel Height="100%" Color="#ddd">
 		<PageControl Width="50%" Orientation="Vertical" InactiveState="Unchanged" Transition="None" Active="{Property Selected}" >
 			<Selection Value="{Property Selected}" MaxCount="1" MinCount="1" />
 			<Each Items="{datas}" Defer="Deferred">
 				<SpinnerPanel Name="{name}" />
 			</Each>
+		</PageControl>
+	</Panel> -->
+	<Panel Height="100%" Color="#ddd">
+		<PageControl Width="50%" Orientation="Vertical" InactiveState="Unchanged" Transition="None" Active="StartDatePage">
+			<Page HitTestMode="LocalBoundsAndChildren" ClipToBounds="true" ux:Name="StartDatePage">
+				<Panel Width="100%" Height="100%" Alignment="TopCenter">
+					<LinearNavigation />
+					<SwipeNavigate ForwardDirection="Down" MaxPages="20" />
+					<Selection Value="{Property Selected}" MaxCount="1" MinCount="1" />
+					<Each Items="{datas}" Defer="Deferred">
+						<SpinnerPanel Name="{name}" />
+					</Each>
+				</Panel>
+			</Page>
 		</PageControl>
 	</Panel>
 </Panel>
