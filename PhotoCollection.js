@@ -15,10 +15,7 @@ var enableClick = Observable("LocalBoundsAndChildren");
 
 
 
-
-
-
-
+		
 
 
 
@@ -244,13 +241,7 @@ function toggleSelect(args) {
 		selectedMode.value = true;
 		activeIndex.value = args.data.index;
 
-
-
-
-
 		currentPictureIndex.value = args.data.index;
-
-
 		console.log("currentPictureIndex.value : " + currentPictureIndex.value);
 
 		spicture.value = args.data.resource;
@@ -595,254 +586,243 @@ function deleteThePicture() {
 
 //==========================================  사진 부분 ==========================================================
 
-		var Environment = require('FuseJS/Environment');
-		var FileSystem = require("FuseJS/FileSystem");
-		var Camera = require('FuseJS/Camera');
-		var CameraRoll = require('FuseJS/CameraRoll');
-		var ImageTools = require('FuseJS/ImageTools');
-		var Uploader = require("Uploader");
-		var Backend = require('Backend.js');
+var connectingPanelLayout = Observable("Background");
+var enableClick = Observable("LocalBoundsAndChildren");
 
-		var connectingPanelLayout = Observable("Background");
-		var enableClick = Observable("LocalBoundsAndChildren");
-		
-		var print = debug_log;
-		 "/acusr/acc/bil/MobileReceiptImgUpload.do"
+var print = debug_log;
+ "/acusr/acc/bil/MobileReceiptImgUpload.do"
 
-		// var uploadUrl = 'http://61.97.121.199:8080/TEST/ImgUploadTest.jsp';// 서버 IP를 변경하세요.
+// var uploadUrl = 'http://61.97.121.199:8080/TEST/ImgUploadTest.jsp';// 서버 IP를 변경하세요.
 
-		var uploadUrl = Backend.BASE_URL + "/acusr/acc/bil/MobileReceiptImgUpload.do" ;// 서버 IP를 변경하세요.
+var uploadUrl = Backend.BASE_URL + "/acusr/acc/bil/MobileReceiptImgUpload.do" ;// 서버 IP를 변경하세요.
 
-		var sendPictureBtnEnabled = Observable(false);
-		var targetImgPath = Observable();
-		var takedPictureWithParamter = Observable();
-		var dateTime = "";
+var sendPictureBtnEnabled = Observable(false);
+var targetImgPath = Observable();
+var takedPictureWithParamter = Observable();
+var dateTime = "";
 
-		function getDatesInString () {
-			var today = new Date();
-			var yearInString = today.getFullYear().toString();
-			var monthInString = "";
-			var dateInString = "";
-			var hourInString = "";
-			var minuteInString = "";
-			var secondInString = ""; 
+function getDatesInString () {
+	var today = new Date();
+	var yearInString = today.getFullYear().toString();
+	var monthInString = "";
+	var dateInString = "";
+	var hourInString = "";
+	var minuteInString = "";
+	var secondInString = ""; 
 
-			if( (today.getMonth()+1) < 10 ) {
-				monthInString = "0" + (today.getMonth()+1).toString();
-			} else {
-				monthInString = (today.getMonth()+1).toString();
-			}
-			
-			if(today.getDate() < 10) {
-				dateInString = "0" +today.getDate().toString();
-			}else {
-				dateInString = today.getDate().toString();
-			}
+	if( (today.getMonth()+1) < 10 ) {
+		monthInString = "0" + (today.getMonth()+1).toString();
+	} else {
+		monthInString = (today.getMonth()+1).toString();
+	}
+	
+	if(today.getDate() < 10) {
+		dateInString = "0" +today.getDate().toString();
+	}else {
+		dateInString = today.getDate().toString();
+	}
 
-			if (today.getHours() < 10) {
-				hourInString = "0" +  today.getHours().toString();
-			} else {
-				hourInString = today.getHours().toString();
-			}
+	if (today.getHours() < 10) {
+		hourInString = "0" +  today.getHours().toString();
+	} else {
+		hourInString = today.getHours().toString();
+	}
 
-			if (today.getMinutes() < 10) {
-				minuteInString = "0" +  today.getMinutes().toString();
-			} else {
-				minuteInString = today.getMinutes().toString();
-			}
+	if (today.getMinutes() < 10) {
+		minuteInString = "0" +  today.getMinutes().toString();
+	} else {
+		minuteInString = today.getMinutes().toString();
+	}
 
-			if (today.getSeconds() < 10) {
-				secondInString = "0" +  today.getSeconds().toString();
-			} else {
-				secondInString = today.getSeconds().toString();
-			}
+	if (today.getSeconds() < 10) {
+		secondInString = "0" +  today.getSeconds().toString();
+	} else {
+		secondInString = today.getSeconds().toString();
+	}
 
-    		var date = yearInString + "-" + monthInString + "-" + dateInString;
-			var time = hourInString + "-" + minuteInString + "-" + secondInString;
-			var dateTime = date+'-'+time;
+	var date = yearInString + "-" + monthInString + "-" + dateInString;
+	var time = hourInString + "-" + minuteInString + "-" + secondInString;
+	var dateTime = date+'-'+time;
 
-			return dateTime;
-		}
+	return dateTime;
+}
 
-		function getDaysInString () { 
-			var today = new Date();
-			var yearInString = today.getFullYear().toString();
-			var monthInString = "";
-			
+function getDaysInString () { 
+	var today = new Date();
+	var yearInString = today.getFullYear().toString();
+	var monthInString = "";
+	
 
-			if( (today.getMonth()+1) < 10 ) {
-				monthInString = "0" + (today.getMonth()+1).toString();
-			} else {
-				monthInString = (today.getMonth()+1).toString();
-			}
-			
-			if(today.getDate() < 10) {
-				dateInString = "0" +today.getDate().toString();
-			}else {
-				dateInString = today.getDate().toString();
-			}
+	if( (today.getMonth()+1) < 10 ) {
+		monthInString = "0" + (today.getMonth()+1).toString();
+	} else {
+		monthInString = (today.getMonth()+1).toString();
+	}
+	
+	if(today.getDate() < 10) {
+		dateInString = "0" +today.getDate().toString();
+	}else {
+		dateInString = today.getDate().toString();
+	}
 
-			var date = yearInString  + monthInString;
-			return date;
-		}
+	var date = yearInString  + monthInString;
+	return date;
+}
 
+function takePictureWithParameter()
+{
+	dateTime = getDatesInString();			
 
+	Camera.takePicture().then(function(image)
+	{
+		// 찍은 사진 리사이징하기
+		// 이미지 사이즈 다시 줄이실 때는 아래 두줄 주석 지우세요.
+		// var args = { desiredWidth:480, desiredHeight:640 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
+		// ImageTools.resize(image, args).then(function(resizedImage) {
+			// 리사이징한 사진 savepanel3에 표시
+			// 다시 사이즈 줄이실 때는 image.path 를 resizedImage.path로 바꾸세요.
+			takedPictureWithParamter.value = image.path;
+			// targetImgPath.value = resizedImage.path;
+			sendPictureBtnEnabled.value = true;
+			// 리사이징한 사진 저정부분은 삭제
+			// CameraRoll.publishImage(resizedImage);
+			// console.log("picture was saved");
 
-		function takePictureWithParameter()
-		{
-			dateTime = getDatesInString();			
-
-			Camera.takePicture().then(function(image)
-			{
-				// 찍은 사진 리사이징하기
-				// 이미지 사이즈 다시 줄이실 때는 아래 두줄 주석 지우세요.
-				// var args = { desiredWidth:480, desiredHeight:640 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
-				// ImageTools.resize(image, args).then(function(resizedImage) {
-					// 리사이징한 사진 savepanel3에 표시
-					// 다시 사이즈 줄이실 때는 image.path 를 resizedImage.path로 바꾸세요.
-					takedPictureWithParamter.value = image.path;
-					// targetImgPath.value = resizedImage.path;
-					sendPictureBtnEnabled.value = true;
-					// 리사이징한 사진 저정부분은 삭제
-					// CameraRoll.publishImage(resizedImage);
-					// console.log("picture was saved");
-
-					// 리사이징한 이미지 흑백으로 변환
-					
-
-					console.log("dateTime : " + dateTime);
-
-					// var imageName = dateTime + ".png";
-					var imageName = dateTime + ".jpg";
-					console.log("Image Name : " + imageName);
-
-					savepanel3.save(imageName);
-					console.log("make image");
-					var saveDir = "";
-					if (Environment.ios) {
-						saveDir = FileSystem.iosPaths.documents;
-					} else if (Environment.android) {
-						// console.log(FileSystem.androidPaths.files);
-						saveDir = FileSystem.androidPaths.files;
-					}
-					var arrayBuff;
-
-					console.log("saveDir : " +saveDir);
-					
-					setTimeout(function() {
-
-						
-
-
-						FileSystem.readBufferFromFile(saveDir+"/"+imageName).then(function(image) {
-							console.log("read success");
-							arrayBuff = image;
-							// console.log(JSON.stringify(arrayBuff));
-							ImageTools.getImageFromBuffer(arrayBuff).then(function(image) {
-								console.log("Scratch image path is: " + image.path);
-								// 흑백으로 변한사진 카메라롤에 저장
-								CameraRoll.publishImage(image).then(function(x) {
-									console.log("save success");
-									targetImgPath.value = saveDir + "/"+imageName;
-									sendPictureWithParamter(yearAndMonth);
-									FileSystem.delete(saveDir+"/"+imageName).then(function() {
-										console.log("delete success");
-									});								
-									takedPicture.value = "";
-								}, function(error) {
-									console.log("error : " );
-								});
-							});
-						}, function(error) {
-							console.log(error);
-						});
-					}, 2000);
-
-					// sendPicture();
-				// 이미지 사이즈 다시 줄이실 때는 아래 세줄 주석 지우세요.
-				// }).catch(function(reason) {
-				// 	console.log("Couldn't resize image: " + reason);
-				// });
-			}).catch(function(reason) {
-				console.log("Couldn't take picture: " + reason);
-			});
-		};
-
-		function sendPictureWithParamter(yearAndMonth)
-		{
+			// 리사이징한 이미지 흑백으로 변환
 			
 
-			var atchmnfl_ym = yearAndMonth
+			console.log("dateTime : " + dateTime);
 
-			console.log("atchmnfl_ym from sendPictureWithParamter : " + atchmnfl_ym);
+			// var imageName = dateTime + ".png";
+			var imageName = dateTime + ".jpg";
+			console.log("Image Name : " + imageName);
+
+			savepanel3.save(imageName);
+			console.log("make image");
+			var saveDir = "";
+			if (Environment.ios) {
+				saveDir = FileSystem.iosPaths.documents;
+			} else if (Environment.android) {
+				// console.log(FileSystem.androidPaths.files);
+				saveDir = FileSystem.androidPaths.files;
+			}
+			var arrayBuff;
+
+			console.log("saveDir : " +saveDir);
 			
-			console.log("sendPicture was called");
-			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
-			var dsSearch = '{"ATCHMNFL_YM":"'+atchmnfl_ym+'","FILE_SE":"N","DOWN_LVL":"ALL"}';
-			console.log("===========================================");
-			console.log("searchContent ds Search : " + dsSearch);
+			setTimeout(function() {
 
-			// var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"ds_search": '+dsSearch+'}');
-
-			// console.log("2018.01.05 jsonParam : " + JSON.stringify(jsonParam));
-
-
-			var gvmemcode = JSON.parse(Backend.dsParam).GVMEMCODE;
-			console.log("gvmemcode : " + gvmemcode);
-
-			Uploader.send(targetImgPath.value, uploadUrl, Backend.dsParam, dsSearch, gvmemcode,  atchmnfl_ym, "N", "ALL").then(function(response) {
-				console.log("upload complete.");
-				console.log(JSON.stringify(response));
 				
-				console.log("response.MiResultMsg : " + JSON.parse(response).ATCHMNFL_IDX);
 
-				if (JSON.parse(response).MiResultMsg == "success") {
-					photoCollectionAlertWithConfirm.message.value="사진이 업로드 됐습니다.";
-					photoCollectionAlertWithConfirm.layer.value="Overlay";
-				}
 
-			});
-		}
-
-		function getImageWithParameter() {
-			CameraRoll.getImage().then(function(image) {
-				takedPictureWithParamter.value = image.path;
-				sendPictureBtnEnabled.value = true;
-
-				var today = new Date();
-	    		var date = today.getFullYear()+''+(today.getMonth()+1)+''+today.getDate();
-				var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
-				var dateTime = date+''+time;
-				var imageName = dateTime + ".png";
-				savepanel3.save(imageName);
-				var saveDir = "";
-				if (Environment.ios) {
-					saveDir = FileSystem.iosPaths.documents;
-				} else if (Environment.android) {
-					saveDir = FileSystem.androidPaths.files;
-				}
-
-				setTimeout(function() {
-					targetImgPath.value = saveDir + "/"+imageName;
-					sendPictureWithParamter(yearAndMonth);
-					
-
-					FileSystem.delete(saveDir+"/"+imageName).then(function() {
-						console.log("delete success");
+				FileSystem.readBufferFromFile(saveDir+"/"+imageName).then(function(image) {
+					console.log("read success");
+					arrayBuff = image;
+					// console.log(JSON.stringify(arrayBuff));
+					ImageTools.getImageFromBuffer(arrayBuff).then(function(image) {
+						console.log("Scratch image path is: " + image.path);
+						// 흑백으로 변한사진 카메라롤에 저장
+						CameraRoll.publishImage(image).then(function(x) {
+							console.log("save success");
+							targetImgPath.value = saveDir + "/"+imageName;
+							sendPictureWithParamter(yearAndMonth);
+							FileSystem.delete(saveDir+"/"+imageName).then(function() {
+								console.log("delete success");
+							});								
+							takedPicture.value = "";
+						}, function(error) {
+							console.log("error : " );
+						});
 					});
-					
-					takedPictureWithParamter.value = "";
-				}, 6000);
-			}).catch(function(reason) {
-				console.log("Couldn't get image: "+reason);
-			});
-		};
+				}, function(error) {
+					console.log(error);
+				});
+			}, 2000);
 
-		var margin = Observable();
+			// sendPicture();
+		// 이미지 사이즈 다시 줄이실 때는 아래 세줄 주석 지우세요.
+		// }).catch(function(reason) {
+		// 	console.log("Couldn't resize image: " + reason);
+		// });
+	}).catch(function(reason) {
+		console.log("Couldn't take picture: " + reason);
+	});
+};
 
-		function placed(args) {
-			margin.value = args.width / 25;
+function sendPictureWithParamter(yearAndMonth)
+{
+	
+
+	var atchmnfl_ym = yearAndMonth
+
+	console.log("atchmnfl_ym from sendPictureWithParamter : " + atchmnfl_ym);
+	
+	console.log("sendPicture was called");
+	// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+	var dsSearch = '{"ATCHMNFL_YM":"'+atchmnfl_ym+'","FILE_SE":"N","DOWN_LVL":"ALL"}';
+	console.log("===========================================");
+	console.log("searchContent ds Search : " + dsSearch);
+
+	// var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"ds_search": '+dsSearch+'}');
+
+	// console.log("2018.01.05 jsonParam : " + JSON.stringify(jsonParam));
+
+
+	var gvmemcode = JSON.parse(Backend.dsParam).GVMEMCODE;
+	console.log("gvmemcode : " + gvmemcode);
+
+	Uploader.send(targetImgPath.value, uploadUrl, Backend.dsParam, dsSearch, gvmemcode,  atchmnfl_ym, "N", "ALL").then(function(response) {
+		console.log("upload complete.");
+		console.log(JSON.stringify(response));
+		
+		console.log("response.ATCHMNFL_IDX : " + JSON.parse(response).ATCHMNFL_IDX);
+
+		if (JSON.parse(response).MiResultMsg == "success") {
+			photoCollectionAlertWithConfirm.message.value="사진이 업로드 됐습니다.";
+			photoCollectionAlertWithConfirm.layer.value="Overlay";
 		}
+	});
+}
+
+function getImageWithParameter() {
+	CameraRoll.getImage().then(function(image) {
+		takedPictureWithParamter.value = image.path;
+		sendPictureBtnEnabled.value = true;
+
+		var today = new Date();
+		var date = today.getFullYear()+''+(today.getMonth()+1)+''+today.getDate();
+		var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
+		var dateTime = date+''+time;
+		var imageName = dateTime + ".png";
+		savepanel3.save(imageName);
+		var saveDir = "";
+		if (Environment.ios) {
+			saveDir = FileSystem.iosPaths.documents;
+		} else if (Environment.android) {
+			saveDir = FileSystem.androidPaths.files;
+		}
+
+		setTimeout(function() {
+			targetImgPath.value = saveDir + "/"+imageName;
+			sendPictureWithParamter(yearAndMonth);
+			
+
+			FileSystem.delete(saveDir+"/"+imageName).then(function() {
+				console.log("delete success");
+			});
+			
+			takedPictureWithParamter.value = "";
+		}, 6000);
+	}).catch(function(reason) {
+		console.log("Couldn't get image: "+reason);
+	});
+};
+
+var margin = Observable();
+
+function placed(args) {
+	margin.value = args.width / 25;
+}
 
 //==========================================  사진 부분 ==========================================================
 

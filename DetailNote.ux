@@ -266,7 +266,7 @@
 
 			<Rectangle Color="White" Width="100%">
 				<Clicked>
-					<Callback Handler="{takePicture}" />
+					<Callback Handler="{takePictureWithParameterDetailNote}" />
 					<Callback Handler="{cancelUpload}" />
 			</Clicked>
 
@@ -275,7 +275,7 @@
 
 			<Rectangle Color="White" Width="100%">
 				<Clicked>
-					<Callback Handler="{getImage}" />
+					<Callback Handler="{getImageWithParameterDetailNote}" />
 					<Callback Handler="{cancelUpload}" />
 				</Clicked>
 				<Text Value="앨범선택" Alignment="Center" FontSize="{margin}*1.2" Margin="{margin}" Color="Blue" />
@@ -434,7 +434,8 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF">
 					<Stroke Width="1" Color="#ccc" />
-					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" InputHint="Number" IsReadOnly="{IsReadOnly}" />
+					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" InputHint="Number" />
+
 				</Rectangle>
 
 				<Image File="Images/btn_02.png" Alignment="Center" RowSpan="3">
@@ -534,4 +535,14 @@
 		</Panel>
 	</StackPanel>
 </Rectangle>
+
+
+<SavePanel ux:Name="savepanel3" Alignment="Bottom">
+		<Image File="{takedPictureWithParamterDetailNote}">
+			<Desaturate Amount="1" />
+		</Image>
+</SavePanel>
+
+
+
 </Page>

@@ -1,15 +1,22 @@
 var Observable = require('FuseJS/Observable');
 var Backend = require('Backend.js');
 var CommonModule = require('CommonModule.js');
+var Environment = require('FuseJS/Environment');
+var FileSystem = require("FuseJS/FileSystem");
+var Camera = require('FuseJS/Camera');
+var CameraRoll = require('FuseJS/CameraRoll');
+var ImageTools = require('FuseJS/ImageTools');
+var Uploader = require("Uploader");
 
-		// var ValueFactory = require('ValueFactory');
+var connectingPanelLayout = Observable("Background");
+var enableClick = Observable("LocalBoundsAndChildren");
+
+// var ValueFactory = require('ValueFactory');
 
 		// console.log("===================");
 		// console.log(JSON.stringify(ValueFactory.getInfoJson()));
 		// console.log("===================");
-
-
-		
+	
 detailText = "불러온 전표내역이 없습니다."
 showText = Observable(false);;
 
@@ -488,6 +495,8 @@ function initBackendSubject () {
 
 var isReadOnly = Observable(false);
 
+var yearAndMonth = "";
+
 function pickFromList(args) {
 	subType.reverse.value=false;
 	GLOBAL_BILL_SUBCODE = null;
@@ -532,6 +541,9 @@ function pickFromList(args) {
 	var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
 	var selectedMonth = selectedDetailNoteVariable.CASH_DATE.substr(4,2);
 	var selectedDay = selectedDetailNoteVariable.CASH_DATE.substr(6,2);
+
+
+	yearAndMonth = selectedYear + selectedMonth;
 
 	selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
 	selectedMoney.value = Backend.dataFromNoteManageToDetailNote.BCASH_MONEY;
@@ -808,17 +820,11 @@ function saveData() {
 	var MONEY = selectedDetailNoteVariable.MONEY;
 	var ORG_BCASH_MEMO = selectedDetailNoteVariable.ORG_BCASH_MEMO;
 	var BCASH_MEMO = selectedDetailNoteVariable.BCASH_MEMO;
-
-
-
-
-
-
-
-
-
 	var BCASH_BILL_SEQ = selectedDetailNoteVariable.BCASH_BILL_SEQ;
 	var BCASH_MONEY = selectedDetailNoteVariable.MONEY;
+
+
+
 
 
 	console.log("ACTION : "  + ACTION);
@@ -943,8 +949,8 @@ function saveData() {
 		+'","MONEY":"'+tempMoneyValue
 		+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO
 		+'","BCASH_MEMO":"'+BCASH_MEMO
-		+'","ESTI_CODE":"'+ESTI_CODE
-		+'","BILL_SUBCODE":'+BILL_SUBCODE
+		+'","ESTI_CODE":'+ESTI_CODE
+		+',"BILL_SUBCODE":'+BILL_SUBCODE
 		+',"BILL_IDX":'+BILL_IDX
 		+',"BILL_CLSS":"'+BILL_CLSS
 		+'","BILL_RECEIPT":'+BILL_RECEIPT
@@ -965,8 +971,8 @@ function saveData() {
 		+'","MONEY":"'+tempMoneyValue
 		+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO
 		+'","BCASH_MEMO":"'+BCASH_MEMO
-		+'","ESTI_CODE":"'+ESTI_CODE
-		+'","ESTI_SUBCODE":"'+ESTI_SUBCODE
+		+'","ESTI_CODE":'+ESTI_CODE
+		+',"ESTI_SUBCODE":"'+ESTI_SUBCODE
 		+'","BILL_SUBCODE":'+BILL_SUBCODE
 		+',"BILL_IDX":"'+BILL_IDX
 		+'","BILL_CLSS":"'+BILL_CLSS
@@ -996,9 +1002,36 @@ function saveData() {
 
 	// // console.log("ds_bCash : " + temp_ds_bCash);
 
-	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
 
-	// console.log("jsonParam : " + JSON.stringify(jsonParam));
+	var pictureList = null;
+	if (isPictureTaken == true) {
+		// pictureList = JSON.stringify(pictureArray._values);
+		pictureList = '{"' + pictureArray+'"}';
+
+	}
+	
+
+	Backend.selectedPhotoCollectionPictureListFromDetailNote
+
+	console.log("pictureListpictureListpictureListpictureListpictureList : " + pictureList);
+
+
+
+	var temp = '{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}';
+	console.log("temp >>>>>>>>>>>>>>>>>>>>> " + temp);
+
+
+
+
+
+
+
+
+
+	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
+
+
+	console.log("jsonParam123123123 : " + JSON.stringify(jsonParam));
 
 	updatebCashMobileUrl = Backend.BASE_URL + Backend.updatebCashMobile_URL;
 	
@@ -1264,6 +1297,295 @@ function deleteData () {
 
 
 
+//==========================================  사진 부분 ==========================================================
+
+var pictureArray = null;
+var isPictureTaken  = null;
+
+var print = debug_log;
+ "/acusr/acc/bil/MobileReceiptImgUpload.do"
+
+// var uploadUrl = 'http://61.97.121.199:8080/TEST/ImgUploadTest.jsp';// 서버 IP를 변경하세요.
+
+var uploadUrl = Backend.BASE_URL + "/acusr/acc/bil/MobileReceiptImgUpload.do" ;// 서버 IP를 변경하세요.
+
+var sendPictureBtnEnabled = Observable(false);
+var targetImgPath = Observable();
+var takedPictureWithParamterDetailNote = Observable();
+var dateTime = "";
+
+function getDatesInString () {
+	var today = new Date();
+	var yearInString = today.getFullYear().toString();
+	var monthInString = "";
+	var dateInString = "";
+	var hourInString = "";
+	var minuteInString = "";
+	var secondInString = ""; 
+
+	if( (today.getMonth()+1) < 10 ) {
+		monthInString = "0" + (today.getMonth()+1).toString();
+	} else {
+		monthInString = (today.getMonth()+1).toString();
+	}
+	
+	if(today.getDate() < 10) {
+		dateInString = "0" +today.getDate().toString();
+	}else {
+		dateInString = today.getDate().toString();
+	}
+
+	if (today.getHours() < 10) {
+		hourInString = "0" +  today.getHours().toString();
+	} else {
+		hourInString = today.getHours().toString();
+	}
+
+	if (today.getMinutes() < 10) {
+		minuteInString = "0" +  today.getMinutes().toString();
+	} else {
+		minuteInString = today.getMinutes().toString();
+	}
+
+	if (today.getSeconds() < 10) {
+		secondInString = "0" +  today.getSeconds().toString();
+	} else {
+		secondInString = today.getSeconds().toString();
+	}
+
+	var date = yearInString + "-" + monthInString + "-" + dateInString;
+	var time = hourInString + "-" + minuteInString + "-" + secondInString;
+	var dateTime = date+'-'+time;
+
+	return dateTime;
+}
+
+function getDaysInString () { 
+	var today = new Date();
+	var yearInString = today.getFullYear().toString();
+	var monthInString = "";
+	
+
+	if( (today.getMonth()+1) < 10 ) {
+		monthInString = "0" + (today.getMonth()+1).toString();
+	} else {
+		monthInString = (today.getMonth()+1).toString();
+	}
+	
+	if(today.getDate() < 10) {
+		dateInString = "0" +today.getDate().toString();
+	}else {
+		dateInString = today.getDate().toString();
+	}
+
+	var date = yearInString  + monthInString;
+	return date;
+}
+
+function takePictureWithParameterDetailNote()
+{
+	dateTime = getDatesInString();			
+
+	Camera.takePicture().then(function(image)
+	{
+		// 찍은 사진 리사이징하기
+		// 이미지 사이즈 다시 줄이실 때는 아래 두줄 주석 지우세요.
+		// var args = { desiredWidth:480, desiredHeight:640 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
+		// ImageTools.resize(image, args).then(function(resizedImage) {
+			// 리사이징한 사진 savepanel3에 표시
+			// 다시 사이즈 줄이실 때는 image.path 를 resizedImage.path로 바꾸세요.
+			takedPictureWithParamterDetailNote.value = image.path;
+			// targetImgPath.value = resizedImage.path;
+			sendPictureBtnEnabled.value = true;
+			// 리사이징한 사진 저정부분은 삭제
+			// CameraRoll.publishImage(resizedImage);
+			// console.log("picture was saved");
+
+			// 리사이징한 이미지 흑백으로 변환
+			
+
+			console.log("dateTime : " + dateTime);
+
+			// var imageName = dateTime + ".png";
+			var imageName = dateTime + ".jpg";
+			console.log("Image Name : " + imageName);
+
+			savepanel3.save(imageName);
+			console.log("make image");
+			var saveDir = "";
+			if (Environment.ios) {
+				saveDir = FileSystem.iosPaths.documents;
+			} else if (Environment.android) {
+				// console.log(FileSystem.androidPaths.files);
+				saveDir = FileSystem.androidPaths.files;
+			}
+			var arrayBuff;
+
+			console.log("saveDir : " +saveDir);
+			
+			setTimeout(function() {
+
+				
+
+
+				FileSystem.readBufferFromFile(saveDir+"/"+imageName).then(function(image) {
+					console.log("read success");
+					arrayBuff = image;
+					// console.log(JSON.stringify(arrayBuff));
+					ImageTools.getImageFromBuffer(arrayBuff).then(function(image) {
+						console.log("Scratch image path is: " + image.path);
+						// 흑백으로 변한사진 카메라롤에 저장
+						CameraRoll.publishImage(image).then(function(x) {
+							console.log("save success");
+							targetImgPath.value = saveDir + "/"+imageName;
+							sendPictureWithParamterDetailNote(yearAndMonth);
+							FileSystem.delete(saveDir+"/"+imageName).then(function() {
+								console.log("delete success");
+							});								
+							takedPicture.value = "";
+						}, function(error) {
+							console.log("error : " );
+						});
+					});
+				}, function(error) {
+					console.log(error);
+				});
+			}, 2000);
+
+			// sendPicture();
+		// 이미지 사이즈 다시 줄이실 때는 아래 세줄 주석 지우세요.
+		// }).catch(function(reason) {
+		// 	console.log("Couldn't resize image: " + reason);
+		// });
+	}).catch(function(reason) {
+		console.log("Couldn't take picture: " + reason);
+	});
+};
+
+function sendPictureWithParamterDetailNote(yearAndMonth)
+{
+	pictureArray = null;
+
+	isPictureTaken = false;
+
+	var atchmnfl_ym = yearAndMonth
+
+	console.log("atchmnfl_ym from sendPictureWithParamterDetailNote : " + atchmnfl_ym);
+	
+	console.log("sendPicture was called");
+	// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+	var dsSearch = '{"ATCHMNFL_YM":"'+atchmnfl_ym+'","FILE_SE":"N","DOWN_LVL":"ALL"}';
+	console.log("===========================================");
+	console.log("searchContent ds Search : " + dsSearch);
+
+	// var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"ds_search": '+dsSearch+'}');
+
+	// console.log("2018.01.05 jsonParam : " + JSON.stringify(jsonParam));
+
+
+	var gvmemcode = JSON.parse(Backend.dsParam).GVMEMCODE;
+	console.log("gvmemcode : " + gvmemcode);
+	var temPictureAtchmnfl_idx = "";
+
+	Uploader.send(targetImgPath.value, uploadUrl, Backend.dsParam, dsSearch, gvmemcode,  atchmnfl_ym, "N", "ALL").then(function(response) {
+		console.log("upload complete.");
+		console.log(JSON.stringify(response));
+		
+		console.log("DetailNote response.ATCHMNFL_IDX : " + JSON.parse(response).ATCHMNFL_IDX);
+
+		// console.log("pictureArray : " + JSON.stringify(pictureArray._values));
+
+		// // pictureArray.add(new chosenPictures(JSON.parse(response).ATCHMNFL_IDX));
+
+		// console.log("pictureArray : " + JSON.stringify(pictureArray._values));
+
+
+
+
+		if (JSON.parse(response).MiResultMsg == "success") {
+			// pictureArray.add(JSON.parse(response).ATCHMNFL_IDX);
+			pictureArray = JSON.parse(response).ATCHMNFL_IDX;
+			isPictureTaken = true;
+		}
+
+		console.log("pictureArray ===============>>>>>>>>>>> : " + pictureArray);
+
+
+	});
+}
+
+function getImageWithParameterDetailNote() {
+	CameraRoll.getImage().then(function(image) {
+		takedPictureWithParamterDetailNote.value = image.path;
+		sendPictureBtnEnabled.value = true;
+
+		var today = new Date();
+		var date = today.getFullYear()+''+(today.getMonth()+1)+''+today.getDate();
+		var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
+		var dateTime = date+''+time;
+		var imageName = dateTime + ".png";
+		savepanel3.save(imageName);
+		var saveDir = "";
+		if (Environment.ios) {
+			saveDir = FileSystem.iosPaths.documents;
+		} else if (Environment.android) {
+			saveDir = FileSystem.androidPaths.files;
+		}
+
+		setTimeout(function() {
+			targetImgPath.value = saveDir + "/"+imageName;
+			sendPictureWithParamterDetailNote(yearAndMonth);
+			
+
+			FileSystem.delete(saveDir+"/"+imageName).then(function() {
+				console.log("delete success");
+			});
+			
+			takedPictureWithParamterDetailNote.value = "";
+		}, 6000);
+	}).catch(function(reason) {
+		console.log("Couldn't get image: "+reason);
+	});
+};
+
+var margin = Observable();
+
+function placed(args) {
+	margin.value = args.width / 25;
+}
+
+//==========================================  사진 부분 ==========================================================
+
+
+function chosenPictures (args) {
+	this.ATCHMNFL_IDX = args
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		//2018.01.16 기존 소스 끝
 		module.exports = {
 			detailText, showText, uploadOn, tryUpload, cancelUpload,
@@ -1288,5 +1610,5 @@ function deleteData () {
 
 
 				router.push("ShowFile", infoJSON);
-			}, alert, alertWithConfirm, logOut, isReadOnly
+			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, getImageWithParameterDetailNote
 		};
