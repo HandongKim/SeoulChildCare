@@ -38,7 +38,7 @@
 
 			<Rectangle Color="White" CornerRadius="0, 0, 10, 10" Width="100%">
 				<Clicked>
-					<Callback Handler="{getImage}" />
+					<Callback Handler="{getImageWithParameter}" />
 					<Callback Handler="{cancelUpload}" />
 				</Clicked>
 
@@ -244,9 +244,40 @@
 	</DockPanel>
 
 	<Alert ux:Name="detailNoteAlert" Title="{alert.title}" MainText="{alert.message}" Type="{alert.type}" Layer="{alert.layer}" />
+
 	<SavePanel ux:Name="savepanel3" Alignment="Bottom">
 			<Image File="{takedPictureWithParamter}">
 				<Desaturate Amount="1" />
 			</Image>
-		</SavePanel>
+	</SavePanel>
+
+
+<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{photoCollectionAlertWithConfirm.layer}">
+	<Stroke Width="1" Color="Black" />
+	<StackPanel>
+		<Panel>
+			<Text Value="{photoCollectionAlertWithConfirm.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+
+			<Image File="Images/alert_top.png" Alignment="TopCenter" />
+		</Panel>
+
+		<Panel Margin="{margin}*5/7">
+			<Text Value="{photoCollectionAlertWithConfirm.message}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+		</Panel>
+
+		<Panel Margin="{margin}">
+			<BlueButton>
+				<Text Value="확인" Alignment="Center" Color="White" />
+
+				<Clicked>
+					<!-- <Callback Handler="{getListDetailNote}" />
+					<Callback Handler="{viewWillAppear}" /> -->
+					<Callback Handler="{getPhotoList}" />
+
+				</Clicked>
+			</BlueButton>
+		</Panel>
+	</StackPanel>
+</Rectangle>
+
 </Page>

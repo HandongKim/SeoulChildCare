@@ -58,6 +58,9 @@ var dsParam = Backend.dsParam;
 var getMobileRciptListUrl = Backend.BASE_URL + Backend.getMobileRciptList_URL;
 var mImgViewUrl = Backend.BASE_URL + Backend.mImgView_URL;
 
+var yearAndMonth = null;
+
+
 function pickerDown() {
 	photoListFromServer = new Array;
 	pictures.clear();
@@ -69,9 +72,8 @@ function pickerDown() {
 	if(month.value < 10) {
 		tempMonth = "0" +month.value.toString();
 	}
-	var yearAndMonth = year.value.toString() + tempMonth;
+	yearAndMonth = year.value.toString() + tempMonth;
 
-	Backend.yearAndMonthFromPhotoCollection.value = yearAndMonth;
 	// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
 	// var dsSearch = '{"BOOK_GB":"01","search_gubun":"A","BCASH_IDX":"","search_cashgb":"","search_month":"'+yearAndMonth+'","search_gb":"Y"}';
 	var dsSearch = '{"ATCHMNFL_YM":"'+yearAndMonth+'"}';
@@ -384,6 +386,7 @@ var tempList1 = null;
 
 function getPhotoList () {
 	alert.layer.value = "Background";
+	photoCollectionAlertWithConfirm.layer.value="Background";
 	year.clear();
 	month.clear();
 
@@ -432,7 +435,7 @@ function getPhotoList () {
 		tempMonth = "0" +monthTemp.toString();
 	}
 
-	var yearAndMonth = tempYear + tempMonth;
+	yearAndMonth = tempYear + tempMonth;
 
 	console.log("yearAndMonth : " +yearAndMonth);
 
@@ -744,7 +747,7 @@ function deleteThePicture() {
 								CameraRoll.publishImage(image).then(function(x) {
 									console.log("save success");
 									targetImgPath.value = saveDir + "/"+imageName;
-									sendPictureWithParamter();
+									sendPictureWithParamter(yearAndMonth);
 									FileSystem.delete(saveDir+"/"+imageName).then(function() {
 										console.log("delete success");
 									});								
@@ -768,19 +771,14 @@ function deleteThePicture() {
 			});
 		};
 
-		function sendPictureWithParamter()
+		function sendPictureWithParamter(yearAndMonth)
 		{
 			
 
-			var atchmnfl_ym = getDaysInString();
+			var atchmnfl_ym = yearAndMonth
 
-			if (Backend.yearAndMonthFromPhotoCollection.value !="") {
-				atchmnfl_ym = Backend.yearAndMonthFromPhotoCollection.value;
-			}
+			console.log("atchmnfl_ym from sendPictureWithParamter : " + atchmnfl_ym);
 			
-			Backend.yearAndMonthFromPhotoCollection.value = "";
-
-
 			console.log("sendPicture was called");
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			var dsSearch = '{"ATCHMNFL_YM":"'+atchmnfl_ym+'","FILE_SE":"N","DOWN_LVL":"ALL"}';
@@ -801,15 +799,17 @@ function deleteThePicture() {
 				
 				console.log("response.MiResultMsg : " + JSON.parse(response).ATCHMNFL_IDX);
 
-
-
+				if (JSON.parse(response).MiResultMsg == "success") {
+					photoCollectionAlertWithConfirm.message.value="사진이 업로드 됐습니다.";
+					photoCollectionAlertWithConfirm.layer.value="Overlay";
+				}
 
 			});
 		}
 
-		function getImage() {
+		function getImageWithParameter() {
 			CameraRoll.getImage().then(function(image) {
-				takedPicture.value = image.path;
+				takedPictureWithParamter.value = image.path;
 				sendPictureBtnEnabled.value = true;
 
 				var today = new Date();
@@ -827,14 +827,14 @@ function deleteThePicture() {
 
 				setTimeout(function() {
 					targetImgPath.value = saveDir + "/"+imageName;
-					sendPicture();
+					sendPictureWithParamter(yearAndMonth);
 					
 
 					FileSystem.delete(saveDir+"/"+imageName).then(function() {
 						console.log("delete success");
 					});
 					
-					takedPicture.value = "";
+					takedPictureWithParamter.value = "";
 				}, 6000);
 			}).catch(function(reason) {
 				console.log("Couldn't get image: "+reason);
@@ -848,11 +848,20 @@ function deleteThePicture() {
 		}
 
 //==========================================  사진 부분 ==========================================================
+
+var photoCollectionAlertWithConfirm = {
+	title: Observable(""),
+	message: Observable(""),
+	type: Observable("Check"),
+	layer: Observable("Background")
+};
+
+
 module.exports = {
 	panelType,
 	month, months, pickerOn, pickerUp, pickerDown,year, years, 
-	uploadOn, tryUpload, cancelUpload,
+	uploadOn, tryUpload, cancelUpload, photoCollectionAlertWithConfirm,
 	pictures, selectionMode, goToSelectionMode, cancelSelectionMode, toggleSelect, header, deleteSelected,
 	selectedMode, cancelSelectedMode, selectedPicture, activeIndex,
-	save, clicked, spicture, getPhotoList,deleteThePicture, alert, takePictureWithParameter, takedPictureWithParamter
+	save, clicked, spicture, getPhotoList,deleteThePicture, alert, takePictureWithParameter, takedPictureWithParamter, getImageWithParameter
 };

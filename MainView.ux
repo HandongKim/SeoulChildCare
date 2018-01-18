@@ -183,13 +183,6 @@
 
 			var atchmnfl_ym = getDaysInString();
 
-			if (Backend.yearAndMonthFromPhotoCollection.value !="") {
-				atchmnfl_ym = Backend.yearAndMonthFromPhotoCollection.value;
-			}
-			
-			Backend.yearAndMonthFromPhotoCollection.value = "";
-
-
 			console.log("sendPicture was called");
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			var dsSearch = '{"ATCHMNFL_YM":"'+atchmnfl_ym+'","FILE_SE":"N","DOWN_LVL":"ALL"}';
