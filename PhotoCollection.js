@@ -48,6 +48,7 @@ for (var i = 0 ; i < 12 ; i++) {
 var pickerOn = Observable(false);
 
 function pickerUp() {
+	console.log("Photo Collection pickerUp");
 	pickerOn.value = true;
 }
 
@@ -56,11 +57,14 @@ var getMobileRciptListUrl = Backend.BASE_URL + Backend.getMobileRciptList_URL;
 var mImgViewUrl = Backend.BASE_URL + Backend.mImgView_URL;
 
 var yearAndMonth = null;
-
+var hasBeenSearched = false;
 
 function pickerDown() {
+	hasBeenSearched = true;
 	photoListFromServer = new Array;
 	pictures.clear();
+
+	console.log("Photo Collection Picker Down");
 
 	console.log("year.value : "  + year.value);
 	console.log("month.value : "  + month.value);
@@ -401,7 +405,7 @@ function getPhotoList () {
 
 	var currentTime = new Date()
 	var tempYear = currentTime.getFullYear();
-	console.log("date : " + typeof(tempYear));
+	// console.log("date : " + typeof(tempYear));
 
 	var monthTemp = currentTime.getMonth() + 1;
 
@@ -426,7 +430,18 @@ function getPhotoList () {
 		tempMonth = "0" +monthTemp.toString();
 	}
 
-	yearAndMonth = tempYear + tempMonth;
+
+
+	if (hasBeenSearched == false) {
+		yearAndMonth = tempYear + tempMonth;
+	} else {
+		//yearAndMonth = 
+	}
+	
+
+
+
+
 
 	console.log("yearAndMonth : " +yearAndMonth);
 
