@@ -29,7 +29,7 @@
 
 			<Rectangle Color="White" Width="100%">
 				<Clicked>
-					<Callback Handler="{takePicture}" />
+					<Callback Handler="{takePictureWithParameter}" />
 					<Callback Handler="{cancelUpload}" />
 				</Clicked>
 
@@ -244,5 +244,9 @@
 	</DockPanel>
 
 	<Alert ux:Name="detailNoteAlert" Title="{alert.title}" MainText="{alert.message}" Type="{alert.type}" Layer="{alert.layer}" />
-
+	<SavePanel ux:Name="savepanel3" Alignment="Bottom">
+			<Image File="{takedPictureWithParamter}">
+				<Desaturate Amount="1" />
+			</Image>
+		</SavePanel>
 </Page>

@@ -27,8 +27,6 @@
 		var takedPicture = Observable();
 		var dateTime = "";
 
-
-
 		function getDatesInString () {
 			var today = new Date();
 			var yearInString = today.getFullYear().toString();
