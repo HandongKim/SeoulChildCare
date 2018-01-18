@@ -812,7 +812,7 @@ function getImageWithParameter() {
 			});
 			
 			takedPictureWithParamter.value = "";
-		}, 6000);
+		}, 5000);
 	}).catch(function(reason) {
 		console.log("Couldn't get image: "+reason);
 	});

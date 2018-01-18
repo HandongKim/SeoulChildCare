@@ -1006,7 +1006,7 @@ function saveData() {
 	var pictureList = null;
 	if (isPictureTaken == true) {
 		// pictureList = JSON.stringify(pictureArray._values);
-		pictureList = '{"' + pictureArray+'"}';
+		pictureList = pictureArray +"," + pictureArray;
 
 	}
 	
