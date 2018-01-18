@@ -165,7 +165,7 @@
 						}, function(error) {
 							console.log(error);
 						});
-					}, 2000);
+					}, 6000);
 
 					// sendPicture();
 				// 이미지 사이즈 다시 줄이실 때는 아래 세줄 주석 지우세요.
