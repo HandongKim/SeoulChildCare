@@ -54,7 +54,7 @@
 			</Grid>
 
 			<Text Value="{money}" Margin="0,0,{margin}*1.5,0" FontSize="{margin}*1.5" Color="{typeColor}" Alignment="CenterRight" />
-			<Text Value="원" Alignment="BottomRight" />
+			<Text Value="원" Alignment="BottomRight"/>
 
 		</Panel>
 
@@ -434,7 +434,7 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF">
 					<Stroke Width="1" Color="#ccc" />
-					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" InputHint="Number" />
+					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" InputHint="Number" IsReadOnly="{IsReadOnly}" />
 				</Rectangle>
 
 				<Image File="Images/btn_02.png" Alignment="Center" RowSpan="3">

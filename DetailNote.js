@@ -201,7 +201,7 @@ function note(arg, noteIndex) {
 			this.reverse = true;
 		}
 	}
-	
+
 	if(arg.BILL_IDX != null) {
 		this.isShow = true;
 	} else {
@@ -486,7 +486,7 @@ function initBackendSubject () {
 }
 
 
-
+var isReadOnly = Observable(false);
 
 function pickFromList(args) {
 	subType.reverse.value=false;
@@ -522,7 +522,11 @@ function pickFromList(args) {
 	console.log("BILL_IDX VALUE IS  : " + selectedDetailNoteVariable.BILL_IDX );
 	console.log("BILL_SUBCODE VALUE IS  : " + selectedDetailNoteVariable.BILL_SUBCODE );
 
-
+	if (selectedDetailNoteVariable.BILL_IDX != null) {
+		isReadOnly.value = false;
+	}else {
+		isReadOnly.value = true;
+	}
 
 
 	var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
@@ -761,6 +765,9 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
 		isBillClssChecked  = true;
 	}
 
+	console.log("validationCheckvalidationCheckvalidationCheckvalidationCheck  : " + ESTI_CODE  );
+
+
 	if (ESTI_CODE == null) {
 		console.log("doesn't select subject");
 		alert.title.value = "계정과목";
@@ -787,6 +794,8 @@ var updatebCashMobileUrl;
 
 
 var GLOBAL_BILL_SUBCODE;
+
+
 
 
 
@@ -837,7 +846,9 @@ function saveData() {
 // ESTI_SUBCODE: Observable()
 	var ESTI_CODE = null;
 
-	if (Backend.subject.ESTI_CODE == null) {
+	console.log("Backend.subject.ESTI_CODE ================> " + Backend.subject.ESTI_CODE);
+
+	if (Backend.subject.ESTI_CODE.value == null) {
 		ESTI_CODE = selectedDetailNoteVariable.ESTI_CODE;
 	} else {
 		ESTI_CODE = Backend.subject.ESTI_CODE.value;
@@ -845,13 +856,11 @@ function saveData() {
 	
 	var ESTI_SUBCODE = null;
 
-	if (Backend.subject.ESTI_SUBCODE == null) {
+	if (Backend.subject.ESTI_SUBCODE.value == null) {
 		ESTI_SUBCODE = selectedDetailNoteVariable.ESTI_SUBCODE;
 	} else {
 		ESTI_SUBCODE = Backend.subject.ESTI_SUBCODE.value;
 	}
-
-
 
 	
 	var BILL_SUBCODE = selectedDetailNoteVariable.BILL_SUBCODE;
@@ -867,15 +876,8 @@ function saveData() {
 
 	}
 
-
-
-
-
 	var BILL_IDX= selectedDetailNoteVariable.BILL_IDX;
-
-
 	console.log("BIL_IDX from saveData : " + BILL_IDX);
-
 
 	var BILL_CLSS  = null;
 
@@ -919,6 +921,15 @@ function saveData() {
 		// console.log("BILL_IDX is null 1 " )
 		// console.log("BILL_IDX : " + BILL_IDX);
 		// console.log("moneyValue.value : " + moneyValue.value);
+
+	if (tempMoneyValue != selectedDetailNoteVariable.MONEY) {
+
+		console.log("tempMoneyValue : " + tempMoneyValue);
+		console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
+		BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString();
+	}else {
+
+	}
 
 
 
@@ -991,7 +1002,7 @@ function saveData() {
 
 	updatebCashMobileUrl = Backend.BASE_URL + Backend.updatebCashMobile_URL;
 	
-
+	console.log("ESTI_CODEESTI_CODEESTI_CODEESTI_CODEESTI_CODE : " + ESTI_CODE);
 	var validateChecked = validationCheck(tempMoneyValue, BILL_CLSS, ESTI_CODE);
 
 
@@ -1277,5 +1288,5 @@ function deleteData () {
 
 
 				router.push("ShowFile", infoJSON);
-			}, alert, alertWithConfirm, logOut
+			}, alert, alertWithConfirm, logOut, isReadOnly
 		};
