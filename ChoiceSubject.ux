@@ -432,28 +432,28 @@ function getTheSubjectList() {
 					<WrapPanel Width="100%" Color="White" Margin="1, 0.5">
 						<Match Value="{type}">
 							<Case String="1">
-								<Panel Width="30" />
+								<Panel Width="15" />
 								<Rectangle CornerRadius="3" Color="#4487CE">
 									<Text Value="목" Margin="3" Color="White" Alignment="Center" />
 								</Rectangle>
 							</Case>
 
 							<Case String="2">
-								<Panel Width="60" />
+								<Panel Width="30" />
 								<Rectangle CornerRadius="3" Color="#599DE5">
 									<Text Value="세목" Margin="3" Color="White" Alignment="Center" />
 								</Rectangle>
 							</Case>
 
 							<Case String="3">
-								<Panel Width="30" />
+								<Panel Width="15" />
 								<Rectangle CornerRadius="3" Color="#F17E22">
 									<Text Value="목" Margin="3" Color="White" Alignment="Center" />
 								</Rectangle>
 							</Case>
 
 							<Case String="4">
-								<Panel Width="60" />
+								<Panel Width="30" />
 								<Rectangle CornerRadius="3" Color="#F1A248">
 									<Text Value="세목" Margin="3" Color="White" Alignment="Center" />
 								</Rectangle>
