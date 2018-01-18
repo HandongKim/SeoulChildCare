@@ -1006,12 +1006,19 @@ function saveData() {
 	var pictureList = null;
 	if (isPictureTaken == true) {
 		// pictureList = JSON.stringify(pictureArray._values);
-		pictureList = pictureArray +"," + pictureArray;
+		pictureList = "{" + pictureArray +"," + pictureArray + "}";
 
 	}
 	
+	pictureList = JSON.parse(pictureList);
 
-	Backend.selectedPhotoCollectionPictureListFromDetailNote
+
+
+
+	// for (var i = 0; i < Backend.selectedPhotoCollectionPictureListFromDetailNote.length; i++) {
+	// 	// Backend.selectedPhotoCollectionPictureListFromDetailNote[i]
+	// }
+	// Backend.selectedPhotoCollectionPictureListFromDetailNote.
 
 	console.log("pictureListpictureListpictureListpictureListpictureList : " + pictureList);
 
