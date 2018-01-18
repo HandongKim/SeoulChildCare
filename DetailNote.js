@@ -442,8 +442,32 @@ var selectedDetailNoteVariable = null;
 
 var tempIndex = null;
 
+
+function initBackendSubject () {
+
+	Backend.subject.isChoice.clear();
+	Backend.subject.color.clear();
+	Backend.subject.type.clear();
+	Backend.subject.name.clear();
+	Backend.subject.text.clear();
+	Backend.subject.ESTI_CODE.clear();
+	Backend.subject.ESTI_GB.clear();
+	Backend.subject.ESTI_SUBCODE.clear();
+
+}
+
+
+
+
 function pickFromList(args) {
 	subType.reverse.value=false;
+	GLOBAL_BILL_SUBCODE = null;
+
+	// initBackendSubject();
+
+	
+
+
 
 	console.log("args.data.index : " + args.data.index);
 
@@ -467,7 +491,7 @@ function pickFromList(args) {
 	
 
 	console.log("BILL_IDX VALUE IS  : " + selectedDetailNoteVariable.BILL_IDX );
-
+	console.log("BILL_SUBCODE VALUE IS  : " + selectedDetailNoteVariable.BILL_SUBCODE );
 
 
 
@@ -730,6 +754,13 @@ var updatebCashMobileUrl;
 
 
 
+
+
+
+var GLOBAL_BILL_SUBCODE;
+
+
+
 function saveData() {
 	var ACTION = selectedDetailNoteVariable.ACTION;
 	var CASH_IDX = selectedDetailNoteVariable.CASH_IDX;
@@ -793,8 +824,23 @@ function saveData() {
 
 
 
-	var BILL_SUBCODE= selectedDetailNoteVariable.BILL_SUBCODE;
 	
+	var BILL_SUBCODE = selectedDetailNoteVariable.BILL_SUBCODE;
+	
+
+	console.log("GLOBAL_BILL_SUBCODE : " + GLOBAL_BILL_SUBCODE);
+
+	if (GLOBAL_BILL_SUBCODE != null) {
+		BILL_SUBCODE = GLOBAL_BILL_SUBCODE;
+		console.log("BILL_SUBCODE = GLOBAL_BILL_SUBCODE");
+		console.log("BILL_SUBCODE : "  + BILL_SUBCODE);
+	}else {
+
+	}
+
+
+
+
 
 	var BILL_IDX= selectedDetailNoteVariable.BILL_IDX;
 
@@ -1146,7 +1192,9 @@ function deleteData () {
 
 			// if ((x != null) && (notes._values[tempIndex] != null)) {
 			if (x != null) {
-				// console.log("notes._values[tempIndex].type : " + notes._values[tempIndex].type);	
+				
+
+
 				try {
 					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 						subType.reverse.value = true;
@@ -1167,6 +1215,14 @@ function deleteData () {
 				}
 			}
 		});
+
+		Backend.subject.ESTI_SUBCODE.onValueChanged(null, function(x) {
+			console.log("Backend.subject.ESTI_SUBCODE.value before setting GLOBAL_BILL_SUBCODE: " + Backend.subject.ESTI_SUBCODE.value);	
+			GLOBAL_BILL_SUBCODE = Backend.subject.ESTI_SUBCODE.value;
+		});
+
+
+
 
 		//2018.01.16 기존 소스 끝
 		module.exports = {

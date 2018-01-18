@@ -261,12 +261,24 @@ function note(arg, noteIndex) {
 	if (arg.CASH_GB == "1") {
 		this.type = "입금";
 		this.typeColor = "#4C9DFF";
-		this.subTypeColor = "#8BBDFF";
+		// this.subTypeColor = "#8BBDFF";
 	} else {
 		this.type = "출금";
 		this.typeColor = "#FF4200";
-		this.subTypeColor = "#FFBA85";
+		// this.subTypeColor = "#FFBA85";
 	}
+
+
+	if (arg.ESTI_CODE != null) {
+		if (arg.ESTI_CODE.substr(0,1) == 1) {
+			this.subTypeColor = "#8BBDFF";
+		} else {
+			this.subTypeColor = "#FFBA85";
+		}	
+	}
+	
+
+
 
 	this.BCASH_MONEY = arg.BCASH_MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
@@ -278,20 +290,35 @@ function note(arg, noteIndex) {
 
 	if (arg.ESTI_SUB_YN == "Y") {
 		this.subType = "세목";
-		this.name = arg.ESTI_NAME;
-	} else {
-		this.subType = "목";
-
+		// this.name = arg.ESTI_NAME;
 		if(arg.ESTI_SUB_NM != null) {
 			this.name = arg.ESTI_NAME + "[" + arg.ESTI_SUB_NM + "]";
 		} else {
 			this.name = arg.ESTI_NAME;	
 		}	
+	} else {
+		this.subType = "목";
+		this.name = arg.ESTI_NAME;	
+
 	}
 
 	this.reverse = false;
+
+
 	if(arg.BILL_IDX != null) {
-		if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)) {
+		console.log("20180118 ==> arg.BILL_IDX : " + arg.BILL_IDX);
+		console.log("arg.ESTI_GB.substr(1,1) : " + arg.ESTI_GB.substr(1,1));
+		console.log("arg.ESTI_CODE.substr(0,1) : " + arg.ESTI_CODE.substr(0,1));
+
+
+		console.log("arg.CASH_GB ==============> " + arg.CASH_GB);
+		console.log("arg.ESTI_CODE ==============> " + arg.ESTI_CODE);
+
+
+		if (arg.CASH_GB != arg.ESTI_CODE.substr(0,1)) {
+
+
+
 			this.reverse=true;
 		}
 		this.isShow = true;

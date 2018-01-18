@@ -569,14 +569,11 @@ function deleteThePicture() {
  
 			var message = JSON.parse(response._bodyInit);
 			var isSuccess = message.MiResultMsg;
-			console.log("message : " + message.MiResultMsg); 
-			var tempList1 = JSON.parse(response._bodyInit);
 
-			console.log("tempList1 : " + JSON.stringify(tempList1));
-
-			tempList1 = tempList1.resultData[1];
-
-			
+			if (isSuccess == "success") {
+				alert.layer.value="Overlay";
+				alert.message.value="성공했습니다";
+			}
 			
             // return response.json();
         }).then(function(jsonData) {
