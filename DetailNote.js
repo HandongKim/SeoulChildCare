@@ -143,13 +143,41 @@ function note(arg, noteIndex) {
 		this.type = "입금";
 		this.typeColor = "#4C9DFF";
 		this.money = arg.MONEY;
-		this.subTypeColor = "#8BBDFF";
+		// this.subTypeColor = "#8BBDFF";
 	} else {
 		this.type = "출금";
 		this.typeColor = "#FF4200";
 		this.money = arg.MONEY;
-		this.subTypeColor = "#FFBA85";
+		// this.subTypeColor = "#FFBA85";
 	}
+
+	if (arg.ESTI_CODE != null) {
+		if (arg.ESTI_CODE.substr(0,1) == 1) {
+			this.subTypeColor = "#8BBDFF";
+		} else {
+			this.subTypeColor = "#FFBA85";
+		}	
+	}
+
+	// this.reverse = false;
+
+	// if(arg.BILL_IDX != null) {
+	// 	console.log("20180118 ==> arg.BILL_IDX : " + arg.BILL_IDX);
+	// 	console.log("arg.ESTI_CODE.substr(0,1) : " + arg.ESTI_CODE.substr(0,1));
+	// 	console.log("arg.CASH_GB ==============> " + arg.CASH_GB);
+	// 	console.log("arg.ESTI_CODE ==============> " + arg.ESTI_CODE);
+	// 	if (arg.CASH_GB != arg.ESTI_CODE.substr(0,1)) {
+	// 		this.reverse=true;
+	// 	}
+	// 	this.isShow = true;
+	// } else {
+	// 	this.isShow = false;
+	// }
+
+
+	// console.log("this.reverse : " + this.reverse);
+	// console.log("this.isShow : " + this.isShow);
+
 	this.money = arg.MONEY;
 	if(this.money != null) {
 		this.money = this.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
@@ -168,11 +196,12 @@ function note(arg, noteIndex) {
 	}
 
 	this.reverse = false;
-	if (arg.BILL_IDX !=null && arg.ESTI_GB !=null) {
-		if (arg.ESTI_GB.substr(1,1) != arg.ESTI_CODE.substr(0,1)){
+	if (arg.BILL_IDX !=null && arg.CASH_GB !=null) {
+		if (arg.CASH_GB != arg.ESTI_CODE.substr(0,1)){
 			this.reverse = true;
 		}
 	}
+	
 	if(arg.BILL_IDX != null) {
 		this.isShow = true;
 	} else {
