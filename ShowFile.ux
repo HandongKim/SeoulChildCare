@@ -11,9 +11,9 @@
 		}
 
 		files = Observable();
-		for (i = 1; i < 11; i++) {
-			files.add(new File(i));
-		}
+		// for (i = 1; i < 11; i++) {
+		// 	files.add(new File(i));
+		// }
 
 		function goDetailFile(arg) {
 			router.push("DetailFile", {index: arg.data.index, resource: arg.data.resource});
@@ -84,11 +84,14 @@
 						photoListFromServer.push(temp2);
 					}
 
+
+					var baseURL = Backend.BASE_URL + Backend.mImgView_URL;
+
 					if (isSuccess =="success") {
 						
 						for (var i = 0; i <photoListFromServer.length ; i++) {
 							var dsSearch = '{"ATCHMNFL_IDX":"'+photoListFromServer[i]+'"}';
-							var baseURL= "http://112.218.172.44:51442/acusr/acc/bil/mImgView.do?";
+							// var baseURL= "http://112.218.172.44:51442/acusr/acc/bil/mImgView.do?";
 							var GVMEMCODE = JSON.parse(dsParam).GVMEMCODE;
 							var requestParameter = "GVMEMCODE=" + GVMEMCODE+ "&ATCHMNFL_IDX=" + photoListFromServer[i];
 							var imgUrl = baseURL + requestParameter;

@@ -117,7 +117,7 @@ function pickerDown() {
 
 					var baseURL= mImgViewUrl;
 
-					var GVMEMCODE = "SEOUL000000000000121";
+					var GVMEMCODE = JSON.parse(dsParam).GVMEMCODE
 
 					var requestParameter = "GVMEMCODE=" + GVMEMCODE+ "&ATCHMNFL_IDX=" + photoListFromServer[i];
 
