@@ -7,12 +7,27 @@ var years = Observable();
 for (var i = 0 ; i < 30 ; i++) {
 	years.add(2010+i);
 }
+var stYearPos = Observable(0);
+for (var i = 0 ; i < years.length ; i++) {
+	if (years.getAt(i) == year.value) {
+		break;
+	} else {
+		stYearPos.value += 50;
+	}
+}
+
 var month = Observable();
-
-
 var months = Observable();
 for (var i = 0 ; i < 12 ; i++) {
 	months.add(1+i);
+}
+var stMonthPos = Observable(0);
+for (var i = 0 ; i < months.length ; i++) {
+	if (months.getAt(i) == month.value) {
+		break;
+	} else {
+		stMonthPos.value += 50;
+	}
 }
 
 // 날짜 선택 피커 화면 켜고 끄는 변수
@@ -205,6 +220,14 @@ function pickerDown() {
 var pickerOn2 = Observable(false);
 var selectedType = Observable("전체");
 var type = Observable("전체", "입금", "출금");
+var stTypePos = Observable(0);
+for (var i = 0 ; i < type.length ; i++) {
+	if (type.getAt(i) == selectedType.value) {
+		break;
+	} else {
+		stTypePos.value += 50;
+	}
+}
 
 // type.clear() 이용해서 type내용 없애고, type.add로 서버에서 받아온 내용을 넣으면 됩니다. 그리고, 처음으로 넣는 값도 selectedType.value에 같이 넣어주세요.
 
@@ -350,6 +373,7 @@ var billCashInputDataList = Observable();
 
 var selectedbillCashInputDataList = Observable("전체");
 var billCashInputDataListTotal = Observable();
+var stBillCashPos = Observable(0);
 
 
 function getBillCashInputLoad () {
@@ -436,6 +460,15 @@ function getBillCashInputLoad () {
 			billCashInputDataListTotal.add(JSON.parse(array));
 			billCashInputDataList.add(billCashInputDataListTotal.getAt(i).NAME);
 		}
+
+		stBillCashPos.value = 0;
+		for (var i = 0 ; i < billCashInputDataList.length ; i++) {
+			if (billCashInputDataList.getAt(i) == selectedbillCashInputDataList.value) {
+				break;
+			} else {
+				stBillCashPos.value += 50;
+			}
+		}
 			return response.json();
 	}).then(function(jsonData) {
 
@@ -517,7 +550,23 @@ function getCurrentDate () {
 	monthTemp = currentTime.getMonth() + 1;
 	console.log("month : " + month);
 	year.value = tempYear;
+	stYearPos.value = 0;
+	for (var i = 0 ; i < years.length ; i++) {
+		if (years.getAt(i) == year.value) {
+			break;
+		} else {
+			stYearPos.value += 50;
+		}
+	}
 	month.value = monthTemp;
+	stMonthPos.value = 0;
+	for (var i = 0 ; i < months.length ; i++) {
+		if (months.getAt(i) == month.value) {
+			break;
+		} else {
+			stMonthPos.value += 50;
+		}
+	}
 	tempMonth = monthTemp.toString();
 
 	if(monthTemp < 10) {
@@ -943,12 +992,12 @@ function goDetailNote2 (arg) {
 
 module.exports = {
 	unReg, checkClick,
-	year, month, years, months, pickerOn, pickerUp, pickerDown, preClick, nextClick, pickerOn2, pickerOn3, pickerUp2, pickerDown2, selectedType, type, notes,
+	year, month, years, stYearPos, months, stMonthPos, pickerOn, pickerUp, pickerDown, preClick, nextClick, pickerOn2, pickerOn3, pickerUp2, pickerDown2, selectedType, type, stTypePos, notes,
 	goDetailNote1: function(arg) {
 		Backend.subject.name.value = "계정과목 선택";
         Backend.subject.isChoice.value = false;
 		router.push("DetailNote", "new");
 	},goDetailNote2,
-	getBillCashInputLoad, billCashInputDataList	,pickerUp3, pickerDown3, selectOnlineBCashList, selectedbillCashInputDataList,
+	getBillCashInputLoad, billCashInputDataList	,pickerUp3, pickerDown3, selectOnlineBCashList, selectedbillCashInputDataList, stBillCashPos,
 	unRegisteredChecked, WhileInActive
 };
