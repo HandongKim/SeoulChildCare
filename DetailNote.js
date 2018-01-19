@@ -1006,25 +1006,56 @@ function saveData() {
 
 	var pictureList = null;
 
+	pictureList = '{"ATCHMNFL_IDX" : ';
+
+
 	if (isPictureTaken == true) {
 		// pictureList = JSON.stringify(pictureArray._values);
 		// pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray +',' + pictureArray + ']}';
 		pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray +']}';
 		// pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray + ']}';
 		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
+
+		isPictureTaken = false;
+
+
 	} else {
 		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
 	}
 	
 	// pictureList = JSON.parse(pictureList);
+
+
+
+
 	if (Backend.selectedPhotoCollectionPictureListFromDetailNote._values == "") {
 		console.log("Backend.selectedPhotoCollectionPictureListFromDetailNote._values == null");
 	} else {
-			console.log("Backend.selectedPhotoCollectionPictureListFromDetailNote._values : " + Backend.selectedPhotoCollectionPictureListFromDetailNote._values);
+		if (Backend.selectedPhotoCollectionPictureListFromDetailNote.length == 1) {
+			console.log("Backend.selectedPhotoCollectionPictureListFromDetailNote.length : " + Backend.selectedPhotoCollectionPictureListFromDetailNote.length);
+
+			pictureList = '{"ATCHMNFL_IDX" : '+'['+ Backend.selectedPhotoCollectionPictureListFromDetailNote._values +']}';
+		} else {
+			for (var i = 0; i < Backend.selectedPhotoCollectionPictureListFromDetailNote.length; i++) {
+
+				if (i == 0 ) {
+					pictureList = pictureList +'['+ Backend.selectedPhotoCollectionPictureListFromDetailNote._values[i] + ','; 
+				} else if (i != (Backend.selectedPhotoCollectionPictureListFromDetailNote.length -1)){
+					pictureList = pictureList + Backend.selectedPhotoCollectionPictureListFromDetailNote._values[i] + ',';
+				} else if (i == (Backend.selectedPhotoCollectionPictureListFromDetailNote.length -1)) {
+					pictureList = pictureList + Backend.selectedPhotoCollectionPictureListFromDetailNote._values[i] + ']}';
+				}		
+			}
+
+
+			console.log("pictureList for many pictures: " + pictureList);
+
+		}
+		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
 	}
 
 
-
+	Backend.selectedPhotoCollectionPictureListFromDetailNote.clear();
 
 
 
