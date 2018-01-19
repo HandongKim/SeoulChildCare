@@ -1001,33 +1001,45 @@ function saveData() {
 	// var temp_ds_bCash = '{"ds_bCash":' + ds_bCash+'}';
 
 	// // console.log("ds_bCash : " + temp_ds_bCash);
+	var jsonParam = null;
 
 
 	var pictureList = null;
+
 	if (isPictureTaken == true) {
 		// pictureList = JSON.stringify(pictureArray._values);
-		pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray +',' + pictureArray + ']}';
-
+		// pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray +',' + pictureArray + ']}';
+		pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray +']}';
+		// pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray + ']}';
+		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
+	} else {
+		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
 	}
 	
 	// pictureList = JSON.parse(pictureList);
+	if (Backend.selectedPhotoCollectionPictureListFromDetailNote._values == "") {
+		console.log("Backend.selectedPhotoCollectionPictureListFromDetailNote._values == null");
+	} else {
+			console.log("Backend.selectedPhotoCollectionPictureListFromDetailNote._values : " + Backend.selectedPhotoCollectionPictureListFromDetailNote._values);
+	}
+
+
+
 
 
 
 
 	// for (var i = 0; i < Backend.selectedPhotoCollectionPictureListFromDetailNote.length; i++) {
-	// 	// Backend.selectedPhotoCollectionPictureListFromDetailNote[i]
+	// 	Backend.selectedPhotoCollectionPictureListFromDetailNote[i]
 	// }
-	// Backend.selectedPhotoCollectionPictureListFromDetailNote.
+	// // Backend.selectedPhotoCollectionPictureListFromDetailNote.
 
-	console.log("pictureListpictureListpictureListpictureListpictureList : " + pictureList);
-
-
-
-	var temp = '{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}';
-	console.log("temp >>>>>>>>>>>>>>>>>>>>> " + temp);
+	// console.log("pictureListpictureListpictureListpictureListpictureList : " + pictureList);
 
 
+
+	// var temp = '{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}';
+	// console.log("temp >>>>>>>>>>>>>>>>>>>>> " + temp);
 
 
 
@@ -1035,7 +1047,9 @@ function saveData() {
 
 
 
-	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
+
+
+	// var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
 
 
 	console.log("jsonParam123123123 : " + JSON.stringify(jsonParam));
