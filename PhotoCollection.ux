@@ -70,15 +70,17 @@
 			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
 		</Panel>
 
-		<Grid ColumnCount="6" Columns="1*, 4*, 1*, 2*, 1*, 1*" Width="100%" Dock="Fill" Color="#ddd">
+		<Grid ColumnCount="6" Columns="1*, 3*, 1*, 2*, 1*, 1*" Width="100%" Height="150" Color="#ddd" Dock="Fill">
 			<Panel />
-			<MyPicker Selected="{year}" Data="{years}" />
 
-			<Text Value="년" Alignment="Center" FontSize="{margin}*1.5" />
+			<MyPicker Selected="{year}" Data="{years}" StPos="{stYearPos}"  />
 
-			<MyPicker Selected="{month}" Data="{months}" />
+			<Text Value="년" Alignment="Center" />
 
-			<Text Value="월" Alignment="Center" FontSize="{margin}*1.5" />
+			<MyPicker Selected="{month}" Data="{months}" StPos="{stMonthPos}" />
+
+			<Text Value="월" Alignment="Center" />
+
 			<Panel />
 		</Grid>
 	</DockPanel>

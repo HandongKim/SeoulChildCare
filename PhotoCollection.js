@@ -39,10 +39,26 @@ var years = Observable();
 for (var i = 0 ; i < 30 ; i++) {
 	years.add(2002+i);
 }
+var stYearPos = Observable(0);
+for (var i = 0 ; i < years.length ; i++) {
+	if (years.getAt(i) == year.value) {
+		break;
+	} else {
+		stYearPos.value += 50;
+	}
+}
 var month = Observable(11);
 var months = Observable();
 for (var i = 0 ; i < 12 ; i++) {
 	months.add(1+i);
+}
+var stMonthPos = Observable(0);
+for (var i = 0 ; i < months.length ; i++) {
+	if (months.getAt(i) == month.value) {
+		break;
+	} else {
+		stMonthPos.value += 50;
+	}
 }
 
 var pickerOn = Observable(false);
@@ -416,7 +432,23 @@ function getPhotoList () {
 	console.log("20180116 monthTemp : " +monthTemp);
 
 	year.value = tempYear;
+	stYearPos.value = 0;
+	for (var i = 0 ; i < years.length ; i++) {
+		if (years.getAt(i) == year.value) {
+			break;
+		} else {
+			stYearPos.value += 50;
+		}
+	}
 	month.value = monthTemp;
+	stMonthPos.value = 0;
+	for (var i = 0 ; i < months.length ; i++) {
+		if (months.getAt(i) == month.value) {
+			break;
+		} else {
+			stMonthPos.value += 50;
+		}
+	}
 
 
 
@@ -851,7 +883,7 @@ var photoCollectionAlertWithConfirm = {
 
 module.exports = {
 	panelType,
-	month, months, pickerOn, pickerUp, pickerDown,year, years, 
+	month, months, pickerOn, pickerUp, pickerDown,year, years, stYearPos, stMonthPos,
 	uploadOn, tryUpload, cancelUpload, photoCollectionAlertWithConfirm,
 	pictures, selectionMode, goToSelectionMode, cancelSelectionMode, toggleSelect, header, deleteSelected,
 	selectedMode, cancelSelectedMode, selectedPicture, activeIndex,
