@@ -28,7 +28,7 @@
 			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
 		</Panel>
 
-		<MyPicker Selected="{selectedData}" Data="{pickerData}" />
+		<MyPicker Selected="{selectedData}" Data="{pickerData}"  StPos="0" />
 	</DockPanel>
 <!-- 2018.01.16 기존 소스 끝 -->
 

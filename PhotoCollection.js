@@ -206,7 +206,7 @@ function ServerPicture(resource, _index) {
 
 pictures = Observable();
 for (i = 1; i < 11; i++) {
-	pictures.add(new Picture(i));
+	// pictures.add(new Picture(i));
 }
 
 selectionMode = Observable(false);
