@@ -8,7 +8,8 @@
     "Fuse.Camera",
     "Fuse.CameraRoll",
     "Fuse.ImageTools",
-    "Android.ActivityUtils"
+    "Android.ActivityUtils",
+    "Fuse.PushNotifications",
   ],
   "Includes": [
     "*",
@@ -45,7 +46,7 @@
   },
   "iOS": {
     "DevelopmentTeam": "R33668Z4ZE",
-    "BundleIdentifier": "app.ss.accss.mobile",
+    "BundleIdentifier": "app.ss.accss.ios",
     "PreviewBundleIdentifier": "com.crosscert.sample.maxtedpreview",
     "DeploymentTarget" : "8.0",
 
