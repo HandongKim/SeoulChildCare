@@ -43,6 +43,9 @@ var offDocTransList_URL = "/acadm/offDocMng/offDocTransList.do"
 
 
 
+
+
+
 //업무연락 [받은업무함 전체리스트 및 Search URL]
 var selectBusiReceiveAdminList_URL = "/acadm/cmt/selectBusiReceiveAdminList.do";
 

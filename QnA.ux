@@ -129,7 +129,16 @@
 
 			qnas.clear();
 
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsParam = Backend.dsParam;
+
+			var AREA = "11110";
+			var commClss = "Q";
+			var fCombo = "ALL";
+			var page = "1";
+
+
+
+
 			var dsSearch = '{"AREA":"11110","commClss":"Q","fCombo":"ALL","page":"1","sch_txt":"'+searchText.value+'","combo":"'+combo+'"}';
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
@@ -293,7 +302,7 @@
 		//처음 데이터 가져오기
 		function getQnAList(){
 			console.log("getQnAList first function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsParam = Backend.dsParam;
 			var dsSearch = '{"AREA":"11110","commClss":"Q","page":"1","sch_txt":"","sCombo":"head"}';
 			globalSearch = JSON.parse(dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
@@ -361,7 +370,7 @@
 				sCombo = "head";
 			}			
 			console.log("NextPage function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsParam = Backend.dsParam;
 			var dsSearch = '{"AREA":"11110","commClss":"Q","page":"'+page.value+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			console.log("nextPage Call ! : " + dsSearch);
@@ -406,7 +415,7 @@
 		function getDetailQnA(qnaData){
 			console.log("qnaData : "+qnaData);
 			console.log("DetailValue function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsParam = Backend.dsParam;
 			var dsSearch = '{"combo":"head","commClss":"Q","commSeq":"'+JSON.stringify(qnaData.commSeq)+'","sch_txt":""}';
 		
 			console.log("dsSearch : " + dsSearch);
@@ -641,7 +650,7 @@
 
 		function modifySned(){
 			console.log("modifySned function Call ");
-			var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+			var dsParam = Backend.dsParam;
 			var dsDetail = '{"REGDATE":"'+JSON.stringify(qnaDetailValue.value.regDate.value)+'","AREA":'+JSON.stringify(qnaDetailValue.value.area.value)+',"CONT":'+JSON.stringify(qnaDetailValue.value.cont.value)+',"COMM_SEQ":"'+JSON.stringify(qnaDetailValue.value.commSeq.value)+'","REPLY_REF":"'+JSON.stringify(qnaDetailValue.value.replyRef.value)+'","REGDATE1":'+JSON.stringify(qnaDetailValue.value.regDate1.value)+',"INQ_ADM_CNT":"'+JSON.stringify(qnaDetailValue.value.inqAdmCnt.value)+'","REGID":'+JSON.stringify(qnaDetailValue.value.regId.value)+',"SITE_CLSS_SND":'+JSON.stringify(qnaDetailValue.value.siteClssSnd.value)+',"QA_REPLY_YN":'+JSON.stringify(qnaDetailValue.value.qaReplyYn.value)+',"INQ_USR_CNT":"'+JSON.stringify(qnaDetailValue.value.inqUsrCnt.value)+'","REPLY_DEPTH":"'+JSON.stringify(qnaDetailValue.value.replyDepth.value)+'","WRITER_NM":'+JSON.stringify(qnaDetailValue.value.writerNm.value)+',"WRITE_HOST":"'+JSON.stringify(qnaDetailValue.value.writeHost.value)+'","REGDATE2":'+JSON.stringify(qnaDetailValue.value.regDate2.value)+',"BOD_COM_YN":'+JSON.stringify(qnaDetailValue.value.bodComYn.value)+',"WRITER_ORG":'+JSON.stringify(qnaDetailValue.value.writerOrg.value)+',"BOD_FORM_CLSS":'+JSON.stringify(qnaDetailValue.value.bodFormClss.value)+',"REQ_YN":'+JSON.stringify(qnaDetailValue.value.reqYn.value)+',"TITLE":'+JSON.stringify(qnaDetailValue.value.title.value)+',"REPLY_SORTKEY":'+JSON.stringify(qnaDetailValue.value.replySortkey.value)+'}';
 
 			console.log("update dsDetal : " + dsDetail);

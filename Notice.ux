@@ -75,11 +75,13 @@
 
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 
-			
+			var AREA = "11110";
+			var commClss = "N";
+			var fCombo = "ALL";
+			var page = "1";
 
 
-
-			var dsSearch = '{"AREA":"11110","commClss":"N","fCombo":"ALL","page":"1","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
+			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","fCombo":"'+fCombo+'","page":"'+page+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
 
@@ -225,7 +227,16 @@
 		function getNoticeListValue(){
 			console.log("function Call ");
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
-			var dsSearch = '{"AREA":"11110","commClss":"N","fCombo":"ALL","page":"1","sch_txt":"","sCombo":"head"}';
+			var AREA = "11110";
+			var commClss = "N";
+			var fCombo = "ALL";
+			var page = "1";
+			var sCombo = "head";
+
+
+
+
+			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","fCombo":"'+fCombo+'","page":"'+page+'","sch_txt":"","sCombo":"'+sCombo+'"}';
 			globalSearch = JSON.parse(dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 

@@ -58,8 +58,9 @@
 			console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
 
+			var url = Backend.BASE_URL + Backend.getMobileRciptList_URL;
 
-			fetch("http://112.218.172.44:51432/acusr/acc/bil/getMobileRciptList.do", {
+			fetch(url, {
 				method: 'POST',
 				headers: {
 					"Content-type": "application/json"
