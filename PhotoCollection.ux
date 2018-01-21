@@ -121,7 +121,7 @@
 			</Grid>
 
 			<Panel Width="100%" Background="#000">
-				<PageControl ActiveIndex="{activeIndex}">
+				<PageControl ActiveIndex="{activeIndex}" IsRouterOutlet="false">
 					<Each Items="{selectedPicture}" Defer="Deferred">
 						<Panel>
 							<Image Url="{resource}" Alignment="Center">

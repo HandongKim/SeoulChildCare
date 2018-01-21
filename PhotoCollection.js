@@ -13,15 +13,6 @@ var connectingPanelLayout = Observable("Background");
 var enableClick = Observable("LocalBoundsAndChildren");
 
 
-
-
-		
-
-
-
-
-
-
 this.Parameter.onValueChanged(null, function(x) {
 	// console.log(JSON.stringify(x));
 	if (x.type == "normal") {
@@ -37,7 +28,7 @@ this.Parameter.onValueChanged(null, function(x) {
 var year = Observable(2017);
 var years = Observable();
 for (var i = 0 ; i < 30 ; i++) {
-	years.add(2002+i);
+	years.add(2010+i);
 }
 var stYearPos = Observable(0);
 for (var i = 0 ; i < years.length ; i++) {
