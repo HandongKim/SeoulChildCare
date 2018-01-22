@@ -6,6 +6,8 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
+		var InterApp = require("FuseJS/InterApp");
+
 
 		
 		var type = Observable();
@@ -257,8 +259,16 @@
 			        });
 		}
 
+		function showMap () {
+			// InterApp.on("receivedUri", function(uri) {
+   //  			console.log("Launched with URI", uri);
+			// });
+
+			InterApp.launchUri("https://www.fusetools.com/");
+		}
+		
 		module.exports = {
-			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent
+			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap
 		};
 	</JavaScript>
 
@@ -342,7 +352,12 @@
 								<Text Value="{eduDetail.place}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" TextWrapping="Wrap" />
 								<Rectangle>
 									<Stroke Width="1" Color="#7C8DB5" />
-									<Text Value="약도보기" Color="#7C8DB5" FontSize="{margin}*0.9" Margin="6, 2" Alignment="Center" />
+									<Text Value="약도보기" Color="#7C8DB5" FontSize="{margin}*0.9" Margin="6, 2" Alignment="Center">
+										<Clicked>
+											<Callback Handler="{showMap}" />
+										</Clicked>
+									</Text>
+
 								</Rectangle>
 							</WrapPanel>
 						</Panel>

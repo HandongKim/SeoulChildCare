@@ -1258,7 +1258,7 @@ function deleteData () {
 
 		   	} else {
 		   		alert.title.value = "";
-				alert.message.value = "수정 안 됐습니다.";
+				alert.message.value = "수정 안 됬습니다.";
 				alert.type.value = "Check";
 				alert.layer.value = "Overlay";
 		   	} 	

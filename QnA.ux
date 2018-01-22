@@ -47,6 +47,9 @@
 		var insertQnaCommListUrl = Backend.BASE_URL + Backend.insertQnaCommList_URL;
 		var qnaUserUpdateUrl = Backend.BASE_URL + Backend.qnaUserUpdate_URL;
 
+		var AREA = JSON.parse(Backend.dsParam).GV
+
+
 
 
 		function detailDataClear(){
@@ -139,7 +142,7 @@
 
 
 
-			var dsSearch = '{"AREA":"11110","commClss":"Q","fCombo":"ALL","page":"1","sch_txt":"'+searchText.value+'","combo":"'+combo+'"}';
+			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","fCombo":"'+fCombo+'","page":"1","sch_txt":"'+searchText.value+'","combo":"'+combo+'"}';
 			console.log("===========================================");
 			console.log("searchContent ds Search : " + dsSearch);
 
@@ -303,7 +306,16 @@
 		function getQnAList(){
 			console.log("getQnAList first function Call ");
 			var dsParam = Backend.dsParam;
-			var dsSearch = '{"AREA":"11110","commClss":"Q","page":"1","sch_txt":"","sCombo":"head"}';
+
+			var AREA = "11110";
+			var commClss = "Q";
+			
+			
+
+
+
+
+			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","page":"1","sch_txt":"","sCombo":"head"}';
 			globalSearch = JSON.parse(dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			qnas.clear();
@@ -368,7 +380,12 @@
 			if(searchText.value==null){
 				searchText.value = "";
 				sCombo = "head";
-			}			
+			}
+
+
+
+
+
 			console.log("NextPage function Call ");
 			var dsParam = Backend.dsParam;
 			var dsSearch = '{"AREA":"11110","commClss":"Q","page":"'+page.value+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
