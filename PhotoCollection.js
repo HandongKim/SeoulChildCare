@@ -12,7 +12,6 @@ var Uploader = require("Uploader");
 var connectingPanelLayout = Observable("Background");
 var enableClick = Observable("LocalBoundsAndChildren");
 
-
 this.Parameter.onValueChanged(null, function(x) {
 	// console.log(JSON.stringify(x));
 	if (x.type == "normal") {
@@ -25,8 +24,12 @@ this.Parameter.onValueChanged(null, function(x) {
 });
 
 // 피커에 필요한 변수 및 함수
+
 var year = Observable(2017);
+
 var years = Observable();
+
+
 for (var i = 0 ; i < 30 ; i++) {
 	years.add(2010+i);
 }
@@ -54,10 +57,14 @@ for (var i = 0 ; i < months.length ; i++) {
 
 var pickerOn = Observable(false);
 
+
+
 function pickerUp() {
 	console.log("Photo Collection pickerUp");
 	pickerOn.value = true;
 }
+
+
 
 var dsParam = Backend.dsParam;
 var getMobileRciptListUrl = Backend.BASE_URL + Backend.getMobileRciptList_URL;
@@ -242,11 +249,6 @@ activeIndex.onValueChanged(null, function(x) {
 
 var currentPictureIndex = Observable();
 
-
-
-
-
-
 function toggleSelect(args) {
 	if (selectionMode.value === false) {
 		selectedMode.value = true;
@@ -286,7 +288,7 @@ function toggleSelect(args) {
 	}
 
 	args.data.isSelected.value = !args.data.isSelected.value;
-save
+// save
 }
 
 function cancelSelectedMode() {
@@ -389,20 +391,21 @@ var tempList1 = null;
 function getPhotoList () {
 	alert.layer.value = "Background";
 	photoCollectionAlertWithConfirm.layer.value="Background";
-	year.clear();
-	month.clear();
+	
+	// year.clear();
+	// month.clear();
 
-	years.clear();
-	months.clear();
+	// years.clear();
+	// months.clear();
 
 
-	for (var i = 0 ; i < 30 ; i++) {
-		years.add(2010+i);
-	}
+	// for (var i = 0 ; i < 30 ; i++) {
+	// 	years.add(2010+i);
+	// }
 
-	for (var i = 0 ; i < 12 ; i++) {
-		months.add(1+i);
-	}
+	// for (var i = 0 ; i < 12 ; i++) {
+	// 	months.add(1+i);
+	// }
 	
 	photoListFromServer = new Array;
 
