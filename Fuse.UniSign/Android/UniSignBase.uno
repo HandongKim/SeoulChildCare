@@ -108,7 +108,8 @@ namespace Fuse.UniSign.Android
 		[Foreign(Language.Java)]
 		static bool TransInit(Java.Object handle, string licenseKey)
 		@{
-			return ((CertToolkitMgr)handle).transInit(@(Activity.Package).@(Activity.Name).GetRootActivity().getPackageName(), licenseKey, false);
+			//return ((CertToolkitMgr)handle).transInit(@(Activity.Package).@(Activity.Name).GetRootActivity().getPackageName(), licenseKey, false);
+			return CertToolkitMgr.getInstance().transInit("app.ss.accss", null, false);
 		@}
 
 		[Foreign(Language.Java)]
@@ -138,6 +139,7 @@ namespace Fuse.UniSign.Android
 
 		public static void SetAppInfo(string license, out string error)
 		{
+			GetInstance();
 			var ec = new ErrorClosure();
 			SetAppInfo(license, ec.OnError);
 			error = ec.Error;
