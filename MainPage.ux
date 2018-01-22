@@ -13,7 +13,8 @@
 				</Image>
 
 				<Image File="Images/main_btn2.png">
-					<Clicked><Callback Handler="{takePicture}" /></Clicked>
+					<!-- <Clicked><Callback Handler="{takePicture}" /></Clicked> -->
+					<Clicked><Callback Handler="{FuseNativeCameraUX}" /></Clicked>
 				</Image>
 
 				<Image File="Images/main_btn3.png">

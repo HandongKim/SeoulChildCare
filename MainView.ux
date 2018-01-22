@@ -12,6 +12,10 @@
 		var Uploader = require("Uploader");
 		var Backend = require('Backend.js');
 
+		var FuseNativeCamera = require("FuseNativeCamera");
+
+
+
 		var connectingPanelLayout = Observable("Background");
 		var enableClick = Observable("LocalBoundsAndChildren");
 		
@@ -95,6 +99,12 @@
 			return date;
 		}
 
+		function FuseNativeCameraUX () {
+
+			console.log("111111");
+			// FuseNativeCameraUX.showCamera();
+			FuseNativeCamera.showCamera();
+		}
 
 
 		function takePicture()
@@ -334,7 +344,7 @@
 			targetImgPath,
 			sendPicture,
 			sendPictureBtnEnabled, takedPicture,
-			connectingPanelLayout, enableClick,
+			connectingPanelLayout, enableClick, FuseNativeCameraUX,
 			connecting: function() {
 				connectingPanelLayout.value = "Overlay";
 				enableClick.value = "None";

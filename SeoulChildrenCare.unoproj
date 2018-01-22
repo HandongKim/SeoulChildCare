@@ -10,6 +10,7 @@
     "Fuse.ImageTools",
     "Android.ActivityUtils",
     "Fuse.PushNotifications",
+    "Fuse.Launcher"
   ],
   "Includes": [
     "*",
