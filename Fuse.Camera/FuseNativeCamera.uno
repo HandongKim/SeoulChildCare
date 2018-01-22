@@ -5,9 +5,18 @@ using Uno.Collections;
 using Uno.Threading;
 using Uno.Permissions;
 using Uno.Compiler.ExportTargetInterop;
+using Android;
 
 namespace Fuse.Native.Camera {
 
+
+[ForeignInclude(Language.Java,
+                "android.app.Activity",
+                "android.content.Intent",
+                "android.net.Uri",
+                "android.os.Bundle",
+                "android.provider.MediaStore",
+                "java.io.File")]
 	extern(ANDROID) class AndroidCamera
 	{
 		static AndroidCamera()
@@ -32,12 +41,23 @@ namespace Fuse.Native.Camera {
 			debug_log("PREMISSIONS REJECTED: " + e.Message);
 		}
 
+		private static AndroidCamera instance;
+
+
 		[Foreign(Language.Java)]
 		static void InitCamera()
 		@{
 			
 		@}
 
+		public static AndroidCamera Instance {
+			get {
+				if (instance == null) {
+					instance = new AndroidCamera();
+				}
+				return instance;
+			}
+		}
 		//public static AndroidCamera Instance { 
 		//	get { 
 		//		debug_log("AndroidCamera Instance");
@@ -46,13 +66,51 @@ namespace Fuse.Native.Camera {
 		//}
 
 		[Foreign(Language.Java)]
-		public static string ShowCamera()
+		static extern(android) Java.Object nativeIntent()
+		@{
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			return intent;
+		@} 
+
+
+
+		[Foreign(Language.Java)]
+		public void ShowCamera()
 		@{
 			//return showCamera();
-			android.util.Log.d("", "show camera");
-			return null;
+			//카메라 호출
+			debug_log("Show Camera was started");
+
+			
+            //startActivityForResult(intent,1);
+           @{AndroidCamera:Of(_this).StartActivityForCamera():Call()};
+           
+
+
+			//android.util.Log.d("", "show camera");
+			//return null;
 		@}
+
+		bool StartActivityForCamera() 
+		{
+			debug_log("StartActivityForCameraStartActivityForCamera");
+
+			ActivityUtils.StartActivity(nativeIntent(), OnResult);
+			return true;
+		} 
+
+		[Foreign(Language.Java)]
+		extern(android) void OnResult(int resultCode, Java.Object intent, object info)
+		@{
+			debug_log("PREMISSIONS REJECTED: " + resultCode);
+		@}
+
 	}
+
+	
+
+
+	
 
 	extern(iOS) public class iOSCamera
 	{

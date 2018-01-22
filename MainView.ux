@@ -13,7 +13,6 @@
 		var Backend = require('Backend.js');
 
 		var FuseNativeCamera = require("FuseNativeCamera");
-
 		var connectingPanelLayout = Observable("Background");
 		var enableClick = Observable("LocalBoundsAndChildren");
 		

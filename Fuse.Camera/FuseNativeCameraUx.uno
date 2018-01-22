@@ -19,13 +19,14 @@ namespace Fuse.Native.Camera {
 			AddMember(new NativeFunction("getGallery", (NativeCallback)getGallery));
 		}
 
-		string showCamera(Context context, object[] args)
+		object showCamera(Context context, object[] args)
 		{
 			debug_log("show camera in UNO");
-			return FuseNativeCameraAPI.ShowCamera();
+			FuseNativeCameraAPI.ShowCamera();
+			return null;
 		}
 
-		string getGallery(Context context, object[] args)
+		object getGallery(Context context, object[] args)
 		{
 			debug_log("get gallery in UNO");
 			//return FuseNativeCameraAPI.ShowCamera();

@@ -10,13 +10,13 @@ namespace Fuse.Native.Camera {
 
 	public static class FuseNativeCameraAPI
 	{
-		public static string ShowCamera()
+		public static void ShowCamera()
 		{
 			if defined(ANDROID)
 			{
 				debug_log("2018.01.22 ANDROID SHOW CAMERA WAS CALLED");
 
-				return AndroidCamera.ShowCamera();
+				AndroidCamera.Instance.ShowCamera();
 				//if (error != null)
 				//	throw new Exception("Failed to set license: " + error);
 			}
@@ -32,13 +32,13 @@ namespace Fuse.Native.Camera {
 			}
 		}
 
-		public static string GetGallery()
+		public static void GetGallery()
 		{
 			if defined(ANDROID)
 			{
 				debug_log("2018.01.22 ANDROID SHOW CAMERA WAS CALLED");
 
-				return AndroidCamera.ShowCamera();
+				AndroidCamera.Instance.ShowCamera();
 				//if (error != null)
 				//	throw new Exception("Failed to set license: " + error);
 			}
