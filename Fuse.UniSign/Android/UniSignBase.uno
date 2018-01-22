@@ -282,11 +282,7 @@ namespace Fuse.UniSign.Android
 
 
 		public static bool checkThePassword (string password, Java.Object certificate) 
-		{
-			
-			//debug_log("2018.01.01 type of certificate : " + typeof(cert));
-
-			
+		{	
 			return CheckThePassword(password, certificate);
 		}
 
@@ -321,6 +317,17 @@ namespace Fuse.UniSign.Android
 				ret = true;
 			}
     		return ret;
+		@}
+
+
+		public static bool exportCertificate(Java.Object certificate) {
+			return ExportCertificate(certificate);
+		}
+
+		[Foreign(Language.Java)]
+		static bool ExportCertificate(Java.Object certificate) 
+		@{
+			return false;
 		@}
 
 
