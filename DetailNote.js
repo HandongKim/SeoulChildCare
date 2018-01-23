@@ -482,7 +482,7 @@ function initialDataSetting () {
 	// subType.color.clear();
 	// subType.type.clear();
 	// subType.text.clear();
-
+	selectedData.value = "결제방법";
 	// console.log("args.data.index : " + args.data.index);
 	console.log(JSON.stringify(listDetailNotes._values[0]));
 
@@ -681,7 +681,7 @@ var selectedData = Observable("결제방법");
 var pickerData = Observable("카드결제", "아이행복카드", "계좌이체", "자동이체", "지로", "현금결제", "기타");
 
 function pickerUp() {
-	selectedData.value = "카드결제";
+	selectedData.value = "결제방법";
 	pickerOn.value = true;
 }
 
@@ -1396,8 +1396,8 @@ function deleteData () {
 						
 						
 						
-						if (moneyValue.value.includes("-")) {
-							moneyValue.value = moneyValue.value.slice(1);
+						if (selectedDetailNoteVariable.MONEY.includes("-")) {
+							moneyValue.value = moneyValue.value;
 
 							if (selectedDetailNoteVariable.MONEY.includes("-")) {
 								subType.reverse.value = false;
@@ -1423,8 +1423,8 @@ function deleteData () {
 						
 						
 
-						if (moneyValue.value.includes("-")) {
-							moneyValue.value = moneyValue.value.slice(1);
+						if (selectedDetailNoteVariable.MONEY.includes("-")) {
+							moneyValue.value = moneyValue.value;
 
 							if (selectedDetailNoteVariable.MONEY.includes("-")) {
 								subType.reverse.value = false;
