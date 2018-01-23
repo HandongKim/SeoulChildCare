@@ -491,7 +491,7 @@ function getPhotoList () {
 	console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
 
-
+	photoCollectionLoadingCircleOn.value = true;
 	fetch(getMobileRciptListUrl, {
 		method: 'POST',
 		headers: {
@@ -546,16 +546,20 @@ function getPhotoList () {
 					pictures.add(new ServerPicture(imgUrl, i));
 
 					console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
+
+					if (i == photoListFromServer.length-1) {
+						photoCollectionLoadingCircleOn.value = false;
+					}
 				}
 				
 			} else {
 				console.log("isSuccess is failed");
 			}
 			
-            // return response.json();
+            return response.json();
         }).then(function(jsonData) {
-            var data = jsonData.results[0];
-           
+            // var data = jsonData.results[0];
+            
 			// console.log("Reg Succeeded[ios]: " + data.registration_token);
 			// maintext.value = maintext.value + "/n" + data.registration_token;
         }).catch(function(err) {
@@ -901,6 +905,8 @@ function detailNoteMultiSelectApplyPopDown () {
 	detailNoteMultiSelect.layer.value = "Background";
 }
 
+var photoCollectionLoadingCircleOn = Observable(false);
+
 module.exports = {
 	panelType,
 	month, months, pickerOn, pickerUp, pickerDown,year, years, stYearPos, stMonthPos,
@@ -908,5 +914,6 @@ module.exports = {
 	pictures, selectionMode, goToSelectionMode, cancelSelectionMode, toggleSelect, header, deleteSelected,
 	selectedMode, cancelSelectedMode, selectedPicture, activeIndex, photoCollectionAlertWithConfirmGoBack,
 	save, clicked, spicture, getPhotoList,deleteThePicture, alert, takePictureWithParameter, takedPictureWithParamter, getImageWithParameter,
-	photoCollectionAlertWithConfirmGoBackDown, detailNoteMultiSelectApplyPopup, detailNoteMultiSelectApplyPopDown, detailNoteMultiSelect
+	photoCollectionAlertWithConfirmGoBackDown, detailNoteMultiSelectApplyPopup, detailNoteMultiSelectApplyPopDown, detailNoteMultiSelect,
+	photoCollectionLoadingCircleOn
 };

@@ -3,6 +3,18 @@
 
 	<JavaScript File="PhotoCollection.js" />
 
+	<Panel ux:Name="photoCollectionLoadingPanel" Width="100%" Height="100%" Color="#ccc8" Layer="Background">
+		<WhileTrue ux:Name="photoCollectionLoadingTF" Value="{photoCollectionLoadingCircleOn}">
+			<Change photoCollectionLoadingPanel.Layer="Overlay" />
+			<Spin Target="photoCollectionLoadingCircle" Frequency="2" />
+			<Cycle Target="photoCollectionLoadingCircle.LengthAngleDegrees" Low="30" High="300" Frequency="0.7" />
+		</WhileTrue>
+
+		<Circle ux:Name="photoCollectionLoadingCircle" Width="50" Height="50" StartAngleDegrees="0" LengthAngleDegrees="90">
+			<Stroke Width="5" Color="White" />
+		</Circle>
+	</Panel>
+
 	<!-- 증빙추가 클릭시 종류 선택 창 -->
 	<WhileTrue Value="{uploadOn}">
 		<Change selectType.ZOffset="1.1" />
@@ -227,7 +239,11 @@
 						<Tapped>
 							<Callback Handler="{toggleSelect}" />
 						</Tapped>
-						<Image ux:Name="picture" StretchMode="UniformToFill" Url="{resource}" MemoryPolicy="UnloadUnused" />
+						<Image ux:Name="picture" StretchMode="UniformToFill" Url="{resource}" MemoryPolicy="UnloadUnused">
+							<WhileLoading>
+								<Change photoCollectionLoadingTF.Value="true" />
+							</WhileLoading>
+						</Image>
 						<WhileTrue Value="{isSelected}">
 							<!-- <Change picture.Opacity="0.6" /> -->
 							<Change checkmark.Opacity="1" />
