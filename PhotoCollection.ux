@@ -304,8 +304,9 @@
 				<Clicked>
 					<!-- <Callback Handler="{getListDetailNote}" />
 					<Callback Handler="{viewWillAppear}" /> -->
-					<Callback Handler="{goBackToPrevious}" />
-
+					<Callback Handler="{cancelSelectedMode}" />
+					<Callback Handler="{photoCollectionAlertWithConfirmGoBackDown}" />
+					<Callback Handler="{getPhotoList}" />
 				</Clicked>
 			</BlueButton>
 		</Panel>

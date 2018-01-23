@@ -882,7 +882,9 @@ var photoCollectionAlertWithConfirmGoBack = {
 	layer: Observable("Background")
 };
 
-
+function photoCollectionAlertWithConfirmGoBackDown() {
+	photoCollectionAlertWithConfirmGoBack.layer.value = "Background";
+}
 
 
 module.exports = {
@@ -891,5 +893,6 @@ module.exports = {
 	uploadOn, tryUpload, cancelUpload, photoCollectionAlertWithConfirm,
 	pictures, selectionMode, goToSelectionMode, cancelSelectionMode, toggleSelect, header, deleteSelected,
 	selectedMode, cancelSelectedMode, selectedPicture, activeIndex, photoCollectionAlertWithConfirmGoBack,
-	save, clicked, spicture, getPhotoList,deleteThePicture, alert, takePictureWithParameter, takedPictureWithParamter, getImageWithParameter
+	save, clicked, spicture, getPhotoList,deleteThePicture, alert, takePictureWithParameter, takedPictureWithParamter, getImageWithParameter,
+	photoCollectionAlertWithConfirmGoBackDown
 };
