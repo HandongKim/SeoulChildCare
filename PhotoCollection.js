@@ -603,8 +603,8 @@ function deleteThePicture() {
 			var isSuccess = message.MiResultMsg;
 
 			if (isSuccess == "success") {
-				alert.layer.value="Overlay";
-				alert.message.value="성공했습니다";
+				photoCollectionAlertWithConfirmGoBack.layer.value="Overlay";
+				photoCollectionAlertWithConfirmGoBack.message.value="성공했습니다";
 			}
 			
             // return response.json();
@@ -875,11 +875,21 @@ var photoCollectionAlertWithConfirm = {
 };
 
 
+var photoCollectionAlertWithConfirmGoBack = {
+	title: Observable(""),
+	message: Observable(""),
+	type: Observable("Check"),
+	layer: Observable("Background")
+};
+
+
+
+
 module.exports = {
 	panelType,
 	month, months, pickerOn, pickerUp, pickerDown,year, years, stYearPos, stMonthPos,
 	uploadOn, tryUpload, cancelUpload, photoCollectionAlertWithConfirm,
 	pictures, selectionMode, goToSelectionMode, cancelSelectionMode, toggleSelect, header, deleteSelected,
-	selectedMode, cancelSelectedMode, selectedPicture, activeIndex,
+	selectedMode, cancelSelectedMode, selectedPicture, activeIndex, photoCollectionAlertWithConfirmGoBack,
 	save, clicked, spicture, getPhotoList,deleteThePicture, alert, takePictureWithParameter, takedPictureWithParamter, getImageWithParameter
 };

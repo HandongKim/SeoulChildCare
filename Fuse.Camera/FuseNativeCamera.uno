@@ -16,7 +16,18 @@ namespace Fuse.Native.Camera {
                 "android.net.Uri",
                 "android.os.Bundle",
                 "android.provider.MediaStore",
-                "java.io.File")]
+                "java.io.File",
+                "android.os.Bundle",
+                "android.graphics.Bitmap",
+                "android.graphics.Canvas",
+                "android.graphics.Paint",
+                "android.graphics.ColorMatrix",
+                "android.graphics.ColorMatrixColorFilter",
+                "android.graphics.Bitmap.Config",
+                "android.content.ContextWrapper",
+                "java.io.FileOutputStream",
+                "android.content.Context",
+                "java.lang.Exception")]
 	extern(ANDROID) class AndroidCamera
 	{
 		static AndroidCamera()
@@ -103,6 +114,51 @@ namespace Fuse.Native.Camera {
 		extern(android) void OnResult(int resultCode, Java.Object intent, object info)
 		@{
 			debug_log("PREMISSIONS REJECTED: " + resultCode);
+			Bundle bundle = ((Intent)intent).getExtras();
+			Bitmap photo = bundle.getParcelable("data");
+
+
+			Bitmap bmpGrayscale = Bitmap.createBitmap(photo.getWidth(), photo.getHeight(), Config.ARGB_8888);
+
+	        Canvas c = new Canvas(bmpGrayscale);
+	        Paint paint = new Paint();
+	        ColorMatrix cm = new ColorMatrix();
+	        cm.setSaturation(0);
+	        ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
+	        paint.setColorFilter(f);
+	        c.drawBitmap(photo, 0, 0, paint);
+
+        	
+
+
+			//ContextWrapper cw = new ContextWrapper(getApplicationContext());
+         	// path to /data/data/yourapp/app_data/imageDir
+        	//File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        	// Create imageDir
+        //	File mypath=new File(directory,"profile.jpg");
+
+        //	FileOutputStream fos = null;
+        //	try {           
+         //   	fos = new FileOutputStream(mypath);
+       	//		// Use the compress method on the BitMap object to write image to the OutputStream
+        //    	bmpGrayscale.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        //	} catch (Exception e) {
+         //     e.printStackTrace();
+        //	} finally {
+         //   	try {
+         //     		fos.close();
+         //   	} catch (Exception e) {
+         //     		e.printStackTrace();
+         //   	}
+        //	}	 
+        
+        	//return directory.getAbsolutePath();
+
+
+
+
+
+
 		@}
 
 	}

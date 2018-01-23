@@ -15,7 +15,7 @@ namespace Fuse.Native.Camera {
 			if defined(ANDROID)
 			{
 				debug_log("2018.01.22 ANDROID SHOW CAMERA WAS CALLED");
-
+				
 				AndroidCamera.Instance.ShowCamera();
 				//if (error != null)
 				//	throw new Exception("Failed to set license: " + error);

@@ -22,6 +22,9 @@ namespace Fuse.Native.Camera {
 		object showCamera(Context context, object[] args)
 		{
 			debug_log("show camera in UNO");
+
+			debug_log("Context : " + context);
+
 			FuseNativeCameraAPI.ShowCamera();
 			return null;
 		}

@@ -106,82 +106,96 @@
 
 		function takePicture()
 		{
-			dateTime = getDatesInString();			
+			
 
-			Camera.takePicture().then(function(image)
-			{
-				// 찍은 사진 리사이징하기
-				// 이미지 사이즈 다시 줄이실 때는 아래 두줄 주석 지우세요.
-				// var args = { desiredWidth:480, desiredHeight:640 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
-				// ImageTools.resize(image, args).then(function(resizedImage) {
-					// 리사이징한 사진 savepanel3에 표시
-					// 다시 사이즈 줄이실 때는 image.path 를 resizedImage.path로 바꾸세요.
-					takedPicture.value = image.path;
-					// targetImgPath.value = resizedImage.path;
-					sendPictureBtnEnabled.value = true;
-					// 리사이징한 사진 저정부분은 삭제
-					// CameraRoll.publishImage(resizedImage);
-					// console.log("picture was saved");
 
-					// 리사이징한 이미지 흑백으로 변환
-					
+			if(Environment.ios) {
+				dateTime = getDatesInString();			
 
-					console.log("dateTime : " + dateTime);
+				Camera.takePicture().then(function(image)
+				{
+					// 찍은 사진 리사이징하기
+					// 이미지 사이즈 다시 줄이실 때는 아래 두줄 주석 지우세요.
+					// var args = { desiredWidth:480, desiredHeight:640 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
+					// ImageTools.resize(image, args).then(function(resizedImage) {
+						// 리사이징한 사진 savepanel3에 표시
+						// 다시 사이즈 줄이실 때는 image.path 를 resizedImage.path로 바꾸세요.
+						takedPicture.value = image.path;
+						// targetImgPath.value = resizedImage.path;
+						sendPictureBtnEnabled.value = true;
+						// 리사이징한 사진 저정부분은 삭제
+						// CameraRoll.publishImage(resizedImage);
+						// console.log("picture was saved");
 
-					// var imageName = dateTime + ".png";
-					var imageName = dateTime + ".jpg";
-					console.log("Image Name : " + imageName);
+						// 리사이징한 이미지 흑백으로 변환
+						// console.log("type of image ===> "  +tyoeof(image));
 
-					savepanel3.save(imageName);
-					console.log("make image");
-					var saveDir = "";
-					if (Environment.ios) {
-						saveDir = FileSystem.iosPaths.documents;
-					} else if (Environment.android) {
-						// console.log(FileSystem.androidPaths.files);
-						saveDir = FileSystem.androidPaths.files;
-					}
-					var arrayBuff;
 
-					console.log("saveDir : " +saveDir);
-					
-					setTimeout(function() {
 
+
+
+						console.log("dateTime : " + dateTime);
+
+						// var imageName = dateTime + ".png";
+						var imageName = dateTime + ".jpg";
+						console.log("Image Name : " + imageName);
+
+						savepanel3.save(imageName);
+						console.log("make image");
+						var saveDir = "";
+						if (Environment.ios) {
+							saveDir = FileSystem.iosPaths.documents;
+						} else if (Environment.android) {
+							// console.log(FileSystem.androidPaths.files);
+							saveDir = FileSystem.androidPaths.files;
+						}
+						var arrayBuff;
+
+						console.log("saveDir : " +saveDir);
 						
+						setTimeout(function() {
+
+							
 
 
-						FileSystem.readBufferFromFile(saveDir+"/"+imageName).then(function(image) {
-							console.log("read success");
-							arrayBuff = image;
-							// console.log(JSON.stringify(arrayBuff));
-							ImageTools.getImageFromBuffer(arrayBuff).then(function(image) {
-								console.log("Scratch image path is: " + image.path);
-								// 흑백으로 변한사진 카메라롤에 저장
-								CameraRoll.publishImage(image).then(function(x) {
-									console.log("save success");
-									targetImgPath.value = saveDir + "/"+imageName;
-									sendPicture();
-									FileSystem.delete(saveDir+"/"+imageName).then(function() {
-										console.log("delete success");
-									});								
-									takedPicture.value = "";
-								}, function(error) {
-									console.log("error : " );
+							FileSystem.readBufferFromFile(saveDir+"/"+imageName).then(function(image) {
+								console.log("read success");
+								arrayBuff = image;
+								// console.log(JSON.stringify(arrayBuff));
+								ImageTools.getImageFromBuffer(arrayBuff).then(function(image) {
+									console.log("Scratch image path is: " + image.path);
+									// 흑백으로 변한사진 카메라롤에 저장
+									CameraRoll.publishImage(image).then(function(x) {
+										console.log("save success");
+										targetImgPath.value = saveDir + "/"+imageName;
+										sendPicture();
+										FileSystem.delete(saveDir+"/"+imageName).then(function() {
+											console.log("delete success");
+										});								
+										takedPicture.value = "";
+									}, function(error) {
+										console.log("error : " );
+									});
 								});
+							}, function(error) {
+								console.log(error);
 							});
-						}, function(error) {
-							console.log(error);
-						});
-					}, 6000);
+						}, 6000);
 
-					// sendPicture();
-				// 이미지 사이즈 다시 줄이실 때는 아래 세줄 주석 지우세요.
-				// }).catch(function(reason) {
-				// 	console.log("Couldn't resize image: " + reason);
-				// });
-			}).catch(function(reason) {
-				console.log("Couldn't take picture: " + reason);
-			});
+						// sendPicture();
+					// 이미지 사이즈 다시 줄이실 때는 아래 세줄 주석 지우세요.
+					// }).catch(function(reason) {
+					// 	console.log("Couldn't resize image: " + reason);
+					// });
+				}).catch(function(reason) {
+					console.log("Couldn't take picture: " + reason);
+				});
+
+			}else if (Environment.android) {
+				FuseNativeCameraUX();
+			}
+
+
 		};
 
 		function sendPicture()
