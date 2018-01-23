@@ -585,9 +585,7 @@ function deleteThePicture() {
 	console.log('jsonParam : ' + jsonParam);
 	console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));
 
-
 	var deleteMapngReceipt_URL = Backend.BASE_URL + Backend.deleteMapngReceipt_URL;
-
 	fetch(deleteMapngReceipt_URL, {
 		method: 'POST',
 		headers: {

@@ -264,9 +264,9 @@
     			console.log("Launched with URI", uri);
 			});
 
-			// InterApp.launchUri("http://www.aseoul.co.kr/education/applyMap.do");
+			InterApp.launchUri("http://www.aseoul.co.kr/education/applyMap.do");
 
-			InterApp.launchUri("https://m.map.daum.net/actions/searchView?q=온앤온정보시스템#!/11968772/map/place");
+			// InterApp.launchUri("https://m.map.daum.net/actions/searchView?q=온앤온정보시스템#!/11968772/map/place");
 
 		}
 		

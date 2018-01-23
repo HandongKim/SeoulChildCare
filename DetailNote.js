@@ -205,7 +205,12 @@ function note(arg, noteIndex) {
 	this.reverse = false;
 	if (arg.BILL_IDX !=null && arg.CASH_GB !=null) {
 		if (arg.CASH_GB != arg.ESTI_CODE.substr(0,1)){
-			this.reverse = true;
+
+			if(arg.MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").includes("-")) {
+				this.reverse = true;	
+			}else {
+				this.reverse = false;	
+			}
 		}
 	}
 
@@ -1387,24 +1392,54 @@ function deleteData () {
 				
 				try {
 					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
-						subType.reverse.value = true;
+						
+						
+						
 						
 						if (moneyValue.value.includes("-")) {
 							moneyValue.value = moneyValue.value.slice(1);
+
+							if (selectedDetailNoteVariable.MONEY.includes("-")) {
+								subType.reverse.value = false;
+							}else {
+								subType.reverse.value = true;		
+							}
+
+
 						}else {
 							moneyValue.value = "-" + moneyValue.value;
+
+							if (selectedDetailNoteVariable.MONEY.includes("-")) {
+								subType.reverse.value = false;
+							}else {
+								subType.reverse.value = true;	
+							}
 						}
 
 
 
 
 					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
-						subType.reverse.value = true;
+						
+						
 
 						if (moneyValue.value.includes("-")) {
 							moneyValue.value = moneyValue.value.slice(1);
+
+							if (selectedDetailNoteVariable.MONEY.includes("-")) {
+								subType.reverse.value = false;
+							}else {
+								subType.reverse.value = true;	
+							}
+
 						}else {
 							moneyValue.value = "-" + moneyValue.value;
+
+							if (selectedDetailNoteVariable.MONEY.includes("-")) {
+								subType.reverse.value = false;
+							}else {
+								subType.reverse.value = true;	
+							}
 						}
 
 					} else {
@@ -1623,15 +1658,6 @@ function sendPictureWithParamterDetailNote(yearAndMonth)
 		
 		console.log("DetailNote response.ATCHMNFL_IDX : " + JSON.parse(response).ATCHMNFL_IDX);
 
-		// console.log("pictureArray : " + JSON.stringify(pictureArray._values));
-
-		// // pictureArray.add(new chosenPictures(JSON.parse(response).ATCHMNFL_IDX));
-
-		// console.log("pictureArray : " + JSON.stringify(pictureArray._values));
-
-
-
-
 		if (JSON.parse(response).MiResultMsg == "success") {
 			// pictureArray.add(JSON.parse(response).ATCHMNFL_IDX);
 			pictureArray = JSON.parse(response).ATCHMNFL_IDX;
@@ -1683,6 +1709,8 @@ var margin = Observable();
 function placed(args) {
 	margin.value = args.width / 25;
 }
+
+var loadingCircle = Observable(true);
 
 //==========================================  사진 부분 ==========================================================
 
@@ -1740,5 +1768,6 @@ function chosenPictures (args) {
 
 
 				router.push("ShowFile", infoJSON);
-			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, getImageWithParameterDetailNote
+			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, 
+			getImageWithParameterDetailNote, loadingCircle
 		};

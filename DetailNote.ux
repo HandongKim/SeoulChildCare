@@ -543,6 +543,13 @@
 		</Image>
 </SavePanel>
 
+<WhileTrue Value="{loadingCircle}">
+	<Spin Target="loadingCircle" Frequency="2" />
+	<Cycle Target="loadingCircle.LengthAngleDegrees" Low="30" High="300" Frequency="0.7" />
+</WhileTrue>
 
+<Circle ux:Name="loadingCircle" Width="50" Height="50" StartAngleDegrees="0" LengthAngleDegrees="90">
+	<Stroke Width="5" Color="White" />
+</Circle>
 
 </Page>
