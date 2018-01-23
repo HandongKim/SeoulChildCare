@@ -302,7 +302,6 @@
 				//2018.01.16 기존소스 끝
 				console.log("router.goBack was callled");
 				router.goBack();
-
 			},
 			goNoteManage: function() {
 				router.push("NoteManage");

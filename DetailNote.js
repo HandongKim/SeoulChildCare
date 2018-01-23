@@ -269,18 +269,73 @@ function selectedDetailNote(args) {
 }
 
 
-var isItFromNoteManage = this.Parameter.isFromNoteManage;
+// var isItFromNoteManage = null;
+// isItFromNoteManage = this.Parameter;
 
-var fromNote = isItFromNoteManage.map(function(x) { 
-		return x.isItFromNoteManagel
-	});
+var isItFromNoteManageTrueOrFalse = false;
+
+Backend.isItFromNoteManage.onValueChanged(null, function(x) {
+
+	console.log("Backend.isItFromNoteManage was onValueChanged!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	console.log("Backend.isItFromNoteManage was onValueChanged : " + x);
+	isItFromNoteManageTrueOrFalse = x;
+
+
+});
+
+
+
+
+
+
+
+// var fromNote = isItFromNoteManage.map(function(x) {
+// 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+// 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+// 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+// 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+// 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+// 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+// 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
+// 	if (isItFromNoteManage !=null) {
+
+
+// 		console.log("!@#$%^&*(!@#$%^&*(!@#$%^&*(!@#$%^&*(!@#$%^&*(!@#$%^&*(!@#$%^&*(");
+// 		console.log("x.isFromNoteManage.value : " + x.isFromNoteManage.value);
+
+
+// 		return x.isFromNoteManage;
+// 	}else {
+
+// 		return false;
+// 	}
+// });
 
 function getListDetailNote () {
 	alertWithConfirm.layer.value = "Background";
 	console.log("getListDetailNote was called on 23rd Jan 2018");
 
+	console.log("Backend.isItFromNoteManage was onValueChanged : " + Backend.isItFromNoteManage.value);
 
-	console.log("isItFromNoteManage : " + fromNote);
+
+	// if (fromNote != null) {
+
+	// 	if (fromNote.value == true) {
+	// 		console.log("isFromNoteManage YES");
+	// 		isItFromNoteManage = null;
+	// 		fromNote = null;
+
+	// 	} else {
+	// 		console.log("NONONONONONON");
+	// 	}
+	
+	// } else {
+	// 	console.log("fromNOte is null");
+	// }
+
+
+
 
 // 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
 	// var temp = 	isItFromNoteManage.map(function(x) { 
@@ -393,9 +448,10 @@ function getListDetailNote () {
 			}
 
 
-			// if (cameFromChoiceSubject == false){
-			// 	 initialDataSetting();
-			// }
+			if (isItFromNoteManageTrueOrFalse == true){
+				 initialDataSetting();
+				 isItFromNoteManageTrueOrFalse =false;
+			}
 				
 
 
@@ -1315,6 +1371,9 @@ function deleteData () {
 		//2018.01.16 기존 소스 시작
 		Backend.subject.ESTI_CODE.onValueChanged(null, function(x) {
 
+			console.log("Backend.subject.ESTI_CODE was onValueChanged!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+
 			console.log("x.stringify 2018.01.06 : " + JSON.stringify(x));
 
 			console.log("notes._values[tempIndex] : " + JSON.stringify(notes._values[tempIndex]));
@@ -1670,6 +1729,5 @@ function chosenPictures (args) {
 
 
 				router.push("ShowFile", infoJSON);
-			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, getImageWithParameterDetailNote,
-			fromNote
+			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, getImageWithParameterDetailNote
 		};

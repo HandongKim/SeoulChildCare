@@ -308,9 +308,9 @@ function selectSubject(arg) {
 		// router.goBack();
 
 
-			choiceSubjectAlertWithConfirm.message.value = "선택 되었습니다.";
-			choiceSubjectAlertWithConfirm.layer.value = "Overlay";
-
+		choiceSubjectAlertWithConfirm.message.value = "선택 되었습니다.";
+		choiceSubjectAlertWithConfirm.layer.value = "Overlay";
+		Backend.isItFromNoteManage.value = false;
 		
 
 

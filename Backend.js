@@ -9,6 +9,7 @@ var Observable = require('FuseJS/Observable');
 
 var BASE_URL = "http://112.218.172.44:51432";
 
+var isItFromNoteManage = Observable(false);
 
 
 //로그인 URL
@@ -218,5 +219,5 @@ module.exports = {
 	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, 
 	getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
 	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, 
-	selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject, yearAndMonthFromPhotoCollection
+	selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject, yearAndMonthFromPhotoCollection, isItFromNoteManage
 };

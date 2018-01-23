@@ -914,9 +914,12 @@ function goDetailNote2 (arg) {
 
   	// var infoJSON = 
 
-	
+  	console.log("	Backend.isItFromNoteMange.value  " + 	Backend.isItFromNoteManage.value);
 
-	router.push("DetailNote", {isFromNoteManage:true});
+
+	Backend.isItFromNoteManage.value = true;
+
+	router.push("DetailNote");
 
 
 
