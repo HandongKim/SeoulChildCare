@@ -1385,24 +1385,37 @@ function deleteData () {
 			// if ((x != null) && (notes._values[tempIndex] != null)) {
 			if (x != null) {
 				
-
-
 				try {
 					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 						subType.reverse.value = true;
-						moneyValue.value = "-" + moneyValue.value;
+						
+						if (moneyValue.value.includes("-")) {
+							moneyValue.value = moneyValue.value.slice(1);
+						}else {
+							moneyValue.value = "-" + moneyValue.value;
+						}
+
+
+
+
 					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
 						subType.reverse.value = true;
-						moneyValue.value = "-" +  moneyValue.value;
+
+						if (moneyValue.value.includes("-")) {
+							moneyValue.value = moneyValue.value.slice(1);
+						}else {
+							moneyValue.value = "-" + moneyValue.value;
+						}
+
 					} else {
 						subType.reverse.value = false;
 					}
 					console.log("now type : " + notes._values[tempIndex].type);
 					console.log("ESTI_CODE Changed : " + x.substr(0,1));
 					console.log("reverse state : " + subType.reverse.value);
-				}catch (err){
+				} catch (err){
 					console.log(err);
-				}finally {
+				} finally {
 
 				}
 			}
@@ -1422,8 +1435,6 @@ var pictureArray = null;
 var isPictureTaken  = null;
 
 var print = debug_log;
- "/acusr/acc/bil/MobileReceiptImgUpload.do"
-
 // var uploadUrl = 'http://61.97.121.199:8080/TEST/ImgUploadTest.jsp';// 서버 IP를 변경하세요.
 
 var uploadUrl = Backend.BASE_URL + "/acusr/acc/bil/MobileReceiptImgUpload.do" ;// 서버 IP를 변경하세요.

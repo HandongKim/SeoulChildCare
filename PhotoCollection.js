@@ -604,7 +604,7 @@ function deleteThePicture() {
 
 			if (isSuccess == "success") {
 				photoCollectionAlertWithConfirmGoBack.layer.value="Overlay";
-				photoCollectionAlertWithConfirmGoBack.message.value="성공했습니다";
+				photoCollectionAlertWithConfirmGoBack.message.value="삭제 되었습니다";
 			}
 			
             // return response.json();
@@ -882,10 +882,26 @@ var photoCollectionAlertWithConfirmGoBack = {
 	layer: Observable("Background")
 };
 
+
+var detailNoteMultiSelect = {
+	title: Observable(""),
+	message: Observable(""),
+	type: Observable("Check"),
+	layer: Observable("Background")
+}
+
 function photoCollectionAlertWithConfirmGoBackDown() {
 	photoCollectionAlertWithConfirmGoBack.layer.value = "Background";
 }
 
+function detailNoteMultiSelectApplyPopup () {
+	detailNoteMultiSelect.message.value = "선택된 이미지가 적용되었습니다.";
+	detailNoteMultiSelect.layer.value = "Overlay";
+}
+
+function detailNoteMultiSelectApplyPopDown () {
+	detailNoteMultiSelect.layer.value = "Background";
+}
 
 module.exports = {
 	panelType,
@@ -894,5 +910,5 @@ module.exports = {
 	pictures, selectionMode, goToSelectionMode, cancelSelectionMode, toggleSelect, header, deleteSelected,
 	selectedMode, cancelSelectedMode, selectedPicture, activeIndex, photoCollectionAlertWithConfirmGoBack,
 	save, clicked, spicture, getPhotoList,deleteThePicture, alert, takePictureWithParameter, takedPictureWithParamter, getImageWithParameter,
-	photoCollectionAlertWithConfirmGoBackDown
+	photoCollectionAlertWithConfirmGoBackDown, detailNoteMultiSelectApplyPopup, detailNoteMultiSelectApplyPopDown, detailNoteMultiSelect
 };
