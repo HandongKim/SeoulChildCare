@@ -23,7 +23,7 @@ namespace Fuse.Native.Camera {
 			else if defined(iOS)
 			{
 				debug_log("2018.01.22 iOS SHOW CAMERA WAS CALLED");
-				return iOSCamera.ShowCamera();
+				//return iOSCamera.ShowCamera();
 			}
 			else
 			{
@@ -45,7 +45,7 @@ namespace Fuse.Native.Camera {
 			else if defined(iOS)
 			{
 				debug_log("2018.01.22 iOS SHOW CAMERA WAS CALLED");
-				return iOSCamera.ShowCamera();
+				//return iOSCamera.ShowCamera();
 			}
 			else
 			{

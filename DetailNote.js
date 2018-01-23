@@ -269,15 +269,23 @@ function selectedDetailNote(args) {
 }
 
 
+var isItFromNoteManage = this.Parameter.isFromNoteManage;
+
+var fromNote = isItFromNoteManage.map(function(x) { 
+		return x.isItFromNoteManagel
+	});
 
 function getListDetailNote () {
 	alertWithConfirm.layer.value = "Background";
-// console.log("testAPI clicked ");
-// var dsParam = '{"BILLDATE":"20170301","ESTICODE":"1090101","FROMDATE" :"20170201","GVAREACODE" :"11110","GVBOOKGB":"01","GVESTIYEAR":"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID" :"10009987", "GVORGCLSS" :"5","GVUSERCLSS" :"2","PERESTIYEAR" :"2016","TODATE" :"20170229"}';
-// var dsSearch = '{"SEARCH_ESTI":"", "SEARCH_FROM":"","SEARCH_BIGO":"","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_GB":"Y","SEARCH_MEMO":"","SEARCH_MONTH":"201712","SEARCH_TO":""}';
-// var dsSearch = '{"SEARCH_GB":"Y","SEARCH_TO":"","GVMEMCODE":"SEOUL000000000000121","GVBOOKGB":"01","SEARCH_BILLGB":"","SEARCH_ESTISUB":"","SEARCH_ESTI":"", "SEARCH_FROM":"", "GVMEMID":"9999990","SEARCH_MONTH":"201712","SEARCH_BIGO":"","GVESTIYEAR":"2017","SEARCH_MEMO":""}';
+	console.log("getListDetailNote was called on 23rd Jan 2018");
+
+
+	console.log("isItFromNoteManage : " + fromNote);
+
 // 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
-		
+	// var temp = 	isItFromNoteManage.map(function(x) { 
+	// 	console.log("x.isFromNoteManage : " + x.isFromNoteManage); 
+	// });
 
 	// router.getRoute(function(route) {
 	// 	console.log("goBackToPrevious From " + route[0]);
@@ -1662,5 +1670,6 @@ function chosenPictures (args) {
 
 
 				router.push("ShowFile", infoJSON);
-			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, getImageWithParameterDetailNote
+			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, getImageWithParameterDetailNote,
+			fromNote
 		};

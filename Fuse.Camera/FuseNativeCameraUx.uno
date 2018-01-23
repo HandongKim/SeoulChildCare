@@ -25,7 +25,7 @@ namespace Fuse.Native.Camera {
 
 			debug_log("Context : " + context);
 
-			//FuseNativeCameraAPI.ShowCamera();
+			FuseNativeCameraAPI.ShowCamera();
 			return null;
 		}
 

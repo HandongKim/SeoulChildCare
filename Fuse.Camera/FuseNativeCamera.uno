@@ -27,7 +27,7 @@ namespace Fuse.Native.Camera {
                 "android.content.ContextWrapper",
                 "java.io.FileOutputStream",
                 "android.content.Context",
-                "java.lang.Exception")]
+                "java.lang.Exception","android.os.Environment")]
 	extern(ANDROID) class AndroidCamera
 	{
 		static AndroidCamera()
@@ -117,9 +117,7 @@ namespace Fuse.Native.Camera {
 			Bundle bundle = ((Intent)intent).getExtras();
 			Bitmap photo = bundle.getParcelable("data");
 
-
 			Bitmap bmpGrayscale = Bitmap.createBitmap(photo.getWidth(), photo.getHeight(), Config.ARGB_8888);
-
 	        Canvas c = new Canvas(bmpGrayscale);
 	        Paint paint = new Paint();
 	        ColorMatrix cm = new ColorMatrix();
@@ -130,27 +128,49 @@ namespace Fuse.Native.Camera {
 
         	
 
+	        String root = Environment.getExternalStorageDirectory().toString();
+        	File myDir = new File(root);
+        	String fname = "Image-" + "image_name"+ ".jpg";
+        	myDir.mkdirs();
 
-			//ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        	  File filefefef = new File(myDir, fname);
+
+
+			ContextWrapper cw = new ContextWrapper(com.fuse.Activity.getRootActivity().getApplicationContext());
          	// path to /data/data/yourapp/app_data/imageDir
-        	//File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        	// Create imageDir
-        //	File mypath=new File(directory,"profile.jpg");
+        	File directory = cw.getDir("imageDir", com.fuse.Activity.getRootActivity().MODE_PRIVATE);
 
-        //	FileOutputStream fos = null;
-        //	try {           
-         //   	fos = new FileOutputStream(mypath);
+        	directory = "data/app.ss.accss/imageDir";
+
+        	// Create imageDir
+        	File mypath = new File(directory,"profile.jpg");
+
+        	FileOutputStream fos = null;
+        	try {           
+            	fos = new FileOutputStream(filefefef);
        	//		// Use the compress method on the BitMap object to write image to the OutputStream
-        //    	bmpGrayscale.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        //	} catch (Exception e) {
-         //     e.printStackTrace();
-        //	} finally {
-         //   	try {
-         //     		fos.close();
-         //   	} catch (Exception e) {
-         //     		e.printStackTrace();
-         //   	}
-        //	}	 
+            	bmpGrayscale.compress(Bitmap.CompressFormat.PNG, 100, fos);
+
+
+			String strFileSize = null;
+        	if (filefefef.exists() )
+
+			{
+			      long lFileSize = filefefef.length();
+			     strFileSize = Long.toString(lFileSize) + " bytes";
+				debug_log("strFileSize ==> " + strFileSize);
+			}
+        	} catch (Exception e) {
+        		debug_log("ERROR OCCURRED WHILE MAKING IT GRAY");
+              e.printStackTrace();
+        	} finally {
+            	try {
+            		fos.flush();
+              		fos.close();
+            	} catch (Exception e) {
+              		e.printStackTrace();
+            	}
+        	}	 
         
         	//return directory.getAbsolutePath();
 

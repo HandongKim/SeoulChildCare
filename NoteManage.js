@@ -191,9 +191,6 @@ function pickedSelectOnlineBCashListIndividualData (args) {
 	this.BCASH_MONEY = args.BCASH_MONEY;
 }
 
-
-
-
 var selectOnlineBCashList_URL = Backend.BASE_URL + Backend.selectOnlineBCashList_URL;
 
 
@@ -915,13 +912,11 @@ function goDetailNote2 (arg) {
 	Backend.subject.name.value = "계정과목 선택";
     Backend.subject.isChoice.value = false;
 
-  	var infoJSON = {
-		isFromNoteManage:true
-	}
+  	// var infoJSON = 
 
 	
 
-	router.push("DetailNote", infoJSON);
+	router.push("DetailNote", {isFromNoteManage:true});
 
 
 
