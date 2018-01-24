@@ -107,7 +107,7 @@
 			
 
 
-			if(Environment.ios) {
+			// if(Environment.ios) {
 				dateTime = getDatesInString();			
 
 				Camera.takePicture().then(function(image)
@@ -189,9 +189,9 @@
 					console.log("Couldn't take picture: " + reason);
 				});
 
-			}else if (Environment.android) {
-				FuseNativeCameraUX();
-			}
+			// }else if (Environment.android) {
+			// 	FuseNativeCameraUX();
+			// }
 
 
 		};
@@ -319,6 +319,7 @@
 				// 		router.goto("MainPage");		
 				// 	}
 				// })
+				console.log("goMainPageFromAnywheregoMainPageFromAnywheregoMainPageFromAnywheregoMainPageFromAnywhere");
 				router.goto("MainPage");		
 			},
 

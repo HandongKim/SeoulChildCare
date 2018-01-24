@@ -140,7 +140,7 @@ namespace Fuse.Native.Camera {
          	// path to /data/data/yourapp/app_data/imageDir
         	File directory = cw.getDir("imageDir", com.fuse.Activity.getRootActivity().MODE_PRIVATE);
 
-        	directory = "data/app.ss.accss/imageDir";
+        	//directory = "data/app.ss.accss/imageDir";
 
         	// Create imageDir
         	File mypath = new File(directory,"profile.jpg");

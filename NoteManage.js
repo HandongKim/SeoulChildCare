@@ -337,7 +337,7 @@ function note(arg, noteIndex) {
 
 		if (arg.CASH_GB != arg.ESTI_CODE.substr(0,1)) {
 		
-			if (arg.BCASH_MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").includes("-")) {
+			if (arg.BCASH_MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").toString().includes("-")) {
 				this.reverse=true;
 			} else {
 				this.reverse=false;

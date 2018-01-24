@@ -187,7 +187,7 @@ function note(arg, noteIndex) {
 
 	this.money = arg.MONEY;
 	if(this.money != null) {
-		this.money = this.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+		this.money = this.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	if (arg.MONEY == "A02") {
 		this.isBill = true;
@@ -206,7 +206,7 @@ function note(arg, noteIndex) {
 	if (arg.BILL_IDX !=null && arg.CASH_GB !=null) {
 		if (arg.CASH_GB != arg.ESTI_CODE.substr(0,1)){
 
-			if(arg.MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").includes("-")) {
+			if(arg.MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").toString().includes("-")) {
 				this.reverse = true;	
 			}else {
 				this.reverse = false;	
@@ -1389,17 +1389,17 @@ function deleteData () {
 
 			// if ((x != null) && (notes._values[tempIndex] != null)) {
 			if (x != null) {
-				
+				console.log("%%%%%%%%%%%%%%%%%% X value is not null %%%%%%%%%%%%%%%%%%");
 				try {
 					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 						
+						console.log("notes._values[tempIndex].type == inMoney && x.substr(0,1) == 2");	
 						
 						
-						
-						if (selectedDetailNoteVariable.MONEY.includes("-")) {
+						if (selectedDetailNoteVariable.MONEY.toString().includes("-")) {
 							moneyValue.value = moneyValue.value;
 
-							if (selectedDetailNoteVariable.MONEY.includes("-")) {
+							if (selectedDetailNoteVariable.MONEY.toString().includes("-")) {
 								subType.reverse.value = false;
 							}else {
 								subType.reverse.value = true;		
@@ -1409,7 +1409,7 @@ function deleteData () {
 						}else {
 							moneyValue.value = "-" + moneyValue.value;
 
-							if (selectedDetailNoteVariable.MONEY.includes("-")) {
+							if (selectedDetailNoteVariable.MONEY.toString().includes("-")) {
 								subType.reverse.value = false;
 							}else {
 								subType.reverse.value = true;	
@@ -1421,28 +1421,42 @@ function deleteData () {
 
 					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
 						
-						
+						console.log("notes._values[tempIndex].type == outMoney && x.substr(0,1) == 1");
+						console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
 
-						if (selectedDetailNoteVariable.MONEY.includes("-")) {
+					
+
+
+
+						if (selectedDetailNoteVariable.MONEY.toString().includes("-")) {
+							console.log("1111111111111111111111111");
 							moneyValue.value = moneyValue.value;
 
-							if (selectedDetailNoteVariable.MONEY.includes("-")) {
+							if (selectedDetailNoteVariable.MONEY.toString().includes("-")) {
+								console.log("2222222222222222222222");
 								subType.reverse.value = false;
 							}else {
+								console.log("33333333333333333333333333");
 								subType.reverse.value = true;	
 							}
 
 						}else {
 							moneyValue.value = "-" + moneyValue.value;
-
-							if (selectedDetailNoteVariable.MONEY.includes("-")) {
+								console.log("44444444444444444444444444444");
+							if (selectedDetailNoteVariable.MONEY.toString().includes("-")) {
+								console.log("555555555555555555555555555555");
 								subType.reverse.value = false;
 							}else {
+								console.log("666666666666666666666666666666");
 								subType.reverse.value = true;	
 							}
 						}
 
+
+						console.log("what the hell is this??");
+
 					} else {
+						console.log("notes._values else");
 						subType.reverse.value = false;
 					}
 					console.log("now type : " + notes._values[tempIndex].type);

@@ -270,8 +270,16 @@
 
 		}
 		
+		function applyEducation() {
+			console.log("applyEducation was clicked");
+		}
+
+
+
+
+
 		module.exports = {
-			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap
+			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap, applyEducation
 		};
 	</JavaScript>
 
@@ -294,7 +302,7 @@
 
 				<Image File="Images/btn_home.png">
 					<Clicked>
-						<Callback Handler="{goMainPage}" />
+						<Callback Handler="{goMainPageFromAnywhere}" />
 						<Toggle Target="detailApplyEdu" />
 						<!-- <Toggle Target="" /> -->
 					</Clicked>
@@ -422,6 +430,9 @@
 
 				<Rectangle Width="100%" Height="{margin}*3" Color="#1A387B" CornerRadius="5">
 					<Text Value="신청하기" Color="White" Alignment="Center" />
+					<Clicked>
+						<Callback Handler="{applyEducation}" />
+					</Clicked>
 				</Rectangle>
 			</StackPanel>
 		</ScrollView>

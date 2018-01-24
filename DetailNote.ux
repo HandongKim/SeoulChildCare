@@ -552,4 +552,10 @@
 	<Stroke Width="5" Color="White" />
 </Circle>
 
+
+<Panel ux:Class="MyComponent">
+    <UserEvent ux:Name="myEvent" />
+</Panel>
+
+
 </Page>

@@ -406,7 +406,7 @@ function getPhotoList () {
 	// for (var i = 0 ; i < 12 ; i++) {
 	// 	months.add(1+i);
 	// }
-	
+	photoListFromServer = null;
 	photoListFromServer = new Array;
 
 	pictures.clear();
@@ -718,6 +718,7 @@ function takePictureWithParameter()
 
 	Camera.takePicture().then(function(image)
 	{
+		photoCollectionLoadingCircleOn.value = true;
 		// 찍은 사진 리사이징하기
 		// 이미지 사이즈 다시 줄이실 때는 아래 두줄 주석 지우세요.
 		// var args = { desiredWidth:480, desiredHeight:640 , mode:ImageTools.SCALE_AND_CROP, performInPlace:true };
@@ -753,6 +754,7 @@ function takePictureWithParameter()
 
 			console.log("saveDir : " +saveDir);
 			
+
 			setTimeout(function() {
 
 				
@@ -821,6 +823,7 @@ function sendPictureWithParamter(yearAndMonth)
 		console.log("response.ATCHMNFL_IDX : " + JSON.parse(response).ATCHMNFL_IDX);
 
 		if (JSON.parse(response).MiResultMsg == "success") {
+			photoCollectionLoadingCircleOn.value=false;
 			photoCollectionAlertWithConfirm.message.value="사진이 업로드 됐습니다.";
 			photoCollectionAlertWithConfirm.layer.value="Overlay";
 		}
@@ -831,7 +834,7 @@ function getImageWithParameter() {
 	CameraRoll.getImage().then(function(image) {
 		takedPictureWithParamter.value = image.path;
 		sendPictureBtnEnabled.value = true;
-
+		photoCollectionLoadingCircleOn.value = true;
 		var today = new Date();
 		var date = today.getFullYear()+''+(today.getMonth()+1)+''+today.getDate();
 		var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
