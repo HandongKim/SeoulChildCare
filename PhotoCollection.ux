@@ -240,9 +240,9 @@
 							<Callback Handler="{toggleSelect}" />
 						</Tapped>
 						<Image ux:Name="picture" StretchMode="UniformToFill" Url="{resource}" MemoryPolicy="UnloadUnused">
-							<WhileLoading>
+							<!-- <WhileLoading>
 								<Change photoCollectionLoadingTF.Value="true" />
-							</WhileLoading>
+							</WhileLoading> -->
 						</Image>
 						<WhileTrue Value="{isSelected}">
 							<!-- <Change picture.Opacity="0.6" /> -->

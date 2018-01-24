@@ -194,7 +194,7 @@ function pickedSelectOnlineBCashListIndividualData (args) {
 var selectOnlineBCashList_URL = Backend.BASE_URL + Backend.selectOnlineBCashList_URL;
 
 
-
+var noteManageLoadingCircleOn = Observable(false);
 var hasBeenSearched = Observable(false);
 var selectedYearAndMonth = null;
 
@@ -500,7 +500,7 @@ function requestToGetNoteList (searchGubun, BCASH_IDX, esti_code, search_month) 
 
     console.log('jsonParam : ' + jsonParam);
     console.log('JSON.stringify(jsonParam) : ' + JSON.stringify(jsonParam));  
-
+    noteManageLoadingCircleOn.value = true;
 	fetch(selectOnlineBCashList_URL, {
 		method: 'POST',
 		headers: {
@@ -519,7 +519,7 @@ function requestToGetNoteList (searchGubun, BCASH_IDX, esti_code, search_month) 
 				notes.add(new note(temp[i], i));
 				selectOnlineBCashListDatas.add( new selectOnlineBCashListIndividualData(temp[i], i));
 			}
-
+			noteManageLoadingCircleOn.value = false;
 			//2017.12.18 끝
         	var responseData = JSON.stringify(response);       	
             return response.json();
@@ -998,5 +998,5 @@ module.exports = {
 		router.push("DetailNote", "new");
 	},goDetailNote2,
 	getBillCashInputLoad, billCashInputDataList	,pickerUp3, pickerDown3, selectOnlineBCashList, selectedbillCashInputDataList, stBillCashPos,
-	unRegisteredChecked, WhileInActive
+	unRegisteredChecked, WhileInActive, noteManageLoadingCircleOn
 };

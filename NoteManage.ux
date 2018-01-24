@@ -15,7 +15,17 @@
 
 	<JavaScript File="NoteManage.js"/>
 
+	<Panel ux:Name="photoCollectionLoadingPanel" Width="100%" Height="100%" Color="#ccc8" Layer="Background">
+		<WhileTrue ux:Name="photoCollectionLoadingTF" Value="{noteManageLoadingCircleOn}">
+			<Change photoCollectionLoadingPanel.Layer="Overlay" />
+			<Spin Target="photoCollectionLoadingCircle" Frequency="2" />
+			<Cycle Target="photoCollectionLoadingCircle.LengthAngleDegrees" Low="30" High="300" Frequency="0.7" />
+		</WhileTrue>
 
+		<Circle ux:Name="photoCollectionLoadingCircle" Width="50" Height="50" StartAngleDegrees="0" LengthAngleDegrees="90">
+			<Stroke Width="5" Color="White" />
+		</Circle>
+	</Panel>
 	
 
 	<!-- <StackPanel ux:Class="Note" Width="100%" BoxSizing="FillAspect" Aspect="3.7" Color="White">

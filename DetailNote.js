@@ -1386,6 +1386,11 @@ function deleteData () {
 			cameFromChoiceSubject = true;
 		}
 
+		moneyValue.onValueChanged(null, function (x) {
+			console.log("IT has changed");
+		})
+
+
 		//2018.01.16 기존 소스 시작
 		Backend.subject.ESTI_CODE.onValueChanged(null, function(x) {
 
@@ -1406,34 +1411,23 @@ function deleteData () {
 				
 				try {
 					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
-						
-						// if (selectedDetailNoteVariable.MONEY.toString().includes("-")) {
-						
-						//기존 소스 시작
-						// if (selectedDetailNoteVariable.MONEY < 0) {
-						// 	moneyValue.value = moneyValue.value;
-
-						// 	if (selectedDetailNoteVariable.MONEY < 0) {
-						// 		subType.reverse.value = false;
-						// 	}else {
-						// 		subType.reverse.value = true;		
-						// 	}
-						// }else {
-						// 	moneyValue.value = moneyValue.value * -1;
-
-						// 	if (selectedDetailNoteVariable.MONEY < 0) {
-						// 		subType.reverse.value = false;
-						// 	}else {
-						// 		subType.reverse.value = true;	
-						// 	}
-						// }
-						//기존 소스 끝
+		
 						subType.reverse.value = true;					
 
 						if (moneyValue.value.toString().includes("-")) {
 							if (selectedDetailNoteVariable.MONEY < 0) {
-								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								subType.reverse.value = false;					
+								
+								if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
+									moneyValue.value = moneyValue.value.replace(/,/g , "");
+									moneyValue.value = parseInt(moneyValue.value) * -1;
+									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+									subType.reverse.value = true;
+								}else {
+									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+									subType.reverse.value = false;	
+								}
+
+
 							} else {
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;
@@ -1455,45 +1449,24 @@ function deleteData () {
 						
 
 					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {				
-						console.log("notes._values[tempIndex].type == outMoney && x.substr(0,1) == 1");
-						console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
-						console.log("1234567890 moneyValue.value : " + moneyValue.value);
-						//기존 소스 시작
-
-						// if (selectedDetailNoteVariable.MONEY < 0) {
-						// 	console.log("1111111111111111111111111");
-						// 	moneyValue.value = moneyValue.value;
-
-						// 	if (selectedDetailNoteVariable.MONEY < 0) {
-						// 		console.log("2222222222222222222222");
-						// 		subType.reverse.value = false;
-						// 	}else {
-						// 		console.log("33333333333333333333333333");
-						// 		subType.reverse.value = true;	
-						// 	}
-
-						// }else {
-						// 	// moneyValue.value = "-" + moneyValue.value;
-						// 	moneyValue.value = moneyValue.value * -1;
-						// 		console.log("44444444444444444444444444444");
-						// 	if (selectedDetailNoteVariable.MONEY < 0) {
-						// 		console.log("555555555555555555555555555555");
-						// 		subType.reverse.value = false;
-						// 	}else {
-						// 		console.log("666666666666666666666666666666");
-						// 		subType.reverse.value = true;	
-						// 	}
-						// }
-
-						//기존 소스 끝
-
-						
-
+						console.log("100000000000000000000000000000000");
 						if (moneyValue.value.toString().includes("-")) {
 							if (selectedDetailNoteVariable.MONEY < 0) {
-								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								subType.reverse.value = false;
+								console.log("200000000000000000000000000000000");
+								// moneyValue.value = moneyValue.value.replace(/,/g , "");
+								// moneyValue.value = parseInt(moneyValue.value) * -1;
+								if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
+									moneyValue.value = moneyValue.value.replace(/,/g , "");
+									moneyValue.value = parseInt(moneyValue.value) * -1;
+									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+									subType.reverse.value = true;
+								}else {
+									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+									subType.reverse.value = false;	
+								}
+								
 							} else {
+								console.log("300000000000000000000000000000000");
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1502,6 +1475,8 @@ function deleteData () {
 
 						} else {
 							if (selectedDetailNoteVariable.MONEY < 0) {
+								// moneyValue.value = moneyValue.value.replace(/,/g , "");
+								// moneyValue.value = parseInt(moneyValue.value) * -1;
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 									subType.reverse.value = false;	
 							} else {
@@ -1515,11 +1490,23 @@ function deleteData () {
 						console.log("what the hell is this??");
 
 					} else {
-						
+						// console.log("100000000000000000000000000000000");
 						if (selectedDetailNoteVariable.MONEY < 0) {
+												// console.log("200000000000000000000000000000000");
 							moneyValue.value = moneyValue.value.replace(/,/g , "");
 							moneyValue.value = parseInt(moneyValue.value) * -1;	
 							moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+						} else {
+
+							if (selectedDetailNoteVariable.CASH_GB != selectedDetailNoteVariable.ESTI_CODE.substr(0,1)) {
+								// console.log("300000000000000000000000000000000");
+								moneyValue.value = moneyValue.value.replace(/,/g , "");
+								moneyValue.value = parseInt(moneyValue.value) * -1;	
+								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+
+							}	
+
+							// console.log("400000000000000000000000000000000");
 						}
 						
 						
@@ -1540,9 +1527,6 @@ function deleteData () {
 			console.log("Backend.subject.ESTI_SUBCODE.value before setting GLOBAL_BILL_SUBCODE: " + Backend.subject.ESTI_SUBCODE.value);	
 			GLOBAL_BILL_SUBCODE = Backend.subject.ESTI_SUBCODE.value;
 		});
-
-
-
 
 //==========================================  사진 부분 ==========================================================
 
@@ -1647,7 +1631,7 @@ function takePictureWithParameterDetailNote()
 			// console.log("picture was saved");
 
 			// 리사이징한 이미지 흑백으로 변환
-			
+			detailNoteLoadingCircleOn.value = true;
 
 			console.log("dateTime : " + dateTime);
 
@@ -1740,13 +1724,26 @@ function sendPictureWithParamterDetailNote(yearAndMonth)
 		// pictureArray.add(JSON.parse(response).ATCHMNFL_IDX);
 		pictureArray = JSON.parse(response).ATCHMNFL_IDX;
 		isPictureTaken = true;
+		detailNoteLoadingCircleOn.value = false;
+
+		alert.message.value="성공";
+		alert.layer.value = "Overlay";
+
+	} else {
+		detailNoteLoadingCircleOn.value = false;
+		alert.message.value="실패";
+		alert.layer.value = "Overlay";
 	}
+
+
+
 		console.log("pictureArray ===============>>>>>>>>>>> : " + pictureArray);
 	});
 }
 
 function getImageWithParameterDetailNote() {
 	CameraRoll.getImage().then(function(image) {
+		detailNoteLoadingCircleOn.value = true;
 		takedPictureWithParamterDetailNote.value = image.path;
 		sendPictureBtnEnabled.value = true;
 
@@ -1794,7 +1791,7 @@ function chosenPictures (args) {
 	this.ATCHMNFL_IDX = args
 }
 
-
+var detailNoteLoadingCircleOn = Observable(false);
 
 
 
@@ -1844,5 +1841,5 @@ function chosenPictures (args) {
 
 				router.push("ShowFile", infoJSON);
 			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, 
-			getImageWithParameterDetailNote, loadingCircle
+			getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn
 		};

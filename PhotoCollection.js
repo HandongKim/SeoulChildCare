@@ -358,7 +358,7 @@ function save() {
 						console.log("delete success");
 					});
 
-					alert.message.value="저장되었습니다";
+					alert.message.value="저장되습니다";
 					alert.layer.value = "Overlay";
 
 				}, function(error) {
