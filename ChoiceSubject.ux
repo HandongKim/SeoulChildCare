@@ -7,384 +7,215 @@
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
 		var ValueFactory = require('ValueFactory');
-
-		// var incomeSubject = [
-		// 	{type: "1", text: " [111] 정부지원 보육료"},
-		// 	{type: "1", text: " [112] 부모부담 보육료"},
-		// 	{type: "1", text: " [211] 특별활동비"},
-		// 	{type: "2", text: " [211-] 특별활동비[영어]"},
-		// 	{type: "2", text: " [211-1] 특별활동비[국어]"},
-		// 	{type: "2", text: " [211-2] 특별 발레"},
-		// 	{type: "2", text: " [211-123] 자연"},
-		// 	{type: "1", text: " [221] 기타 필요경비"},
-		// 	{type: "2", text: " [221-111] 입학준비금(상해보험료)"},
-		// 	{type: "2", text: " [221-112] 입학준비금(피복류구입비)"},
-		// 	{type: "2", text: " [221-113] 입학준비금"},
-		// 	{type: "2", text: " [221-121] 현장학습비"},
-		// 	{type: "2", text: " [221-131] 차량운행비"},
-		// 	{type: "2", text: " [221-141] 행사비"},
-		// 	{type: "2", text: " [221-151] 아침.저녁급식비"},
-		// 	{type: "2", text: " [221-161] 기타시도특성회비"},
-		// 	{type: "1", text: " [311] 인건비 보조금"},
-		// 	{type: "1", text: " [321] 기본보육료"},
-		// 	{type: "2", text: " [321-] 영어"},
-		// 	{type: "1", text: " [322] 공공형 운영비"},
-		// 	{type: "1", text: " [323] 기타 지원금"},
-		// 	{type: "1", text: " [331] 자본보조금"},
-		// 	{type: "1", text: " [411] 전입금"},
-		// 	{type: "1", text: " [421] 단기차입금"},
-		// 	{type: "1", text: " [422] 장기차입금"},
-		// 	{type: "1", text: " [511] 지정후원금"},
-		// 	{type: "1", text: " [512] 비지정후원금"},
-		// 	{type: "1", text: " [611] 적립금 처분 수입"},
-		// 	{type: "1", text: " [711] 과년도 수입"},
-		// 	{type: "1", text: " [811] 이자수입"},
-		// 	{type: "1", text: " [812] 기타잡수입"}
-		// ];
-		var outcomeSubject = [
-			{type: "3", text: " [111] 원장급여"},
-			{type: "3", text: " [112] 원장수장"},
-			{type: "3", text: " [121] 보육교직원급여"},
-			{type: "3", text: " [122] 보육교직원수당"},
-			{type: "3", text: " [131] 기타 인건비"},
-			{type: "3", text: " [141] 법정부담금"},
-			{type: "3", text: " [142] 퇴직금 및 퇴직적립금"},
-			{type: "3", text: " [211] 수용비 및 수수료"},
-			{type: "4", text: " [211-1] 전기요금"},
-			{type: "4", text: " [211-2] 전화요금"},
-			{type: "3", text: " [212] 공공요금 및 제세공과금"},
-			{type: "4", text: " [212-1] 전기요금"},
-			{type: "3", text: " [213] 연료비"},
-			{type: "3", text: " [214] 여비"},
-			{type: "3", text: " [215] 차량비"},
-			{type: "3", text: " [216] 복리후생비"},
-			{type: "3", text: " [217] 기타 운영비"},
-			{type: "4", text: " [217-111] 임대료"},
-			{type: "4", text: " [217-121] 건물융자금의이자"},
-			{type: "4", text: " [217-151] 기타"},
-			{type: "3", text: " [221] 업무추진비"},
-			{type: "3", text: " [222] 직책급"},
-			{type: "3", text: " [223] 회의비"},
-			{type: "3", text: " [311] 교직원연수·연구비"},
-			{type: "3", text: " [312] 교재·교구 구입비"},
-			{type: "3", text: " [313] 행사비"},
-			{type: "3", text: " [314] 영유아복리비"},
-			{type: "3", text: " [315] 급식비"},
-			{type: "3", text: " [411] 특별활동비지출"},
-			{type: "3", text: " [421] 기타 필요경비 지출"},
-			{type: "4", text: " [421-111] 입학준비금(상해보험료)"},
-			{type: "4", text: " [421-112] 입학준비금(피복류구입비)"},
-			{type: "4", text: " [421-113] 입학준비금"},
-			{type: "4", text: " [421-121] 현장학습비"},
-			{type: "4", text: " [421-131] 차량운행비"},
-			{type: "4", text: " [421-141] 행사비"},
-			{type: "4", text: " [421-151] 아침.저녁급식비"},
-			{type: "4", text: " [421-161] 기타"},
-			{type: "3", text: " [511] 적립금"},
-			{type: "3", text: " [611] 단기 차입금 상환"},
-			{type: "3", text: " [612] 장기 차입금 상환"},
-			{type: "3", text: " [621] 보조금 반환금"},
-			{type: "3", text: " [622] 보호자 반환금"},
-			{type: "3", text: " [623] 법인회계 전출금"},
-			{type: "3", text: " [711] 시설비"},
-			{type: "3", text: " [712] 시설장비 유지비"},
-			{type: "3", text: " [721] 자산취득비"},
-			{type: "4", text: " [721-001] 차량할부금"},
-			{type: "4", text: " [721-002] 차산취득비"},
-			{type: "3", text: " [811] 과년도 지출"}
-		];
-
 		var incomeTF = Observable(true);
-
 		var CASH_GB;
 
 		this.Parameter.onValueChanged(null,function(x) {
 			if (x == null) {
-
 			}else {
-
-				CASH_GB = Observable(x.CASH_GB);
-				
+				CASH_GB = Observable(x.CASH_GB);		
 			}
 		});
 
-
 		var temp;
 		var recievedData;
+		var getEstiSearchLoadUrl;
+		function searchTheSubjectList (esti_gb) {
+			getEstiSearchLoadUrl = Backend.BASE_URL + Backend.getEstiSearchLoad_URL;
+			var dsParam = Backend.dsParam.substring(0, Backend.dsParam.length -1);
+			console.log("esti_gb : " + esti_gb);
+			subjects.clear();
+			incomeDataFromServerList.clear();
+			dsParam = dsParam + ', "ESTI_GB":"' + esti_gb + '", "BOOKGB":"01"}';
+			console.log("20180101 dsParam1 : " + dsParam);
+			console.log("getEstiSearchLoadUrl ==> " + getEstiSearchLoadUrl);
+			var ds_bCash = CASH_GB.value;
+			console.log("2017.12.30 log =================================================================");
+			console.log("dsParam : " + dsParam);
+			console.log("dsParm TYpe : " + typeof(dsParam) );
+			console.log("2017.12.30 log =================================================================");
+			console.log('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
 
-var getEstiSearchLoadUrl;
-function searchTheSubjectList (esti_gb) {
-	getEstiSearchLoadUrl = Backend.BASE_URL + Backend.getEstiSearchLoad_URL;
-	var dsParam = Backend.dsParam.substring(0, Backend.dsParam.length -1);
+			var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
+			fetch(getEstiSearchLoadUrl, {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify(jsonParam)
+		        }).then(function(response) {
+		        	console.log("WTF");
+					console.log("2018.01.01 response : " + JSON.stringify(response));
+					var responseHeaders = JSON.parse(response._bodyInit);
+					console.log("2018.01.01 response._bodyInit : " + JSON.stringify(responseHeaders));						
+					temp = responseHeaders.ds_estiList[1];
+					console.log("responseHeaders.ds_estiList[1] : "+ JSON.stringify(temp) );
+					// recievedData = temp;
+					for (var i = 0 ; i < temp.length ; i++) {
+						subjects.add(new income(temp[i]));
+						incomeDataFromServerList.add(new incomeDataFromServer(temp[i], i));
+					}
+		            return response.json();
+		        }).then(function(jsonData) {
+		        
+		        }).catch(function(err) {
+		        
+		        });
+		}
 
-	console.log("esti_gb : " + esti_gb);
-
-	subjects.clear();
-	incomeDataFromServerList.clear();
-
-	dsParam = dsParam + ', "ESTI_GB":"' + esti_gb + '", "BOOKGB":"01"}';
-	console.log("20180101 dsParam1 : " + dsParam);
-	console.log("getEstiSearchLoadUrl ==> " + getEstiSearchLoadUrl);
-	var ds_bCash = CASH_GB.value;
-	console.log("2017.12.30 log =================================================================");
-	console.log("dsParam : " + dsParam);
-	console.log("dsParm TYpe : " + typeof(dsParam) );
-	console.log("2017.12.30 log =================================================================");
-	console.log('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
-
-	var jsonParam = JSON.parse('{"dsParam":'+dsParam+'}');
-	fetch(getEstiSearchLoadUrl, {
-		method: 'POST',
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify(jsonParam)
-        }).then(function(response) {
-        	console.log("WTF");
-			console.log("2018.01.01 response : " + JSON.stringify(response));
-			var responseHeaders = JSON.parse(response._bodyInit);
-			console.log("2018.01.01 response._bodyInit : " + JSON.stringify(responseHeaders));						
-			temp = responseHeaders.ds_estiList[1];
-			console.log("responseHeaders.ds_estiList[1] : "+ JSON.stringify(temp) );
-			// recievedData = temp;
-			for (var i = 0 ; i < temp.length ; i++) {
-				subjects.add(new income(temp[i]));
-				incomeDataFromServerList.add(new incomeDataFromServer(temp[i], i));
+		function income(subject) {
+			if (subject.ESTI_GB == "31") {
+				if (subject.ESTI_SUBCODE == null) {
+					this.type = "1";
+				} else {
+					this.type = "2"
+				}
+			} else if (subject.ESTI_GB == "32") {
+				if (subject.ESTI_SUBCODE == null) {
+					this.type = "3";
+				} else {
+					this.type = "4"
+				}
 			}
-            return response.json();
-        }).then(function(jsonData) {
-        
-        }).catch(function(err) {
-        
-        });
-}
-
-
-function income(subject) {
-	if (subject.ESTI_GB == "31") {
-		if (subject.ESTI_SUBCODE == null) {
-			this.type = "1";
-		} else {
-			this.type = "2"
-		}
-	} else if (subject.ESTI_GB == "32") {
-		if (subject.ESTI_SUBCODE == null) {
-			this.type = "3";
-		} else {
-			this.type = "4"
-		}
-	}
-	this.text = " " + subject.M_DISPLAY_NAME;
-	this.name = subject.M_DISPLAY_NAME2;
-	this.ESTI_CODE = subject.ESTI_CODE;
-	this.ESTI_GB = subject.ESTI_GB;
-	this.ESTI_SUBCODE = subject.ESTI_SUBCODE;
-	this.ESTI_SUB_YN = subject.ESTI_SUB_YN;
-	this.ESTI_NAME = subject.M_DISPLAY_NAME2;
-	console.log("add" + subject.DISPLAY_NAME);
-}
-
-var incomeDataFromServerList = Observable();
-
-function incomeDataFromServer(args, index) {
-	this.INDEX = index;
-	this.DISPLAY_NAME = args.DISPLAY_NAME;
-	this.DISPLAY_CODE = args.DISPLAY_CODE;
-	this.ESTI_SUBNAME = args.ESTI_SUBNAME;
-	this.ESTI_YEAR = args.ESTI_YEAR;
-	this.ESTI_GB = args.ESTI_GB;
-	this.ESTI_CODE = args.ESTI_CODE;
-	this.ESTI_DISPLAY = args.ESTI_DISPLAY;
-	this.ESTI_NAME = args.ESTI_NAME;
-	this.M_DISPLAY_NAME2 = args.M_DISPLAY_NAME2;
-	this.MEMCODE = args.MEMCODE;
-	this.M_DISPLAY_NAME = args.M_DISPLAY_NAME;
-	this.MEMO = args.MEMO;
-	this.SORT_GUBUN = args.SORT_GUBUN;
-	this.ESTI_PART = args.ESTI_PART;
-	this.ESTI_SUBCODE = args.ESTI_SUBCODE;
-	this.BOOK_GB = args.BOOK_GB;
-	this.ESTI_SUB_YN = args.ESTI_SUB_YN;
-}
-
-
-
-var subjects = Observable();
-
-// for (var i = 0 ; i < recievedData.length ; i++) {
-// 	subjects.add(new income(recievedData[i]));
-// }
-
-function incomeClick() {
-	subjects.clear();
-	// for (var i = 0 ; i < incomeSubject.length ; i++) {
-	// 	subjects.add(incomeSubject[i]);
-	// }
-	// for (var i = 0 ; i < recievedData.length ; i++) {
-	// 	subjects.add(new income(recievedData[i]));
-	// }
-	searchTheSubjectList("31");
-}
-
-function outcomeClick() {
-	subjects.clear();
-	// for (var i = 0 ; i < outcomeSubject.length ; i++) {
-	// 	subjects.add(outcomeSubject[i]);
-	// }
-	searchTheSubjectList("32");
-}
-
-function selectSubject(arg) {
-	// console.log(arg.data.text);
-	console.log(JSON.stringify(arg));
-	if (arg.data.ESTI_SUBCODE == null && arg.data.ESTI_SUB_YN == "Y") {
-		//
-	} else {
-		
-		if (arg.data.type == 1) {
-			Backend.subject.color.value = "#4C9DFF";
-			Backend.subject.type.value = "목";
-		} else if (arg.data.type == 2) {
-			Backend.subject.color.value = "#8BBDFF";
-			Backend.subject.type.value = "세목";
-		} else if (arg.data.type == 3) {
-			Backend.subject.color.value = "#FF4200";
-			Backend.subject.type.value = "목";
-		} else if (arg.data.type == 4) {
-			Backend.subject.color.value = "#FFBA85";
-			Backend.subject.type.value = "세목";
-		}
-		
-		Backend.subject.isChoice.value = true;
-		Backend.subject.name.value = arg.data.name;
-		Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
-		Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
-		Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
-
-		Backend.chosenSubject.isChoice = true;
-		Backend.chosenSubject.name = arg.data.name;
-		Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
-		Backend.chosenSubject.ESTI_GB = arg.data.ESTI_GB;
-		Backend.chosenSubject.ESTI_SUBCODE = arg.data.ESTI_SUBCODE;	
-
-
-
-		console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
-		console.log("Backend.subject.name.value : " + Backend.subject.name.value);
-		console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
-		console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
-
-		var infoJSON = {
-			choicesubject_ischoice:Backend.subject.isChoice.value,
-			choicesubject_name:Backend.subject.name.value,
-			choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
-			choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
+			this.text = " " + subject.M_DISPLAY_NAME;
+			this.name = subject.M_DISPLAY_NAME2;
+			this.ESTI_CODE = subject.ESTI_CODE;
+			this.ESTI_GB = subject.ESTI_GB;
+			this.ESTI_SUBCODE = subject.ESTI_SUBCODE;
+			this.ESTI_SUB_YN = subject.ESTI_SUB_YN;
+			this.ESTI_NAME = subject.M_DISPLAY_NAME2;
+			console.log("add" + subject.DISPLAY_NAME);
 		}
 
-		var str = JSON.stringify(infoJSON);
-		ValueFactory.setInfoJson(str);
+		var incomeDataFromServerList = Observable();
 
-		// router.getRoute(function(route) {
-		// 	console.log("goBackToPrevious From " + route[0]);
-		// 	if (route[0] == "NoteManage") {
-		// 		router.goto("MainPage");
-		// 	} else if (route[0] == "DetailNote") {
-		// 		router.goto("NoteManage");
-		// 	} else if (route[0] == "ShowFile") {
-		// 		router.goto("DetailNote");
-		// 	} else if (route[0] == "ChoiceSubject") {
-		// 		router.goto("DetailNote");
-		// 	} else if (route[0] == "Notice") {
-		// 		router.goto("MainPage");
-		// 	} else if (route[0] == "ApplyEdu") {
-		// 		router.goto("MainPage");
-		// 	} else if (route[0] == "QnA") {
-		// 		router.goto("MainPage");
-		// 	} else {
-		// 		router.goBack();
-		// 	}
-		// });
-
-		// router.goBack();
-
-
-		choiceSubjectAlertWithConfirm.message.value = "선택 되었습니다.";
-		choiceSubjectAlertWithConfirm.layer.value = "Overlay";
-		Backend.isItFromNoteManage.value = false;
-		
-
-
-	}
-}
-
-var choiceSubjectAlertWithConfirm = {
-	title: Observable(""),
-	message: Observable(""),
-	type: Observable("Check"),
-	layer: Observable("Background")
-};
-
-
-function getTheSubjectList() {
-	console.log("getTheSubjectList was called");
-
-	choiceSubjectAlertWithConfirm.layer.value = "Background";
- 	
-	if (CASH_GB.value == "1") {
-			incomeTF.value = false;
-	} else {
-		incomeTF.value = true;
-	}
-		console.log("2018.01.01 CASH_GB : " + CASH_GB.value);
-		searchTheSubjectList("3"+CASH_GB.value);
-
-
-	// fetch("http://112.218.172.44:51442/acusr/acc/bil/getEstiSearchLoad.do", {
-	// 	method: 'POST',
-	// 	headers: {
-	// 		"Content-type": "application/json"
-	// 	},
-	// 	body: JSON.stringify({
-	// 		"SIGNGB":"1",
-	// 		"signedText":mSignedData
- //                })
- //        }).then(function(response) {
- //        	console.log("response.ok :"  + response.ok);
- //        	isConnected = response.ok;
-
-	// 		// staticDsParam = JSON.parse(response._bodyInit);
- //   //      	// staticDsParam = staticDsParam.result;
- //   //      	staticParamStringValue = JSON.stringify(staticDsParam.dsParam);
- //   //      	console.log("staticDsParam : " + staticDsParam);
-	// 		// console.log("staticParamStringValue : " + staticParamStringValue);
- //        	if(isConnected == true) {
- //        		router.goto("MainPage");
- //        	}
- //        	console.log("isConnected : " + isConnected);
-
- //        	var responseData = JSON.stringify(response);
-	// 		console.log("responseData : "+ responseData);
- //            return response.json();
-        	
- //        }).then(function(jsonData) {
- //            // var data = jsonData.results[0];
-
- //            // console.log("data : " + jsonData.results[0]);
-			
- //        }).catch(function(err) {
- //            console.log("Reg Succeeded[ios] Error!! : " + err.message);
- //        });
+		function incomeDataFromServer(args, index) {
+			this.INDEX = index;
+			this.DISPLAY_NAME = args.DISPLAY_NAME;
+			this.DISPLAY_CODE = args.DISPLAY_CODE;
+			this.ESTI_SUBNAME = args.ESTI_SUBNAME;
+			this.ESTI_YEAR = args.ESTI_YEAR;
+			this.ESTI_GB = args.ESTI_GB;
+			this.ESTI_CODE = args.ESTI_CODE;
+			this.ESTI_DISPLAY = args.ESTI_DISPLAY;
+			this.ESTI_NAME = args.ESTI_NAME;
+			this.M_DISPLAY_NAME2 = args.M_DISPLAY_NAME2;
+			this.MEMCODE = args.MEMCODE;
+			this.M_DISPLAY_NAME = args.M_DISPLAY_NAME;
+			this.MEMO = args.MEMO;
+			this.SORT_GUBUN = args.SORT_GUBUN;
+			this.ESTI_PART = args.ESTI_PART;
+			this.ESTI_SUBCODE = args.ESTI_SUBCODE;
+			this.BOOK_GB = args.BOOK_GB;
+			this.ESTI_SUB_YN = args.ESTI_SUB_YN;
+		}
 
 
 
+		var subjects = Observable();
+
+		// for (var i = 0 ; i < recievedData.length ; i++) {
+		// 	subjects.add(new income(recievedData[i]));
+		// }
+
+		function incomeClick() {
+			subjects.clear();
+			// for (var i = 0 ; i < incomeSubject.length ; i++) {
+			// 	subjects.add(incomeSubject[i]);
+			// }
+			// for (var i = 0 ; i < recievedData.length ; i++) {
+			// 	subjects.add(new income(recievedData[i]));
+			// }
+			searchTheSubjectList("31");
+		}
+
+		function outcomeClick() {
+			subjects.clear();
+			// for (var i = 0 ; i < outcomeSubject.length ; i++) {
+			// 	subjects.add(outcomeSubject[i]);
+			// }
+			searchTheSubjectList("32");
+		}
+
+		function selectSubject(arg) {
+			// console.log(arg.data.text);
+			console.log(JSON.stringify(arg));
+			if (arg.data.ESTI_SUBCODE == null && arg.data.ESTI_SUB_YN == "Y") {
+				//
+			} else {
+				
+				if (arg.data.type == 1) {
+					Backend.subject.color.value = "#4C9DFF";
+					Backend.subject.type.value = "목";
+				} else if (arg.data.type == 2) {
+					Backend.subject.color.value = "#8BBDFF";
+					Backend.subject.type.value = "세목";
+				} else if (arg.data.type == 3) {
+					Backend.subject.color.value = "#FF4200";
+					Backend.subject.type.value = "목";
+				} else if (arg.data.type == 4) {
+					Backend.subject.color.value = "#FFBA85";
+					Backend.subject.type.value = "세목";
+				}
+				
+				Backend.subject.isChoice.value = true;
+				Backend.subject.name.value = arg.data.name;
+				Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
+				Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
+				Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
+
+				Backend.chosenSubject.isChoice = true;
+				Backend.chosenSubject.name = arg.data.name;
+				Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
+				Backend.chosenSubject.ESTI_GB = arg.data.ESTI_GB;
+				Backend.chosenSubject.ESTI_SUBCODE = arg.data.ESTI_SUBCODE;	
 
 
 
-}
+				console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
+				console.log("Backend.subject.name.value : " + Backend.subject.name.value);
+				console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
+				console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
 
-	module.exports = {
-		subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList, incomeTF, choiceSubjectAlertWithConfirm
-	};
+				var infoJSON = {
+					choicesubject_ischoice:Backend.subject.isChoice.value,
+					choicesubject_name:Backend.subject.name.value,
+					choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
+					choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
+				}
+
+				var str = JSON.stringify(infoJSON);
+				ValueFactory.setInfoJson(str);
+
+				choiceSubjectAlertWithConfirm.message.value = "선택 되었습니다.";
+				choiceSubjectAlertWithConfirm.layer.value = "Overlay";
+				Backend.isItFromNoteManage.value = false;
+			}
+		}
+
+		var choiceSubjectAlertWithConfirm = {
+			title: Observable(""),
+			message: Observable(""),
+			type: Observable("Check"),
+			layer: Observable("Background")
+		};
+
+		function getTheSubjectList() {
+			console.log("getTheSubjectList was called");
+			choiceSubjectAlertWithConfirm.layer.value = "Background";
+
+			if (CASH_GB.value == "1") {
+					incomeTF.value = false;
+			} else {
+				incomeTF.value = true;
+			}
+				console.log("2018.01.01 CASH_GB : " + CASH_GB.value);
+				searchTheSubjectList("3"+CASH_GB.value);
+		}
+
+		module.exports = {
+			subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList, incomeTF, choiceSubjectAlertWithConfirm
+		};
 	</JavaScript>
 
 	<DockPanel ux:Name="choiceSubjectPanel" Width="100%" Height="100%" Color="White">

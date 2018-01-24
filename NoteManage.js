@@ -478,7 +478,6 @@ function getBillCashInputLoad () {
 	});
 }
 
-
 var selectOnlineBCashListData = Observable();
 var temp;
 
@@ -775,8 +774,6 @@ function unRegisteredChecked() {
 //         }).catch(function(err) {
 //             console.log("Reg Succeeded[ios] Error!! : " + err.message);
 //         });
-
-
 	selectOnlineBCashList();
 }
 

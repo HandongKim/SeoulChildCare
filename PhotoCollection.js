@@ -22,13 +22,9 @@ this.Parameter.onValueChanged(null, function(x) {
 		panelType.value = "normal";
 	}
 });
-
 // 피커에 필요한 변수 및 함수
-
 var year = Observable(2017);
-
 var years = Observable();
-
 
 for (var i = 0 ; i < 30 ; i++) {
 	years.add(2010+i);

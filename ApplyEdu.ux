@@ -276,6 +276,12 @@
 
 		}
 		
+var applicantName = Observable();
+var hp1 = Observable();
+var hp2 = Observable();
+var hp3 = Observable();
+
+
 		function applyEducation() {
 			console.log("applyEducation was clicked");
 			console.log("eduDetail._values[0].eduSeq : "+ eduDetail._values[0].eduSeq);
@@ -294,7 +300,26 @@
 			var STATE = eduDetail._values[0].state;
 			var SINDATE_M = eduDetail._values[0].sinDateM;
 
+			// ds_info
 
+			var SEQ = eduIntoList._values[0].eduSeq;
+			var INS_NAME = eduIntoList._values[0].insName;
+			var INS_GB_CARE = eduIntoList._values[0].insGbCare;
+			var CODE_NAME = eduIntoList._values[0].codeName;
+			var AREA_CODE = eduIntoList._values[0].areaCode;
+			var AREA_NAME = eduIntoList._values[0].areaName;
+			var OFF_NM = eduIntoList._values[0].offNm;
+			var SEOUL_YN = eduIntoList._values[0].seoulYn;
+			var NAME = applicantName.value;
+			var FLAG = "I";
+
+			var HP1 = hp1.value;
+			var HP2 = hp2.value;
+			var HP3 = hp3.value;
+
+
+
+		
 
 			
 			
@@ -386,7 +411,7 @@
 
 
 		module.exports = {
-			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap, applyEducation
+			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap, applyEducation, applicantName, hp1, hp2, hp3
 		};
 	</JavaScript>
 
@@ -510,7 +535,7 @@
 							<Text Value="수강자명" FontSize="{margin}*0.9" Alignment="Center" />
 						</Panel>
 						<Panel Width="100%" Height="100%" Color="White">
-							<TextBox Value="" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" Width="85%" />
+							<TextBox Value="{applicantName}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" Width="85%" />
 						</Panel>
 
 						<Panel Width="100%" Height="{margin}*3" Color="#eee">
@@ -525,11 +550,11 @@
 						</Panel>
 						<Panel Width="100%" Height="100%" Color="White">
 							<WrapPanel Width="100%" Alignment="Center">
-								<TextBox Value="" FontSize="{margin}*0.9" MaxLength="3" Alignment="CenterLeft" Margin="5,5,0,5" Width="{margin}*4" />
+								<TextBox Value="{hp1}" FontSize="{margin}*0.9" MaxLength="3" Alignment="CenterLeft" Margin="5,5,0,5" Width="{margin}*4" />
 								<Text Value="-" Alignment="Center" Margin="1" />
-								<TextBox Value="" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5" Width="{margin}*5" />
+								<TextBox Value="{hp2}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5" Width="{margin}*5" />
 								<Text Value="-" Alignment="Center" Margin="1" />
-								<TextBox Value="" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5,5,5" Width="{margin}*5" />
+								<TextBox Value="{hp3}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5,5,5" Width="{margin}*5" />
 							</WrapPanel>
 						</Panel>
 					</Grid>
