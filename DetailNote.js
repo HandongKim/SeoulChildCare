@@ -254,23 +254,121 @@ function listDetailNote (args, index) {
 }
 
 function selectedDetailNote(args) {
-	this.INDEX = args.INDEX;
-	this.CASH_IDX2 = args.CASH_IDX2;
-	this.CASH_GB=args.CASH_GB;
-	this.CASH_IDX= args.CASH_IDX;
-	this.BCASH_MEMO = args.BCASH_MEMO;
-	this.ESTI_CODE = args.ESTI_CODE
-	this.CASH_DATE = args.CASH_DATE
-	this.ESTI_NAME = args.ESTI_NAME
-	this.SUM_MONEY = args.SUM_MONEY
-	this.BILL_RECEIPT = args.BILL_RECEIPT
-	this.MONEY = args.MONEY
-	this.ESTI_SUB_YN = args.ESTI_SUB_YN
-	this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO
-	this.ACTION = args.ACTION
-	this.BILL_SUBCODE = args.BILL_SUBCODE
-	this.BILL_IDX = args.BILL_IDX
-	this.BCASH_BILL_SEQ = args.BCASH_BILL_SEQ
+	if (args.INDEX !=null) {
+		this.INDEX = args.INDEX;	
+	} else {
+		this.INDEX="";
+	}
+	
+	if (args.CASH_IDX2 !=null) {
+		this.CASH_IDX2 = args.CASH_IDX2;	
+	} else {
+		this.CASH_IDX2="";
+	}
+
+	if (args.CASH_GB !=null) {
+		this.CASH_GB = args.CASH_GB;	
+	} else {
+		this.CASH_GB="";
+	}
+
+
+	if (args.CASH_IDX !=null) {
+		this.CASH_IDX = args.CASH_IDX;	
+	} else {
+		this.CASH_IDX="";
+	}
+
+
+
+	if (args.BCASH_MEMO !=null) {
+		this.BCASH_MEMO = args.BCASH_MEMO;	
+	} else {
+		this.BCASH_MEMO="";
+	}
+
+
+
+	if (args.ESTI_CODE !=null) {
+		this.ESTI_CODE = args.ESTI_CODE;	
+	} else {
+		this.ESTI_CODE="";
+	}
+
+
+
+	if (args.CASH_DATE !=null) {
+		this.CASH_DATE = args.CASH_DATE;	
+	} else {
+		this.CASH_DATE="";
+	}
+
+	if (args.ESTI_NAME !=null) {
+		this.ESTI_NAME = args.ESTI_NAME;	
+	} else {
+		this.ESTI_NAME="";
+	}
+
+
+
+	if (args.SUM_MONEY !=null) {
+		this.SUM_MONEY = args.SUM_MONEY;	
+	} else {
+		this.SUM_MONEY="";
+	}
+
+	if (args.BILL_RECEIPT !=null) {
+		this.BILL_RECEIPT = args.BILL_RECEIPT;	
+	} else {
+		this.INDEX="";
+	}
+	if (args.MONEY !=null) {
+		this.MONEY = args.MONEY;	
+	} else {
+		this.MONEY="";
+	}
+
+
+
+	if (args.ESTI_SUB_YN !=null) {
+		this.ESTI_SUB_YN = args.ESTI_SUB_YN;	
+	} else {
+		this.ESTI_SUB_YN="";
+	}
+	if (args.ORG_BCASH_MEMO !=null) {
+		this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO;	
+	} else {
+		this.ORG_BCASH_MEMO="";
+	}
+
+	if (args.ACTION !=null) {
+		this.ACTION = args.ACTION;	
+	} else {
+		this.ACTION="";
+	}
+	if (args.BILL_SUBCODE !=null) {
+		this.BILL_SUBCODE = args.BILL_SUBCODE;	
+	} else {
+		this.BILL_SUBCODE="";
+	}
+
+
+	if (args.BILL_IDX !=null) {
+		this.BILL_IDX = args.BILL_IDX;	
+	} else {
+		this.BILL_IDX="";
+	}
+	if (args.BCASH_BILL_SEQ !=null) {
+		this.BCASH_BILL_SEQ = args.BCASH_BILL_SEQ;	
+	} else {
+		this.BCASH_BILL_SEQ="";
+	}
+	
+
+	
+	
+	
+	
 }
 
 
@@ -591,11 +689,11 @@ function pickFromList(args) {
 
 function initialDataSetting () {
 	moneyValue.clear();
-	tempIndex = 0;
 	// subType.isChoice.clear();
 	// subType.color.clear();
 	// subType.type.clear();
 	// subType.text.clear();
+	tempIndex = 0;
 	selectedData.value = "결제방법";
 	// console.log("args.data.index : " + args.data.index);
 	console.log("initialDataSetting listDetailNotes" + JSON.stringify(listDetailNotes._values[0]));
@@ -1376,11 +1474,16 @@ function deleteData () {
 				console.log("%%%%%%%%%%%%%%%%%% X value is not null %%%%%%%%%%%%%%%%%%");
 				
 				try {
+					console.log("notes._values[tempIndex].type : " + notes._values[tempIndex].type);
+					console.log("x.substr(0,1) : " + x.substr(0,1));
+
 					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
-						console.log("1111111111111111111111111111111111111111");
+						console.log("7777777777777777777777777777777777777");
 						subType.reverse.value = true;					
+
 						if (moneyValue.value.toString().includes("-")) {
-							if (selectedDetailNoteVariable.MONEY < 0) {							
+							if (selectedDetailNoteVariable.MONEY < 0) {
+								
 								if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 									moneyValue.value = moneyValue.value.replace(/,/g , "");
 									moneyValue.value = parseInt(moneyValue.value) * -1;
@@ -1390,12 +1493,15 @@ function deleteData () {
 									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 									subType.reverse.value = false;	
 								}
+
+
 							} else {
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 								subType.reverse.value = true;					
 							}
+
 						} else {
 							if (selectedDetailNoteVariable.MONEY < 0) {
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1406,9 +1512,11 @@ function deleteData () {
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 								subType.reverse.value = true;					
 							}
-						}				
+						}
+						
+
 					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {				
-						console.log("2222222222222222222222222222222222222222");
+						console.log("100000000000000000000000000000000");
 						if (moneyValue.value.toString().includes("-")) {
 							if (selectedDetailNoteVariable.MONEY < 0) {
 								console.log("200000000000000000000000000000000");
@@ -1433,48 +1541,54 @@ function deleteData () {
 							}
 
 						} else {
-							// console.log("100000000000000000000000000000000");
-							console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
+							console.log("900000000000000000000000000000000000000000000000");
 							if (selectedDetailNoteVariable.MONEY < 0) {
-								// console.log("200000000000000000000000000000000");
-							// moneyValue.value = moneyValue.value.replace(/,/g , "");
-							// moneyValue.value = parseInt(moneyValue.value) * -1;
+								// moneyValue.value = moneyValue.value.replace(/,/g , "");
+								// moneyValue.value = parseInt(moneyValue.value) * -1;
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								subType.reverse.value = false;	
+									subType.reverse.value = false;	
 							} else {
-								// console.log("300000000000000000000000000000000");
+
+								console.log("900000000000000000000000000000000000000000000000");
+
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;	
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-									subType.reverse.value = true;
+										subType.reverse.value = true;
 							}
 						}
 
 						console.log("what the hell is this??");
 
 					} else {
-						console.log("100000000000000000000000000000000");
-						console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
+						console.log("1555555555555555555555555555555555555");
 						if (selectedDetailNoteVariable.MONEY < 0) {
-							console.log("200000000000000000000000000000000");
+												// console.log("200000000000000000000000000000000");
 							moneyValue.value = moneyValue.value.replace(/,/g , "");
 							moneyValue.value = parseInt(moneyValue.value) * -1;	
 							moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
 						} else {
-							console.log("300000000000000000000000000000000");
-							if (selectedDetailNoteVariable.CASH_GB != selectedDetailNoteVariable.ESTI_CODE.substr(0,1)) {
+							console.log("7777777777777777777555555555555555555555");
+							console.log("selectedDetailNoteVariable.ESTI_CODE =====>" +selectedDetailNoteVariable.ESTI_CODE);
+							console.log("selectedDetailNoteVariable.CASH_GB =====>" +selectedDetailNoteVariable.CASH_GB);
+							if ((selectedDetailNoteVariable.CASH_GB != selectedDetailNoteVariable.ESTI_CODE.substr(0,1)) ) {
+							// if ((selectedDetailNoteVariable.ESTI_CODE == null)) {
+								console.log("300000000000000000000000000000000");
+								moneyValue.value = moneyValue.value.replace(/,/g , "");
+								moneyValue.value = parseInt(moneyValue.value) * -1;	
+								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+							} else if ( (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "1") ||  (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "2" )){
 								console.log("400000000000000000000000000000000");
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;	
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
-
-							}	
-
-							// console.log("400000000000000000000000000000000");
+							}
+								console.log("500000000000000000000000000000000");
 						}
 						
 						
 						subType.reverse.value = false;
+						console.log("600000000000000000000000000000000");
 					}
 					console.log("now type : " + notes._values[tempIndex].type);
 					console.log("ESTI_CODE Changed : " + x.substr(0,1));
