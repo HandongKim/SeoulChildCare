@@ -42,7 +42,7 @@ var getEstiSearchLoad_URL = "/acusr/acc/bil/getEstiSearchLoad.do";
 //공무송수신함
 var offDocTransList_URL = "/acadm/offDocMng/offDocTransList.do"
 
-
+var eduapplyproc_URL = "/mobile/education/eduapplyproc.do";
 
 
 
@@ -214,7 +214,7 @@ module.exports = {
 	updatebCashMobile_URL, deleteMobileBillList_URL,
 	getBillCashInputLoad_URL, selectMobileOnlineBillList_URL, 
 	dataFromNoteManageToDetailNote,notiUserMipList_URL,
-	noticeUserMipDetailList_URL, qnaList_URL, 
+	noticeUserMipDetailList_URL, qnaList_URL, eduapplyproc_URL,
 	qnaListDtl_URL,qnaUserUpdate_URL, insertQnaCommList_URL,
 	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, 
 	getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,

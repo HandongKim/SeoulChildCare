@@ -239,11 +239,14 @@
 						<Tapped>
 							<Callback Handler="{toggleSelect}" />
 						</Tapped>
-						<Image ux:Name="picture" StretchMode="UniformToFill" Url="{resource}" MemoryPolicy="UnloadUnused">
+						<!-- <WhileBusy> -->
+							<Image ux:Name="picture" StretchMode="UniformToFill" Url="{resource}" MemoryPolicy="UnloadUnused">
 							<!-- <WhileLoading>
 								<Change photoCollectionLoadingTF.Value="true" />
 							</WhileLoading> -->
-						</Image>
+							
+							</Image>
+						<!-- </WhileBusy> -->
 						<WhileTrue Value="{isSelected}">
 							<!-- <Change picture.Opacity="0.6" /> -->
 							<Change checkmark.Opacity="1" />

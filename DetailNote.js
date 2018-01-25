@@ -476,51 +476,7 @@ function getListDetailNote () {
 }
 
 
-function initialDataSetting () {
-	moneyValue.clear();
-	// subType.isChoice.clear();
-	// subType.color.clear();
-	// subType.type.clear();
-	// subType.text.clear();
-	selectedData.value = "결제방법";
-	// console.log("args.data.index : " + args.data.index);
-	console.log(JSON.stringify(listDetailNotes._values[0]));
 
-	//서버에 쓰일 데이터.
-	selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[0]);
-	
-
-	console.log("BILL_IDX VALUE IS  : " + selectedDetailNoteVariable.BILL_IDX );
-
-
-
-
-
-	var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
-	var selectedMonth = selectedDetailNoteVariable.CASH_DATE.substr(4,2);
-	var selectedDay = selectedDetailNoteVariable.CASH_DATE.substr(6,2);
-
-	selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
-	selectedMoney.value = Backend.dataFromNoteManageToDetailNote.BCASH_MONEY;
-
-	year.value =selectedYear;
-	month.value = selectedMonth;
-	day.value = selectedDay;
-	
-	moneyValue.value = notes._values[0].money;
-	
-	console.log("notes._values[args.data.index] : " + JSON.stringify(notes._values[0]));
-	console.log("notes._values[args.data.index].color : " + notes._values[0].color);
-	console.log("notes._values[args.data.index].type : " + notes._values[0].type);
-	console.log("notes._values[args.data.index].text : " + notes._values[0].text);
-
-	Backend.subject.isChoice.value = true;
-	Backend.subject.name.value = notes._values[0].name;
-	Backend.subject.color.value = notes._values[0].subTypeColor;
-	Backend.subject.type.value = notes._values[0].subType;
-
-	cameFromChoiceSubject = false;
-}
 
 
 
@@ -631,36 +587,46 @@ function pickFromList(args) {
 	Backend.subject.color.value = notes._values[args.data.index].subTypeColor;
 	Backend.subject.type.value = notes._values[args.data.index].subType;
 
-	// selectedTemp = temp[args.data.index];
-	// var selectedSubject = temp[args.data.index].ESTI_NAME;
-
-	// CASH_GB.value = temp[args.data.index].CASH_GB;
-
-	// console.log("temp[args.data.index].CASH_GB : " +  CASH_GB.value);
-
-	// selectedMemo.clear();
-	// selectedMemo.value= selectedTemp.BCASH_MEMO;
-
-	 
-	// tempCode = args.data.ESTI_CODE;
-	// Backend.subject.isChoice.value = true;
-	// Backend.subject.color.value = args.data.subTypeColor;
-	// Backend.subject.type.value = args.data.subType;
-	// Backend.subject.name.value = selectedSubject;
-
-	// moneyValue.value = temp[args.data.index].MONEY;
-
-
-		// console.log("selectedTemp : " + JSON.stringify(selectedTemp));
-
-
-
-
-
-		// console.log("temp[arg.data.index].MONEY : " + temp[args.data.index].MONEY);
 }
 
+function initialDataSetting () {
+	moneyValue.clear();
+	tempIndex = 0;
+	// subType.isChoice.clear();
+	// subType.color.clear();
+	// subType.type.clear();
+	// subType.text.clear();
+	selectedData.value = "결제방법";
+	// console.log("args.data.index : " + args.data.index);
+	console.log("initialDataSetting listDetailNotes" + JSON.stringify(listDetailNotes._values[0]));
+	//서버에 쓰일 데이터.
+	selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[0]);
+	console.log("BILL_IDX VALUE IS  : " + selectedDetailNoteVariable.BILL_IDX );
+	var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
+	var selectedMonth = selectedDetailNoteVariable.CASH_DATE.substr(4,2);
+	var selectedDay = selectedDetailNoteVariable.CASH_DATE.substr(6,2);
 
+	selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
+	selectedMoney.value = Backend.dataFromNoteManageToDetailNote.BCASH_MONEY;
+
+	year.value =selectedYear;
+	month.value = selectedMonth;
+	day.value = selectedDay;
+	
+	moneyValue.value = notes._values[0].money;
+	
+	console.log("notes._values[args.data.index] : " + JSON.stringify(notes._values[0]));
+	console.log("notes._values[args.data.index].color : " + notes._values[0].color);
+	console.log("notes._values[args.data.index].type : " + notes._values[0].type);
+	console.log("notes._values[args.data.index].text : " + notes._values[0].text);
+
+	Backend.subject.isChoice.value = true;
+	Backend.subject.name.value = notes._values[0].name;
+	Backend.subject.color.value = notes._values[0].subTypeColor;
+	Backend.subject.type.value = notes._values[0].subType;
+
+	cameFromChoiceSubject = false;
+}
 		
 
 
@@ -1411,12 +1377,10 @@ function deleteData () {
 				
 				try {
 					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
-		
+						console.log("1111111111111111111111111111111111111111");
 						subType.reverse.value = true;					
-
 						if (moneyValue.value.toString().includes("-")) {
-							if (selectedDetailNoteVariable.MONEY < 0) {
-								
+							if (selectedDetailNoteVariable.MONEY < 0) {							
 								if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 									moneyValue.value = moneyValue.value.replace(/,/g , "");
 									moneyValue.value = parseInt(moneyValue.value) * -1;
@@ -1426,15 +1390,12 @@ function deleteData () {
 									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 									subType.reverse.value = false;	
 								}
-
-
 							} else {
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 								subType.reverse.value = true;					
 							}
-
 						} else {
 							if (selectedDetailNoteVariable.MONEY < 0) {
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1445,11 +1406,9 @@ function deleteData () {
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 								subType.reverse.value = true;					
 							}
-						}
-						
-
+						}				
 					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {				
-						console.log("100000000000000000000000000000000");
+						console.log("2222222222222222222222222222222222222222");
 						if (moneyValue.value.toString().includes("-")) {
 							if (selectedDetailNoteVariable.MONEY < 0) {
 								console.log("200000000000000000000000000000000");
@@ -1474,32 +1433,37 @@ function deleteData () {
 							}
 
 						} else {
+							// console.log("100000000000000000000000000000000");
+							console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
 							if (selectedDetailNoteVariable.MONEY < 0) {
-								// moneyValue.value = moneyValue.value.replace(/,/g , "");
-								// moneyValue.value = parseInt(moneyValue.value) * -1;
+								// console.log("200000000000000000000000000000000");
+							// moneyValue.value = moneyValue.value.replace(/,/g , "");
+							// moneyValue.value = parseInt(moneyValue.value) * -1;
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-									subType.reverse.value = false;	
+								subType.reverse.value = false;	
 							} else {
+								// console.log("300000000000000000000000000000000");
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;	
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-										subType.reverse.value = true;
+									subType.reverse.value = true;
 							}
 						}
 
 						console.log("what the hell is this??");
 
 					} else {
-						// console.log("100000000000000000000000000000000");
+						console.log("100000000000000000000000000000000");
+						console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
 						if (selectedDetailNoteVariable.MONEY < 0) {
-												// console.log("200000000000000000000000000000000");
+							console.log("200000000000000000000000000000000");
 							moneyValue.value = moneyValue.value.replace(/,/g , "");
 							moneyValue.value = parseInt(moneyValue.value) * -1;	
 							moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
 						} else {
-
+							console.log("300000000000000000000000000000000");
 							if (selectedDetailNoteVariable.CASH_GB != selectedDetailNoteVariable.ESTI_CODE.substr(0,1)) {
-								// console.log("300000000000000000000000000000000");
+								console.log("400000000000000000000000000000000");
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;	
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	

@@ -7,14 +7,9 @@
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
 		var InterApp = require("FuseJS/InterApp");
-
-
-		
 		var type = Observable();
 		var selectedType = Observable();
 		var edus = Observable();
-
-
 		pickerOn = Observable(false);
 
 		function pickerUp() {
@@ -286,6 +281,10 @@ var hp3 = Observable();
 			console.log("applyEducation was clicked");
 			console.log("eduDetail._values[0].eduSeq : "+ eduDetail._values[0].eduSeq);
 
+			//dsSearch
+			var EDUYEAR = eduDetail._values[0].eduYear;
+
+
 			//ds_edu
 			var EDUSEQ = eduDetail._values[0].eduSeq;
 			var CHK_ID = eduDetail._values[0].chkId;
@@ -300,16 +299,26 @@ var hp3 = Observable();
 			var STATE = eduDetail._values[0].state;
 			var SINDATE_M = eduDetail._values[0].sinDateM;
 
-			// ds_info
 
-			var SEQ = eduIntoList._values[0].eduSeq;
-			var INS_NAME = eduIntoList._values[0].insName;
-			var INS_GB_CARE = eduIntoList._values[0].insGbCare;
-			var CODE_NAME = eduIntoList._values[0].codeName;
-			var AREA_CODE = eduIntoList._values[0].areaCode;
-			var AREA_NAME = eduIntoList._values[0].areaName;
-			var OFF_NM = eduIntoList._values[0].offNm;
-			var SEOUL_YN = eduIntoList._values[0].seoulYn;
+
+			// ds_info
+			var SEQ = null;
+			if (eduDetailInfo._values[0].eduSeq == null) {
+				SEQ = "";
+			} else {
+				SEQ = eduDetailInfo._values[0].eduSeq;
+			}
+			
+
+
+
+			var INS_NAME = eduDetailInfo._values[0].insName;
+			var INS_GB_CARE = eduDetailInfo._values[0].insGbCare;
+			var CODE_NAME = eduDetailInfo._values[0].codeName;
+			var AREA_CODE = eduDetailInfo._values[0].areaCode;
+			var AREA_NAME = eduDetailInfo._values[0].areaName;
+			var OFF_NM = eduDetailInfo._values[0].offNm;
+			var SEOUL_YN = eduDetailInfo._values[0].seoulYn;
 			var NAME = applicantName.value;
 			var FLAG = "I";
 
@@ -335,76 +344,88 @@ var hp3 = Observable();
 	// var SEARCH_FROM = "";
 	// var GVMEMID = JSON.parse(dsParam).GVMEMID;
 	// var SEARCH_MONTH = "201712";
+
 	// var SEARCH_BIGO = "";
 	// var GVESTIYEAR = JSON.parse(dsParam).GVESTIYEAR;
 	// var SEARCH_MEMO = "";
 
-	// var dsSearch = '{' 
-	// 		+ '"SEARCH_GB":"'+SEARCH_GB+ '",' 
-	// 		+ '"SEARCH_TO":"'+SEARCH_TO+'",' 
-	// 		+ '"GVMEMCODE":"'+GVMEMCODE+'",'
-	// 		+ '"GVBOOKGB":"'+GVBOOKGB+'",'
-	// 		+ '"SEARCH_BILLGB":"'+SEARCH_BILLGB +'",'
-	// 		+ '"SEARCH_ESTISUB":"' +SEARCH_ESTISUB+ '",' 
-	// 		+ '"SEARCH_ESTI":"' +SEARCH_ESTI +'",'
-	// 		+ '"SEARCH_FROM":"'+SEARCH_FROM+'",'
-	// 		+ '"GVMEMID":"'+GVMEMID+'",'
-	// 		+ '"SEARCH_MONTH":"'+SEARCH_MONTH+'",'
-	// 		+ '"SEARCH_BIGO":"'+SEARCH_BIGO+ '",'
-	// 		+ '"GVESTIYEAR":"'+GVESTIYEAR+'",'
-	// 		+ '"SEARCH_MEMO":"'+SEARCH_MEMO+'"' 
-	// 		+ '}';
+	var dsSearch = '{' 
+			+ '"eduyear":"'+EDUYEAR+ '",' 
+			+ '"eduseq":"'+EDUSEQ+'"' 
+			+ '}';
 
-	
-	// console.log("20180112 dsSearch2 : " + dsSearch);
-	// var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+console.log("dsSearch : " + dsSearch);
 
-	// var url = Backend.BASE_URL + Backend.getBillCashInputLoad_URL;
-	// console.log("=========================== 2018.01.04===========================");
-	// console.log("getBillCashInputLoad URL : " + url);
-	// console.log("=========================== 2018.01.04===========================");
-
-	// fetch(url, {
-	// 	method: 'POST',
-	// 	headers: {
-	// 		"Content-type": "application/json"
-	// 	},
-	// 	body: JSON.stringify(jsonParam)
-	// }).then(function (response) {
-	// 	var responseData = JSON.stringify(response);
-	// 	var responseHeaders = JSON.parse(response._bodyInit);
-
-	// 	var responseDsCashCodeList = JSON.stringify(responseHeaders.ds_bCashCodeList);
-	// 	responseDsCashCodeList = responseDsCashCodeList.split('],')[1];
-	// 	responseDsCashCodeList = responseDsCashCodeList.substr(0, responseDsCashCodeList.length-1);
-	// 	billCashInputData.replaceAll(JSON.parse(responseDsCashCodeList));
-	// 	billCashInputDataList.add("전체");
-
-	// 	for (var i =0; i < billCashInputData.length; i++) {
-	// 		var name = billCashInputData.getAt(i).NAME;
-	// 		var code = billCashInputData.getAt(i).BCASH_IDX;
-	// 		var array = '{"INDEX":"'+i+'","NAME":"'+name+'","BCASH_IDX":"'+code+'"}';
-	// 		billCashInputDataListTotal.add(JSON.parse(array));
-	// 		billCashInputDataList.add(billCashInputDataListTotal.getAt(i).NAME);
-	// 	}
-
-	// 	stBillCashPos.value = 0;
-	// 	for (var i = 0 ; i < billCashInputDataList.length ; i++) {
-	// 		if (billCashInputDataList.getAt(i) == selectedbillCashInputDataList.value) {
-	// 			break;
-	// 		} else {
-	// 			stBillCashPos.value += 50;
-	// 		}
-	// 	}
-	// 		return response.json();
-	// }).then(function(jsonData) {
-
-	// }).catch(function(err) {
-	// 	console.log("ERROR : " + err.message);
-	// });
+	var ds_edu = '{' 
+			+ '"EDUSEQ":"'+EDUSEQ+ '",' 
+			+ '"CHK_ID":"'+CHK_ID+'",' 
+			+ '"EDUDATE":"'+EDUDATE+'",'
+			// + '"EDUDATETIME":'+EDUDATETIME+','
+			// + '"CONTENT":'+CONTENT +','
+			// + '"OBJECT":' +OBJECT+ ',' 
+			// + '"PLACE":' +PLACE +','
+			// + '"PLACE_URL":'+PLACE_URL+','
+			// + '"REQUEST":'+REQUEST+','
+			// + '"TRAFFIC":'+TRAFFIC+','
+			+ '"STATE":"'+STATE+ '",'
+			+ '"SINDATE_M":"'+SINDATE_M+'"' 
+			+ '}';
 
 
-		}
+		// console.log("ds_edu : " + ds_edu);	
+
+
+
+
+	var ds_info = '{' 
+	+ '"SEQ":"'+SEQ+ '",' 
+	+ '"INS_NAME":"'+INS_NAME+'",' 
+	+ '"INS_GB_CARE":"'+INS_GB_CARE+'",'
+	+ '"CODE_NAME":"'+CODE_NAME+'",'
+	+ '"AREA_CODE":"'+AREA_CODE +'",'
+	+ '"AREA_NAME":"' +AREA_NAME+ '",' 
+	+ '"OFF_NM":"' +OFF_NM +'",'
+	+ '"SEOUL_YN":"'+SEOUL_YN+'",'
+	+ '"NAME":"'+NAME+'",'
+	+ '"FLAG":"'+FLAG+'",'
+	+ '"HP1":"'+HP1+ '",'
+	+ '"HP2":"'+HP1+'",'
+	+ '"HP3":"'+HP1+'"' 
+	+ '}';
+
+	console.log("ds_info : " + ds_info);	
+
+	var jsonString = '{"dsParam":'+Backend.dsParam+',"dsSearch": '+dsSearch+',"ds_info": '+ds_info+', "ds_edu": '+ds_edu+'}';
+	// var jsonString = '{"dsParam":'+Backend.dsParam+',"dsSearch": '+dsSearch+', "ds_edu": '+ds_edu+'}';
+
+	console.log("jsonString : " + jsonString);
+	var jsonParam = JSON.parse(jsonString);
+
+	var url = Backend.BASE_URL + Backend.eduapplyproc_URL;
+
+
+
+		console.log("=========================== 2018.01.04===========================");
+		console.log("getBillCashInputLoad URL : " + url);
+		console.log("=========================== 2018.01.04===========================");
+
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+	}).then(function (response) {
+		console.log("response : " + JSON.stringify(response));
+		return response.json();
+	}).then(function(jsonData) {
+
+	}).catch(function(err) {
+		console.log("ERROR : " + err.message);
+	});
+
+
+}
 
 
 
