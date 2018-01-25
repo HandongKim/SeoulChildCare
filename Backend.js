@@ -63,7 +63,8 @@ var subject = {
 	text: Observable(),
 	ESTI_CODE: Observable(),
 	ESTI_GB: Observable(),
-	ESTI_SUBCODE: Observable()
+	ESTI_SUBCODE: Observable(),
+	ESTI_NAME: Observable()
 };
 
 

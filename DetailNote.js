@@ -280,22 +280,17 @@ function selectedDetailNote(args) {
 	}
 
 
-
 	if (args.BCASH_MEMO !=null) {
 		this.BCASH_MEMO = args.BCASH_MEMO;	
 	} else {
 		this.BCASH_MEMO="";
 	}
 
-
-
 	if (args.ESTI_CODE !=null) {
 		this.ESTI_CODE = args.ESTI_CODE;	
 	} else {
 		this.ESTI_CODE="";
 	}
-
-
 
 	if (args.CASH_DATE !=null) {
 		this.CASH_DATE = args.CASH_DATE;	
@@ -308,8 +303,6 @@ function selectedDetailNote(args) {
 	} else {
 		this.ESTI_NAME="";
 	}
-
-
 
 	if (args.SUM_MONEY !=null) {
 		this.SUM_MONEY = args.SUM_MONEY;	
@@ -327,8 +320,6 @@ function selectedDetailNote(args) {
 	} else {
 		this.MONEY="";
 	}
-
-
 
 	if (args.ESTI_SUB_YN !=null) {
 		this.ESTI_SUB_YN = args.ESTI_SUB_YN;	
@@ -652,11 +643,14 @@ function pickFromList(args) {
 	console.log("BILL_IDX VALUE IS  : " + selectedDetailNoteVariable.BILL_IDX );
 	console.log("BILL_SUBCODE VALUE IS  : " + selectedDetailNoteVariable.BILL_SUBCODE );
 
-	if (selectedDetailNoteVariable.BILL_IDX != null) {
-		isReadOnly.value = false;
-	}else {
+	if (selectedDetailNoteVariable.BILL_IDX != "") {
 		isReadOnly.value = true;
+	}else {
+		isReadOnly.value = false;
 	}
+
+	console.log("isReadOnly.value : " + isReadOnly.value);
+
 
 
 	var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
@@ -906,7 +900,7 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
 	console.log("validationCheckvalidationCheckvalidationCheckvalidationCheck  : " + ESTI_CODE  );
 
 
-	if (ESTI_CODE == null) {
+	if ((ESTI_CODE == null) || (ESTI_CODE == "")) {
 		console.log("doesn't select subject");
 		alert.title.value = "계정과목";
 		alert.message.value = "계정과목을 입력해주세요.";
@@ -978,21 +972,33 @@ function saveData() {
 // ESTI_SUBCODE: Observable()
 	var ESTI_CODE = null;
 
-	console.log("Backend.subject.ESTI_CODE ================> " + Backend.subject.ESTI_CODE);
+	console.log("Backend.subject.ESTI_CODE ================> " + Backend.subject.ESTI_CODE.value);
 
-	if (Backend.subject.ESTI_CODE.value == null) {
+	if (Backend.subject.ESTI_CODE.value == "") {
+
 		ESTI_CODE = selectedDetailNoteVariable.ESTI_CODE;
 	} else {
 		ESTI_CODE = Backend.subject.ESTI_CODE.value;
 	}
 	
+	console.log("ESTI_CODE ================> " + ESTI_CODE);
+
+
+
+
 	var ESTI_SUBCODE = null;
 
+	console.log("Backend.subject.ESTI_SUBCODE ================> " + Backend.subject.ESTI_SUBCODE.value);
+
 	if (Backend.subject.ESTI_SUBCODE.value == null) {
-		ESTI_SUBCODE = selectedDetailNoteVariable.ESTI_SUBCODE;
+		// ESTI_SUBCODE = selectedDetailNoteVariable.ESTI_SUBCODE;
+		ESTI_SUBCODE = "";
 	} else {
 		ESTI_SUBCODE = Backend.subject.ESTI_SUBCODE.value;
 	}
+
+	console.log("ESTI_SUBCODEESTI_SUBCODEESTI_SUBCODE : " + ESTI_SUBCODE);
+
 
 	
 	var BILL_SUBCODE = selectedDetailNoteVariable.BILL_SUBCODE;
@@ -1024,13 +1030,16 @@ function saveData() {
 		ESTI_SUB_YN = Backend.subject.ESTI_SUB_YN.value;
 	}
 	
-	var ESTI_NAME;	
+	var ESTI_NAME = "";	
 
-	if (Backend.subject.ESTI_NAME == null) {
+	console.log("Backend.subject.ESTI_NAME ================> " + Backend.subject.ESTI_NAME.value);
+
+	if (Backend.subject.ESTI_NAME.value == null) {
 		ESTI_NAME = selectedDetailNoteVariable.ESTI_NAME;
 	} else {
 		ESTI_NAME = Backend.subject.ESTI_NAME.value;	
 	}
+
 
 	var tempMoneyValue = null;
 
@@ -1075,17 +1084,17 @@ function saveData() {
 		+'","MONEY":"'+tempMoneyValue
 		+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO
 		+'","BCASH_MEMO":"'+BCASH_MEMO
-		+'","ESTI_CODE":'+ESTI_CODE
-		+',"BILL_SUBCODE":'+BILL_SUBCODE
-		+',"BILL_IDX":'+BILL_IDX
-		+',"BILL_CLSS":"'+BILL_CLSS
-		+'","BILL_RECEIPT":'+BILL_RECEIPT
-		+',"ESTI_SUB_YN":'+ESTI_SUB_YN
-		+',"ESTI_NAME":'+ESTI_NAME
-		+',"BILL_GB":"'+BILL_GB
+		+'","ESTI_CODE":"'+ESTI_CODE
+		+'","BILL_SUBCODE":"'+BILL_SUBCODE
+		+'","BILL_IDX":"'+BILL_IDX
+		+'","BILL_CLSS":"'+BILL_CLSS
+		+'","BILL_RECEIPT":"'+BILL_RECEIPT
+		+'","ESTI_SUB_YN":"'+ESTI_SUB_YN
+		+'","ESTI_NAME":"'+ESTI_NAME
+		+'","BILL_GB":"'+BILL_GB
 		+'","ESTI_SUBCODE":"'+ESTI_SUBCODE
-		+'","BCASH_BILL_SEQ":'+BCASH_BILL_SEQ
-		+', "BCASH_MONEY":"'+BCASH_MONEY
+		+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ
+		+'", "BCASH_MONEY":"'+BCASH_MONEY
 		+'"}';	
 
 	} else if (ACTION =="U") {
@@ -1097,10 +1106,10 @@ function saveData() {
 		+'","MONEY":"'+tempMoneyValue
 		+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO
 		+'","BCASH_MEMO":"'+BCASH_MEMO
-		+'","ESTI_CODE":'+ESTI_CODE
-		+',"ESTI_SUBCODE":"'+ESTI_SUBCODE
-		+'","BILL_SUBCODE":'+BILL_SUBCODE
-		+',"BILL_IDX":"'+BILL_IDX
+		+'","ESTI_CODE":"'+ESTI_CODE
+		+'","ESTI_SUBCODE":"'+ESTI_SUBCODE
+		+'","BILL_SUBCODE":"'+BILL_SUBCODE
+		+'","BILL_IDX":"'+BILL_IDX
 		+'","BILL_CLSS":"'+BILL_CLSS
 		+'","BILL_RECEIPT":"'+BILL_RECEIPT
 		+'","ESTI_SUB_YN":"'+ESTI_SUB_YN
@@ -1135,50 +1144,7 @@ function saveData() {
 	pictureList = '{"ATCHMNFL_IDX" : ';
 
 
-	if (isPictureTaken == true) {
-		// pictureList = JSON.stringify(pictureArray._values);
-		// pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray +',' + pictureArray + ']}';
-		pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray +']}';
-		// pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray + ']}';
-		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
-
-		isPictureTaken = false;
-
-
-	} else {
-		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
-	}
 	
-	// pictureList = JSON.parse(pictureList);
-
-
-
-
-	if (Backend.selectedPhotoCollectionPictureListFromDetailNote._values == "") {
-		console.log("Backend.selectedPhotoCollectionPictureListFromDetailNote._values == null");
-	} else {
-		if (Backend.selectedPhotoCollectionPictureListFromDetailNote.length == 1) {
-			console.log("Backend.selectedPhotoCollectionPictureListFromDetailNote.length : " + Backend.selectedPhotoCollectionPictureListFromDetailNote.length);
-
-			pictureList = '{"ATCHMNFL_IDX" : '+'['+ Backend.selectedPhotoCollectionPictureListFromDetailNote._values +']}';
-		} else {
-			for (var i = 0; i < Backend.selectedPhotoCollectionPictureListFromDetailNote.length; i++) {
-
-				if (i == 0 ) {
-					pictureList = pictureList +'['+ Backend.selectedPhotoCollectionPictureListFromDetailNote._values[i] + ','; 
-				} else if (i != (Backend.selectedPhotoCollectionPictureListFromDetailNote.length -1)){
-					pictureList = pictureList + Backend.selectedPhotoCollectionPictureListFromDetailNote._values[i] + ',';
-				} else if (i == (Backend.selectedPhotoCollectionPictureListFromDetailNote.length -1)) {
-					pictureList = pictureList + Backend.selectedPhotoCollectionPictureListFromDetailNote._values[i] + ']}';
-				}		
-			}
-
-
-			console.log("pictureList for many pictures: " + pictureList);
-
-		}
-		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
-	}
 
 
 	Backend.selectedPhotoCollectionPictureListFromDetailNote.clear();
@@ -1238,6 +1204,58 @@ function saveData() {
 	var validateChecked = validationCheck(tempMoneyValue, BILL_CLSS, ESTI_CODE);
 
 	if (validateChecked == true) {
+
+		if (isPictureTaken == true) {
+		// pictureList = JSON.stringify(pictureArray._values);
+		// pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray +',' + pictureArray + ']}';
+		pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray +']}';
+		// pictureList = '{"ATCHMNFL_IDX" : '+'['+ pictureArray + ']}';
+		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
+
+		isPictureTaken = false;
+
+
+		} else {
+			var temp = '{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}';
+			console.log(temp);
+
+
+			jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
+		}
+	
+	// pictureList = JSON.parse(pictureList);
+
+
+
+
+	if (Backend.selectedPhotoCollectionPictureListFromDetailNote._values == "") {
+		console.log("Backend.selectedPhotoCollectionPictureListFromDetailNote._values == null");
+	} else {
+		if (Backend.selectedPhotoCollectionPictureListFromDetailNote.length == 1) {
+			console.log("Backend.selectedPhotoCollectionPictureListFromDetailNote.length : " + Backend.selectedPhotoCollectionPictureListFromDetailNote.length);
+
+			pictureList = '{"ATCHMNFL_IDX" : '+'['+ Backend.selectedPhotoCollectionPictureListFromDetailNote._values +']}';
+		} else {
+			for (var i = 0; i < Backend.selectedPhotoCollectionPictureListFromDetailNote.length; i++) {
+
+				if (i == 0 ) {
+					pictureList = pictureList +'['+ Backend.selectedPhotoCollectionPictureListFromDetailNote._values[i] + ','; 
+				} else if (i != (Backend.selectedPhotoCollectionPictureListFromDetailNote.length -1)){
+					pictureList = pictureList + Backend.selectedPhotoCollectionPictureListFromDetailNote._values[i] + ',';
+				} else if (i == (Backend.selectedPhotoCollectionPictureListFromDetailNote.length -1)) {
+					pictureList = pictureList + Backend.selectedPhotoCollectionPictureListFromDetailNote._values[i] + ']}';
+				}		
+			}
+
+
+			console.log("pictureList for many pictures: " + pictureList);
+
+		}
+		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
+	}
+
+
+
 		console.log("check: " + tempMoneyValue + ", " + BILL_CLSS +", " + ESTI_CODE);
 
 		fetch(updatebCashMobileUrl, {
@@ -1317,15 +1335,32 @@ function deleteData () {
 // 	ESTI_CODE: Observable(),
 // ESTI_GB: Observable(),
 // ESTI_SUBCODE: Observable()
-	var ESTI_CODE;
+	// var ESTI_CODE;
 
-	if (Backend.subject.ESTI_CODE == null) {
-		ESTI_CODE = selectedDetailNoteVariable.ESTI_CODE;
-	} else {
-		ESTI_CODE = Backend.subject.ESTI_CODE.value;
-	}
+	// if (Backend.subject.ESTI_CODE. == null) {
+	// 	ESTI_CODE = selectedDetailNoteVariable.ESTI_CODE;
+	// } else {
+	// 	ESTI_CODE = Backend.subject.ESTI_CODE.value;
+	// }
+
+
+	var ESTI_CODE = null;
+
+	// console.log("Backend.subject.ESTI_CODE ================> " + Backend.subject.ESTI_CODE.value);
+
+	// if (Backend.subject.ESTI_CODE.value == "") {
+
+	ESTI_CODE = selectedDetailNoteVariable.ESTI_CODE;
+	// } else {
+	// 	ESTI_CODE = Backend.subject.ESTI_CODE.value;
+	// }
 	
+	console.log("ESTI_CODE ================> " + ESTI_CODE);
+
 	var BILL_SUBCODE= selectedDetailNoteVariable.BILL_SUBCODE;
+
+	console.log("BILL_SUBCODE ================> " + BILL_SUBCODE);
+
 	var BILL_IDX= selectedDetailNoteVariable.BILL_IDX;
 	console.log("BIL_IDX from saveData : " + BILL_IDX);
 	var BILL_CLSS=selected_BILL_CLSS.value;
@@ -1368,12 +1403,19 @@ function deleteData () {
 
 
 
-	ds_bCash ='{"ACTION":"D","CASH_IDX":"'+CASH_IDX+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+tempMoneyValue+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":'+BILL_SUBCODE+',"BILL_IDX":"'+BILL_IDX+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME+'","BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ+'"}';	
+	ds_bCash ='{"ACTION":"D","CASH_IDX":"'+CASH_IDX
+	+'","CASH_DATE":"'+CASH_DATE+'","CASH_GB":"'+CASH_GB
+	+'","CASH_IDX2":"'+CASH_IDX2+'","MONEY":"'+tempMoneyValue
+	+'","ORG_BCASH_MEMO":"'+ORG_BCASH_MEMO+'","BCASH_MEMO":"'+BCASH_MEMO
+	+'","ESTI_CODE":"'+ESTI_CODE+'","BILL_SUBCODE":"'+BILL_SUBCODE+'","BILL_IDX":"'+BILL_IDX
+	+'","BILL_CLSS":"'+BILL_CLSS+'","BILL_RECEIPT":"'+BILL_RECEIPT
+	+'","ESTI_SUB_YN":"'+ESTI_SUB_YN+'","ESTI_NAME":"'+ESTI_NAME
+	+'","BILL_GB":"'+BILL_GB+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ+'"}';	
 	
 
 
 
-	// // console.log("ds_bCash : " + temp_ds_bCash);
+	console.log("ds_bCash : " + ds_bCash);
 
 	
 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
@@ -1476,26 +1518,25 @@ function deleteData () {
 				try {
 					console.log("notes._values[tempIndex].type : " + notes._values[tempIndex].type);
 					console.log("x.substr(0,1) : " + x.substr(0,1));
-
 					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 						console.log("7777777777777777777777777777777777777");
-						subType.reverse.value = true;					
-
+						subType.reverse.value = true;
 						if (moneyValue.value.toString().includes("-")) {
+							console.log("88888888888888888888888888888888888");
 							if (selectedDetailNoteVariable.MONEY < 0) {
-								
+								console.log("9999999999999999999999999999999");
 								if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 									moneyValue.value = moneyValue.value.replace(/,/g , "");
 									moneyValue.value = parseInt(moneyValue.value) * -1;
 									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-									subType.reverse.value = true;
-								}else {
+									subType.reverse.value = false;
+								} else {
+									console.log("0000000000000000000000000000000000");
 									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 									subType.reverse.value = false;	
 								}
-
-
 							} else {
+								console.log("666666666666666666666666666666666666666");
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1503,10 +1544,13 @@ function deleteData () {
 							}
 
 						} else {
+							console.log("7878787878787878787878787878787878787878787878");
 							if (selectedDetailNoteVariable.MONEY < 0) {
+								console.log("121212121212121212121212121212121212121212121212");
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 								subType.reverse.value = false;					
 							} else {
+								console.log("34343434343434343434343434343434343434343434343434");
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1526,7 +1570,7 @@ function deleteData () {
 									moneyValue.value = moneyValue.value.replace(/,/g , "");
 									moneyValue.value = parseInt(moneyValue.value) * -1;
 									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-									subType.reverse.value = true;
+									subType.reverse.value = false;
 								}else {
 									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 									subType.reverse.value = false;	
@@ -1563,30 +1607,37 @@ function deleteData () {
 					} else {
 						console.log("1555555555555555555555555555555555555");
 						if (selectedDetailNoteVariable.MONEY < 0) {
-												// console.log("200000000000000000000000000000000");
+							console.log("200000000000000000000000000000000");
 							moneyValue.value = moneyValue.value.replace(/,/g , "");
 							moneyValue.value = parseInt(moneyValue.value) * -1;	
 							moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
 						} else {
-							console.log("7777777777777777777555555555555555555555");
-							console.log("selectedDetailNoteVariable.ESTI_CODE =====>" +selectedDetailNoteVariable.ESTI_CODE);
-							console.log("selectedDetailNoteVariable.CASH_GB =====>" +selectedDetailNoteVariable.CASH_GB);
-							if ((selectedDetailNoteVariable.CASH_GB != selectedDetailNoteVariable.ESTI_CODE.substr(0,1)) ) {
-							// if ((selectedDetailNoteVariable.ESTI_CODE == null)) {
-								console.log("300000000000000000000000000000000");
-								moneyValue.value = moneyValue.value.replace(/,/g , "");
-								moneyValue.value = parseInt(moneyValue.value) * -1;	
-								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
-							} else if ( (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "1") ||  (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "2" )){
+							// console.log("7777777777777777777555555555555555555555");
+							// console.log("selectedDetailNoteVariable.ESTI_CODE =====>" +selectedDetailNoteVariable.ESTI_CODE);
+							// console.log("selectedDetailNoteVariable.CASH_GB =====>" +selectedDetailNoteVariable.CASH_GB);
+							// if ((selectedDetailNoteVariable.CASH_GB != selectedDetailNoteVariable.ESTI_CODE.substr(0,1)) ) {
+
+							console.log("300000000000000000000000000000000");
+							// 	moneyValue.value = moneyValue.value.replace(/,/g , "");
+							// 	moneyValue.value = parseInt(moneyValue.value) * -1;	
+							// 	moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+							// } 
+
+							// // else if ( (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "1") ||  (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "2" )){
+							// 	console.log("400000000000000000000000000000000");
+							// // 	moneyValue.value = moneyValue.value.replace(/,/g , "");
+							// // 	moneyValue.value = parseInt(moneyValue.value) * -1;	
+							// // 	moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+							// // }
+							// console.log("500000000000000000000000000000000");
+
+							if (moneyValue.value.toString().includes("-")) {
 								console.log("400000000000000000000000000000000");
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;	
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
 							}
-								console.log("500000000000000000000000000000000");
-						}
-						
-						
+						}			
 						subType.reverse.value = false;
 						console.log("600000000000000000000000000000000");
 					}

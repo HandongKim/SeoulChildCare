@@ -20,7 +20,9 @@
 		var temp;
 		var recievedData;
 		var getEstiSearchLoadUrl;
+
 		function searchTheSubjectList (esti_gb) {
+			choiceSubjectLoadingCircleOn.value = true;
 			getEstiSearchLoadUrl = Backend.BASE_URL + Backend.getEstiSearchLoad_URL;
 			var dsParam = Backend.dsParam.substring(0, Backend.dsParam.length -1);
 			console.log("esti_gb : " + esti_gb);
@@ -55,6 +57,7 @@
 						subjects.add(new income(temp[i]));
 						incomeDataFromServerList.add(new incomeDataFromServer(temp[i], i));
 					}
+					choiceSubjectLoadingCircleOn.value =false;
 		            return response.json();
 		        }).then(function(jsonData) {
 		        
@@ -163,6 +166,13 @@
 				Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
 				Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
 				Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
+				Backend.subject.ESTI_NAME.value = arg.data.ESTI_NAME;
+
+				console.log("======================== ************************************************");
+				console.log("arg.data.ESTI_NAME : " + arg.data.ESTI_NAME);
+				console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
+				console.log("======================== ************************************************");
+
 
 				Backend.chosenSubject.isChoice = true;
 				Backend.chosenSubject.name = arg.data.name;
@@ -213,8 +223,10 @@
 				searchTheSubjectList("3"+CASH_GB.value);
 		}
 
+		var choiceSubjectLoadingCircleOn = Observable(false);
+
 		module.exports = {
-			subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList, incomeTF, choiceSubjectAlertWithConfirm
+			subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList, incomeTF, choiceSubjectAlertWithConfirm, choiceSubjectLoadingCircleOn
 		};
 	</JavaScript>
 
@@ -337,6 +349,18 @@
 
 
 
+
+<Panel ux:Name="photoCollectionLoadingPanel" Width="100%" Height="100%" Color="#ccc8" Layer="Background">
+	<WhileTrue ux:Name="photoCollectionLoadingTF" Value="{choiceSubjectLoadingCircleOn}">
+		<Change photoCollectionLoadingPanel.Layer="Overlay" />
+		<Spin Target="photoCollectionLoadingCircle" Frequency="2" />
+		<Cycle Target="photoCollectionLoadingCircle.LengthAngleDegrees" Low="30" High="300" Frequency="0.7" />
+	</WhileTrue>
+
+	<Circle ux:Name="photoCollectionLoadingCircle" Width="50" Height="50" StartAngleDegrees="0" LengthAngleDegrees="90">
+		<Stroke Width="5" Color="White" />
+	</Circle>
+</Panel>
 
 
 
