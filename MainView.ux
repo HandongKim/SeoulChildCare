@@ -410,16 +410,6 @@
 	<Android.StatusBarConfig Color="#000f" IsVisible="True" />
 	<MemoryPolicy ux:Global="MyUnload" UnloadInBackground="true" UnusedTimeout="0.5" UnpinInvisible="true"/>
 
-
-
-		
-
-
-
-
-
-
-
 	<ClientPanel Placed="{placed}" HitTestMode="{enableClick}">
 		<Panel Width="100%" Height="100%" Color="#FFF8" Layer="{connectingPanelLayout}" HitTestMode="None" />
 		<Navigator DefaultPath="Intro" Color="White">

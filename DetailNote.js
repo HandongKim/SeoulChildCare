@@ -205,9 +205,8 @@ function note(arg, noteIndex) {
 	this.reverse = false;
 	if (arg.BILL_IDX !=null && arg.CASH_GB !=null) {
 		if (arg.CASH_GB != arg.ESTI_CODE.substr(0,1)){
-
 			if(arg.MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").toString().includes("-")) {
-				this.reverse = true;	
+				this.reverse = true;
 			}else {
 				this.reverse = false;	
 			}
@@ -272,13 +271,11 @@ function selectedDetailNote(args) {
 		this.CASH_GB="";
 	}
 
-
 	if (args.CASH_IDX !=null) {
 		this.CASH_IDX = args.CASH_IDX;	
 	} else {
 		this.CASH_IDX="";
 	}
-
 
 	if (args.BCASH_MEMO !=null) {
 		this.BCASH_MEMO = args.BCASH_MEMO;	
@@ -343,7 +340,6 @@ function selectedDetailNote(args) {
 		this.BILL_SUBCODE="";
 	}
 
-
 	if (args.BILL_IDX !=null) {
 		this.BILL_IDX = args.BILL_IDX;	
 	} else {
@@ -353,13 +349,7 @@ function selectedDetailNote(args) {
 		this.BCASH_BILL_SEQ = args.BCASH_BILL_SEQ;	
 	} else {
 		this.BCASH_BILL_SEQ="";
-	}
-	
-
-	
-	
-	
-	
+	}	
 }
 
 
@@ -409,88 +399,19 @@ Backend.isItFromNoteManage.onValueChanged(null, function(x) {
 function getListDetailNote () {
 	alertWithConfirm.layer.value = "Background";
 	console.log("getListDetailNote was called on 23rd Jan 2018");
-
 	console.log("Backend.isItFromNoteManage was onValueChanged : " + Backend.isItFromNoteManage.value);
 
-
-	// if (fromNote != null) {
-
-	// 	if (fromNote.value == true) {
-	// 		console.log("isFromNoteManage YES");
-	// 		isItFromNoteManage = null;
-	// 		fromNote = null;
-
-	// 	} else {
-	// 		console.log("NONONONONONON");
-	// 	}
-	
-	// } else {
-	// 	console.log("fromNOte is null");
-	// }
-
-
-
-
-// 2017.12.18 dsSearch에 요청하는 파람값을 변경한다.
-	// var temp = 	isItFromNoteManage.map(function(x) { 
-	// 	console.log("x.isFromNoteManage : " + x.isFromNoteManage); 
-	// });
-
 	// router.getRoute(function(route) {
-	// 	console.log("goBackToPrevious From " + route[0]);
-	// 	if (route[0] == "NoteManage") {
-	// 		console.log("2018.01.17 NoteManage");
-	// 	} else if (route[0] == "DetailNote") {
-	// 		console.log("2018.01.17 DetailNote");
-	// 	} else if (route[0] == "ShowFile") {
-	// 		console.log("2018.01.17 ShowFile");
-	// 	} else if (route[0] == "ChoiceSubject") {
-	// 		console.log("2018.01.17 ChoiceSubject");
-	// 	} else if (route[0] == "Notice") {
-	// 		console.log("2018.01.17 Notice");
-	// 	} else if (route[0] == "ApplyEdu") {
-	// 		console.log("2018.01.17 ApplyEdu");
-	// 	} else if (route[0] == "QnA") {
-	// 		console.log("2018.01.17 QnA");
-	// 	} else {
-			
+	//  	for (var i = 0; i < route.length; i++) {
+	// 		console.log("=============== 2018.01.17 route[" + i + "] : "  + route[i]);
 	// 	}
 	// });
-	router.getRoute(function(route) {
-	 	for (var i = 0; i < route.length; i++) {
-			console.log("=============== 2018.01.17 route[" + i + "] : "  + route[i]);
-		}
-	});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	CASH_IDX = Backend.dataFromNoteManageToDetailNote.CASH_IDX.value;
 	BILL_IDX = Backend.dataFromNoteManageToDetailNote.BILL_IDX.value;
 
-
-
     var dsSearch = '{"SEARCH_BCASH":'+CASH_IDX+',"SEARCH_BILL_IDX": '+BILL_IDX+'}';
-
     console.log("CASH_IDX : " + CASH_IDX);
     console.log("SEARCH_BILL_IDX : " + BILL_IDX);
-
-
-
-
 	// // console.log(" dsSearch : " + dsSearch);
     var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
     // var jsonParam = JSON.parse('{"dsParam":'+staticParamStringValue+',"dsSearch": '+dsSearch+'}');
@@ -503,8 +424,9 @@ function getListDetailNote () {
     // selectedData.value="카드결제";
     // subType.isChoice.value=false;
 
-
-
+	notes.clear();
+	listDetailNotes.clear();
+	detailNoteLoadingCircleOn.value =true;
 
 	fetch(selectMobileOnlineBillList_URL, {
 		method: 'POST',
@@ -528,8 +450,7 @@ function getListDetailNote () {
 			
 			console.log("2017.12.18 2 responseHeaders.ds_billList : "+ JSON.stringify(temp));
 
-			notes.clear();
-			listDetailNotes.clear();
+		
 
 
 			// console.log("fefefefefe temp.length : " + temp.length);
@@ -548,7 +469,7 @@ function getListDetailNote () {
 			}
 				
 
-
+			detailNoteLoadingCircleOn.value = false;
 
         	var responseData = JSON.stringify(response);
         	
@@ -559,8 +480,11 @@ function getListDetailNote () {
             // console.log("data : " + jsonData.results[0]);
 			// console.log("Reg Succeeded[ios]: " + data.registration_token);
 			// maintext.value = maintext.value + "/n" + data.registration_token;
+			detailNoteLoadingCircleOn.value = false;
         }).catch(function(err) {
+
             // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+            detailNoteLoadingCircleOn.value = false;
         });
 }
 
@@ -595,6 +519,16 @@ var tempIndex = null;
 
 function initBackendSubject () {
 
+	// Backend.subject.isChoice.clear();
+	// Backend.subject.color.clear();
+	// Backend.subject.type.clear();
+	// Backend.subject.name.clear();
+	// Backend.subject.text.clear();
+	// Backend.subject.ESTI_CODE.clear();
+	// Backend.subject.ESTI_GB.clear();
+	// Backend.subject.ESTI_SUBCODE.clear();
+
+
 	Backend.subject.isChoice.clear();
 	Backend.subject.color.clear();
 	Backend.subject.type.clear();
@@ -603,8 +537,11 @@ function initBackendSubject () {
 	Backend.subject.ESTI_CODE.clear();
 	Backend.subject.ESTI_GB.clear();
 	Backend.subject.ESTI_SUBCODE.clear();
+	Backend.subject.ESTI_NAME.clear();
+};
 
-}
+
+
 
 
 var isReadOnly = Observable(false);
@@ -612,7 +549,7 @@ var isReadOnly = Observable(false);
 var yearAndMonth = "";
 
 function pickFromList(args) {
-	subType.reverse.value=false;
+	subType.reverse.value = notes._values[args.data.index].reverse;
 	GLOBAL_BILL_SUBCODE = null;
 
 	// initBackendSubject();
@@ -683,6 +620,7 @@ function pickFromList(args) {
 
 function initialDataSetting () {
 	moneyValue.clear();
+	initBackendSubject();
 	// subType.isChoice.clear();
 	// subType.color.clear();
 	// subType.type.clear();
@@ -691,6 +629,11 @@ function initialDataSetting () {
 	selectedData.value = "결제방법";
 	// console.log("args.data.index : " + args.data.index);
 	console.log("initialDataSetting listDetailNotes" + JSON.stringify(listDetailNotes._values[0]));
+	subType.reverse.value=notes._values[0].reverse;
+	
+
+
+
 	//서버에 쓰일 데이터.
 	selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[0]);
 	console.log("BILL_IDX VALUE IS  : " + selectedDetailNoteVariable.BILL_IDX );
@@ -861,10 +804,6 @@ function datePickerDown() {
 			            
 		// 	        });
 		// }
-
-
-
-
 
 function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
  	var allChecked = false;
@@ -1320,6 +1259,15 @@ function logOut() {
 var deleteMobileBillListUrl;
 
 function deleteData () {
+
+	if (selectedDetailNoteVariable.ESTI_CODE == "") {
+		   			alert.title.value = "";
+					alert.message.value = "미등록 된 전표는 삭제할수 없습니다.";
+					alert.type.value = "Check";
+					alert.layer.value = "Overlay";
+	} else {
+
+
 	var ACTION = selectedDetailNoteVariable.ACTION;
 	var CASH_IDX = selectedDetailNoteVariable.CASH_IDX;
 	var CASH_DATE = selectedDetailNoteVariable.CASH_DATE;
@@ -1443,12 +1391,11 @@ function deleteData () {
 		   		console.log("수정완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		   		alertWithConfirm.message.value = "삭제 되었습니다.";
 				alertWithConfirm.layer.value = "Overlay";
-
-		   	} else {
-		   		alert.title.value = "";
-				alert.message.value = "수정 안 됬습니다.";
-				alert.type.value = "Check";
-				alert.layer.value = "Overlay";
+		   	} else {	   		
+		   			alert.title.value = "";
+					alert.message.value = "삭제가 되지않았습니다.";
+					alert.type.value = "Check";
+					alert.layer.value = "Overlay";			   		
 		   	} 	
             return response.json();
         }).then(function(jsonData) {
@@ -1459,6 +1406,8 @@ function deleteData () {
         }).catch(function(err) {
             // console.log("Reg Succeeded[ios] Error!! : " + err.message);
         });
+
+     }   
 }
 
 
@@ -1608,9 +1557,14 @@ function deleteData () {
 						console.log("1555555555555555555555555555555555555");
 						if (selectedDetailNoteVariable.MONEY < 0) {
 							console.log("200000000000000000000000000000000");
-							moneyValue.value = moneyValue.value.replace(/,/g , "");
-							moneyValue.value = parseInt(moneyValue.value) * -1;	
-							moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+
+							if (parseInt(moneyValue.value) < 0 ) {
+								//
+							} else {
+								moneyValue.value = moneyValue.value.replace(/,/g , "");
+								moneyValue.value = parseInt(moneyValue.value) * -1;	
+								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+							}
 						} else {
 							// console.log("7777777777777777777555555555555555555555");
 							// console.log("selectedDetailNoteVariable.ESTI_CODE =====>" +selectedDetailNoteVariable.ESTI_CODE);
@@ -1855,12 +1809,12 @@ function sendPictureWithParamterDetailNote(yearAndMonth)
 		isPictureTaken = true;
 		detailNoteLoadingCircleOn.value = false;
 
-		alert.message.value="성공";
+		alert.message.value="선택된 이미작가 적용되었습니다.";
 		alert.layer.value = "Overlay";
 
 	} else {
 		detailNoteLoadingCircleOn.value = false;
-		alert.message.value="실패";
+		alert.message.value="선택된 이미작가 적용되지 않았습니다.";
 		alert.layer.value = "Overlay";
 	}
 

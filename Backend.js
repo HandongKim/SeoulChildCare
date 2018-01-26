@@ -54,6 +54,9 @@ var selectBusiReceiveAdminList_URL = "/acadm/cmt/selectBusiReceiveAdminList.do";
 //업무연락 [보낸업무함 전체리스트 및 Search URL]
 var selectBusiSendAdminList_URL = "/acadm/cmt/selectBusiSendAdminList.do";
 
+var searchBusiReceiveAdmDtl_URL = "/acadm/cmt/searchBusiReceiveAdmDtl.do"
+
+
 
 var subject = {
 	isChoice: Observable(),
@@ -220,5 +223,6 @@ module.exports = {
 	dataFromChoiceSubjectToDetailNote, educationMain_URL, eduapply_URL, 
 	getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
 	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, 
-	selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject, yearAndMonthFromPhotoCollection, isItFromNoteManage
+	selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject, yearAndMonthFromPhotoCollection, isItFromNoteManage,
+	searchBusiReceiveAdmDtl_URL
 };

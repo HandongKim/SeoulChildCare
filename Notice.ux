@@ -572,7 +572,7 @@
 		<MyPicker Data="{type}" Selected="{selectedType}" />
 	</DockPanel>
 
-<!-- 세부 사항 눌렀을때 나오는 화면 -->
+	<!-- 세부 사항 눌렀을때 나오는 화면 -->
 	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
 		<!-- Top Pannel -->
 		<Panel Dock="Top">

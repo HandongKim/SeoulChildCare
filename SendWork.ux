@@ -14,8 +14,8 @@
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
 				<Image File="Images/btn_pre.png" Alignment="Left">
 					<Clicked>
-						<Callback Handler="{selectedTypes}" />	
-						<Callback Handler="{pickerDown}" />
+						<!-- <Callback Handler="{selectedTypes}" />	 -->
+						<!-- <Callback Handler="{pickerDown}" /> -->
 						<Toggle Target="detailSendWork" />
 					</Clicked>
 				</Image>
@@ -24,8 +24,8 @@
 
 				<Image File="Images/btn_home.png">
 					<Clicked>
-						<Callback Handler="{selectedTypes}" />	
-						<Callback Handler="{pickerDown}" />
+						<!-- <Callback Handler="{selectedTypes}" />	 -->
+						<!-- <Callback Handler="{pickerDown}" /> -->
 						<Toggle Target="detailSendWork" />
 						<Callback Handler="{goMainPageFromAnywhere}" />
 					</Clicked>
@@ -118,24 +118,26 @@
 		<Grid Alignment="Center" ColumnCount="2" Columns="7*, 2*" Margin="{margin}" Width="100%" >
 			<Grid ColumnCount="1" RowCount="2">
 				<WrapPanel Alignment="CenterLeft">
-					<Text Value="{sender}" Font="BoldText" Color="#888" Alignment="CenterLeft" />
+					<Text Value="{WRITER_NM}" Font="BoldText" Color="#888" Alignment="CenterLeft" />
 					<Text Value="님이 보냈습니다." FontSize="{margin}" Color="#888" Alignment="CenterLeft" />
 				</WrapPanel>
-				<Text Value="{title}" Color="#888" Alignment="CenterLeft" />
+				<Text Value="{TITLE}" Color="#888" Alignment="CenterLeft" />
 			</Grid>
 
 			<Grid ColumnCount="1" RowCount="2">
-				<Text Value="{regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterRight" />
-				<Text Value="{regDate2}" FontSize="{margin}*0.9" Color="#888" Alignment="CenterRight" />
+				<Text Value="{REGDATE}" FontSize="{margin}" Color="#888" Alignment="CenterRight" />
+				<Text Value="{REGDATE}" FontSize="{margin}*0.9" Color="#888" Alignment="CenterRight" />
 			</Grid>
 		</Grid>
 
 		<Clicked>
 			<!-- <Callback Handler="{sendFromPickerDown}" />
 			<Callback Handler="{sendToPickerDown}" /> -->
-			<Callback Handler="{selectedTypes}" />	
-			<Callback Handler="{pickerDown}" />
+			<!-- <Callback Handler="{selectedTypes}" />	 -->
+			<!-- <Callback Handler="{pickerDown}" /> -->
+			<Callback Handler="{sentWorkDetail}" />
 			<Toggle Target="detailSendWork" />
+
 		</Clicked>
 	</StackPanel>
 
@@ -289,14 +291,14 @@
 
 		<ScrollView ux:Name="sendWorkScroll" SnapMaxTransform="false" SnapMinTransform="false">
 			<StackPanel Color="#ddd" ItemSpacing="1">
-				<Each Items="{sendWorks}">
+				<Each Items="{sentMessages}">
 					<MySendWork />
 				</Each>
 
-				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
+				<!-- <Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
 						<Text Value="더보기(1/1)" Alignment="Center" />
-						<!-- <Clicked><Callback Handler="{nextPage}"/></Clicked> -->
+						<Clicked><Callback Handler="{nextPage}"/></Clicked>
 					</Panel>
 
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
@@ -305,7 +307,7 @@
 							<Set Target="sendWorkScroll.ScrollPosition" Value="0" />
 						</Clicked>
 					</Panel>
-				</Grid>
+				</Grid> -->
 			</StackPanel>
 		</ScrollView>
 	</DockPanel>

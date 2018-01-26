@@ -332,16 +332,13 @@ namespace Fuse.UniSign.Android
 			return false;
 		@}
 
-
-
 		public static bool removeCertificate(Java.Object certificate) {
 			return RemoveCertificate(certificate);
 		}
 
 		[Foreign(Language.Java)]
 		static bool RemoveCertificate (Java.Object certificate) 
-		@{
-			
+		@{	
 			try {
 				CertListMgr.getInstance().deleteCert((com.crosscert.android.core.Cert) certificate);
 				System.out.println("인증서를 삭제 했습니다");
@@ -350,13 +347,8 @@ namespace Fuse.UniSign.Android
 				e.printStackTrace();
 				System.out.println("인증서 삭제 중 오류가 발생했습니다.");
 				return false;	
-			}
-
-			
+			}		
 		@}
-
-
-
 
 		public static void changePassword(string oldPassword, string newPassword, Java.Object cert) 
 		{
@@ -368,11 +360,12 @@ namespace Fuse.UniSign.Android
 		@{
 
 			String errorMsg = CertToolkitMgr.getInstance().logicChangeCertPW((com.crosscert.android.core.Cert)cert , oldPassword, newPassword);
-             if (errorMsg != null) {
+            if (errorMsg != null) {
 				System.out.println("입력오류");
 			} else {
 				System.out.println("비밀번호 변경 성공");
 			}
+
 		@}
 
 
@@ -412,17 +405,13 @@ namespace Fuse.UniSign.Android
 			[Foreign(Language.Java)]
 			public static int Count(Java.Object handle)
 			@{
-			
 				System.out.println("handle.toString() : " + handle.toString());
 				ArrayList<Object> myList = new ArrayList<Object>((Collection<?>) handle);
 				if (null != myList)
                  {
-                          					//do something with your list
-                 }
-                        
+                 	//do something with your list
+                 }                       
                  return myList.size();
-
-
 			@}
 
 			

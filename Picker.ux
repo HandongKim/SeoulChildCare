@@ -14,14 +14,14 @@
 		var selecting = Observable();
 		
 		function scrollFunction(arg) {
-			console.log("11111111111");
+			// console.log("11111111111");
 			position.value = arg.value[1];
-			console.log("222222222222");
+			// console.log("222222222222");
 			isScrolling.value = true;
 			stopScrolling.value = false;
 			endPosition.value = Math.round((position.value-10)/50) * 50;
 
-			console.log("333333333333");
+			// console.log("333333333333");
 		}
 
 		function stopScroll() {

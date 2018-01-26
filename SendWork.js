@@ -63,14 +63,106 @@ function selectedTypes(){
 }
 
 var sendWorks = Observable();
-for (var i = 0 ; i < 5 ; i++) {
-	sendWorks.add({
-		sender: "노성순",
-		title: "업무연락 부탁드립니다.",
-		regDate1: "오후 06:46",
-		regDate2: "2018-01-01"
-	});
+// for (var i = 0 ; i < 5 ; i++) {
+// 	sendWorks.add({
+// 		sender: "노성순", 
+// 		title: "업무연락 부탁드립니다.",
+// 		regDate1: "오후 06:46",
+// 		regDate2: "2018-01-01"
+// 	});
+// }
+
+function sentMessage (args, index) {
+	
+	if (args.INDEX !=null) {
+		this.INDEX = args.INDEX	
+	} else {
+		this.INDEX = "";
+	}
+	
+
+	if (args.R_COUNT !=null) {
+		this.R_COUNT = args.R_COUNT	
+	} else {
+		this.R_COUNT = "";
+	}
+
+
+	if (args.REPLY_DEPTH !=null) {
+		this.REPLY_DEPTH = args.REPLY_DEPTH	
+	} else {
+		this.REPLY_DEPTH = "";
+	}
+
+
+	if (args.REPLY_DEPTH !=null) {
+		this.REPLY_DEPTH = args.REPLY_DEPTH	
+	} else {
+		this.REPLY_DEPTH = "";
+	}
+
+
+
+	if (args.REGDATE !=null) {
+		this.REGDATE = args.REGDATE	
+	} else {
+		this.REGDATE = "";
+	}
+
+
+
+	if (args.WRITER_NM !=null) {
+		this.WRITER_NM = args.WRITER_NM	
+	} else {
+		this.WRITER_NM = "";
+	}
+
+	if (args.BOD_COM_YN !=null) {
+		this.BOD_COM_YN = args.BOD_COM_YN	
+	} else {
+		this.BOD_COM_YN = "";
+	}
+
+
+	if (args.CHK !=null) {
+		this.CHK = args.CHK	
+	} else {
+		this.CHK = "";
+	}
+
+	if (args.COMM_SEQ !=null) {
+		this.COMM_SEQ = args.COMM_SEQ	
+	} else {
+		this.COMM_SEQ = "";
+	}
+
+
+	if (args.WRITER_ORG !=null) {
+		this.WRITER_ORG = args.WRITER_ORG	
+	} else {
+		this.WRITER_ORG = "";
+	}
+
+	if (args.BOD_FORM_CLSS !=null) {
+		this.BOD_FORM_CLSS = args.BOD_FORM_CLSS	
+	} else {
+		this.REGID = "";
+	}
+
+	if (args.TITLE !=null) {
+		this.TITLE = (args.TITLE).replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+	} else {
+		this.TITLE = "";
+	}
+
+
+
+	
+
+
+	
 }
+
 
 var sendworkDetail = Observable();
 sendworkDetail.add({
@@ -150,7 +242,9 @@ function getSentMessageList(srch_Type, srch_Text) {
         });
 }
 
-
+function sentWorkDetail (args) {
+	console.log("args : " + JSON.stringify(args));
+}
 
 
 
@@ -172,5 +266,5 @@ module.exports = {
 	type, selectedType, pickerOn, pickerUp, pickerDown, selectedTypes,
 	fromDate, sendFromPickerPanelOn, sendFromPickerUp, sendFromPickerDown,
 	toDate, sendToPickerPanelOn, sendToPickerUp, sendToPickerDown,
-	sendWorks, sendworkDetail, initSentList
+	sendWorks, sendworkDetail, initSentList, sentMessages, sentWorkDetail
 };

@@ -13,9 +13,11 @@
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
 				<Image File="Images/btn_pre.png" Alignment="Left">
 					<Clicked>
-						<Callback Handler="{selectedTypes}" />	
-						<Callback Handler="{pickerDown}" />
+						<!-- <Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" /> -->
+						<!-- <Callback Handler="{goBackToPrevious}" /> -->
 						<Toggle Target="detailReceiveWork" />
+
 					</Clicked>
 				</Image>
 
@@ -23,8 +25,8 @@
 
 				<Image File="Images/btn_home.png">
 					<Clicked>
-						<Callback Handler="{selectedTypes}" />	
-						<Callback Handler="{pickerDown}" />
+						<!-- <Callback Handler="{selectedTypes}" />	
+						<Callback Handler="{pickerDown}" /> -->
 						<Toggle Target="detailReceiveWork" />
 						<Callback Handler="{goMainPageFromAnywhere}" />
 					</Clicked>
@@ -119,10 +121,10 @@
 		<Grid Alignment="Center" ColumnCount="2" Columns="7*, 2*" Margin="{margin}" Width="100%" >
 			<Grid ColumnCount="1" RowCount="2">
 				<WrapPanel Alignment="CenterLeft">
-					<Text Value="{sender}" Font="BoldText" Color="#888" Alignment="CenterLeft" />
+					<Text Value="{WRITER_NM}" Font="BoldText" Color="#888" Alignment="CenterLeft" />
 					<Text Value="님이 보냈습니다." FontSize="{margin}" Color="#888" Alignment="CenterLeft" />
 				</WrapPanel>
-				<Text Value="{title}" Color="#888" Alignment="CenterLeft" />
+				<Text Value="{TITLE}" Color="#888" Alignment="CenterLeft" />
 			</Grid>
 
 			<Grid ColumnCount="1" RowCount="2">
@@ -133,6 +135,7 @@
 
 		<Clicked>
 			<Toggle Target="detailReceiveWork" />
+			<Callback Handler="{goToDetailReceiveWork}" />
 		</Clicked>
 	</StackPanel>
 
@@ -152,7 +155,9 @@
 			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
 		</Panel>
 
-		<MyPicker Data="{type}" Selected="{selectedType}" />
+		<MyPicker Data="{type}" Selected="{selectedType}" StPos="0"/>
+
+		<!-- <MyPicker Selected="{selectedData}" Data="{pickerData}"  StPos="0" /> -->
 	</DockPanel>
 
 	<!-- 보여지는 영역 -->
@@ -196,10 +201,10 @@
 					<MyReceiveWork />
 				</Each>
 
-				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
+				<!-- <Grid ColumnCount="2" Columns="4*, 1*" Height="60" Color="#ddd" CellSpacing="2">
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
 						<Text Value="더보기(1/1)" Alignment="Center" />
-						<!-- <Clicked><Callback Handler="{nextPage}"/></Clicked> -->
+						<Clicked><Callback Handler="{nextPage}"/></Clicked>
 					</Panel>
 
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
@@ -208,7 +213,7 @@
 							<Set Target="receiveWorkScroll.ScrollPosition" Value="0" />
 						</Clicked>
 					</Panel>
-				</Grid>
+				</Grid> -->
 			</StackPanel>
 		</ScrollView>
 	</DockPanel>
