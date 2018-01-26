@@ -110,15 +110,60 @@
 
 		//null Check
 		function eduIntoList(eduIntoList){
-			this.name = eduIntoList.NAME;
-			this.offNm = eduIntoList.OFF_NM;
-			this.insName = eduIntoList.INS_NAME;
-			this.areaName = eduIntoList.AREA_NAME;
-			this.codeName = eduIntoList.CODE_NAME;
-			this.areaCode = eduIntoList.AREA_CODE;
-			this.insGbCare = eduIntoList.INS_GB_CARE;
-			this.seq = eduIntoList.SEQ;
-			this.seoulYn = eduIntoList.SEOUL_YN;
+
+			if(eduIntoList.EDUSEQ!=null){
+				this.name = eduIntoList.NAME;
+			}else{
+				this.name = "";
+			}
+
+			if(eduIntoList.EDUSEQ!=null){
+				this.offNm = eduIntoList.OFF_NM;
+			}else{
+				this.offNm = "";
+			}
+
+			if(eduIntoList.EDUSEQ!=null){
+				this.insName = eduIntoList.INS_NAME;
+			}else{
+				this.insName = "";
+			}
+
+			if(eduIntoList.EDUSEQ!=null){
+				this.areaName = eduIntoList.AREA_NAME;
+			}else{
+				this.areaName = "";
+			}
+
+			if(eduIntoList.EDUSEQ!=null){
+				this.codeName = eduIntoList.CODE_NAME;
+			}else{
+				this.codeName = "";
+			}
+
+			if(eduIntoList.EDUSEQ!=null){
+				this.areaCode = eduIntoList.AREA_CODE;
+			}else{
+				this.areaCode = "";
+			}
+
+			if(eduIntoList.EDUSEQ!=null){
+				this.insGbCare = eduIntoList.INS_GB_CARE;
+			}else{
+				this.insGbCare = "";
+			}
+
+			if(eduIntoList.EDUSEQ!=null){
+				this.seq = eduIntoList.SEQ;
+			}else{
+				this.seq = "";
+			}
+
+			if(eduIntoList.EDUSEQ!=null){
+				this.seoulYn = eduIntoList.SEOUL_YN;
+			}else{
+				this.seoulYn = "";
+			}
 		}
 
 
@@ -271,10 +316,10 @@
 
 		}
 		
-var applicantName = Observable();
-var hp1 = Observable();
-var hp2 = Observable();
-var hp3 = Observable();
+		var applicantName = Observable();
+		var hp1 = Observable();
+		var hp2 = Observable();
+		var hp3 = Observable();
 
 
 		function applyEducation() {
