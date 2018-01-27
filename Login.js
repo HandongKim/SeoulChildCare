@@ -826,6 +826,22 @@ function connectToServer() {
 }
 
 
+function checkTheLastPageLoginPage() {
+
+	console.log("이것도 돌아가나??");
+
+	router.getRoute(function(route) {
+			console.log("goBackToPrevious From " + route[0]);
+			if (route[0] == "Login") {
+				// exitOnBackButton.value = true;
+			} else if (route[0] == "MainPage") {
+				// exitOnBackButton.value = true;
+			} 
+		});
+
+}
+
+
 module.exports = {
 	goMainPage, goMainPage2, getLicenseInfo,
 	corSelected, friSelect, corSelect,
@@ -844,5 +860,5 @@ module.exports = {
 	onFindCenter, findCenterUp, findCenterDown,
 	firstNum, secondNum, thirdNum, countDownSeconds, countDownMinutes,
 	importCert, getList, data, chooseCertificate, removeCertificate,changePassword, 
-	alert, setLicense
+	alert, setLicense, checkTheLastPageLoginPage
 };

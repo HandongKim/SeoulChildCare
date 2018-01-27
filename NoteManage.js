@@ -449,8 +449,6 @@ function getBillCashInputLoad () {
 
 		console.log("1234567890987654321234567890987654321");
 		// console.log(" responseData : " + responseData);
-
-
 		var responseHeaders = JSON.parse(response._bodyInit);
 
 		var responseDsCashCodeList = JSON.stringify(responseHeaders.ds_bCashCodeList);

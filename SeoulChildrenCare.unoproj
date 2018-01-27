@@ -27,9 +27,9 @@
     "fuse_modules/bolav/fuse-homescreen/homescreen_include.unoproj"
   ],
   "Icon": "./Images/icon-512-2.png",
-  "Versions": "1.0.0",
-  "VersionCode": "100",
-  "VersionName": "1.0.0",
+  "Versions": "1.0.1",
+  "VersionCode": "101",
+  "VersionName": "1.0.1",
   "Android": {
     "VersionCode": "$(VersionCode)",
     "VersionName": "$(VersionName)",
@@ -45,8 +45,7 @@
   },
   "iOS": {
     "DevelopmentTeam": "R33668Z4ZE",
-    "BundleIdentifier": "app.ss.accss.ios",
-    "PreviewBundleIdentifier": "com.crosscert.sample.maxtedpreview",
+    "BundleIdentifier": "app.ss.accss.mobile",
     "DeploymentTarget": "8.0",
     "Icons": {
       "iPhone_29_1x": "./Images/icons/iOS/Icon-Small.png",

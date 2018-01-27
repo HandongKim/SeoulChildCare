@@ -2,12 +2,10 @@
 	<string ux:Property="Title" />
 	<string ux:Property="MainText" />
 	<string ux:Property="Type" />
-
 	<Stroke Width="1" Color="Black" />
 	<StackPanel>
 		<Panel>
 			<Text Value="{Property Title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
-
 			<Image File="Images/alert_top.png" Alignment="TopCenter" />
 		</Panel>
 
@@ -20,7 +18,6 @@
 				<Case String="Check">
 					<BlueButton>
 						<Text Value="확인" Alignment="Center" Color="White" />
-
 						<Clicked>
 							<Set Target="this.Layer" Value="Background" />
 						</Clicked>

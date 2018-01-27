@@ -28,7 +28,7 @@
 			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
 		</Panel>
 
-		<MyPicker Selected="{selectedData}" Data="{pickerData}"  StPos="0" />
+		<MyPicker Selected="{selectedData}" Data="{pickerData}"  StPos="{stPos}" />
 	</DockPanel>
 <!-- 2018.01.16 기존 소스 끝 -->
 
@@ -461,7 +461,7 @@
 				<Rectangle Width="100%" Height="100%" Color="#FFF" ColumnSpan="3">
 					<Stroke Width="1" Color="#ccc" />
 					<ScrollView AllowedScrollDirections="Both" SnapMaxTransform="false" SnapMinTransform="false">
-						<WrapPanel Alignment="CenterLeft" Padding="2">
+						<WrapPanel Alignment="CenterLeft" Padding="2" Height="{margin}*3">
 						<!-- <Grid> -->
 							<WhileTrue Value="{subType.isChoice}">
 								<WhileTrue Value="{subType.reverse}">

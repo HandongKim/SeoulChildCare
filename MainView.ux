@@ -398,10 +398,10 @@
 
 	</OnBackButton>
 
-
+<!-- 
 	<WhileTrue Value="{exitOnBackButton}">
 		<HomeScreen Type="Finish" />
-	</WhileTrue>
+	</WhileTrue> -->
 
 
 
