@@ -358,7 +358,7 @@ function save() {
 						console.log("delete success");
 					});
 
-					alert.message.value="저장되습니다";
+					alert.message.value="선택된 이미지가 적용되었습니다.";
 					alert.layer.value = "Overlay";
 
 				}, function(error) {
@@ -602,7 +602,7 @@ function deleteThePicture() {
 
 			if (isSuccess == "success") {
 				photoCollectionAlertWithConfirmGoBack.layer.value="Overlay";
-				photoCollectionAlertWithConfirmGoBack.message.value="삭제 되었습니다";
+				photoCollectionAlertWithConfirmGoBack.message.value="선택된 이미지를 삭제하였습니다.";
 			}
 			
             // return response.json();

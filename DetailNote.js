@@ -609,13 +609,23 @@ function pickFromList(args) {
 		selectedData.value = "결제방법"
 	}
 
+
+	console.log("selectedDetailNoteVariable.BILL_IDX : " + selectedDetailNoteVariable.BILL_IDX);
+
 	if (selectedDetailNoteVariable.BILL_IDX != "") {
-		isReadOnly.value = true;
-	}else {
 		isReadOnly.value = false;
+	}else {
+		isReadOnly.value = true;
 	}
 
 	console.log("isReadOnly.value : " + isReadOnly.value);
+
+
+	if (selectedDetailNoteVariable.ACTION == "I") {
+		saveOrEdit.value="저장";
+	}else if (selectedDetailNoteVariable.ACTION == "U") {
+		saveOrEdit.value="수정";
+	}
 
 
 
@@ -663,6 +673,7 @@ function initialDataSetting () {
 
 
 
+
 	//서버에 쓰일 데이터.
 	selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[0]);
 	console.log("BILL_IDX VALUE IS  : " + selectedDetailNoteVariable.BILL_IDX );
@@ -680,6 +691,14 @@ function initialDataSetting () {
 	moneyValue.value = notes._values[0].money;
 
 	console.log("initialDataSetting selectedDetailNoteVariable.BILL_CLSS : " + selectedDetailNoteVariable.BILL_CLSS);
+
+
+	if (selectedDetailNoteVariable.ACTION == "I") {
+		saveOrEdit.value="저장";
+	}else if (selectedDetailNoteVariable.ACTION == "U") {
+		saveOrEdit.value="수정";
+	}
+
 
 	if(selectedDetailNoteVariable.BILL_CLSS == "10") {
 		selectedData.value = "카드결제";
@@ -910,17 +929,7 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
 }
 
 var updatebCashMobileUrl;
-
-
-
-
-
-
 var GLOBAL_BILL_SUBCODE;
-
-
-
-
 
 function saveData() {
 	var ACTION = selectedDetailNoteVariable.ACTION;
@@ -934,10 +943,6 @@ function saveData() {
 	var BCASH_BILL_SEQ = selectedDetailNoteVariable.BCASH_BILL_SEQ;
 	var BCASH_MONEY = selectedDetailNoteVariable.MONEY;
 
-
-
-
-
 	console.log("ACTION : "  + ACTION);
 	console.log("CASH_IDX : "  + CASH_IDX);
 	console.log("CASH_DATE : "  + CASH_DATE);
@@ -945,17 +950,9 @@ function saveData() {
 	console.log("CASH_IDX2 : "  + CASH_IDX2);
 	console.log("MONEY : "  + MONEY);
 	console.log("ORG_BCASH_MEMO : "  + ORG_BCASH_MEMO);
-
-
 	console.log("BCASH_MEMO : "  + BCASH_MEMO);
 	console.log("BCASH_BILL_SEQ : "  + BCASH_BILL_SEQ);
 	console.log("BCASH_MONEY : "  + BCASH_MONEY);
-	
-
-
-
-
-
 //이거 가져오고
 
 // 	ESTI_CODE: Observable(),
@@ -1071,7 +1068,16 @@ function saveData() {
 
 		console.log("tempMoneyValue : " + tempMoneyValue);
 		console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
-		BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString();
+
+		if (ACTION =="I") {
+			BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString();
+		} else if (ACTION == "U") {
+			BCASH_MEMO = ORG_BCASH_MEMO;
+		}
+		
+
+
+
 	}else {
 
 	}
@@ -1280,18 +1286,24 @@ function saveData() {
 
 			   	if (MiResultMsg == "success") {
 			   		console.log("수정완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			   		alertWithConfirm.message.value = "수정되었습니다.";
-					alertWithConfirm.layer.value = "Overlay";
-
+			   		
+			   		if (ACTION == "I") {
+			   			alertWithConfirm.message.value = "저장 됬습니다.";
+			   		} else if (ACTION =="U") {
+			   			alertWithConfirm.message.value = "수정 됬습니다.";
+			   		}
+			   		alertWithConfirm.layer.value = "Overlay";	
 			   	} else {
-			   		alert.title.value = "";
-					alert.message.value = "수정 안 됐습니다.";
+			   		if (ACTION == "I") {
+				   		alert.message.value = "저장이 안됬습니다.";
+						
+			   		} else if (ACTION =="U") {
+				   		alert.message.value = "수정이 안됬습니다.";
+			   		}
+			
 					alert.type.value = "Check";
 					alert.layer.value = "Overlay";
-			   	}
-
-		    	
-
+			   	} 	
 			       return response.json();
 			   }).then(function(jsonData) {
 			       var data = jsonData.results[0];
@@ -1316,7 +1328,7 @@ function logOut() {
 }
 
 
-
+var saveOrEdit = Observable();
 
 
 
@@ -1629,14 +1641,18 @@ function deleteData () {
 
 
 							if (selectedDetailNoteVariable.MONEY < 0) {
-								console.log("200000000000000000000000000000000");
+								console.log("1111111111111111111111111111111111111111");
 								// moneyValue.value = moneyValue.value.replace(/,/g , "");
 								// moneyValue.value = parseInt(moneyValue.value) * -1;	
 								// moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
 
 								if (parseInt(moneyValue.value) < 0 ) {
-									//
+									console.log("222222222222222222222222222222222222");
+									moneyValue.value = moneyValue.value.replace(/,/g , "");
+									moneyValue.value = parseInt(moneyValue.value) * -1;	
+									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
 								} else {
+									console.log("333333333333333333333333333333333333");
 									moneyValue.value = moneyValue.value.replace(/,/g , "");
 									moneyValue.value = parseInt(moneyValue.value) * -1;	
 									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
@@ -1647,7 +1663,7 @@ function deleteData () {
 								// console.log("selectedDetailNoteVariable.CASH_GB =====>" +selectedDetailNoteVariable.CASH_GB);
 								// if ((selectedDetailNoteVariable.CASH_GB != selectedDetailNoteVariable.ESTI_CODE.substr(0,1)) ) {
 
-								console.log("300000000000000000000000000000000");
+								console.log("4444444444444444444444444444444444444444");
 								// 	moneyValue.value = moneyValue.value.replace(/,/g , "");
 								// 	moneyValue.value = parseInt(moneyValue.value) * -1;	
 								// 	moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
@@ -1661,8 +1677,8 @@ function deleteData () {
 								// // }
 								// console.log("500000000000000000000000000000000");
 
-								if (moneyValue.value.toString().includes("-")) {
-									console.log("400000000000000000000000000000000");
+								if (parseInt(moneyValue.value) < 0 ) {
+									console.log("55555555555555555555555555555555555555");
 									moneyValue.value = moneyValue.value.replace(/,/g , "");
 									moneyValue.value = parseInt(moneyValue.value) * -1;	
 									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
@@ -1894,12 +1910,12 @@ function sendPictureWithParamterDetailNote(yearAndMonth)
 		isPictureTaken = true;
 		detailNoteLoadingCircleOn.value = false;
 
-		alert.message.value="선택된 이미작가 적용되었습니다.";
+		alert.message.value="선택된 이미지가 적용되었습니다.";
 		alert.layer.value = "Overlay";
 
 	} else {
 		detailNoteLoadingCircleOn.value = false;
-		alert.message.value="선택된 이미작가 적용되지 않았습니다.";
+		alert.message.value="선택된 이미지가 적용되지 않았습니다.";
 		alert.layer.value = "Overlay";
 	}
 
@@ -1963,7 +1979,9 @@ var detailNoteLoadingCircleOn = Observable(false);
 
 
 
-
+function testMethod () {
+	console.log("testMethodtestMethodtestMethodtestMethodtestMethodtestMethodtestMethod");
+}
 
 
 
@@ -2009,5 +2027,5 @@ var detailNoteLoadingCircleOn = Observable(false);
 
 				router.push("ShowFile", infoJSON);
 			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, 
-			getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn
+			getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn, testMethod, saveOrEdit
 		};

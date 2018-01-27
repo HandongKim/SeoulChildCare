@@ -145,7 +145,7 @@
 			console.log("selectSubject : " + JSON.stringify(arg));
 			if (arg.data.ESTI_CODE == "2020201") {
 				console.log(" '업무추진비' 계정과목은 적요 내용 입력 방식에 따라 모바일 화면에서는 등록/수정할 수 없습니다. PC화면에서 직접 등록/수정하셔야 합니다.");
-				alert.title.value = "금액 입력";
+				alert.title.value = "";
 				alert.message.value = "'업무추진비' 계정과목은 적요 내용 입력 방식에 따라 모바일 화면에서는 등록/수정할 수 없습니다. PC화면에서 직접 등록/수정하셔야 합니다.";
 				alert.type.value = "Check";
 				alert.layer.value = "Overlay";

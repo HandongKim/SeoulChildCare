@@ -444,8 +444,8 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF">
 					<Stroke Width="1" Color="#ccc" />
-					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" InputHint="Number" IsReadOnly="true"/>
-
+					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" InputHint="Number" IsEnabled="{isReadOnly}"/>
+					
 				</Rectangle>
 
 				<Image File="Images/btn_02.png" Alignment="Center" RowSpan="3">
@@ -499,7 +499,7 @@
 
 				<Grid ColumnCount="2" ColumnSpan="5" CellSpacing="2">
 					<OrangeButton>
-						<Text Value="저장" Alignment="Center" Color="White" />
+						<Text Value="{saveOrEdit}" Alignment="Center" Color="White" />
 						<Clicked>
 							<Callback Handler="{saveData}" />
 						</Clicked>

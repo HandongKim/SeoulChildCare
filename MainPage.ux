@@ -47,6 +47,16 @@
 				<Image File="Images/main_btn9.png">
 					<Clicked><Callback Handler="{goOfficialDutiesList}" /></Clicked>
 				</Image>
+				
+				 <!-- <Button Text="HomeScreen" >
+      				<Clicked>
+        				<HomeScreen Type="CallIntent" />
+      				</Clicked>
+    			</Button> -->
+
+
+
+
 			</Grid>
 			<Image File="Images/bg_fixfooter.png" StretchMode="UniformToFill" />
 		</Panel>

@@ -23,7 +23,8 @@
   "Projects": [
     "fuse_modules/MaxGraey/fuse-device/device_include.unoproj",
     "fuse_modules/bolav/fuse-usersettings/usersettings_include.unoproj",
-    "./Fuse.UniSign/Fuse.UniSign.unoproj"
+    "./Fuse.UniSign/Fuse.UniSign.unoproj",
+    "fuse_modules/bolav/fuse-homescreen/homescreen_include.unoproj"
   ],
   "Icon": "./Images/icon-512-2.png",
   "Versions": "1.0.0",
@@ -65,7 +66,8 @@
   "FusePM": {
     "Dependencies": [
       "https://github.com/MaxGraey/fuse-device",
-      "https://github.com/bolav/fuse-usersettings"
+      "https://github.com/bolav/fuse-usersettings",
+      "https://github.com/bolav/fuse-homescreen"
     ]
   }
 }
