@@ -63,12 +63,14 @@ function pickerUp() {
 function pickerDown() {
 	pickerOn.value = false;
 
+	console.log("selectedType : " + selectedType.value);
+
 	var temp = "";
-	if (selectedType.value ="제목") {
+	if (selectedType.value =="제목") {
 		temp = "TITLE";
-	} else if (selectedType.value = "내용") {
+	} else if (selectedType.value == "내용") {
 		temp = "CONT";
-	} else if (selectedType.value= "보낸사람") {
+	} else if (selectedType.value == "보낸사람") {
 		temp = "WRITER_NM";
 	}
 

@@ -12,7 +12,7 @@
 		</Panel>
 
 		<Panel Margin="{margin}*5/7">
-			<Text Value="{Property MainText}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			<Text Value="{Property MainText}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
 		</Panel>
 
 		<Panel Margin="{margin}">

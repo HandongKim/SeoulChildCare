@@ -142,70 +142,85 @@
 
 		function selectSubject(arg) {
 			// console.log(arg.data.text);
-			console.log(JSON.stringify(arg));
-			if (arg.data.ESTI_SUBCODE == null && arg.data.ESTI_SUB_YN == "Y") {
-				//
+			console.log("selectSubject : " + JSON.stringify(arg));
+			if (arg.data.ESTI_CODE == "2020201") {
+				console.log(" '업무추진비' 계정과목은 적요 내용 입력 방식에 따라 모바일 화면에서는 등록/수정할 수 없습니다. PC화면에서 직접 등록/수정하셔야 합니다.");
+				alert.title.value = "금액 입력";
+				alert.message.value = "'업무추진비' 계정과목은 적요 내용 입력 방식에 따라 모바일 화면에서는 등록/수정할 수 없습니다. PC화면에서 직접 등록/수정하셔야 합니다.";
+				alert.type.value = "Check";
+				alert.layer.value = "Overlay";
 			} else {
-				
-				if (arg.data.type == 1) {
-					Backend.subject.color.value = "#4C9DFF";
-					Backend.subject.type.value = "목";
-				} else if (arg.data.type == 2) {
-					Backend.subject.color.value = "#8BBDFF";
-					Backend.subject.type.value = "세목";
-				} else if (arg.data.type == 3) {
-					Backend.subject.color.value = "#FF4200";
-					Backend.subject.type.value = "목";
-				} else if (arg.data.type == 4) {
-					Backend.subject.color.value = "#FFBA85";
-					Backend.subject.type.value = "세목";
+				if (arg.data.ESTI_SUBCODE == null && arg.data.ESTI_SUB_YN == "Y") {
+					//
+				} else {
+					
+					if (arg.data.type == 1) {
+						Backend.subject.color.value = "#4C9DFF";
+						Backend.subject.type.value = "목";
+					} else if (arg.data.type == 2) {
+						Backend.subject.color.value = "#8BBDFF";
+						Backend.subject.type.value = "세목";
+					} else if (arg.data.type == 3) {
+						Backend.subject.color.value = "#FF4200";
+						Backend.subject.type.value = "목";
+					} else if (arg.data.type == 4) {
+						Backend.subject.color.value = "#FFBA85";
+						Backend.subject.type.value = "세목";
+					}
+					
+					Backend.subject.isChoice.value = true;
+					Backend.subject.name.value = arg.data.name;
+					Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
+					Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
+					Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
+					Backend.subject.ESTI_NAME.value = arg.data.ESTI_NAME;
+
+					console.log("======================== ************************************************");
+					console.log("arg.data.ESTI_NAME : " + arg.data.ESTI_NAME);
+					console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
+					console.log("======================== ************************************************");
+
+
+					Backend.chosenSubject.isChoice = true;
+					Backend.chosenSubject.name = arg.data.name;
+					Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
+					Backend.chosenSubject.ESTI_GB = arg.data.ESTI_GB;
+					Backend.chosenSubject.ESTI_SUBCODE = arg.data.ESTI_SUBCODE;	
+
+
+
+					console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
+					console.log("Backend.subject.name.value : " + Backend.subject.name.value);
+					console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
+					console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
+
+					var infoJSON = {
+						choicesubject_ischoice:Backend.subject.isChoice.value,
+						choicesubject_name:Backend.subject.name.value,
+						choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
+						choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
+					}
+
+					var str = JSON.stringify(infoJSON);
+					ValueFactory.setInfoJson(str);
+
+					choiceSubjectAlertWithConfirm.message.value = "선택 되었습니다.";
+					choiceSubjectAlertWithConfirm.layer.value = "Overlay";
+					Backend.isItFromNoteManage.value = false;
 				}
-				
-				Backend.subject.isChoice.value = true;
-				Backend.subject.name.value = arg.data.name;
-				Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
-				Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
-				Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
-				Backend.subject.ESTI_NAME.value = arg.data.ESTI_NAME;
-
-				console.log("======================== ************************************************");
-				console.log("arg.data.ESTI_NAME : " + arg.data.ESTI_NAME);
-				console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
-				console.log("======================== ************************************************");
-
-
-				Backend.chosenSubject.isChoice = true;
-				Backend.chosenSubject.name = arg.data.name;
-				Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
-				Backend.chosenSubject.ESTI_GB = arg.data.ESTI_GB;
-				Backend.chosenSubject.ESTI_SUBCODE = arg.data.ESTI_SUBCODE;	
-
-
-
-				console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
-				console.log("Backend.subject.name.value : " + Backend.subject.name.value);
-				console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
-				console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
-
-				var infoJSON = {
-					choicesubject_ischoice:Backend.subject.isChoice.value,
-					choicesubject_name:Backend.subject.name.value,
-					choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
-					choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
-				}
-
-				var str = JSON.stringify(infoJSON);
-				ValueFactory.setInfoJson(str);
-
-				choiceSubjectAlertWithConfirm.message.value = "선택 되었습니다.";
-				choiceSubjectAlertWithConfirm.layer.value = "Overlay";
-				Backend.isItFromNoteManage.value = false;
-			}
+			}	
 		}
 
 		var choiceSubjectAlertWithConfirm = {
 			title: Observable(""),
 			message: Observable(""),
+			type: Observable("Check"),
+			layer: Observable("Background")
+		};
+
+		var alert = {
+			title: Observable(),
+			message: Observable(),
 			type: Observable("Check"),
 			layer: Observable("Background")
 		};
@@ -226,7 +241,7 @@
 		var choiceSubjectLoadingCircleOn = Observable(false);
 
 		module.exports = {
-			subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList, incomeTF, choiceSubjectAlertWithConfirm, choiceSubjectLoadingCircleOn
+			subjects, incomeClick, outcomeClick, selectSubject,getTheSubjectList, incomeTF, choiceSubjectAlertWithConfirm, choiceSubjectLoadingCircleOn, alert
 		};
 	</JavaScript>
 
@@ -367,7 +382,7 @@
 
 
 
-
+<Alert ux:Name="detailNoteAlert" Title="{alert.title}" MainText="{alert.message}" Type="{alert.type}" Layer="{alert.layer}" />
 
 
 

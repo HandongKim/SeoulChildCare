@@ -446,6 +446,11 @@ function getBillCashInputLoad () {
 		body: JSON.stringify(jsonParam)
 	}).then(function (response) {
 		var responseData = JSON.stringify(response);
+
+		console.log("1234567890987654321234567890987654321");
+		// console.log(" responseData : " + responseData);
+
+
 		var responseHeaders = JSON.parse(response._bodyInit);
 
 		var responseDsCashCodeList = JSON.stringify(responseHeaders.ds_bCashCodeList);
@@ -454,12 +459,22 @@ function getBillCashInputLoad () {
 		billCashInputData.replaceAll(JSON.parse(responseDsCashCodeList));
 		billCashInputDataList.add("전체");
 
+		console.log(" responseDsCashCodeList : " + responseDsCashCodeList);
+
+		var count =0;
+
 		for (var i =0; i < billCashInputData.length; i++) {
-			var name = billCashInputData.getAt(i).NAME;
-			var code = billCashInputData.getAt(i).BCASH_IDX;
-			var array = '{"INDEX":"'+i+'","NAME":"'+name+'","BCASH_IDX":"'+code+'"}';
-			billCashInputDataListTotal.add(JSON.parse(array));
-			billCashInputDataList.add(billCashInputDataListTotal.getAt(i).NAME);
+			if (billCashInputData.getAt(i).BOOK_GB == "01") {
+				var name = billCashInputData.getAt(i).NAME;
+				var code = billCashInputData.getAt(i).BCASH_IDX;
+				var array = '{"INDEX":"'+count+'","NAME":"'+name+'","BCASH_IDX":"'+code+'"}';
+				console.log("array : " + array);
+				billCashInputDataListTotal.add(JSON.parse(array));
+				billCashInputDataList.add(billCashInputDataListTotal.getAt(count).NAME);
+
+				count++;
+			}
+				
 		}
 
 		stBillCashPos.value = 0;

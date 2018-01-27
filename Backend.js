@@ -10,8 +10,6 @@ var Observable = require('FuseJS/Observable');
 var BASE_URL = "http://112.218.172.44:51432";
 
 var isItFromNoteManage = Observable(false);
-
-
 //로그인 URL
 var LOGIN_URL = "/common/loginSigned.do";
 //NoteManage (전표관리에서 쓰이는 URL)
