@@ -422,17 +422,17 @@
 
 
 
-<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{choiceSubjectAlertWithConfirm.layer}">
+<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{LoginAlertWithConfirm.layer}">
 	<Stroke Width="1" Color="Black" />
 	<StackPanel>
 		<Panel>
-			<Text Value="{choiceSubjectAlertWithConfirm.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+			<Text Value="{LoginAlertWithConfirm.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
 
 			<Image File="Images/alert_top.png" Alignment="TopCenter" />
 		</Panel>
 
 		<Panel Margin="{margin}*5/7">
-			<Text Value="{choiceSubjectAlertWithConfirm.message}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			<Text Value="{LoginAlertWithConfirm.message}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
 		</Panel>
 
 		<Panel Margin="{margin}">
@@ -441,7 +441,7 @@
 					<Text Value="확인" Alignment="Center" Color="White" />
 
 					<Clicked>
-						<Set Target="this.Layer" Value="Background" />
+						<HomeScreen Type="Finish" />
 					</Clicked>
 				</BlueButton>
 
@@ -449,7 +449,8 @@
 					<Text Value="취소" Alignment="Center" Color="White" />
 
 					<Clicked>
-						<Set Target="this.Layer" Value="Background" />
+						<!-- <Set Target="this.Layer" Value="Background" /> -->
+						<Callback Handler="{LoginAlertWithConfirmCancel}" />
 					</Clicked>
 				</GrayButton>
 

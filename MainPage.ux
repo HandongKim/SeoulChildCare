@@ -1,5 +1,49 @@
 <Page ux:Class="MainPage">
 	<Router ux:Dependency="router"/>
+
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+		var MainPageAlertWithConfirm = {
+				title: Observable(),
+				message: Observable(),
+				type: Observable("Check"),
+				layer: Observable("Background")
+		};
+
+		var count = 0;
+		function closeApp () {
+			router.getRoute(function(route) {
+				console.log("goBackToPrevious From " + route[0]);
+				if (route[0] == "MainPage") {
+					console.log("Currnet Page is MainPage and count is : " + count);
+
+					count++;
+
+					console.log("Currnet Page is MainPage and count is (After increase ): " + count);
+					if (count >1) {
+						MainPageAlertWithConfirm.message.value="종료하시겠습니까?";
+						MainPageAlertWithConfirm.layer.value="Overlay";			
+						count = 0;
+					} else {
+
+					}
+
+				} 
+			});
+
+			
+		}
+
+		function MainPageAlertWithConfirmCancel () {
+			MainPageAlertWithConfirm.layer.value="Background";
+		}
+
+		module.exports = {
+			MainPageAlertWithConfirmCancel, closeApp, MainPageAlertWithConfirm
+		};
+	</JavaScript>
+
+
 	<DockPanel>
 		<Panel Dock="Top" Width="100%" BoxSizing="FillAspect" Aspect="2.4" />
 		<Panel Dock="Top" Width="100%" BoxSizing="FillAspect" Aspect="1" Color="#eee0">
@@ -65,4 +109,49 @@
 	<StackPanel>
 		<Image File="Images/main_bg.png" Width="100%" Alignment="TopCenter" />
 	</StackPanel>
+
+	<OnBackButton >
+   		<Callback Handler="{closeApp}" />
+	</OnBackButton>
+
+
+
+<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{MainPageAlertWithConfirm.layer}">
+	<Stroke Width="1" Color="Black" />
+	<StackPanel>
+		<Panel>
+			<Text Value="{MainPageAlertWithConfirm.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+
+			<Image File="Images/alert_top.png" Alignment="TopCenter" />
+		</Panel>
+
+		<Panel Margin="{margin}*5/7">
+			<Text Value="{MainPageAlertWithConfirm.message}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+		</Panel>
+
+		<Panel Margin="{margin}">
+			<Grid ColumnCount="2" CellSpacing="5">
+				<BlueButton>
+					<Text Value="확인" Alignment="Center" Color="White" />
+
+					<Clicked>
+						<HomeScreen Type="Finish" />
+					</Clicked>
+				</BlueButton>
+
+				<GrayButton>
+					<Text Value="취소" Alignment="Center" Color="White" />
+
+					<Clicked>
+						<!-- <Set Target="this.Layer" Value="Background" /> -->
+						<Callback Handler="{MainPageAlertWithConfirmCancel}" />
+					</Clicked>
+				</GrayButton>
+
+				
+			</Grid>
+		</Panel>
+	</StackPanel>
+</Rectangle>
+
 </Page>

@@ -275,20 +275,20 @@
 
 		var exitOnBackButton = Observable(false);
 
-		function checkTheLastPage() {
+		// function checkTheLastPage() {
 
-			console.log("이게 돌아가나??");
+		// 	console.log("이게 돌아가나??");
 
-			router.getRoute(function(route) {
-					console.log("goBackToPrevious From " + route[0]);
-					if (route[0] == "Login") {
-						exitOnBackButton.value = true;
-					} else if (route[0] == "MainPage") {
-						exitOnBackButton.value = true;
-					} 
-				});
+		// 	router.getRoute(function(route) {
+		// 			console.log("goBackToPrevious From " + route[0]);
+		// 			if (route[0] == "Login") {
+		// 				exitOnBackButton.value = true;
+		// 			} else if (route[0] == "MainPage") {
+		// 				exitOnBackButton.value = true;
+		// 			} 
+		// 		});
 
-		}
+		// }
 
 
 
@@ -382,21 +382,12 @@
 				connectingPanelLayout.value = "Background";
 				enableClick.value = "LocalBoundsAndChildren";
 			},
-			checkTheLastPage, exitOnBackButton
+			exitOnBackButton
 		};
 	</JavaScript>
 
 	<Uploader ux:Global="Uploader" />
 
-	<OnBackButton >
-  		<!-- <WhileTrue Value="false">
-  			<HomeScreen Type="CallIntent" />
-  		</WhileTrue> -->
-
-  		<Callback Handler="{checkTheLastPage}" />
-
-
-	</OnBackButton>
 
 <!-- 
 	<WhileTrue Value="{exitOnBackButton}">

@@ -2018,9 +2018,6 @@ function focusLost () {
 
 				}
 
-
-
-
 				subType.reverse.value = false;
 				console.log("600000000000000000000000000000000");
 			}

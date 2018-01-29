@@ -830,16 +830,30 @@ function checkTheLastPageLoginPage() {
 
 	console.log("이것도 돌아가나??");
 
-	router.getRoute(function(route) {
-			console.log("goBackToPrevious From " + route[0]);
-			if (route[0] == "Login") {
-				// exitOnBackButton.value = true;
-			} else if (route[0] == "MainPage") {
-				// exitOnBackButton.value = true;
-			} 
-		});
+	// router.getRoute(function(route) {
+	// 		console.log("goBackToPrevious From " + route[0]);
+	// 		if (route[0] == "Login") {
+	// 			// exitOnBackButton.value = true;
+	// 		} else if (route[0] == "MainPage") {
+	// 			// exitOnBackButton.value = true;
+	// 		} 
+	// 	});
+	LoginAlertWithConfirm.message.value="종료하시겠습니까?";
+	LoginAlertWithConfirm.layer.value="Overlay";
 
 }
+
+function LoginAlertWithConfirmCancel () {
+	LoginAlertWithConfirm.layer.value="Background";
+}
+
+
+var LoginAlertWithConfirm = {
+	title: Observable(),
+	message: Observable(),
+	type: Observable("Check"),
+	layer: Observable("Background")
+};
 
 
 module.exports = {
@@ -860,5 +874,5 @@ module.exports = {
 	onFindCenter, findCenterUp, findCenterDown,
 	firstNum, secondNum, thirdNum, countDownSeconds, countDownMinutes,
 	importCert, getList, data, chooseCertificate, removeCertificate,changePassword, 
-	alert, setLicense, checkTheLastPageLoginPage
+	alert, setLicense, checkTheLastPageLoginPage, LoginAlertWithConfirm, LoginAlertWithConfirmCancel
 };
