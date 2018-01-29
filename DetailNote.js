@@ -555,6 +555,9 @@ var isReadOnly = Observable(false);
 var yearAndMonth = "";
 
 function pickFromList(args) {
+
+	initBackendSubject();
+
 	subType.reverse.value = notes._values[args.data.index].reverse;
 	GLOBAL_BILL_SUBCODE = null;
 
@@ -1565,180 +1568,68 @@ function deleteData () {
 			// if ((x != null) && (notes._values[tempIndex] != null)) {
 			if (x != null) {
 				console.log("%%%%%%%%%%%%%%%%%% X value is not null %%%%%%%%%%%%%%%%%%");
-				
 				try {
 					console.log("notes._values[tempIndex].type : " + notes._values[tempIndex].type);
 					console.log("x.substr(0,1) : " + x.substr(0,1));
 					if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 						console.log("7777777777777777777777777777777777777");
 						subType.reverse.value = true;
-						// if (parseInt(moneyValue.value) < 0) {
-						// 	console.log("88888888888888888888888888888888888");
-						// 	if (selectedDetailNoteVariable.MONEY < 0) {
-						// 		console.log("9999999999999999999999999999999");
-						// 		if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
-						// 			moneyValue.value = moneyValue.value.replace(/,/g , "");
-						// 			moneyValue.value = parseInt(moneyValue.value) * -1;
-						// 			moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-						// 			subType.reverse.value = false;
-						// 		} else {
-						// 			console.log("0000000000000000000000000000000000");
-						// 			moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-						// 			subType.reverse.value = false;	
-						// 		}
-						// 	} else {
-						// 		console.log("666666666666666666666666666666666666666");
-						// 		moneyValue.value = moneyValue.value.replace(/,/g , "");
-						// 		moneyValue.value = parseInt(moneyValue.value) * -1;
-						// 		moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-						// 		subType.reverse.value = true;					
-						// 	}
-
-						// } else {
-						// 	console.log("7878787878787878787878787878787878787878787878");
-						// 	if (selectedDetailNoteVariable.MONEY < 0) {
-						// 		console.log("121212121212121212121212121212121212121212121212");
-						// 		moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-						// 		subType.reverse.value = false;					
-						// 	} else {
-						// 		console.log("34343434343434343434343434343434343434343434343434");
-
-						// 		if ((parseInt(moneyValue.value) < 0) && (selectedDetailNoteVariable.MONEY < 0) ) {
-						// 			console.log("5656565656565656565656565656565656565656565656565656");
-						// 			moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-						// 			subType.reverse.value = true;						
-						// 		} else if (parseInt(moneyValue.value) < 0 && selectedDetailNoteVariable.MONEY > 0) {
-						// 			console.log("787878787878787878787878787878787878787878787878787878");
-						// 			moneyValue.value = moneyValue.value.replace(/,/g , "");
-						// 			moneyValue.value = parseInt(moneyValue.value) * -1;
-						// 			moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-						// 			subType.reverse.value = true;							
-						// 		} else if ((parseInt(moneyValue.value) > 0) && (selectedDetailNoteVariable.MONEY < 0)  ) {
-						// 			console.log("9090909090909090909090909090909090909090909090909090909090909090909090");
-						// 			moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-						// 			subType.reverse.value = true;							
-						// 		} else if ((parseInt(moneyValue.value) > 0) && (selectedDetailNoteVariable.MONEY > 0)  ) {
-						// 			console.log("12121212121212121212121212121212121212121212121212");
-						// 			moneyValue.value = moneyValue.value.replace(/,/g , "");
-						// 			moneyValue.value = parseInt(moneyValue.value) * -1;
-						// 			moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-						// 			subType.reverse.value = true;						
-						// 		}
-						// 	}
-//						}
-						if (selectedDetailNoteVariable.MONEY < 0) {
-							if (parseInt(moneyValue.value) < 0) {
-								if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "1") {
-									// moneyValue.value = moneyValue.value.replace(/,/g , "");
-									// moneyValue.value = parseInt(moneyValue.value) * -1;
-									// moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-									subType.reverse.value=false;
-								} else if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
-									moneyValue.value = moneyValue.value.replace(/,/g , "");
-									moneyValue.value = parseInt(moneyValue.value) * -1;
-									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								}
-
-
-
-							} else if (parseInt(moneyValue.value) > 0){
-
+						if (parseInt(moneyValue.value) < 0) {
+							if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "1") {
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-							}
-						} else {
-							if (parseInt(moneyValue.value) > 0) {
+								subType.reverse.value=false;
+							} else if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-							} else {
-								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 							}
+						} else if (parseInt(moneyValue.value) > 0){
+							// moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "1") {
+								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+								subType.reverse.value=false;
+							} else if (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "2") {
+								moneyValue.value = moneyValue.value.replace(/,/g , "");
+								moneyValue.value = parseInt(moneyValue.value) * -1;
+								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							}	
 						}
-
-
-
-
-					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {				
-						console.log("100000000000000000000000000000000");
-						if (moneyValue.value.toString().includes("-")) {
-							if (selectedDetailNoteVariable.MONEY < 0) {
-								console.log("200000000000000000000000000000000");
-								// moneyValue.value = moneyValue.value.replace(/,/g , "");
-								// moneyValue.value = parseInt(moneyValue.value) * -1;
-								if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
-									moneyValue.value = moneyValue.value.replace(/,/g , "");
-									moneyValue.value = parseInt(moneyValue.value) * -1;
-									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-									subType.reverse.value = false;
-								}else {
-									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-									subType.reverse.value = false;	
-								}
-								
-							} else {
-								console.log("300000000000000000000000000000000");
+						
+					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {	
+						subType.reverse.value = true;
+						if (parseInt(moneyValue.value) < 0) {
+							if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "2") {
+								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+								subType.reverse.value=false;
+							} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								subType.reverse.value = true;
 							}
-
-						} else {
-							console.log("900000000000000000000000000000000000000000000000");
-							if (selectedDetailNoteVariable.MONEY < 0) {
-								// moneyValue.value = moneyValue.value.replace(/,/g , "");
-								// moneyValue.value = parseInt(moneyValue.value) * -1;
+						} else if (parseInt(moneyValue.value) > 0){
+							// moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "2") {
 								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-									subType.reverse.value = false;	
-							} else {
-
-								console.log("900000000000000000000000000000000000000000000000");
-
+								subType.reverse.value=false;
+							} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
+								moneyValue.value = moneyValue.value.replace(/,/g , "");
+								moneyValue.value = parseInt(moneyValue.value) * -1;
+								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							}	
+						}
+					} else {
+						console.log("1555555555555555555555555555555555555");											
+						if ((notes._values[tempIndex].type == "출금" && x.substr(0,1) == "2") || (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "1"))  {
+							console.log("123456789012345678901234567890123456789012345678901234567890");
+							if (parseInt(moneyValue.value) < 0) {
 								moneyValue.value = moneyValue.value.replace(/,/g , "");
 								moneyValue.value = parseInt(moneyValue.value) * -1;	
-								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-										subType.reverse.value = true;
-							}
-						}
-
-						console.log("what the hell is this??");
-
-					} else {
-						console.log("1555555555555555555555555555555555555");
-												
-						if ((notes._values[tempIndex].type == "출금" && x.substr(0,1) == "2") || (notes._values[tempIndex].type == "입금" && x.substr(0,1) == "1"))  {
-
-							console.log("123456789012345678901234567890123456789012345678901234567890");
-							if (selectedDetailNoteVariable.MONEY < 0) {
-								console.log("1111111111111111111111111111111111111111");
-								// moneyValue.value = moneyValue.value.replace(/,/g , "");
-								// moneyValue.value = parseInt(moneyValue.value) * -1;	
-								// moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
-
-								if (parseInt(moneyValue.value) < 0 ) {
-									console.log("222222222222222222222222222222222222");
-									// moneyValue.value = moneyValue.value.replace(/,/g , "");
-									// moneyValue.value = parseInt(moneyValue.value) * -1;	
-									// moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
-									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								} else {
-									console.log("333333333333333333333333333333333333");
-									moneyValue.value = moneyValue.value.replace(/,/g , "");
-									moneyValue.value = parseInt(moneyValue.value) * -1;	
-									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
-								}
+								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+									// moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 							} else {
-								console.log("4444444444444444444444444444444444444444");
-								if (parseInt(moneyValue.value) < 0 ) {
-									console.log("55555555555555555555555555555555555555");
-									moneyValue.value = moneyValue.value.replace(/,/g , "");
-									moneyValue.value = parseInt(moneyValue.value) * -1;	
-									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
-								} else {
-									moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								}
-							}			
+								moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							}
+
 						
 						} else {
 
@@ -1763,9 +1654,12 @@ function deleteData () {
 		});
 
 		//가격이 바뀌었을 때 타야되는 로직
-
+		var tempValues = "";
 		moneyValue.onValueChanged(null, function (x) {
-			console.log("IT has changed");
+			console.log("JSON.stringify(x) : " + JSON.stringify(x) );
+			// moneyValue.value = moneyValue.value;
+			// tempValues = x.replace(/,/g , "");
+			console.log("tempValues : " + tempValues);
 		});
 
 
@@ -2057,7 +1951,89 @@ function testMethod () {
 	console.log("testMethodtestMethodtestMethodtestMethodtestMethodtestMethodtestMethod");
 }
 
+function focusLost () {
 
+	if (Backend.subject.ESTI_CODE.value !=null) {
+		try {
+			if (notes._values[tempIndex].type == "입금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "2") {
+				console.log("7777777777777777777777777777777777777");
+				subType.reverse.value = true;
+				if (parseInt(moneyValue.value) < 0) {
+					if (notes._values[tempIndex].type == "입금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "1") {
+						moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						subType.reverse.value=false;
+					} else if (notes._values[tempIndex].type == "입금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "2") {
+						moneyValue.value = moneyValue.value.replace(/,/g , "");
+						moneyValue.value = parseInt(moneyValue.value) * -1;
+						moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					}
+				} else if (parseInt(moneyValue.value) > 0){
+					// moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					if (notes._values[tempIndex].type == "입금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "1") {
+						moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						subType.reverse.value=false;
+					} else if (notes._values[tempIndex].type == "입금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "2") {
+						moneyValue.value = moneyValue.value.replace(/,/g , "");
+						moneyValue.value = parseInt(moneyValue.value) * -1;
+						moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					}	
+				}
+				
+			} else if (notes._values[tempIndex].type == "출금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "1") {	
+				subType.reverse.value = true;
+				if (parseInt(moneyValue.value) < 0) {
+					if (notes._values[tempIndex].type == "출금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "2") {
+						moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						subType.reverse.value=false;
+					} else if (notes._values[tempIndex].type == "출금" && x.substr(0,1) == "1") {
+						moneyValue.value = moneyValue.value.replace(/,/g , "");
+						moneyValue.value = parseInt(moneyValue.value) * -1;
+						moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					}
+				} else if (parseInt(moneyValue.value) > 0){
+					// moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					if (notes._values[tempIndex].type == "출금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "2") {
+						moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						subType.reverse.value=false;
+					} else if (notes._values[tempIndex].type == "출금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "1") {
+						moneyValue.value = moneyValue.value.replace(/,/g , "");
+						moneyValue.value = parseInt(moneyValue.value) * -1;
+						moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					}	
+				}
+			} else {
+				console.log("1555555555555555555555555555555555555");											
+				if ((notes._values[tempIndex].type == "출금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "2") || (notes._values[tempIndex].type == "입금" && Backend.subject.ESTI_CODE.value.substr(0,1) == "1"))  {
+					console.log("123456789012345678901234567890123456789012345678901234567890");
+					if (parseInt(moneyValue.value) < 0) {
+						moneyValue.value = moneyValue.value.replace(/,/g , "");
+						moneyValue.value = parseInt(moneyValue.value) * -1;	
+						moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+							// moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					} else {
+						moneyValue.value = moneyValue.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					}
+			
+				} else {
+
+				}
+
+
+
+
+				subType.reverse.value = false;
+				console.log("600000000000000000000000000000000");
+			}
+			console.log("now type : " + notes._values[tempIndex].type);
+			console.log("ESTI_CODE Changed : " + x.substr(0,1));
+			console.log("reverse state : " + subType.reverse.value);
+		} catch (err){
+			console.log(err);
+		} finally {
+
+		}
+	}
+}
 
 
 
@@ -2101,5 +2077,5 @@ function testMethod () {
 
 				router.push("ShowFile", infoJSON);
 			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, 
-			getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn, testMethod, saveOrEdit
+			getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn, testMethod, saveOrEdit, focusLost
 		};

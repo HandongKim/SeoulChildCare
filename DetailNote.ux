@@ -33,6 +33,7 @@
 <!-- 2018.01.16 기존 소스 끝 -->
 
 
+
 <Panel ux:Name="photoCollectionLoadingPanel" Width="100%" Height="100%" Color="#ccc8" Layer="Background">
 	<WhileTrue ux:Name="photoCollectionLoadingTF" Value="{detailNoteLoadingCircleOn}">
 		<Change photoCollectionLoadingPanel.Layer="Overlay" />
@@ -444,7 +445,8 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF">
 					<Stroke Width="1" Color="#ccc" />
-					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" InputHint="Number" IsEnabled="{isReadOnly}"/>
+					<TextInput Value="{moneyValue}" Alignment="Right" PlaceholderText="금액" InputHint="Number" IsEnabled="{isReadOnly}" Focus.Gained="{testMethod}" Focus.Lost="{focusLost}">						
+					</TextInput>
 					
 				</Rectangle>
 
