@@ -6,6 +6,7 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
+		var FileDownload = require('FileDownloadUX');
 
 		var type = Observable("제목", "내용");
 		var selectedType = Observable("제목");
@@ -137,7 +138,6 @@
 		}
 		//noticeList null체크
 		function noticeList(notice){
-
 			if(notice.SITE_CLSS_SND!=null){
 				this.siteClassSnd = notice.SITE_CLSS_SND;
 			}else{
@@ -546,8 +546,16 @@
 			        });
 		}
 
+		function downloadFile(args) {
+			console.log("downloadFile was clicked");
+
+			console.log("args : " + JSON.stringify(args));
+
+			FileDownload.documentDownload("http://smart.knou.ac.kr/fileDownServlet?rFileName=*EB*93*B1*EB*A1*9D*EA*B3*B5*EA*B3*A0.hwp&sFileName=COMF_1801150957376e680017.hwp&filePath=/business/board/BOAD_130926103441595d0000/");
+
+		}
 		module.exports = {
-			type, selectedType, pickerOn, pickerUp, pickerDown, getNoticeListValue, notices, noticeDetail, noticeFiles,getClickListValue, pageCount, totalPage, nextPage,searchText, searchContent, selectedTypes, pageCountInit
+			type, selectedType, pickerOn, pickerUp, pickerDown, getNoticeListValue, notices, noticeDetail, noticeFiles,getClickListValue, pageCount, totalPage, nextPage,searchText, searchContent, selectedTypes, pageCountInit,downloadFile
 		};
 	</JavaScript>
 	<Panel ux:Name="page4BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
@@ -636,6 +644,9 @@
 									<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
 									<Text Value="{noticeFiles.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
 									<Text Value="{noticeFiles.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Clicked>
+										<Callback Handler="{downloadFile}" />
+									</Clicked>
 								</WrapPanel>
 							</Each>
 						</StackPanel>

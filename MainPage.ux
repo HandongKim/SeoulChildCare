@@ -16,9 +16,7 @@
 				console.log("goBackToPrevious From " + route[0]);
 				if (route[0] == "MainPage") {
 					console.log("Currnet Page is MainPage and count is : " + count);
-
 					count++;
-
 					console.log("Currnet Page is MainPage and count is (After increase ): " + count);
 					if (count >1) {
 						MainPageAlertWithConfirm.message.value="종료하시겠습니까?";
@@ -27,11 +25,8 @@
 					} else {
 
 					}
-
 				} 
-			});
-
-			
+			});		
 		}
 
 		function MainPageAlertWithConfirmCancel () {
@@ -42,7 +37,6 @@
 			MainPageAlertWithConfirmCancel, closeApp, MainPageAlertWithConfirm
 		};
 	</JavaScript>
-
 
 	<DockPanel>
 		<Panel Dock="Top" Width="100%" BoxSizing="FillAspect" Aspect="2.4" />
@@ -110,11 +104,9 @@
 		<Image File="Images/main_bg.png" Width="100%" Alignment="TopCenter" />
 	</StackPanel>
 
-	<OnBackButton >
-   		<Callback Handler="{closeApp}" />
-	</OnBackButton>
-
-
+<OnBackButton >
+	<Callback Handler="{closeApp}" />
+</OnBackButton>
 
 <Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{MainPageAlertWithConfirm.layer}">
 	<Stroke Width="1" Color="Black" />
@@ -126,7 +118,7 @@
 		</Panel>
 
 		<Panel Margin="{margin}*5/7">
-			<Text Value="{MainPageAlertWithConfirm.message}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			<Text Value="{MainPageAlertWithConfirm.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
 		</Panel>
 
 		<Panel Margin="{margin}">

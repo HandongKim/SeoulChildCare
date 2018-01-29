@@ -414,13 +414,8 @@
 
 
 <OnBackButton >
-  		<!-- <WhileTrue Value="false">
-  			<HomeScreen Type="CallIntent" />
-  		</WhileTrue> -->
 	<Callback Handler="{checkTheLastPageLoginPage}" />
 </OnBackButton>
-
-
 
 <Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{LoginAlertWithConfirm.layer}">
 	<Stroke Width="1" Color="Black" />
@@ -432,14 +427,13 @@
 		</Panel>
 
 		<Panel Margin="{margin}*5/7">
-			<Text Value="{LoginAlertWithConfirm.message}" Alignment="TopLeft" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			<Text Value="{LoginAlertWithConfirm.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
 		</Panel>
 
 		<Panel Margin="{margin}">
 			<Grid ColumnCount="2" CellSpacing="5">
 				<BlueButton>
 					<Text Value="확인" Alignment="Center" Color="White" />
-
 					<Clicked>
 						<HomeScreen Type="Finish" />
 					</Clicked>
@@ -447,14 +441,10 @@
 
 				<GrayButton>
 					<Text Value="취소" Alignment="Center" Color="White" />
-
 					<Clicked>
-						<!-- <Set Target="this.Layer" Value="Background" /> -->
 						<Callback Handler="{LoginAlertWithConfirmCancel}" />
 					</Clicked>
-				</GrayButton>
-
-				
+				</GrayButton>			
 			</Grid>
 		</Panel>
 	</StackPanel>

@@ -47,6 +47,9 @@
     "DevelopmentTeam": "R33668Z4ZE",
     "BundleIdentifier": "app.ss.accss.mobile",
     "DeploymentTarget": "8.0",
+    "Version":"1.0.0",
+    "Build":"6",
+    "Devices":"iPhone",
     "Icons": {
       "iPhone_29_1x": "./Images/icons/iOS/Icon-Small.png",
       "iPhone_29_2x": "./Images/icons/iOS/Icon-Small@2x.png",
