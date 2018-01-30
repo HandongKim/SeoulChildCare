@@ -229,7 +229,7 @@
 
 					<Grid ColumnCount="2" Columns="1*, 1*" CellSpacing="3">
 						<Rectangle Width="100%" Height="100%" Color="#FFF">
-							<Stroke Width="2" Color="#888" />
+							<Stroke Width="2" Color="#5771AA" />
 							<Clicked><Callback Handler="{pickerUp2}" /></Clicked>
 
 							<Text Value="{selectedType}" FontSize="{margin}" Margin="{margin}/2, 0" Alignment="CenterLeft" />

@@ -7,7 +7,342 @@
 		<Callback Handler="{initialReceiveMessageList}" />
 	</WhileActive>
 
-	<DockPanel>
+	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
+		<Panel Dock="Top">
+			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
+				<Image File="Images/btn_pre.png" Alignment="Left">
+					<Clicked>
+						<Callback Handler="{}" />	
+						<Toggle Target="detailOfficialDuty" />
+					</Clicked>
+				</Image>
+
+				<Text Value="서울시어린이집회계" FontSize="{margin}*1.4" Color="White" Alignment="Center" />
+
+				<Image File="Images/btn_home.png">
+					<Clicked>
+						<Callback Handler="{}" />	
+						<Callback Handler="{}" />
+						<Callback Handler="{goMainPageFromAnywhere}" />
+						<Toggle Target="detailOfficialDuty" />
+					</Clicked>
+				</Image>
+			</Grid>
+
+			<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="5.5">
+				<Rectangle Width="100%" Color="#4069C2" Height="3" Alignment="Bottom" />
+			</Rectangle>
+		</Panel>
+
+		<!-- 페이지 제목 -->
+		<Panel Dock="Top">
+			<WrapPanel Alignment="CenterLeft" Margin="{margin}" Width="100%" Dock="Top">
+				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+				<Text Value="공문 수/발신" FontSize="{margin}*1.2" Color="Black" />
+			</WrapPanel>
+			<Rectangle Width="100%" Color="#4069C2" Height="1" Alignment="Bottom" />
+		</Panel>
+
+		<WhileTrue ux:Name="detailOfficialDuty">
+			<Move X="-1" RelativeTo="Size" />
+		</WhileTrue>
+	</DockPanel>
+
+	<StackPanel ux:InnerClass="MyOfficialDuties" Width="100%" Color="White">
+		<Panel Margin="{margin}">
+			<Grid Alignment="Center" ColumnCount="2" Width="100%" >
+				<Rectangle Width="{margin}*3" Height="{margin}*2" Color="#3477BE">
+					<Text Value="{typeText}" Alignment="Center" />
+				</Rectangle>
+
+				<Text Value="{regDate}" FontSize="{margin}" Color="#888" Alignment="CenterRight" />
+				
+				<Panel ColumnSpan="2">
+					<Text Value="{title}" Alignment="CenterLeft" FontSize="{margin}" Color="Black" />
+				</Panel>
+			</Grid>
+		</Panel>
+
+		<Clicked>
+			<Callback Handler="{}" />
+			<Toggle Target="detailOfficialDuty" />
+		</Clicked>
+	</StackPanel>
+
+	<!-- 피커 패널들 모음 -->
+	<!-- 분류 -->
+	<WhileTrue Value="{}">
+		<Change offDutiesCategoryPicker.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="offDutiesCategoryPicker" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Panel Width="100%" Height="150" Color="#ddd" Dock="Fill">
+			<MyPicker Selected="{}" Data="{}" StPos="{}"  />
+		</Panel>
+	</DockPanel>
+
+	<!-- 상태 -->
+	<WhileTrue Value="{}">
+		<Change offDutiesStatusPicker.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="offDutiesStatusPicker" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Panel Width="100%" Height="150" Color="#ddd" Dock="Fill">
+			<MyPicker Selected="{}" Data="{}" StPos="{}"  />
+		</Panel>
+	</DockPanel>
+
+	<!-- 발송일 -->
+	<WhileTrue Value="{}">
+		<Change offDutiesDateTypePicker.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="offDutiesDateTypePicker" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Panel Width="100%" Height="150" Color="#ddd" Dock="Fill">
+			<MyPicker Selected="{}" Data="{}" StPos="{}"  />
+		</Panel>
+	</DockPanel>
+
+	<!-- 시작일 -->
+	<WhileTrue Value="{}">
+		<Change offDutiesStDatePicker.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="offDutiesStDatePicker" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Grid ColumnCount="8" Columns="1*, 3*, 1*, 2*, 1*, 2*, 1*, 1*" Width="100%" Height="150" Color="#ddd" Dock="Fill">
+			<Panel />
+
+			<MyPicker Selected="{}" Data="{}" StPos="{}"  />
+
+			<Text Value="년" Alignment="Center" />
+
+			<MyPicker Selected="{}" Data="{}" StPos="{}" />
+
+			<Text Value="월" Alignment="Center" />
+
+			<MyPicker Selected="{}" Data="{}" StPos="{}" />
+
+			<Text Value="일" Alignment="Center" />
+
+			<Panel />
+		</Grid>
+	</DockPanel>
+
+	<!-- 종료일 -->
+	<WhileTrue Value="{}">
+		<Change offDutiesEndDatePicker.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="offDutiesEndDatePicker" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Grid ColumnCount="8" Columns="1*, 3*, 1*, 2*, 1*, 2*, 1*, 1*" Width="100%" Height="150" Color="#ddd" Dock="Fill">
+			<Panel />
+
+			<MyPicker Selected="{}" Data="{}" StPos="{}"  />
+
+			<Text Value="년" Alignment="Center" />
+
+			<MyPicker Selected="{}" Data="{}" StPos="{}" />
+
+			<Text Value="월" Alignment="Center" />
+
+			<MyPicker Selected="{}" Data="{}" StPos="{}" />
+
+			<Text Value="일" Alignment="Center" />
+
+			<Panel />
+		</Grid>
+	</DockPanel>
+
+	<!-- 공문명 -->
+	<WhileTrue Value="{}">
+		<Change offDutiesNamePicker.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<DockPanel ux:Name="offDutiesNamePicker" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<Panel Width="100%" Height="150" Color="#ddd" Dock="Fill">
+			<MyPicker Selected="{}" Data="{}" StPos="{}"  />
+		</Panel>
+	</DockPanel>
+
+	<DockPanel Color="White">
 		<topBar Dock="Top" />
+
+		<!-- 페이지 제목 -->
+		<Panel  Dock="Top">
+			<Grid Margin="{margin}" Width="100%" ColumnCount="3" Columns="2*, 1*, 1*" CellSpacing="3">
+				<WrapPanel Alignment="CenterLeft">
+					<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+					<Text Value="공문 수/발신" FontSize="{margin}*1.2" Color="Black" />
+				</WrapPanel>
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="1" Color="#000" />
+					<Text Value="분류" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}/2, 0" />
+					<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
+
+
+					<Clicked>
+						<Callback Handler="{}" />
+					</Clicked>
+				</Rectangle>
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="1" Color="#000" />
+					<Text Value="상태" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}/2, 0" />
+					<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
+
+
+					<Clicked>
+						<Callback Handler="{}" />
+					</Clicked>
+				</Rectangle>
+			</Grid>
+		</Panel>
+
+		<!-- 선택바 -->
+		<Panel Color="#5771AA" Dock="Top">
+			<Grid ColumnCount="3" Columns="4*, 10*, 3*" Margin="{margin}" Width="100%" CellSpacing="{margin}/2">
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="1" Color="#000" />
+
+					<Text Value="발송일" FontSize="{margin}" Margin="{margin}/2, 0" Alignment="CenterLeft" />
+
+					<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
+
+					<Clicked><Callback Handler="{}" /></Clicked>
+				</Rectangle>
+
+				<Grid ColumnCount="3" Columns="8*, 1*, 8*" Width="100%">
+					<Rectangle Width="100%" Height="100%" Color="#FFF">
+						<Stroke Width="1" Color="#000" />
+
+						<Text Value="년-월-일" FontSize="{margin}" Margin="{margin}/2, 0" Alignment="CenterLeft" />
+
+						<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
+
+						<Clicked><Callback Handler="{}" /></Clicked>
+					</Rectangle>
+
+					<Text Value="~" Alignment="Center" Color="White" />
+
+					<Rectangle Width="100%" Height="100%" Color="#FFF">
+						<Stroke Width="1" Color="#000" />
+
+						<Text Value="년-월-일" FontSize="{margin}" Margin="{margin}/2, 0" Alignment="CenterLeft" />
+
+						<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
+
+						<Clicked><Callback Handler="{}" /></Clicked>
+					</Rectangle>
+				</Grid>
+
+				<Panel />
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="1" Color="#000" />
+
+					<Text Value="공문명" FontSize="{margin}" Margin="{margin}/2, 0" Alignment="CenterLeft" />
+
+					<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
+
+					<Clicked><Callback Handler="{}" /></Clicked>
+				</Rectangle>
+
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="1" Color="#000" />
+					<TextInput Margin="{margin}/2, 0" PlaceholderText="검색어 입력" PlaceholderColor="#888" Width="100%" Background="White" Value="{searchText}"/>
+				</Rectangle>
+
+				<OrangeButton Width="60%" BoxSizing="FillAspect" Aspect="1.5" Alignment="CenterLeft">
+					<Text Value="검색" Alignment="Center" Color="White" >
+						<Clicked>
+							<Callback Handler="{}" />
+						</Clicked>
+					</Text>
+				</OrangeButton>
+			</Grid>
+		</Panel>
+
+		<ScrollView ux:Name="officialDutiesListScroll" SnapMaxTransform="false" SnapMinTransform="false">
+			<StackPanel ItemSpacing="1" Color="#ddd">
+				<Each Items="{}">
+					<MyOfficialDuties />
+				</Each>
+				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" CellSpacing="1">
+					<Panel Width="100%" Height="100%" Color="#fcfcfc">
+						<Text Value="더보기({}/{})" Alignment="Center" />
+						<Clicked><Callback Handler="{}"/></Clicked>
+					</Panel>
+
+					<Panel Width="100%" Height="100%" Color="#fcfcfc">
+						<Text Value="맨위로" Alignment="Center" />
+
+						<Clicked>
+							<Set Target="officialDutiesListScroll.ScrollPosition" Value="0" />
+						</Clicked>
+					</Panel>
+				</Grid>
+			</StackPanel>
+		</ScrollView>
 	</DockPanel>
 </Page>
