@@ -106,6 +106,8 @@ receiveworkDetail.add({
 
 var commClss = "";
 function initReceiveList() {
+	selectedTypes();
+
 	commClss = "D";
 	var srch_Type = "";
 	var srch_Text = "";
@@ -200,13 +202,27 @@ var dsParam = Backend.dsParam;
 function searchContent () {
 
 	var srchType = "";
-	if (selectedType.value ="제목") {
+	// if (selectedType.value ="제목") {
+	// 	srchType = "TITLE";
+	// } else if (selectedType.value = "내용") {
+	// 	srchType = "CONT";
+	// } else if (selectedType.value= "보낸사람") {
+	// 	srchType = "WRITER_NM";
+	// }
+
+
+
+var srchType = "";
+	if (selectedType.value =="제목") {
 		srchType = "TITLE";
-	} else if (selectedType.value = "내용") {
+	} else if (selectedType.value == "내용") {
 		srchType = "CONT";
-	} else if (selectedType.value= "보낸사람") {
+	} else if (selectedType.value == "보낸사람") {
 		srchType = "WRITER_NM";
 	}
+
+
+	console.log("selectedType.value : " + selectedType.value);
 
 	var srchText = searchText.value;
 	
@@ -307,10 +323,13 @@ function goToDetailReceiveWork (args) {
 
 
 	var dsSearch = '{"commClss":"'+commClss
-				+'","COMM_SEQ":"'+COMM_SEQ
+				+'","commSeq":"'+COMM_SEQ
 				+'","INFO_CONF_DATE":"'+INFO_CONF_DATE
 				+'","INFO_CDHD_NO":"'+INFO_CDHD_NO
 				+'"}';
+
+
+
 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
 

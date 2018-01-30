@@ -695,8 +695,12 @@
 		function registerSend(){
 			console.log("registerSend function Call ");
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+
+			var dsDetail = '{"REGDATE":"'+JSON.stringify(qnaDetailValue.value.regDate.value)+'","AREA":'+JSON.stringify(qnaDetailValue.value.area.value)+',"CONT":"'+qnaDetailValue.value.cont.value+'","COMM_SEQ":"'+JSON.stringify(qnaDetailValue.value.commSeq.value)+'","REPLY_REF":"'+JSON.stringify(qnaDetailValue.value.replyRef.value)+'","REGDATE1":'+JSON.stringify(qnaDetailValue.value.regDate1.value)+',"INQ_ADM_CNT":"'+JSON.stringify(qnaDetailValue.value.inqAdmCnt.value)+'","REGID":'+JSON.stringify(qnaDetailValue.value.regId.value)+',"SITE_CLSS_SND":'+JSON.stringify(qnaDetailValue.value.siteClssSnd.value)+',"QA_REPLY_YN":'+JSON.stringify(qnaDetailValue.value.qaReplyYn.value)+',"INQ_USR_CNT":"'+JSON.stringify(qnaDetailValue.value.inqUsrCnt.value)+'","REPLY_DEPTH":"'+JSON.stringify(qnaDetailValue.value.replyDepth.value)+'","WRITER_NM":'+JSON.stringify(qnaDetailValue.value.writerNm.value)+',"WRITE_HOST":"'+JSON.stringify(qnaDetailValue.value.writeHost.value)+'","REGDATE2":'+JSON.stringify(qnaDetailValue.value.regDate2.value)+',"BOD_COM_YN":'+JSON.stringify(qnaDetailValue.value.bodComYn.value)+',"WRITER_ORG":'+JSON.stringify(qnaDetailValue.value.writerOrg.value)+',"BOD_FORM_CLSS":'+JSON.stringify(qnaDetailValue.value.bodFormClss.value)+',"REQ_YN":'+JSON.stringify(qnaDetailValue.value.reqYn.value)+',"TITLE":"'+qnaDetailValue.value.title.value+'","REPLY_SORTKEY":'+JSON.stringify(qnaDetailValue.value.replySortkey.value)+'}';
+
+
 			var dsParam = Backend.dsParam;
-			var dsDetail = '{"CONT":"'+qnaDetailValue.value.cont.value+'","TITLE":"'+qnaDetailValue.value.title.value+'"}';
+			// var dsDetail = '{"CONT":"'+qnaDetailValue.value.cont.value+'","TITLE":"'+qnaDetailValue.value.title.value+'"}';
 			var dsFileList = '{}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
 

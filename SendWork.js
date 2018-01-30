@@ -276,7 +276,7 @@ function goToDetailSentWork (args) {
 
 
 	var dsSearch = '{"commClss":"'+commClss
-				+'","COMM_SEQ":"'+COMM_SEQ
+				+'","commSeq":"'+COMM_SEQ
 				+'","REGID":"'+REGID
 				+'"}';
 	var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"dsSearch": '+dsSearch+'}');
@@ -305,9 +305,6 @@ function goToDetailSentWork (args) {
         }).catch(function(err) {
 
         });
-
-
-
 	console.log("hjahaheifheihq iowhefioqhwo iefho wihefoiqw hefiohwioehfw");
 }
 
