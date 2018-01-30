@@ -90,8 +90,8 @@ var dsParam="";
 var choiceSubjectList = Observable();
 
 var AndroidLicenseKey = "ikdt8CleK1HVv3Qa0temFA==";
-// var iOSLicenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
-var iOSLicenseKey = "zsXSgR2LrUkLoPFQqgOXWw==";
+var iOSLicenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
+// var iOSLicenseKey = "zsXSgR2LrUkLoPFQqgOXWw==";
 
 
 
