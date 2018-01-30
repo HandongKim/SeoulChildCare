@@ -44,7 +44,8 @@ function sendToPickerDown() {
 	sendToPickerPanelOn.value = false;
 }
 
-var type = Observable("제목", "내용");
+var searchText = Observable();
+var type = Observable("제목", "내용", "수신자");
 var selectedType = Observable("제목");
 
 pickerOn = Observable(false);
@@ -184,7 +185,7 @@ var commClss = "";
 function initSentList() {
 	console.log("initSentListinitSentListinitSentListinitSentListinitSentList");
 	commClss = "D";
-	var srch_Type = "";
+	var srch_Type = "TITLE";
 	var srch_Text = "";
 
 	getSentMessageList(srch_Type, srch_Text);
@@ -310,25 +311,29 @@ function goToDetailSentWork (args) {
 	console.log("hjahaheifheihq iowhefioqhwo iefho wihefoiqw hefiohwioehfw");
 }
 
+function searchContent () {
+	console.log("selectedType.value : " + selectedType.value);
+	var srch_Type = "";
+	if (selectedType.value == "제목") {
+		srch_Type = "TITLE";
+	}else if (selectedType.value == "내용") {
+		srch_Type = "CONT";
+	} else if (selectedType.value == "수신자") {
+		srch_Type = "RECEIVE_NM";
+	}
+	
+	var srch_Text = searchText.value;
 
+	console.log("srch_Type : " + srch_Type);
+	console.log("srch_Text : " + srch_Text);
 
-
-
-
-
-
-
-
-
-
-
-
-
+	getSentMessageList(srch_Type, srch_Text);
+}
 
 module.exports = {
 	years, months, days,
 	type, selectedType, pickerOn, pickerUp, pickerDown, selectedTypes,
 	fromDate, sendFromPickerPanelOn, sendFromPickerUp, sendFromPickerDown,
 	toDate, sendToPickerPanelOn, sendToPickerUp, sendToPickerDown,
-	sendWorks, sendworkDetail, initSentList, sentMessages, goToDetailSentWork
+	sendWorks, sendworkDetail, initSentList, sentMessages, goToDetailSentWork, searchContent, searchText
 };
