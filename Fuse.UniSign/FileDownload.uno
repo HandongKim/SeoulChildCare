@@ -29,7 +29,7 @@ namespace Fuse.UniSign.Fuse_UniSign
 				
 
 				var temp = AndroidFileDownload.Instance;
-				temp.ShowDocument();
+				temp.StartActivityForDownloadFile(url);
 			} else if defined(iOS) 
 			{
 				debug_log("This is iOS");

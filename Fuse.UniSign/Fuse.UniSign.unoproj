@@ -4,6 +4,7 @@
     "FuseJS",
     "Uno.Threading",
     "Uno.Permissions",
+    "Android.ActivityUtils",
   ],
   "Includes": [
     "*",

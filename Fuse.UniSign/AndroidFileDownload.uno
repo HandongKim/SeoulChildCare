@@ -55,6 +55,7 @@ namespace Fuse.UniSign.Fuse_UniSign
 
 		private static AndroidFileDownload instance;
 
+		private string _tempUrl_;
 
 		[Foreign(Language.Java)]
 		static void InitAndroidFileDownload()
@@ -72,26 +73,37 @@ namespace Fuse.UniSign.Fuse_UniSign
 		}
 
 		[Foreign(Language.Java)]
-		static extern(android) Java.Object nativeIntent(string url)
+		static extern(android) Java.Object nativeIntent(String url)
 		@{
-			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+			String _url ="";
+			_url = url;
+
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(_url));
 			return intent;
 		@} 
 		
 
 		[Foreign(Language.Java)]
-		public void ShowDocument()
+		public void ShowDocument(String url)
 		@{
 			//return showCamera();
+			String _tempUrl = "";
+			_tempUrl = url;
+
+
+
+			debug_log("_tempUrl : " + _tempUrl);
+
 			debug_log("Show Document was started");
-          	@{AndroidCamera:Of(_this).StartActivityForDownloadFile():Call()};
+          	
+          
            
 		@}
 
-		bool StartActivityForDownloadFile() 
+		public bool StartActivityForDownloadFile(string url) 
 		{
 			debug_log("StartActivityForCameraStartActivityForCamera");
-			ActivityUtils.StartActivity(nativeIntent("https://www.google.com"));
+			ActivityUtils.StartActivity(nativeIntent(url));
 			return true;
 		} 
 
