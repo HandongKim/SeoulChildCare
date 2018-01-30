@@ -86,18 +86,10 @@ namespace Fuse.UniSign.Fuse_UniSign
 		[Foreign(Language.Java)]
 		public void ShowDocument(String url)
 		@{
-			//return showCamera();
 			String _tempUrl = "";
 			_tempUrl = url;
-
-
-
 			debug_log("_tempUrl : " + _tempUrl);
-
 			debug_log("Show Document was started");
-          	
-          
-           
 		@}
 
 		public bool StartActivityForDownloadFile(string url) 

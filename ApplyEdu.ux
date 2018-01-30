@@ -111,55 +111,55 @@
 		//null Check
 		function eduIntoList(eduIntoList){
 
-			if(eduIntoList.EDUSEQ!=null){
+			if(eduIntoList.NAME!=null){
 				this.name = eduIntoList.NAME;
 			}else{
 				this.name = "";
 			}
 
-			if(eduIntoList.EDUSEQ!=null){
+			if(eduIntoList.OFF_NM!=null){
 				this.offNm = eduIntoList.OFF_NM;
 			}else{
 				this.offNm = "";
 			}
 
-			if(eduIntoList.EDUSEQ!=null){
+			if(eduIntoList.INS_NAME!=null){
 				this.insName = eduIntoList.INS_NAME;
 			}else{
 				this.insName = "";
 			}
 
-			if(eduIntoList.EDUSEQ!=null){
+			if(eduIntoList.AREA_NAME!=null){
 				this.areaName = eduIntoList.AREA_NAME;
 			}else{
 				this.areaName = "";
 			}
 
-			if(eduIntoList.EDUSEQ!=null){
+			if(eduIntoList.CODE_NAME!=null){
 				this.codeName = eduIntoList.CODE_NAME;
 			}else{
 				this.codeName = "";
 			}
 
-			if(eduIntoList.EDUSEQ!=null){
+			if(eduIntoList.AREA_CODE!=null){
 				this.areaCode = eduIntoList.AREA_CODE;
 			}else{
 				this.areaCode = "";
 			}
 
-			if(eduIntoList.EDUSEQ!=null){
+			if(eduIntoList.INS_GB_CARE!=null){
 				this.insGbCare = eduIntoList.INS_GB_CARE;
 			}else{
 				this.insGbCare = "";
 			}
 
-			if(eduIntoList.EDUSEQ!=null){
+			if(eduIntoList.SEQ!=null){
 				this.seq = eduIntoList.SEQ;
 			}else{
 				this.seq = "";
 			}
 
-			if(eduIntoList.EDUSEQ!=null){
+			if(eduIntoList.SEOUL_YN!=null){
 				this.seoulYn = eduIntoList.SEOUL_YN;
 			}else{
 				this.seoulYn = "";
@@ -218,20 +218,25 @@
 			        });
 		}
 
+		var applicableOrNot = Observable(false);
+
 		function clickEducation(value){
+			//교육신청 리스트에서 교육 클릭시 실행되는 함수
+			applicableOrNot.value = false;
 			var eduSeq = value.data.eduSeq;
 			console.log("eduSeq : "+JSON.stringify(eduSeq));
 			getDetailEdu(eduSeq);
 		}
 
 		function getDetailEdu(eduSeq){
+			//교육신청 리스트에서 교육 클릭시 실행되고나서 실행되는 함수
 			console.log("getEducationMain function Call ");
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			var dsSearch = '{"eduyear":"'+selectedType.value+'","eduseq":"'+eduSeq+'"}';
 			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"dsSearch": '+dsSearch+'}');
 			eduDetail.clear();
 			eduDetailInfo.clear();
-			
+			var expiredOrNot = "";
 
 			fetch(eduApplyUrl, {
 					method: 'POST',
@@ -253,6 +258,17 @@
 						eduDetail.add(new eduDetailList(responseBody.ds_edu));
 						
 						console.log("eduDetail.value : "+ JSON.stringify(eduDetail.value));
+						
+						expiredOrNot = eduDetail._values[0].state;
+						console.log("expiredOrNot : " + expiredOrNot);
+
+						if (expiredOrNot == "신청") {
+							applicableOrNot.value = true;
+						}
+
+						
+
+
 
 						eduDetailInfo.add(new eduIntoList(responseBody.ds_info));
 
@@ -434,8 +450,8 @@ console.log("dsSearch : " + dsSearch);
 	+ '"NAME":"'+NAME+'",'
 	+ '"FLAG":"'+FLAG+'",'
 	+ '"HP1":"'+HP1+ '",'
-	+ '"HP2":"'+HP1+'",'
-	+ '"HP3":"'+HP1+'"' 
+	+ '"HP2":"'+HP2+'",'
+	+ '"HP3":"'+HP3+'"' 
 	+ '}';
 
 	console.log("ds_info : " + ds_info);	
@@ -477,7 +493,7 @@ console.log("dsSearch : " + dsSearch);
 
 
 		module.exports = {
-			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap, applyEducation, applicantName, hp1, hp2, hp3
+			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap, applyEducation, applicantName, hp1, hp2, hp3, applicableOrNot
 		};
 	</JavaScript>
 
@@ -595,6 +611,7 @@ console.log("dsSearch : " + dsSearch);
 				</Panel>
 
 				<!-- 어떤 데이터 넘어와야 하는지? 화면 구성 알아서 수정 필요 -->
+			<WhileTrue Value="{applicableOrNot}">
 				<Panel Color="#CCC">
 					<Grid ColumnCount="2" Columns="1*, 3.5*" Rows="Auto" CellSpacing="1" Margin="0,2,0,1">
 						<Panel Width="100%" Height="{margin}*3" Color="#eee">
@@ -632,6 +649,8 @@ console.log("dsSearch : " + dsSearch);
 						<Callback Handler="{applyEducation}" />
 					</Clicked>
 				</Rectangle>
+			</WhileTrue>
+
 			</StackPanel>
 		</ScrollView>
 
