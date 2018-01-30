@@ -1,6 +1,12 @@
 <Page ux:Class="OfficialDutiesList">
 	<Router ux:Dependency="router"/>
 
+	<JavaScript File="OfficialDutiesList.js"/>
+
+	<WhileActive>
+		<Callback Handler="{initialReceiveMessageList}" />
+	</WhileActive>
+
 	<DockPanel>
 		<topBar Dock="Top" />
 	</DockPanel>

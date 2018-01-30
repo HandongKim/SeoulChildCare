@@ -165,13 +165,13 @@ function sentMessage (args, index) {
 
 
 var sendworkDetail = Observable();
-sendworkDetail.add({
-	title: "업무연락 부탁드립니다.",
-	sender: "노성순",
-	regDate1: "18:46:21",
-	regDate2: "2018-01-01",
-	cont: "테스트입니다."
-});
+// sendworkDetail.add({
+// 	title: "업무연락 부탁드립니다.",
+// 	sender: "노성순",
+// 	regDate1: "18:46:21",
+// 	regDate2: "2018-01-01",
+// 	cont: "테스트입니다."
+// });
 
 
 
@@ -191,6 +191,7 @@ function initSentList() {
 }
 
 var sentMessages = Observable();
+var REGID = JSON.parse(Backend.dsParam).GVMEMID;
 
 function sentMessage (args, index) {
 	this.INDEX = index
@@ -207,7 +208,7 @@ function sentMessage (args, index) {
 }
 
 function getSentMessageList(srch_Type, srch_Text) {
-	var REGID = JSON.parse(Backend.dsParam).GVMEMID;
+	// var REGID = JSON.parse(Backend.dsParam).GVMEMID;
 	var srchType = srch_Type;
 	var srchText = srch_Text;
 	var dsParam = Backend.dsParam;
@@ -242,8 +243,71 @@ function getSentMessageList(srch_Type, srch_Text) {
         });
 }
 
-function sentWorkDetail (args) {
+
+function goToDetailSentWork (args) {
 	console.log("args : " + JSON.stringify(args));
+
+	console.log(" args.data.COMM_SEQ : "+ args.data.COMM_SEQ);
+	console.log(" args.data.REGID : "+ args.data.REGID);
+	console.log(" args.data.BOD_FORM_CLSS : "+ args.data.BOD_FORM_CLSS);
+
+	var COMM_SEQ = null;
+	var INFO_CONF_DATE = null;
+	
+	if (args.data.COMM_SEQ !=null) {
+		COMM_SEQ = args.data.COMM_SEQ;
+	}else {
+		COMM_SEQ = "";
+	}
+	
+
+	if (args.data.INFO_CONF_DATE !=null) {
+		INFO_CONF_DATE = args.data.INFO_CONF_DATE;
+	}else {
+		INFO_CONF_DATE = "";
+	}
+
+
+	console.log("commClss : " +commClss);
+	console.log("COMM_SEQ : " +COMM_SEQ);
+	// console.log("INFO_CONF_DATE : " +INFO_CONF_DATE);
+	// console.log("INFO_CDHD_NO : " +INFO_CDHD_NO);
+
+
+	var dsSearch = '{"commClss":"'+commClss
+				+'","COMM_SEQ":"'+COMM_SEQ
+				+'","REGID":"'+REGID
+				+'"}';
+	var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"dsSearch": '+dsSearch+'}');
+
+
+	var searchBusiReceiveAdmDtl_URL = Backend.BASE_URL + Backend.searchBusisendAdmDtl_URL;
+
+	fetch(searchBusiReceiveAdmDtl_URL, {
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+        }).then(function(response) {
+        	console.log("response : " + JSON.stringify(response));
+
+			// var bodyInit = JSON.parse(response._bodyInit);
+			// var messageList = bodyInit.ds_CommList[1];
+			// for (var i = 0; i < messageList.length; i++) {
+			// 	receiveWorks.add(new receivedMessage(messageList[i], i)); 
+			// }
+			// console.log("receiveMessages : " + JSON.stringify(receiveWorks));
+            return response.json();
+        }).then(function(jsonData) {
+        
+        }).catch(function(err) {
+
+        });
+
+
+
+	console.log("hjahaheifheihq iowhefioqhwo iefho wihefoiqw hefiohwioehfw");
 }
 
 
@@ -266,5 +330,5 @@ module.exports = {
 	type, selectedType, pickerOn, pickerUp, pickerDown, selectedTypes,
 	fromDate, sendFromPickerPanelOn, sendFromPickerUp, sendFromPickerDown,
 	toDate, sendToPickerPanelOn, sendToPickerUp, sendToPickerDown,
-	sendWorks, sendworkDetail, initSentList, sentMessages, sentWorkDetail
+	sendWorks, sendworkDetail, initSentList, sentMessages, goToDetailSentWork
 };

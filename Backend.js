@@ -59,6 +59,8 @@ var searchBusiReceiveAdmDtl_URL = "/acadm/cmt/searchBusiReceiveAdmDtl.do"
 
 
 
+var searchBusisendAdmDtl_URL = "/acadm/cmt/searchBusisendAdmDtl.do";
+
 var subject = {
 	isChoice: Observable(),
 	color: Observable(),
@@ -225,5 +227,5 @@ module.exports = {
 	getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
 	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, 
 	selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject, yearAndMonthFromPhotoCollection, isItFromNoteManage,
-	searchBusiReceiveAdmDtl_URL
+	searchBusiReceiveAdmDtl_URL, searchBusisendAdmDtl_URL
 };

@@ -135,7 +135,7 @@
 			<Callback Handler="{sendToPickerDown}" /> -->
 			<!-- <Callback Handler="{selectedTypes}" />	 -->
 			<!-- <Callback Handler="{pickerDown}" /> -->
-			<Callback Handler="{sentWorkDetail}" />
+			<Callback Handler="{goToDetailSentWork}" />
 			<Toggle Target="detailSendWork" />
 
 		</Clicked>

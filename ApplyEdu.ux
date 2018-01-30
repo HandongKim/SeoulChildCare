@@ -417,24 +417,16 @@
 
 console.log("dsSearch : " + dsSearch);
 
+	
+
 	var ds_edu = '{' 
 			+ '"EDUSEQ":"'+EDUSEQ+ '",' 
 			+ '"CHK_ID":"'+CHK_ID+'",' 
 			+ '"EDUDATE":"'+EDUDATE+'",'
-			// + '"EDUDATETIME":'+EDUDATETIME+','
-			// + '"CONTENT":'+CONTENT +','
-			// + '"OBJECT":' +OBJECT+ ',' 
-			// + '"PLACE":' +PLACE +','
-			// + '"PLACE_URL":'+PLACE_URL+','
-			// + '"REQUEST":'+REQUEST+','
-			// + '"TRAFFIC":'+TRAFFIC+','
+	
 			+ '"STATE":"'+STATE+ '",'
 			+ '"SINDATE_M":"'+SINDATE_M+'"' 
 			+ '}';
-
-
-		// console.log("ds_edu : " + ds_edu);	
-
 
 
 
@@ -462,6 +454,7 @@ console.log("dsSearch : " + dsSearch);
 	console.log("jsonString : " + jsonString);
 	var jsonParam = JSON.parse(jsonString);
 
+	console.log("20180130 : JSON.stringify()" + JSON.stringify(jsonParam));
 	var url = Backend.BASE_URL + Backend.eduapplyproc_URL;
 
 
