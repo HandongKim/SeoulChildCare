@@ -715,7 +715,7 @@ console.log("dsSearch : " + dsSearch);
 					<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
 				</Rectangle>
 
-				<Rectangle Width="60%" BoxSizing="FillAspect" Aspect="1.5" CornerRadius="3" Color="#3477BE" Alignment="CenterLeft">
+				<Rectangle Width="60%" BoxSizing="FillAspect" Aspect="1.5" CornerRadius="3" Color="#F17E22" Alignment="CenterLeft">
 
 					<Clicked><Callback Handler="{searchContent}" /></Clicked>
 					<Text Value="검색" Alignment="Center" Color="White" />

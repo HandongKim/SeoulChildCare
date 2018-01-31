@@ -44,8 +44,8 @@
 				<Text Value="질의응답" FontSize="{margin}*1.2" Color="Black" />
 			</WrapPanel>
 
-			<Rectangle Width="100%" Color="#708EAE">
-				<Text Value="나중에 지워야 하는 부분" Margin="{margin}" Color="White" />
+			<Rectangle Width="100%" Color="#5771AA">
+				<Text Value="{detailReceivedWorks.WRITER_NM}" Margin="{margin}" Color="White" />
 			</Rectangle>
 		</Grid>
 
@@ -280,7 +280,7 @@
 					<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
 				</Rectangle>
 				<TextBox Width="100%" Background="White" Value="{searchText}"/>
-				<Rectangle Width="60%" BoxSizing="FillAspect" Aspect="1.5" CornerRadius="3" Color="#3477BE" Alignment="CenterLeft">
+				<Rectangle Width="60%" BoxSizing="FillAspect" Aspect="1.5" CornerRadius="3" Color="#F17E22" Alignment="CenterLeft">
 					<Text Value="검색" Alignment="Center" Color="White" >
 						<Clicked>
 							<Callback Handler="{searchContent}" />

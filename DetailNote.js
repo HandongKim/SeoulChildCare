@@ -2031,24 +2031,6 @@ function focusLost () {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		//2018.01.16 기존 소스 끝
 		module.exports = {
 			detailText, showText, uploadOn, tryUpload, cancelUpload,
