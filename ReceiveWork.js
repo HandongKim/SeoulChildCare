@@ -292,7 +292,92 @@ function getReceivedMessageList(srch_Type, srch_Text) {
         });
 }
 
+
+var detailReceivedWorks = Observable();
+var detailReceivedWorkVariable = null;
+
+function detailReceiveWork (args, index) {
+
+	this.INDEX = index;
+
+	if (args.INFO_CONF_DATE != null) {
+		this.INFO_CONF_DATE = args.INFO_CONF_DATE;	
+	} else {
+		this.INFO_CONF_DATE = "";	
+	}
+	
+	if (args.REPLY_DEPTH != null) {
+		this.REPLY_DEPTH = args.REPLY_DEPTH;	
+	} else {
+		this.REPLY_DEPTH = "";	
+	}
+
+	if (args.REGDATE != null) {
+		this.REGDATE = args.REGDATE;	
+	} else {
+		this.REGDATE = "";	
+	}
+
+	if (args.WRITER_NM != null) {
+		this.WRITER_NM = args.WRITER_NM;	
+	} else {
+		this.WRITER_NM = "";	
+	}
+
+	if (args.BOD_COM_YN != null) {
+		this.BOD_COM_YN = args.BOD_COM_YN;	
+	} else {
+		this.BOD_COM_YN = "";	
+	}
+
+	if (args.CONT != null) {
+		this.CONT = (args.CONT).replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");;	
+	} else {
+		this.CONT = "";	
+	}
+
+	if (args.COMM_SEQ != null) {
+		this.COMM_SEQ = args.COMM_SEQ;	
+	} else {
+		this.COMM_SEQ = "";	
+	}
+
+	if (args.REPLY_REF != null) {
+		this.REPLY_REF = args.REPLY_REF;	
+	} else {
+		this.REPLY_REF = "";	
+	}
+
+	if (args.WRITER_ORG != null) {
+		this.WRITER_ORG = args.WRITER_ORG;	
+	} else {
+		this.WRITER_ORG = "";	
+	}
+
+	if (args.BOD_FORM_CLSS != null) {
+		this.BOD_FORM_CLSS = args.BOD_FORM_CLSS;	
+	} else {
+		this.BOD_FORM_CLSS = "";	
+	}
+
+	if (args.REPLY_REF_SEQ != null) {
+		this.REPLY_REF_SEQ = args.REPLY_REF_SEQ;	
+	} else {
+		this.REPLY_REF_SEQ = "";	
+	}
+
+	if (args.TITLE != null) {
+		this.TITLE = (args.TITLE).replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+
+	} else {
+		this.TITLE = "";	
+	}
+}
+
 function goToDetailReceiveWork (args) {
+	console.log("goToDetailReceiveWork was called");
+	detailReceivedWorks.clear();
+	detailReceivedWorkVariable = null;
 	console.log("args : " + JSON.stringify(args));
 
 	console.log(" args.data.COMM_SEQ : "+ args.data.COMM_SEQ);
@@ -328,10 +413,7 @@ function goToDetailReceiveWork (args) {
 				+'","INFO_CDHD_NO":"'+INFO_CDHD_NO
 				+'"}';
 
-
-
 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-
 
 	var searchBusiReceiveAdmDtl_URL = Backend.BASE_URL + Backend.searchBusiReceiveAdmDtl_URL;
 
@@ -342,14 +424,38 @@ function goToDetailReceiveWork (args) {
 		},
 		body: JSON.stringify(jsonParam)
         }).then(function(response) {
-        	console.log("response : " + JSON.stringify(response));
+        	// console.log("response : " + JSON.stringify(response));
 
-			// var bodyInit = JSON.parse(response._bodyInit);
-			// var messageList = bodyInit.ds_CommList[1];
-			// for (var i = 0; i < messageList.length; i++) {
-			// 	receiveWorks.add(new receivedMessage(messageList[i], i)); 
-			// }
-			// console.log("receiveMessages : " + JSON.stringify(receiveWorks));
+			var bodyInit = JSON.parse(response._bodyInit);
+			var messageList = bodyInit.ds_CommList[1];
+
+			console.log("messageList : " + JSON.stringify(messageList));
+
+			for (var i = 0; i < messageList.length; i++) {
+				console.log("MessageList.length : " + messageList.length);
+				console.log("MessageList[" + i +"] : " + messageList[i]);
+
+				detailReceivedWorkVariable = new detailReceiveWork(messageList[i], i); 
+				detailReceivedWorks.add(new detailReceiveWork(messageList[i], i));
+				// detailReceivedWorks.add("This is : " + i);
+
+
+				console.log("=========================================================================");			
+			}
+
+			// detailReceivedWorkVariable = new selectedDetailNote(detailReceivedWorks._values[args.data.index]);
+			console.log("detailReceivedWorkVariable.INFO_CONF_DATE : " + detailReceivedWorkVariable.INFO_CONF_DATE);
+			console.log("detailReceivedWorkVariable.WRITER_NM : " + detailReceivedWorkVariable.WRITER_NM);
+			console.log("detailReceivedWorkVariable.COMM_SEQ : " + detailReceivedWorkVariable.COMM_SEQ);
+			console.log("detailReceivedWorkVariable.BOD_FORM_CLSS : " + detailReceivedWorkVariable.BOD_FORM_CLSS);
+
+
+
+
+
+			console.log("=========================================================================");
+			console.log("detailReceivedWorks : " + JSON.stringify(detailReceivedWorks));
+			console.log("=========================================================================");
             return response.json();
         }).then(function(jsonData) {
         
@@ -359,7 +465,7 @@ function goToDetailReceiveWork (args) {
 
 
 
-	console.log("hjahaheifheihq iowhefioqhwo iefho wihefoiqw hefiohwioehfw");
+	
 }
 
 module.exports = {
@@ -367,5 +473,5 @@ module.exports = {
 	type, selectedType, pickerOn, pickerUp, pickerDown, selectedTypes,
 	fromDate, receiveFromPickerPanelOn, receiveFromPickerUp, receiveFromPickerDown,
 	toDate, receiveToPickerPanelOn, receiveToPickerUp, receiveToPickerDown, searchContent,
-	receiveWorks, receiveworkDetail, initReceiveList, goToDetailReceiveWork, searchText
+	receiveWorks, receiveworkDetail, initReceiveList, goToDetailReceiveWork, searchText, detailReceivedWorks, detailReceivedWorkVariable
 };

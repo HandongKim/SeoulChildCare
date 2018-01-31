@@ -47,7 +47,7 @@
 		var insertQnaCommListUrl = Backend.BASE_URL + Backend.insertQnaCommList_URL;
 		var qnaUserUpdateUrl = Backend.BASE_URL + Backend.qnaUserUpdate_URL;
 
-		var AREA = JSON.parse(Backend.dsParam).GV
+		var AREA = JSON.parse(Backend.dsParam).GVAREACODE;
 
 
 
@@ -134,7 +134,7 @@
 
 			var dsParam = Backend.dsParam;
 
-			var AREA = "11110";
+			// var AREA = "11110";
 			var commClss = "Q";
 			var fCombo = "ALL";
 			var page = "1";
@@ -307,7 +307,7 @@
 			console.log("getQnAList first function Call ");
 			var dsParam = Backend.dsParam;
 
-			var AREA = "11110";
+			// var AREA = "11110";
 			var commClss = "Q";
 			
 			
@@ -328,6 +328,8 @@
 					body: JSON.stringify(jsonParam)
 			        }).then(function(response) {
 						var responseData = JSON.stringify(response);
+
+						console.log("2018.01.31 responseData : " + responseData);
 
 						var responseBody = JSON.parse(response._bodyInit);
 						// console.log("2017.12.21 responseBody : "+ JSON.stringify(responseBody));
@@ -388,7 +390,7 @@
 
 			console.log("NextPage function Call ");
 			var dsParam = Backend.dsParam;
-			var dsSearch = '{"AREA":"11110","commClss":"Q","page":"'+page.value+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
+			var dsSearch = '{"AREA":"'+AREA+'","commClss":"Q","page":"'+page.value+'","sch_txt":"'+searchText.value+'","sCombo":"'+sCombo+'"}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			console.log("nextPage Call ! : " + dsSearch);
 
@@ -695,6 +697,17 @@
 		function registerSend(){
 			console.log("registerSend function Call ");
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
+
+			var temp = '{"REGDATE":"'+JSON.stringify(qnaDetailValue.value.regDate.value)+'","AREA":'+JSON.stringify(qnaDetailValue.value.area.value)+',"CONT":'+JSON.stringify(qnaDetailValue.value.cont.value)+',"COMM_SEQ":"'+JSON.stringify(qnaDetailValue.value.commSeq.value)+'","REPLY_REF":"'+JSON.stringify(qnaDetailValue.value.replyRef.value)+'","REGDATE1":'+JSON.stringify(qnaDetailValue.value.regDate1.value)+',"INQ_ADM_CNT":"'+JSON.stringify(qnaDetailValue.value.inqAdmCnt.value)+'","REGID":'+JSON.stringify(qnaDetailValue.value.regId.value)+',"SITE_CLSS_SND":'+JSON.stringify(qnaDetailValue.value.siteClssSnd.value)+',"QA_REPLY_YN":'+JSON.stringify(qnaDetailValue.value.qaReplyYn.value)+',"INQ_USR_CNT":"'+JSON.stringify(qnaDetailValue.value.inqUsrCnt.value)+'","REPLY_DEPTH":"'+JSON.stringify(qnaDetailValue.value.replyDepth.value)+'","WRITER_NM":'+JSON.stringify(qnaDetailValue.value.writerNm.value)+',"WRITE_HOST":"'+JSON.stringify(qnaDetailValue.value.writeHost.value)+'","REGDATE2":'+JSON.stringify(qnaDetailValue.value.regDate2.value)+',"BOD_COM_YN":'+JSON.stringify(qnaDetailValue.value.bodComYn.value)+',"WRITER_ORG":'+JSON.stringify(qnaDetailValue.value.writerOrg.value)+',"BOD_FORM_CLSS":'+JSON.stringify(qnaDetailValue.value.bodFormClss.value)+',"REQ_YN":'+JSON.stringify(qnaDetailValue.value.reqYn.value)+',"TITLE":'+JSON.stringify(qnaDetailValue.value.title.value)+',"REPLY_SORTKEY":'+JSON.stringify(qnaDetailValue.value.replySortkey.value)+'}';
+
+			console.log("temp : " + temp);
+
+
+			// {"REGDATE":1249007925000,"COMM_SEQ":504,"REPLY_REF":503,"OPEN_YN":"N","INQ_ADM_CNT":1,"SITE_CLSS_SND":"4","COMM_CLSS":"Q","IDX":3,"QA_REPLY_YN":"Y","INQ_USR_CNT":76,"REPLY_DEPTH":1,"WRITER_NM":"Ìó¨ÌîÑÎç∞Ïä§ÌÅ¨","WRITER_ORG":null,"REQ_YN":"Ï≤òÎ¶¨ÏôÑÎ£å","TITLE":"[ÎãµÎ≥Ä] czcz"}
+
+
+
+
 			var dsParam = Backend.dsParam;
 			var dsDetail = '{"CONT":"'+qnaDetailValue.value.cont.value+'","TITLE":"'+qnaDetailValue.value.title.value+'"}';
 			var dsFileList = '{}';

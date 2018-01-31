@@ -168,8 +168,6 @@ function ds_OffDocTransCountData (args, index) {
 	}
 }
 
-
-
 //공통적으로 리스트 불러오기
 function getReceivedMessgaeList (stat, fld, date_type, stt_dt, end_dt, srch_type, srch_text) {
 	ds_OffDocTransCountDataList.clear();
@@ -273,6 +271,26 @@ function initialReceiveMessageList () {
 	getReceivedMessgaeList(stat, fld, date_type, stt_dt, end_dt, srch_type, srch_text);
 }
 
+
+var selectedType = Observable("전체");
+var type = Observable("전체", "입금", "출금");
+
+var statusSelected = Observable("전체");
+var statusType = Observable("전체", "회신", "신규", "마감", "확인");
+
+var categorySelected = Observable("전체");
+var categoryType = Observable("전체", "회계", "운영", "기타");
+
+var dateTypeSelected = Observable("전체");
+var dateType = Observable("발송일", "확인일", "회신일");
+
+var searchTypeSelected = Observable("공문명");
+var searchType = Observable("공문명", "내용", "파일명", "첨부파일명", "등록자");
+
+
+
 module.exports = {
-	initialReceiveMessageList
+	initialReceiveMessageList, selectedType,
+	type,statusSelected,statusType,categorySelected,
+	categoryType,dateTypeSelected,dateType,searchTypeSelected,searchType
 };

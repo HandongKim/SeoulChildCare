@@ -404,6 +404,7 @@
 
 			if(detail.CONT!=null){
 				this.cont = (detail.CONT).replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+				this.cont = this.cont.replace(/&nbsp;/g, '');
 			}else{
 				this.cont = "";
 			}
@@ -513,7 +514,7 @@
 						console.log("2017.12.21 responseBody : "+ JSON.stringify(responseBody));
 						// console.log("=================================================================");
 						var responseDetail = responseBody.ds_comm_dtl[1];
-						// console.log("2017.12.21 responseList : "+ JSON.stringify(responseDetail));
+						console.log("2017.12.21 responseList : "+ JSON.stringify(responseDetail));
 
 						console.log("==============================");
 						// console.log("responseList.length : "+ responseDetail.length);

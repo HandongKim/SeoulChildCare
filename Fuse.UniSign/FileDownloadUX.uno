@@ -21,7 +21,6 @@ namespace Fuse.UniSign.Fuse_UniSign
 
 		object documentDownload(Context context, object[] args)
 		{
-			var infoJson = ((IEnumerable<object>)args).FirstOrDefault() as string;
 			debug_log("FileDownload was called");
 			debug_log("URL FROM JAVASCRIPT : " + args[0]);
 			FileDownload.GetInstance().fileDownloadCalled(args[0] as string);

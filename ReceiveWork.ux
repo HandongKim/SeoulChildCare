@@ -56,18 +56,18 @@
 			<StackPanel Color="#eee">
 				<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
 					<StackPanel Width="100%" Color="White">
-						<Text Value="{receiveworkDetail.title}" Font="BoldText" FontSize="{margin}*1.2" Color="Black" Alignment="CenterLeft" Margin="{margin}" TextWrapping="Wrap" />
+						<Text Value="{detailReceivedWorks.TITLE}" Font="BoldText" FontSize="{margin}*1.2" Color="Black" Alignment="CenterLeft" Margin="{margin}" TextWrapping="Wrap" />
 						<WrapPanel Margin="{margin}" Alignment="CenterLeft">
-							<Text Value="{receiveworkDetail.sender}" FontSize="{margin}*1.1" Color="#18f" Font="BoldText" />
+							<Text Value="{detailReceivedWorks.WRITER_NM}" FontSize="{margin}*1.1" Color="#18f" Font="BoldText" />
 							<Text Value="님이 보냈습니다." FontSize="{margin}" Color="Black" />
 						</WrapPanel>
 						<WrapPanel Alignment="CenterLeft">
-							<Text Value="{receiveworkDetail.regDate2}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
-							<Text Value="{receiveworkDetail.regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+							<Text Value="{detailReceivedWorks.REGDATE}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+							<Text Value="{detailReceivedWorks.REGDATE}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
 						</WrapPanel>
 					</StackPanel>
 					<Panel Width="100%" Color="White">
-						<Text Value="{receiveworkDetail.cont}" Alignment="TopLeft" TextWrapping="Wrap" Margin="{margin}" />
+						<Text Value="{detailReceivedWorks.CONT}" Alignment="TopLeft" TextWrapping="Wrap" Margin="{margin}" />
 					</Panel>
 				</Grid>
 			</StackPanel>

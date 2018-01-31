@@ -12,7 +12,7 @@
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
 				<Image File="Images/btn_pre.png" Alignment="Left">
 					<Clicked>
-						<Callback Handler="{}" />	
+						<!-- <Callback Handler="{}" />	 -->
 						<Toggle Target="detailOfficialDuty" />
 					</Clicked>
 				</Image>
@@ -21,8 +21,8 @@
 
 				<Image File="Images/btn_home.png">
 					<Clicked>
-						<Callback Handler="{}" />	
-						<Callback Handler="{}" />
+						<!-- <Callback Handler="{}" />	
+						<Callback Handler="{}" /> -->
 						<Callback Handler="{goMainPageFromAnywhere}" />
 						<Toggle Target="detailOfficialDuty" />
 					</Clicked>
@@ -87,7 +87,7 @@
 		</Panel>
 
 		<Panel Width="100%" Height="150" Color="#ddd" Dock="Fill">
-			<MyPicker Selected="{}" Data="{}" StPos="{}"  />
+			<MyPicker Selected="{categorySelected}" Data="{categoryType}" StPos="{}"  />
 		</Panel>
 	</DockPanel>
 
@@ -108,7 +108,7 @@
 		</Panel>
 
 		<Panel Width="100%" Height="150" Color="#ddd" Dock="Fill">
-			<MyPicker Selected="{}" Data="{}" StPos="{}"  />
+			<MyPicker Selected="{statusSelected}" Data="{statusType}" StPos="{}"  />
 		</Panel>
 	</DockPanel>
 
@@ -129,7 +129,7 @@
 		</Panel>
 
 		<Panel Width="100%" Height="150" Color="#ddd" Dock="Fill">
-			<MyPicker Selected="{}" Data="{}" StPos="{}"  />
+			<MyPicker Selected="{dateTypeSelected}" Data="{dateType}" StPos="{}"  />
 		</Panel>
 	</DockPanel>
 
@@ -220,7 +220,7 @@
 		</Panel>
 
 		<Panel Width="100%" Height="150" Color="#ddd" Dock="Fill">
-			<MyPicker Selected="{}" Data="{}" StPos="{}"  />
+			<MyPicker Selected="{searchTypeSelected}" Data="{searchType}" StPos="{}"  />
 		</Panel>
 	</DockPanel>
 
@@ -325,13 +325,13 @@
 
 		<ScrollView ux:Name="officialDutiesListScroll" SnapMaxTransform="false" SnapMinTransform="false">
 			<StackPanel ItemSpacing="1" Color="#ddd">
-				<Each Items="{}">
+				<Each Items="{ds_OffDocTransCountDataList}">
 					<MyOfficialDuties />
 				</Each>
 				<Grid ColumnCount="2" Columns="4*, 1*" Height="60" CellSpacing="1">
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">
-						<Text Value="더보기({}/{})" Alignment="Center" />
-						<Clicked><Callback Handler="{}"/></Clicked>
+						<!-- <Text Value="더보기({}/{})" Alignment="Center" />
+						<Clicked><Callback Handler="{}"/></Clicked> -->
 					</Panel>
 
 					<Panel Width="100%" Height="100%" Color="#fcfcfc">

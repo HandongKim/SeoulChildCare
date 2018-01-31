@@ -44,29 +44,29 @@
 			<Rectangle Width="100%" Color="#4069C2" Height="1" Alignment="Bottom" />
 		</Panel>
 
-		<Grid Color="#5771AA" Dock="Top" ColumnCount="2" Columns="5*, 1*">
+		<!-- <Grid Color="#5771AA" Dock="Top" ColumnCount="2" Columns="5*, 1*"> -->
+		<Grid Color="#5771AA" Dock="Top" ColumnCount="1" Columns="1*">
 			<Panel />
-			<OrangeButton CornerRadius="3" Margin="5">
+			<!-- <OrangeButton CornerRadius="3" Margin="5">
 				<Text Value="답장" Color="White" Alignment="Center" />
-			</OrangeButton>
+			</OrangeButton> -->
 		</Grid>
 
 		<ScrollView SnapMinTransform="false" SnapMaxTransform="false" Width="100%">
 			<StackPanel Color="#eee">
 				<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
 					<StackPanel Width="100%" Color="White">
-						<Text Value="{sendworkDetail.title}" Font="BoldText" FontSize="{margin}*1.2" Color="Black" Alignment="CenterLeft" Margin="{margin}" TextWrapping="Wrap" />
+						<Text Value="{detailSendWorks.TITLE}" Font="BoldText" FontSize="{margin}*1.2" Color="Black" Alignment="CenterLeft" Margin="{margin}" TextWrapping="Wrap" />
 						<WrapPanel Margin="{margin}" Alignment="CenterLeft">
-							<Text Value="{sendworkDetail.sender}" FontSize="{margin}*1.1" Color="#18f" Font="BoldText" />
+							<Text Value="{detailSendWorks.WRITER_NM}" FontSize="{margin}*1.1" Color="#18f" Font="BoldText" />
 							<Text Value="님이 보냈습니다." FontSize="{margin}" Color="Black" />
 						</WrapPanel>
 						<WrapPanel Alignment="CenterLeft">
-							<Text Value="{sendworkDetail.regDate2}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
-							<Text Value="{sendworkDetail.regDate1}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+							<Text Value="{detailSendWorks.REGDATE}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
 						</WrapPanel>
 					</StackPanel>
 					<Panel Width="100%" Color="White">
-						<Text Value="{sendworkDetail.cont}" Alignment="TopLeft" TextWrapping="Wrap" Margin="{margin}" />
+						<Text Value="{detailSendWorks.CONT}" Alignment="TopLeft" TextWrapping="Wrap" Margin="{margin}" />
 					</Panel>
 				</Grid>
 			</StackPanel>

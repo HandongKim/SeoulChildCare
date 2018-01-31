@@ -244,8 +244,74 @@ function getSentMessageList(srch_Type, srch_Text) {
         });
 }
 
+var detailSendWorks = Observable();
+
+function detailSendWork (args, index) {
+
+	if (args.REPLY_DEPTH !=null) {
+		this.REPLY_DEPTH = args.REPLY_DEPTH;	
+	}else {
+		this.REPLY_DEPTH = "";
+	}
+	
+	if (args.REGDATE !=null) {
+		this.REGDATE = args.REGDATE;	
+	}else {
+		this.REGDATE = "";
+	}
+
+	if (args.WRITER_NM !=null) {
+		this.WRITER_NM = args.WRITER_NM;	
+	}else {
+		this.WRITER_NM = "";
+	}
+
+	if (args.BOD_COM_YN !=null) {
+		this.BOD_COM_YN = args.BOD_COM_YN;	
+	}else {
+		this.BOD_COM_YN = "";
+	}
+
+	if (args.CONT !=null) {
+		this.CONT = args.CONT;	
+	}else {
+		this.CONT = "";
+	}
+
+	if (args.COMM_SEQ !=null) {
+		this.COMM_SEQ = args.COMM_SEQ;	
+	}else {
+		this.COMM_SEQ = "";
+	}
+
+	if (args.WRITER_ORG !=null) {
+		this.WRITER_ORG = args.WRITER_ORG;	
+	}else {
+		this.WRITER_ORG = "";
+	}
+
+	if (args.BOD_FORM_CLSS !=null) {
+		this.BOD_FORM_CLSS = args.BOD_FORM_CLSS;	
+	}else {
+		this.BOD_FORM_CLSS = "";
+	}
+
+	if (args.REPLY_REF_SEQ !=null) {
+		this.REPLY_REF_SEQ = args.REPLY_REF_SEQ;	
+	}else {
+		this.REPLY_REF_SEQ = "";
+	}
+
+	if (args.TITLE !=null) {
+		this.TITLE = args.TITLE;	
+	}else {
+		this.TITLE = "";
+	}
+}
 
 function goToDetailSentWork (args) {
+	detailSendWorks.clear();
+	console.log("goToDetailSentWork was called");
 	console.log("args : " + JSON.stringify(args));
 
 	console.log(" args.data.COMM_SEQ : "+ args.data.COMM_SEQ);
@@ -291,14 +357,18 @@ function goToDetailSentWork (args) {
 		},
 		body: JSON.stringify(jsonParam)
         }).then(function(response) {
-        	console.log("response : " + JSON.stringify(response));
+        	console.log("goToDetailSentWork response : " + JSON.stringify(response));
 
-			// var bodyInit = JSON.parse(response._bodyInit);
-			// var messageList = bodyInit.ds_CommList[1];
-			// for (var i = 0; i < messageList.length; i++) {
-			// 	receiveWorks.add(new receivedMessage(messageList[i], i)); 
-			// }
-			// console.log("receiveMessages : " + JSON.stringify(receiveWorks));
+			var bodyInit = JSON.parse(response._bodyInit);
+
+			console.log("bodyInit : " + JSON.stringify(bodyInit));
+
+			var messageList = bodyInit.ds_CommList[1];
+			console.log("messageList : " + JSON.stringify(messageList));
+			for (var i = 0; i < messageList.length; i++) {
+				detailSendWorks.add(new detailSendWork(messageList[i], i)); 
+			}
+			// console.log("detailSendWorks : " + JSON.stringify(detailSendWorks));
             return response.json();
         }).then(function(jsonData) {
         
@@ -332,5 +402,6 @@ module.exports = {
 	type, selectedType, pickerOn, pickerUp, pickerDown, selectedTypes,
 	fromDate, sendFromPickerPanelOn, sendFromPickerUp, sendFromPickerDown,
 	toDate, sendToPickerPanelOn, sendToPickerUp, sendToPickerDown,
-	sendWorks, sendworkDetail, initSentList, sentMessages, goToDetailSentWork, searchContent, searchText
+	sendWorks, sendworkDetail, initSentList, sentMessages, 
+	goToDetailSentWork, searchContent, searchText, detailSendWorks
 };
