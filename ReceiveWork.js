@@ -468,10 +468,15 @@ function goToDetailReceiveWork (args) {
 	
 }
 
+function test()
+{
+	console.log("testtesttestetesttestetefwefwfwefwef f wfwefwefw ");
+} 
+
 module.exports = {
 	years, months, days,
 	type, selectedType, pickerOn, pickerUp, pickerDown, selectedTypes,
 	fromDate, receiveFromPickerPanelOn, receiveFromPickerUp, receiveFromPickerDown,
 	toDate, receiveToPickerPanelOn, receiveToPickerUp, receiveToPickerDown, searchContent,
-	receiveWorks, receiveworkDetail, initReceiveList, goToDetailReceiveWork, searchText, detailReceivedWorks, detailReceivedWorkVariable
+	receiveWorks, receiveworkDetail, initReceiveList, goToDetailReceiveWork, searchText, detailReceivedWorks, detailReceivedWorkVariable, test
 };
