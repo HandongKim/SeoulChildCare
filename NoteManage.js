@@ -273,94 +273,92 @@ function nextClick() {
 var notes = Observable();
 
 function note(arg, noteIndex) {
-	this.index = noteIndex;
-
-	this.CASH_DATE = arg.CASH_DATE.substring(4,6) + "." + arg.CASH_DATE.substring(6,8);
-
+	try {
+		this.index = noteIndex;
+		this.CASH_DATE = arg.CASH_DATE.substring(4,6) + "." + arg.CASH_DATE.substring(6,8);
 	
-	if (arg.CASH_GB == "1") {
-		this.type = "입금";
-		this.typeColor = "#4C9DFF";
-		// this.subTypeColor = "#8BBDFF";
-	} else {
-		this.type = "출금";
-		this.typeColor = "#FF4200";
-		// this.subTypeColor = "#FFBA85";
-	}
-
-
-	if (arg.ESTI_CODE != null) {
-		if (arg.ESTI_CODE.substr(0,1) == 1) {
-			this.subTypeColor = "#8BBDFF";
+		if (arg.CASH_GB == "1") {
+			this.type = "입금";
+			this.typeColor = "#4C9DFF";
+			// this.subTypeColor = "#8BBDFF";
 		} else {
-			this.subTypeColor = "#FFBA85";
-		}	
-	}
-	
+			this.type = "출금";
+			this.typeColor = "#FF4200";
+			// this.subTypeColor = "#FFBA85";
+		}
 
-
-
-	this.BCASH_MONEY = arg.BCASH_MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-	if (arg.BILL_GB == "A02") {
-		this.isBill = true;
-	} else {
-		this.isBill = false;
-	}
-
-	if (arg.ESTI_SUB_YN == "Y") {
-		this.subType = "세목";
-		// this.name = arg.ESTI_NAME;
-		if(arg.ESTI_SUB_NM != null) {
-			this.name = arg.ESTI_NAME + "[" + arg.ESTI_SUB_NM + "]";
-		} else {
-			this.name = arg.ESTI_NAME;	
-		}	
-	} else {
-		this.subType = "목";
-		this.name = arg.ESTI_NAME;	
-
-	}
-
-	this.reverse = false;
-
-
-	if(arg.BILL_IDX != null) {
-		console.log("20180118 ==> arg.BILL_IDX : " + arg.BILL_IDX);
-		console.log("arg.ESTI_GB.substr(1,1) : " + arg.ESTI_GB.substr(1,1));
-		console.log("arg.ESTI_CODE.substr(0,1) : " + arg.ESTI_CODE.substr(0,1));
-
-
-		console.log("arg.CASH_GB ==============> " + arg.CASH_GB);
-		console.log("arg.ESTI_CODE ==============> " + arg.ESTI_CODE);
-
-
-		if (arg.CASH_GB != arg.ESTI_CODE.substr(0,1)) {
 		
-			if (arg.BCASH_MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").toString().includes("-")) {
-				this.reverse=true;
+		if (arg.ESTI_CODE != null) {
+			if (arg.ESTI_CODE.substr(0,1) == 1) {
+				this.subTypeColor = "#8BBDFF";
 			} else {
-				this.reverse=false;
-			}
-		
+				this.subTypeColor = "#FFBA85";
+			}	
+		}
+
+		this.BCASH_MONEY = arg.BCASH_MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+		if (arg.BILL_GB == "A02") {
+			this.isBill = true;
+		} else {
+			this.isBill = false;
+		}
+
+		if (arg.ESTI_SUB_YN == "Y") {
+			this.subType = "세목";
+			// this.name = arg.ESTI_NAME;
+			if(arg.ESTI_SUB_NM != null) {
+				this.name = arg.ESTI_NAME + "[" + arg.ESTI_SUB_NM + "]";
+			} else {
+				this.name = arg.ESTI_NAME;	
+			}	
+		} else {
+			this.subType = "목";
+			this.name = arg.ESTI_NAME;	
 
 		}
-		this.isShow = true;
-	} else {
-		this.isShow = false;
+
+		console.log("8");
+
+		this.reverse = false;
+		console.log("9");
+
+		if(arg.BILL_IDX != null) {
+			console.log("10");
+			if (arg.CASH_GB != arg.ESTI_CODE.substr(0,1)) {
+				console.log("11");
+				if (arg.BCASH_MONEY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").toString().includes("-")) {
+					console.log("12");
+					this.reverse=true;
+				} else {
+					console.log("13");
+					this.reverse=false;
+				}
+				console.log("14");
+			}
+			this.isShow = true;
+			console.log("15");
+		} else {
+			console.log("16");
+			this.isShow = false;
+			console.log("17");
+		}		
+
+		if (arg.BILL_RECEIPT > 1) {
+			console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
+
+			this.receipt = "2";
+		} else if (arg.BILL_RECEIPT == 1) {
+			this.receipt = "1";
+		} else {
+			this.receipt = "0";
+		}
+
+		this.BCASH_MEMO = arg.BCASH_MEMO;
+	}catch (e){
+
 	}
-
-	if (arg.BILL_RECEIPT > 1) {
-		console.log("arg.BILL_RECEIPT : " + arg.BILL_RECEIPT);
-
-		this.receipt = "2";
-	} else if (arg.BILL_RECEIPT == 1) {
-		this.receipt = "1";
-	} else {
-		this.receipt = "0";
-	}
-
-	this.BCASH_MEMO = arg.BCASH_MEMO;
+	
 }
 		
 
@@ -527,10 +525,20 @@ function requestToGetNoteList (searchGubun, BCASH_IDX, esti_code, search_month) 
 			temp = responseHeaders.ds_bCashList[1];
 			console.log("");
 			console.log("2017.12.18 2 responseHeaders.ds_bCashList : "+ JSON.stringify(temp));
+			console.log(temp.length);
 
 			for (var i = 0; i < temp.length; i++) {
+				console.log(i + " : started");
+				if (i == 14) {
+					console.log(" i : " + i);
+					console.log(JSON.stringify(temp[i]));				
+				}
+	
+
 				notes.add(new note(temp[i], i));
+				console.log(i + " : Middle");
 				selectOnlineBCashListDatas.add( new selectOnlineBCashListIndividualData(temp[i], i));
+				console.log(i + " : Finished");
 			}
 			noteManageLoadingCircleOn.value = false;
 			//2017.12.18 끝
