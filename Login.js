@@ -5,7 +5,7 @@ var settings = require('UserSettings');
 var Device = require('Device');
 var Backend = require('Backend.js');
 var Environment = require('FuseJS/Environment');
-
+var push = require("FuseJS/Push");
 
 var corSelected = Observable(false);
 var onPanel = Observable(false);
@@ -13,6 +13,64 @@ var mSignedData = null;
 
 var licenseKey = "ikdt8CleK1HVv3Qa0temFA==";
 // var licenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
+
+
+
+
+
+
+
+push.on("registrationSucceeded", function(regID) {
+    console.log("Reg Succeeded: " + regID);
+});
+
+push.on("error", function(reason) {
+    console.log("Reg Failed: " + reason);
+});
+
+push.on("receivedMessage", function(payload) {
+    console.log("Recieved Push Notification: " + payload);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function friSelect() {
 	corSelected.value = false;

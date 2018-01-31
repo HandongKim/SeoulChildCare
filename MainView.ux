@@ -18,6 +18,27 @@
 		
 		var print = debug_log;
 		// var uploadUrl = 'http://61.97.121.199:8080/TEST/ImgUploadTest.jsp';// 서버 IP를 변경하세요.
+		var push = require("FuseJS/Push");
+
+	    push.on("registrationSucceeded", function(regID) {
+	        console.log("Reg Succeeded: " + regID);
+	    });
+
+	    push.on("error", function(reason) {
+	        console.log("Reg Failed: " + reason);
+	    });
+
+	    push.on("receivedMessage", function(payload) {
+	        console.log("Recieved Push Notification: " + payload);
+	    });
+
+
+
+
+
+
+
+
 
 		var uploadUrl = Backend.BASE_URL + "/acusr/acc/bil/MobileReceiptImgUpload.do" ;// 서버 IP를 변경하세요.
 
