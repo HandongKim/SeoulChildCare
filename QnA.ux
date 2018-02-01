@@ -801,6 +801,22 @@
 		<Change page7PickerPanel.Y="0" Duration=".2" />
 	</WhileTrue>
 
+		<DockPanel ux:Name="page7PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{pickerDown2}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<MyPicker Data="{type}" Selected="{selectedType}" />
+	</DockPanel>
+
+
+
 	<!-- 새로 등록 정보 -->
 	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
 		<Panel Dock="Top">
@@ -1066,19 +1082,7 @@
 		<MyPicker Data="{type}" Selected="{selectedType}" />
 	</DockPanel>
 
-	<DockPanel ux:Name="page7PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
-		<Panel Dock="Top" Width="100%" Height="25%">
-			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
-				<Clicked>
-					<Callback Handler="{pickerDown2}" />
-				</Clicked>
-			</Text>
 
-			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
-		</Panel>
-
-		<MyPicker Data="{type}" Selected="{selectedType}" />
-	</DockPanel>
 
 
 	<DockPanel Color="White">
