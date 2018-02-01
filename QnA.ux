@@ -15,14 +15,25 @@
 
 
 		pickerOn = Observable(false);
+		pickerOn2= Observable(false);
 		function pickerUp() {
-			console.log("pickerUp is on");
+			
 			pickerOn.value = true;
 		}
 
 		function pickerDown() {
 			pickerOn.value = false;
 		}
+
+		function pickerUp2() {
+			console.log("wowowowowowowowowowowowowowowowowow");
+			pickerOn2.value = true;
+		}
+
+		function pickerDown2() {
+			pickerOn2.value = false;
+		}
+
 
 		function selectedTypes(){
 			selectedType.value = "제목";
@@ -765,9 +776,16 @@
 			        });
 		}
 
+		function test () {
+			console.log("test");
+		}
+
+
 		module.exports = {
-			type, selectedType, pickerOn, pickerUp, pickerDown, getQnAList ,qnas, selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, searchContent,getClickListValue, getDetailQnA, qnaDetailValue, qnaFileValue, qnaIsCorrect , sendData,
-				detailDataClear, warnningText,  warnningOn
+			type, selectedType, pickerOn, pickerOn2, pickerUp, pickerDown, getQnAList ,qnas, 
+			selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, test,
+			searchContent,getClickListValue, getDetailQnA, qnaDetailValue, pickerUp2, pickerDown2,
+			qnaFileValue, qnaIsCorrect , sendData,detailDataClear, warnningText,  warnningOn, pickerUp2
 		};
 	</JavaScript>
 	<Panel ux:Name="page6BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
@@ -776,6 +794,11 @@
 
 	<WhileTrue Value="{pickerOn}">
 		<Change page6PickerPanel.Y="0" Duration=".2" />
+	</WhileTrue>
+
+	<WhileTrue Value="{pickerOn2}">
+		<Callback Handler="{test}" />
+		<Change page7PickerPanel.Y="0" Duration=".2" />
 	</WhileTrue>
 
 	<!-- 새로 등록 정보 -->
@@ -1042,6 +1065,22 @@
 
 		<MyPicker Data="{type}" Selected="{selectedType}" />
 	</DockPanel>
+
+	<DockPanel ux:Name="page7PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+		<Panel Dock="Top" Width="100%" Height="25%">
+			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
+				<Clicked>
+					<Callback Handler="{pickerDown2}" />
+				</Clicked>
+			</Text>
+
+			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
+		</Panel>
+
+		<MyPicker Data="{type}" Selected="{selectedType}" />
+	</DockPanel>
+
+
 	<DockPanel Color="White">
 		<Panel Dock="Top">
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
