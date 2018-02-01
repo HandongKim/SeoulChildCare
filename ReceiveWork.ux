@@ -41,7 +41,7 @@
 		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
 			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
 				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
-				<Text Value="질의응답" FontSize="{margin}*1.2" Color="Black" />
+				<Text Value="받은업무함" FontSize="{margin}*1.2" Color="Black" />
 			</WrapPanel>
 
 			<Rectangle Width="100%" Color="#5771AA">
@@ -51,7 +51,7 @@
 
 		<Grid Color="#ccc" CellSpacing="1" Rows="Auto">
 			<Panel Color="White">
-				<TextBox Value="나중에 지워야 하는 부분" Margin="{margin}" PlaceholderText="제목을 입력하세요" />
+				<TextBox Value="{replyTitle}" Margin="{margin}" PlaceholderText="제목을 입력하세요" />
 			</Panel>
 			<Panel Color="White">
 				<TextBox Value="나중에 지워야 하는 부분" Margin="{margin}" PlaceholderText="내용을 입력하세요" Width="100%" MaxWidth="100%" TextWrapping="Wrap" />
@@ -83,7 +83,7 @@
 				<OrangeButton>
 					<Text Value="저장" Color="White" Alignment="Center" />
 					<Clicked>
-						<Callback Handler="{sendData}" />
+						<Callback Handler="{replyReceiveWork}" />
 					</Clicked>
 				</OrangeButton>
 			</Grid>
@@ -142,7 +142,7 @@
 				<Text Value="답장" Color="White" Alignment="Center" />
 				<Clicked>
 					<Toggle Target="reply" />
-					<Callback Handler="{test}" />
+					<Callback Handler="{setTheReplyTitle}" />
 				</Clicked>
 			</OrangeButton>
 		</Grid>
@@ -151,14 +151,14 @@
 			<StackPanel Color="#eee">
 				<Grid ColumnCount="1" Rows="Auto" CellSpacing="1">
 					<StackPanel Width="100%" Color="White">
-						<Text Value="{detailReceivedWorks.TITLE}" Font="BoldText" FontSize="{margin}*1.2" Color="Black" Alignment="CenterLeft" Margin="{margin}" TextWrapping="Wrap" />
+						<Text Value="제목 : {detailReceivedWorks.TITLE}" Font="BoldText" FontSize="{margin}*1.2" Color="Black" Alignment="CenterLeft" Margin="{margin}" TextWrapping="Wrap" />
 						<WrapPanel Margin="{margin}" Alignment="CenterLeft">
 							<Text Value="{detailReceivedWorks.WRITER_NM}" FontSize="{margin}*1.1" Color="#18f" Font="BoldText" />
 							<Text Value="님이 보냈습니다." FontSize="{margin}" Color="Black" />
 						</WrapPanel>
 						<WrapPanel Alignment="CenterLeft">
 							<Text Value="{detailReceivedWorks.REGDATE}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
-							<Text Value="{detailReceivedWorks.REGDATE}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" />
+							<!-- <Text Value="{detailReceivedWorks.REGDATE}" FontSize="{margin}" Color="#888" Alignment="CenterLeft" Margin="{margin}" /> -->
 						</WrapPanel>
 					</StackPanel>
 					<Panel Width="100%" Color="White">

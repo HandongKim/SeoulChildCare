@@ -73,7 +73,7 @@
 			</Grid>
 		</Panel>
 		<Panel Dock="Bottom" Height="8%">
-			<Grid ColumnCount="3">
+			<Grid ColumnCount="2">
 				<Image File="Images/main_btn7.png">
 					<Clicked><Callback Handler="{goReceiveWork}" /></Clicked>
 				</Image>
@@ -82,9 +82,9 @@
 					<Clicked><Callback Handler="{goSendWork}" /></Clicked>
 				</Image>
 
-				<Image File="Images/main_btn9.png">
+				<!-- <Image File="Images/main_btn9.png">
 					<Clicked><Callback Handler="{goOfficialDutiesList}" /></Clicked>
-				</Image>
+				</Image> -->
 				
 				 <!-- <Button Text="HomeScreen" >
       				<Clicked>

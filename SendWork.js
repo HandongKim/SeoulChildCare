@@ -351,7 +351,7 @@ function goToDetailSentWork (args) {
 			for (var i = 0; i < messageList.length; i++) {
 				detailSendWorks.add(new detailSendWork(messageList[i], i)); 
 			}
-			// console.log("detailSendWorks : " + JSON.stringify(detailSendWorks));
+			console.log("detailSendWorks : " + JSON.stringify(detailSendWorks));
             return response.json();
         }).then(function(jsonData) {
         

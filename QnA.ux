@@ -16,6 +16,7 @@
 
 		pickerOn = Observable(false);
 		function pickerUp() {
+			console.log("pickerUp is on");
 			pickerOn.value = true;
 		}
 
@@ -826,7 +827,7 @@
 
 
 					<Clicked>
-						<!-- <Callback Handler="{pickerUp3}" /> -->
+						<Callback Handler="{pickerUp2}" />
 					</Clicked>
 
 				</Panel>
@@ -836,7 +837,7 @@
 			<Rectangle Width="100%" Color="#708EAE">
 
 				<WhileTrue Value="{warnningOn}">
-					<Text Value="{warnningText}" Margin="{margin}" Color="White" FontSize="{margin}*0.8"/>
+					<TextView Value="{warnningText}" Margin="{margin}" TextColor="White" FontSize="{margin}*0.8" TextWrapping="Wrap"/>
 				</WhileTrue>
 
 				<WhileFalse Value="{warnningOn}">
@@ -1093,7 +1094,9 @@
 			<Grid ColumnCount="3" Columns="2*, 5*, 3*" Margin="{margin}" Width="100%" CellSpacing="{margin}/2">
 				<Rectangle Width="100%" Height="100%" Color="#FFF">
 					<Stroke Width="2" Color="#888" />
-					<Clicked><Callback Handler="{pickerUp}" /></Clicked>
+					<Clicked>
+						<Callback Handler="{pickerUp}" />
+					</Clicked>
 
 					<Text Value="{selectedType}" FontSize="{margin}" Margin="{margin}/2, 0" Alignment="CenterLeft" />
 

@@ -468,15 +468,78 @@ function goToDetailReceiveWork (args) {
 	
 }
 
-function test()
+var replyTitle = Observable();
+
+function setTheReplyTitle () {
+	replyTitle.value = "[답변]" + detailReceivedWorks._values[0].TITLE;
+}
+
+
+function replyReceiveWork()
 {
-	console.log("testtesttestetesttestetefwefwfwefwef f wfwefwefw ");
+	
+	// SITE_CLSS_SND = JSON.parse(Backend.dsParam).GVORGCLSS;
+	// TITLE
+	// CONT", ta_cont.Text);                                   //내용
+	// REPLY_REF",ds_FvCommList.GetColumn(0,"COMM_SEQ"));     //답변대상 COMM_SEQ
+	// REPLY_DEPTH","1");                                     //질문 답변인지여부 0:질문 1:답변
+	// REPLY_SORTKEY",ds_FvCommList.GetColumn(0,"COMM_SEQ")); //답변대상 COMM_SEQ +0 * 40
+	// WRITE_HOST",fn_GetIp());                          //로컬 IP
+	// AREA",gvAREACODE);                              //지원기관코드
+	// BOD_FORM_CLSS",ds_FvCommList.GetColumn(0,"BOD_FORM_CLSS")); //업무연락구분
+	// BOD_COM_YN",ds_FvCommList.GetColumn(0,"BOD_COM_YN"));
+	// REGID",gvMEMID);
+	// //수신자데이타
+	// INFO_CDHD_NO",ds_FvCommList.GetColumn(0,"REGID"));     //수신자ID
+	// INFO_OBJ_CTGO",ds_FvCommList.GetColumn(0,"SITE_CLSS_SND"));    //수신자 권한
+	// RECEIVE_NM",ds_FvCommList.GetColumn(0,"WRITER_NM"));       //수신자 이름
+	// RECEIVE_ORG",ds_FvCommList.GetColumn(0,"WRITER_ORG"));      //수신자 소속
+
+
+
+	
+	var dsSearch = '{"commClss":"'+commClss+'","srchType":"'+srchType+'","srchText":"'+srchText+'","INFO_CDHD_NO":"'+INFO_CDHD_NO+'"}';
+	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+	var selectBusiReceiveAdminList_URL = Backend.BASE_URL + Backend.selectBusiReceiveAdminList_URL;
+
+	receiveWorks.clear();
+
+	fetch(selectBusiReceiveAdminList_URL, {
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+        }).then(function(response) {
+			var bodyInit = JSON.parse(response._bodyInit);
+			var messageList = bodyInit.ds_CommList[1];
+			for (var i = 0; i < messageList.length; i++) {
+				receiveWorks.add(new receivedMessage(messageList[i], i)); 
+			}
+			console.log("receiveMessages : " + JSON.stringify(receiveWorks));
+            return response.json();
+        }).then(function(jsonData) {
+        
+        }).catch(function(err) {
+
+        });
 } 
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
 	years, months, days,
 	type, selectedType, pickerOn, pickerUp, pickerDown, selectedTypes,
 	fromDate, receiveFromPickerPanelOn, receiveFromPickerUp, receiveFromPickerDown,
 	toDate, receiveToPickerPanelOn, receiveToPickerUp, receiveToPickerDown, searchContent,
-	receiveWorks, receiveworkDetail, initReceiveList, goToDetailReceiveWork, searchText, detailReceivedWorks, detailReceivedWorkVariable, test
+	receiveWorks, receiveworkDetail, initReceiveList, goToDetailReceiveWork, setTheReplyTitle,
+	searchText, detailReceivedWorks, detailReceivedWorkVariable, replyReceiveWork, replyTitle
 };
