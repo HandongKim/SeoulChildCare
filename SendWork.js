@@ -81,36 +81,29 @@ function sentMessage (args, index) {
 		this.INDEX = "";
 	}
 	
-
 	if (args.R_COUNT !=null) {
 		this.R_COUNT = args.R_COUNT	
 	} else {
 		this.R_COUNT = "";
 	}
 
-
 	if (args.REPLY_DEPTH !=null) {
 		this.REPLY_DEPTH = args.REPLY_DEPTH	
 	} else {
 		this.REPLY_DEPTH = "";
 	}
 
-
 	if (args.REPLY_DEPTH !=null) {
 		this.REPLY_DEPTH = args.REPLY_DEPTH	
 	} else {
 		this.REPLY_DEPTH = "";
 	}
-
-
 
 	if (args.REGDATE !=null) {
 		this.REGDATE = args.REGDATE	
 	} else {
 		this.REGDATE = "";
 	}
-
-
 
 	if (args.WRITER_NM !=null) {
 		this.WRITER_NM = args.WRITER_NM	
@@ -124,7 +117,6 @@ function sentMessage (args, index) {
 		this.BOD_COM_YN = "";
 	}
 
-
 	if (args.CHK !=null) {
 		this.CHK = args.CHK	
 	} else {
@@ -136,7 +128,6 @@ function sentMessage (args, index) {
 	} else {
 		this.COMM_SEQ = "";
 	}
-
 
 	if (args.WRITER_ORG !=null) {
 		this.WRITER_ORG = args.WRITER_ORG	
@@ -155,13 +146,6 @@ function sentMessage (args, index) {
 	} else {
 		this.TITLE = "";
 	}
-
-
-
-	
-
-
-	
 }
 
 
@@ -326,7 +310,6 @@ function goToDetailSentWork (args) {
 	}else {
 		COMM_SEQ = "";
 	}
-	
 
 	if (args.data.INFO_CONF_DATE !=null) {
 		INFO_CONF_DATE = args.data.INFO_CONF_DATE;

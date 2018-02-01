@@ -5,6 +5,7 @@
     "Uno.Threading",
     "Uno.Permissions",
     "Android.ActivityUtils",
+    "Uno.Net.Sockets"
   ],
   "Includes": [
     "*",

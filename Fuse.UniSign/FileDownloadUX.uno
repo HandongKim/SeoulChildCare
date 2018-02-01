@@ -3,6 +3,7 @@ using Uno.UX;
 using Fuse.Scripting;
 using Uno.Collections;
 using Uno.Threading;
+using Uno.Net;
 
 namespace Fuse.UniSign.Fuse_UniSign
 {
@@ -15,6 +16,7 @@ namespace Fuse.UniSign.Fuse_UniSign
 			if(_instance != null) return;
 			Resource.SetGlobalKey(_instance = this, "FileDownloadUX");
 			AddMember(new NativeFunction("documentDownload", (NativeCallback)documentDownload));
+			AddMember(new NativeFunction("getIpAddress", (NativeCallback)getIpAddress));
 			
 		}
 
@@ -26,6 +28,12 @@ namespace Fuse.UniSign.Fuse_UniSign
 			FileDownload.GetInstance().fileDownloadCalled(args[0] as string);
 			return null;
 		}
+
+		object getIpAddress(Context context, object[] args) 
+		{
+			FileDownload.GetInstance().getIpAddress();
+			return null;
+		} 
 
 	}
 }

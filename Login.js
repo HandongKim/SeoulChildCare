@@ -5,7 +5,7 @@ var settings = require('UserSettings');
 var Device = require('Device');
 var Backend = require('Backend.js');
 var Environment = require('FuseJS/Environment');
-var push = require("FuseJS/Push");
+
 
 var corSelected = Observable(false);
 var onPanel = Observable(false);
@@ -13,64 +13,6 @@ var mSignedData = null;
 
 var licenseKey = "ikdt8CleK1HVv3Qa0temFA==";
 // var licenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
-
-
-
-
-
-
-
-push.on("registrationSucceeded", function(regID) {
-    console.log("Reg Succeeded: " + regID);
-});
-
-push.on("error", function(reason) {
-    console.log("Reg Failed: " + reason);
-});
-
-push.on("receivedMessage", function(payload) {
-    console.log("Recieved Push Notification: " + payload);
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function friSelect() {
 	corSelected.value = false;
@@ -491,13 +433,8 @@ function startTimer() {
 
 function setLicense () {
 	console.log("setLicense was clicked");
-
-
 	console.log(test(10,  20));
 	
-
-
-
 	if(Environment.ios) {
 		licenseKey = Backend.iOSLicenseKey;
 		console.log("Environment is iOS and icenseKey is " + licenseKey);
@@ -507,8 +444,6 @@ function setLicense () {
 	}
 	UniSign.setLicense(licenseKey);
 };
-
-
 
 function getLogicSignedData () {
 	var value = certPw.value;
@@ -797,23 +732,27 @@ function checkThePassword (passwordValue) {
  	return isPasswordCorrect;
 }
 
+
+
 function removeCertificate (){
 	console.log("removeCertificate was clicked");
-	var isPasswordCorrect = checkThePassword(certPw.value);
+	// var isPasswordCorrect = checkThePassword(certPw.value);
 	var removed = false;
 
-	if (isPasswordCorrect != false) {
-		console.log("Password is Correct");	
+	// if (isPasswordCorrect != false) {
+	// 	console.log("Password is Correct");	
+		
 		removed = UniSign.removeUserCertificate(certificateIndexValue);
 		if(removed != false) {
 			console.log("Certificate is removed");
+			removeCertConfirmationAlertCancel();
 			getList();
 		} else {
 			console.log("Certificate is not removed");
 		}
-	} else {
-		console.log("Password is incorrect");
-	}
+	// } else {
+	// 	console.log("Password is incorrect");
+	// }
 }
 
 function changePassword () {
@@ -914,6 +853,27 @@ var LoginAlertWithConfirm = {
 };
 
 
+
+var removeCertConfirmationAlert = {
+	title: Observable(),
+	message: Observable(),
+	type: Observable("Check"),
+	layer: Observable("Background")
+};
+
+
+function removeCertConfirmationAlertCancel () {
+	removeCertConfirmationAlert.layer.value="Background";
+}
+
+function removeCertConfirmationAlertShow () {
+	removeCertConfirmationAlert.message.value = "선택한 인증서를 삭제하시겠습니까?";
+	removeCertConfirmationAlert.layer.value = "Overlay";
+}
+
+
+
+
 module.exports = {
 	goMainPage, goMainPage2, getLicenseInfo,
 	corSelected, friSelect, corSelect,
@@ -925,11 +885,11 @@ module.exports = {
 	onExportPanel, popUpExportPanel, popDownExportPanel,
 	onEnterPw, popUpEnterPw, popDownEnterPw,
 	password, friData, corData, chgPassword,
-	certPw, exportCertPw,
-	active,
+	certPw, exportCertPw, removeCertConfirmationAlertShow, 
+	active, removeCertConfirmationAlertCancel,
 	selectedFindingType, findingType, findingText,
 	onFindingPicker, findingPickerOn, findingPickerDown,
-	onFindCenter, findCenterUp, findCenterDown,
+	onFindCenter, findCenterUp, findCenterDown, removeCertConfirmationAlert,
 	firstNum, secondNum, thirdNum, countDownSeconds, countDownMinutes,
 	importCert, getList, data, chooseCertificate, removeCertificate,changePassword, 
 	alert, setLicense, checkTheLastPageLoginPage, LoginAlertWithConfirm, LoginAlertWithConfirmCancel

@@ -94,23 +94,136 @@
 
 		function incomeDataFromServer(args, index) {
 			this.INDEX = index;
-			this.DISPLAY_NAME = args.DISPLAY_NAME;
+
+			if (args.DISPLAY_NAME!=null) {
+				this.DISPLAY_NAME = args.DISPLAY_NAME;	
+			} else {
+				this.DISPLAY_NAME = "";	
+			}
+			
+			if (args.DISPLAY_CODE!=null) {
 			this.DISPLAY_CODE = args.DISPLAY_CODE;
+			} else {
+				this.DISPLAY_CODE = "";	
+			}
+
+			if (args.ESTI_SUBNAME!=null) {
 			this.ESTI_SUBNAME = args.ESTI_SUBNAME;
+			} else {
+				this.ESTI_SUBNAME = "";	
+			}
+
+
+			if (args.ESTI_YEAR!=null) {
 			this.ESTI_YEAR = args.ESTI_YEAR;
+			} else {
+				this.ESTI_YEAR = "";	
+			}
+
+
+			if (args.ESTI_GB!=null) {
 			this.ESTI_GB = args.ESTI_GB;
+			} else {
+				this.ESTI_GB = "";	
+			} 
+
+
+
+			if (args.ESTI_CODE!=null) {
 			this.ESTI_CODE = args.ESTI_CODE;
+			} else {
+				this.ESTI_CODE = "";	
+			}
+
+
+
+			if (args.ESTI_DISPLAY!=null) {
 			this.ESTI_DISPLAY = args.ESTI_DISPLAY;
+			} else {
+				this.ESTI_DISPLAY = "";	
+			}
+
+
+
+			if (args.ESTI_NAME!=null) {
 			this.ESTI_NAME = args.ESTI_NAME;
+			} else {
+				this.ESTI_NAME = "";	
+			}
+
+
+			if (args.M_DISPLAY_NAME2!=null) {
 			this.M_DISPLAY_NAME2 = args.M_DISPLAY_NAME2;
+			} else {
+				this.M_DISPLAY_NAME2 = "";	
+			}
+
+
+
+
+			if (args.MEMCODE!=null) {
 			this.MEMCODE = args.MEMCODE;
+			} else {
+				this.MEMCODE = "";	
+			}
+
+
+			if (args.M_DISPLAY_NAME!=null) {
 			this.M_DISPLAY_NAME = args.M_DISPLAY_NAME;
+			} else {
+				this.M_DISPLAY_NAME = "";	
+			}
+
+
+
+			if (args.MEMO!=null) {
 			this.MEMO = args.MEMO;
+			} else {
+				this.MEMO = "";	
+			}
+
+
+
+			if (args.SORT_GUBUN!=null) {
 			this.SORT_GUBUN = args.SORT_GUBUN;
+			} else {
+				this.SORT_GUBUN = "";	
+			}
+
+
+
+
+			if (args.ESTI_PART!=null) {
 			this.ESTI_PART = args.ESTI_PART;
+			} else {
+				this.ESTI_PART = "";	
+			}
+
+
+
+
+			if (args.ESTI_SUBCODE!=null) {
 			this.ESTI_SUBCODE = args.ESTI_SUBCODE;
+			} else {
+				this.ESTI_SUBCODE = "";	
+			}
+
+
+
+
+			if (args.BOOK_GB!=null) {
 			this.BOOK_GB = args.BOOK_GB;
+			} else {
+				this.BOOK_GB = "";	
+			}
+
+
+
+			if (args.ESTI_SUB_YN!=null) {
 			this.ESTI_SUB_YN = args.ESTI_SUB_YN;
+			} else {
+				this.ESTI_SUB_YN = "";	
+			}
 		}
 
 

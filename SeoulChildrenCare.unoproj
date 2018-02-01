@@ -44,7 +44,7 @@
     }
   },
   "iOS": {
-    "DevelopmentTeam": "R33668Z4ZE",
+    "DevelopmentTeam": "X8QAFM9E79",
     "BundleIdentifier": "app.ss.accss.mobile",
     "DeploymentTarget": "8.0",
     "Version":"1.0.0",

@@ -4,12 +4,16 @@ using Fuse.Scripting;
 using Uno.Collections;
 using Uno.Threading;
 using Uno.Compiler.ExportTargetInterop;
+using Uno.Net;
 
 namespace Fuse.UniSign.Fuse_UniSign
 {
 	public class FileDownload
 	{
 		private static FileDownload instance = new FileDownload();
+
+		
+
 
 		public static FileDownload GetInstance() 
 		{
@@ -38,6 +42,14 @@ namespace Fuse.UniSign.Fuse_UniSign
 			
 		}
 
+		public void getIpAddress()  
+		{
+			
+
+			debug_log("getIpAddress");
+			
+			
+		}
 
 
 
