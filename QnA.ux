@@ -10,14 +10,21 @@
 
 		var type = Observable("제목", "내용");
 		var selectedType = Observable("제목");
+
+
+		var type2 = Observable("비공개", "공개");
+		var selectedType2 = Observable("비공개");
+
+
+
 		var FileDownload = require('FileDownloadUX');
 
 
 
 		pickerOn = Observable(false);
 		pickerOn2= Observable(false);
+
 		function pickerUp() {
-			
 			pickerOn.value = true;
 		}
 
@@ -54,7 +61,6 @@
 		var qnaDetailValue = Observable(); 
 		var qnaFileValue = Observable();
 		var qnaIsCorrect = Observable();
-
 
 		//Url List
 		var qnaListUrl = Backend.BASE_URL + Backend.qnaList_URL;
@@ -785,7 +791,7 @@
 			type, selectedType, pickerOn, pickerOn2, pickerUp, pickerDown, getQnAList ,qnas, 
 			selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, test,
 			searchContent,getClickListValue, getDetailQnA, qnaDetailValue, pickerUp2, pickerDown2,
-			qnaFileValue, qnaIsCorrect , sendData,detailDataClear, warnningText,  warnningOn, pickerUp2
+			qnaFileValue, qnaIsCorrect , sendData,detailDataClear, warnningText,  warnningOn, pickerUp2, type2, selectedType2
 		};
 	</JavaScript>
 	<Panel ux:Name="page6BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
@@ -801,7 +807,7 @@
 		<Change page7PickerPanel.Y="0" Duration=".2" />
 	</WhileTrue>
 
-		<DockPanel ux:Name="page7PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
+	<DockPanel ux:Name="page7PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">
 			<Text Value="확인" Alignment="CenterRight" Margin="{margin}" Color="#18f" FontSize="{margin}*1.2">
 				<Clicked>
@@ -812,7 +818,7 @@
 			<Rectangle Width="100%" Height="1" Color="#888" Alignment="Top" />
 		</Panel>
 
-		<MyPicker Data="{type}" Selected="{selectedType}" />
+		<MyPicker Data="{type2}" Selected="{selectedType2}" />
 	</DockPanel>
 
 

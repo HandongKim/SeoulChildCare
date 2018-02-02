@@ -58,137 +58,784 @@ var selectOnlineBCashListDatas = Observable();
 
 function selectOnlineBCashListIndividualData (args, index) {
 	this.INDEX = index;
-	this.SUBJECT = args.SUBJECT;
-	this.BILL_NURIGB = args.BILL_NURIGB;
-	this.BIGO = args.BIGO;
-	this.CASH_IDX2 = args.CASH_IDX2;
-	this.GUBUN = args.GUBUN;
-	this.CASH_GB = args.CASH_GB;
-	this.BILL_NUM = args.BILL_NUM;
-	this.BCASH_IDX = args.BCASH_IDX;
-	this.BILL_DATE = args.BILL_DATE;
-	this.CASH_PLACE = args.CASH_PLACE;
-	this.ESTI_SUB_NM = args.ESTI_SUB_NM;
-	this.SUM_MONEY = args.SUM_MONEY;
-	this.BILL_INPROGRAM = args.BILL_INPROGRAM;
-	this.BILL_ETC1 = args.BILL_ETC1;
-	this.MEMO = args.MEMO;
-	this.BILL_ETC2 = args.BILL_ETC2;
-	this.BILL_ETC3 = args.BILL_ETC3;
-	this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO;
-	this.MONEY_OUT = args.MONEY_OUT;
-	this.FIRMNAME = args.FIRMNAME;
-	this.ACTION = args.ACTION;
-	this.BILL_ETC4 = args.BILL_ETC4;
-	this.CASH_ORDER = args.CASH_ORDER;
-	this.MONEY_GB = args.MONEY_GB;
-	this.EDITABLE = args.EDITABLE;
-	this.BILL_BOJOGB = args.BILL_BOJOGB;
-	this.ESTI_CODE = args.ESTI_CODE;
-	this.CRED_SEQ = args.CRED_SEQ;
-	this.ESTI_NAME = args.ESTI_NAME;
-	this.BOOK_GB = args.BOOK_GB;
-	this.BILL_IDX = args.BILL_IDX;
-	this.BILL_CANCELGB = args.BILL_CANCELGB;
-	this.BILL_GB = args.BILL_GB;
-	this.MEMO_ADD = args.MEMO_ADD;
-	this.ESTI_GB = args.ESTI_GB;
-	this.BILL_DATE0 = args.BILL_DATE0;
-	this.BILL_DATE1 = args.BILL_DATE1;
-	this.BILL_DATE4 = args.BILL_DATE4;
-	this.CASH_DATE = args.CASH_DATE;
-	this.BILL_DATE2 = args.BILL_DATE2;
-	this.PURPOSE = args.PURPOSE;
-	this.BILL_DATE3 = args.BILL_DATE3;
-	this.GRID_NURIGB = args.GRID_NURIGB;
-	this.BILL_CLSS = args.BILL_CLSS;
-	this.CASH_MEMO = args.CASH_MEMO;
-	this.CHK = args.CHK;
-	this.BILL_SUBCODE = args.BILL_SUBCODE;
-	this.BILL_NUMDETAIL = args.BILL_NUMDETAIL;
-	this.BILL_MONEY = args.BILL_MONEY;
-	this.GRID_BOJOGB = args.GRID_BOJOGB;
-	this.CONTENTS = args.CONTENTS;
-	this.BCASH_MEMO = args.BCASH_MEMO;
-	this.CASH_IDX = args.CASH_IDX;
-	this.ESTI_DISPLAY = args.ESTI_DISPLAY;
-	this.PREV_IDX = args.PREV_IDX;
-	this.MEMCODE = args.MEMCODE;
-	this.BILL_RECEIPT = args.BILL_RECEIPT;
-	this.ESTI_PART = args.ESTI_PART;
-	this.MONEY = args.MONEY;
-	this.REMAIN = args.REMAIN;
-	this.ESTI_SUB_YN = args.ESTI_SUB_YN;
-	this.BILL_KEEPCODE = args.BILL_KEEPCODE;
-	this.MONEY_IN = args.MONEY_IN;
-	this.BCASH_MONEY = args.BCASH_MONEY;
+
+
+	if (args.SUBJECT != null)  {
+		this.SUBJECT = args.SUBJECT;	
+	} else {
+		this.SUBJECT = "";
+	}
+	
+	if (args.BILL_NURIGB != null)  {
+		this.BILL_NURIGB = args.BILL_NURIGB;
+	} else {
+		this.BILL_NURIGB = "";	
+	}
+
+	if (args.BIGO != null)  {
+		this.BIGO = args.BIGO;
+	} else {
+		this.BIGO = "";
+	}	
+
+	if (args.CASH_IDX2 != null)  {
+		this.CASH_IDX2 = args.CASH_IDX2;
+	} else {
+		this.CASH_IDX2 = "";
+	}
+
+	if (args.GUBUN != null)  {
+		this.GUBUN = args.GUBUN;
+	} else {
+		this.GUBUN = "";
+	}
+
+	if (args.CASH_GB != null)  {
+		this.CASH_GB = args.CASH_GB;
+	} else {
+		this.CASH_GB = "";
+	}
+
+	if (args.BILL_NUM != null)  {
+		this.BILL_NUM = args.BILL_NUM;
+	} else {
+		this.BILL_NUM = "";
+	}
+
+	if (args.BCASH_IDX != null)  {
+		this.BCASH_IDX = args.BCASH_IDX;
+	} else {
+		this.BCASH_IDX = "";
+	}
+
+	if (args.BILL_DATE != null)  {
+		this.BILL_DATE = args.BILL_DATE;
+	} else {
+		this.BILL_DATE = "";
+	}
+
+	if (args.CASH_PLACE != null)  {
+		this.CASH_PLACE = args.CASH_PLACE;
+	} else {
+		this.CASH_PLACE = "";
+	}
+
+	if (args.ESTI_SUB_NM != null)  {
+		this.ESTI_SUB_NM = args.ESTI_SUB_NM;
+	} else {
+		this.ESTI_SUB_NM = "";
+	}
+
+	if (args.SUM_MONEY != null)  {
+		this.SUM_MONEY = args.SUM_MONEY;
+	} else {
+		this.SUM_MONEY = "";
+	}
+
+	if (args.BILL_INPROGRAM != null)  {
+		this.BILL_INPROGRAM = args.BILL_INPROGRAM;
+	} else {
+		this.BILL_INPROGRAM = "";
+	}
+
+	if (args.BILL_ETC1 != null)  {
+		this.BILL_ETC1 = args.BILL_ETC1;
+	} else {
+		this.BILL_ETC1 = "";
+	}
+
+	if (args.MEMO != null)  {
+		this.MEMO = args.MEMO;
+	} else {
+		this.MEMO = "";
+	}
+
+	if (args.BILL_ETC2 != null)  {
+		this.BILL_ETC2 = args.BILL_ETC2;
+	} else {
+		this.BILL_ETC2 = "";
+	}
+
+	if (args.BILL_ETC3 != null)  {
+		this.BILL_ETC3 = args.BILL_ETC3;
+	} else {
+		this.BILL_ETC3 = "";
+	}
+
+	if (args.ORG_BCASH_MEMO != null)  {
+		this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO;
+	} else {
+		this.ORG_BCASH_MEMO = "";
+	}
+
+	if (args.MONEY_OUT != null)  {
+		this.MONEY_OUT = args.MONEY_OUT;
+	} else {
+		this.MONEY_OUT = "";
+	}
+
+	if (args.FIRMNAME != null)  {
+		this.FIRMNAME = args.FIRMNAME;
+	} else {
+		this.FIRMNAME = "";
+	}
+
+	if (args.ACTION != null)  {
+		this.ACTION = args.ACTION;
+	} else {
+		this.ACTION = "";
+	}
+
+	if (args.BILL_ETC4 != null)  {
+		this.BILL_ETC4 = args.BILL_ETC4;
+	} else {
+		this.BILL_ETC4 = "";
+	}
+
+	if (args.CASH_ORDER != null)  {
+		this.CASH_ORDER = args.CASH_ORDER;
+	} else {
+		this.CASH_ORDER = "";
+	}
+
+	if (args.MONEY_GB != null)  {
+		this.MONEY_GB = args.MONEY_GB;
+	} else {
+		this.MONEY_GB = "";
+	}
+
+	if (args.EDITABLE != null)  {
+		this.EDITABLE = args.EDITABLE;
+	} else {
+		this.EDITABLE = "";
+	}
+
+	if (args.BILL_BOJOGB != null)  {
+		this.BILL_BOJOGB = args.BILL_BOJOGB;
+	} else {
+		this.BILL_BOJOGB = "";
+	}
+
+	if (args.ESTI_CODE != null)  {
+		this.ESTI_CODE = args.ESTI_CODE;
+	} else {
+		this.ESTI_CODE = "";
+	}
+
+	if (args.CRED_SEQ != null)  {
+		this.CRED_SEQ = args.CRED_SEQ;
+	} else {
+		this.CRED_SEQ = "";
+	}
+
+	if (args.ESTI_NAME != null)  {
+		this.ESTI_NAME = args.ESTI_NAME;
+	} else {
+		this.ESTI_NAME = "";
+	}
+
+	if (args.BOOK_GB != null)  {
+		this.BOOK_GB = args.BOOK_GB;
+	} else {
+		this.BOOK_GB = "";
+	}
+
+	if (args.BILL_IDX != null)  {
+		this.BILL_IDX = args.BILL_IDX;
+	} else {
+		this.BILL_IDX = "";
+	}
+
+	if (args.BILL_CANCELGB != null)  {
+		this.BILL_CANCELGB = args.BILL_CANCELGB;
+	} else {
+		this.BILL_CANCELGB = "";
+	}
+
+	if (args.BILL_GB != null)  {
+		this.BILL_GB = args.BILL_GB;
+	} else {
+		this.BILL_GB = "";
+	}
+
+	if (args.MEMO_ADD != null)  {
+		this.MEMO_ADD = args.MEMO_ADD;
+	} else {
+		this.MEMO_ADD = "";
+	}
+
+	if (args.ESTI_GB != null)  {
+		this.ESTI_GB = args.ESTI_GB;
+	} else {
+		this.ESTI_GB = "";
+	}
+
+	if (args.BILL_DATE0 != null)  {
+		this.BILL_DATE0 = args.BILL_DATE0;
+	} else {
+		this.BILL_DATE0 = "";
+	}
+
+	if (args.BILL_DATE1 != null)  {
+		this.BILL_DATE1 = args.BILL_DATE1;
+	} else {
+		this.BILL_DATE1 = "";
+	}
+
+	if (args.BILL_DATE4 != null)  {
+		this.BILL_DATE4 = args.BILL_DATE4;
+	} else {
+		this.BILL_DATE4 = "";
+	}
+
+	if (args.CASH_DATE != null)  {
+		this.CASH_DATE = args.CASH_DATE;
+	} else {
+		this.CASH_DATE = "";
+	}
+
+	if (args.BILL_DATE2 != null)  {
+		this.BILL_DATE2 = args.BILL_DATE2;
+	} else {
+		this.BILL_DATE2 = "";
+	}
+
+	if (args.PURPOSE != null)  {
+		this.PURPOSE = args.PURPOSE;
+	} else {
+		this.PURPOSE = "";
+	}
+
+	if (args.BILL_DATE3 != null)  {
+		this.BILL_DATE3 = args.BILL_DATE3;
+	} else {
+		this.BILL_DATE3 = "";
+	}
+
+	if (args.GRID_NURIGB != null)  {
+		this.GRID_NURIGB = args.GRID_NURIGB;
+	} else {
+		this.GRID_NURIGB = "";
+	}
+
+	if (args.BILL_CLSS != null)  {
+		this.BILL_CLSS = args.BILL_CLSS;
+	} else {
+		this.BILL_CLSS = "";
+	}
+
+	if (args.CASH_MEMO != null)  {
+		this.CASH_MEMO = args.CASH_MEMO;
+	} else {
+		this.CASH_MEMO = "";
+	}
+
+	if (args.CHK != null)  {
+		this.CHK = args.CHK;
+	} else {
+		this.CHK = "";
+	}
+
+	if (args.BILL_SUBCODE != null)  {
+		this.BILL_SUBCODE = args.BILL_SUBCODE;
+	} else {
+		this.BILL_SUBCODE = "";
+	}
+
+	if (args.BILL_NUMDETAIL != null)  {
+		this.BILL_NUMDETAIL = args.BILL_NUMDETAIL;
+	} else {
+		this.BILL_NUMDETAIL = "";
+	}
+
+	if (args.BILL_MONEY != null)  {
+		this.BILL_MONEY = args.BILL_MONEY;
+	} else {
+		this.BILL_MONEY = "";
+	}
+
+	if (args.GRID_BOJOGB != null)  {
+		this.GRID_BOJOGB = args.GRID_BOJOGB;
+	} else {
+		this.GRID_BOJOGB = "";
+	}
+
+	if (args.CONTENTS != null)  {
+		this.CONTENTS = args.CONTENTS;
+	} else {
+		this.CONTENTS = "";
+	}
+
+	if (args.BCASH_MEMO != null)  {
+		this.BCASH_MEMO = args.BCASH_MEMO;
+	} else {
+		this.BCASH_MEMO = "";
+	}
+
+	if (args.CASH_IDX != null)  {
+		this.CASH_IDX = args.CASH_IDX;
+	} else {
+		this.CASH_IDX = "";
+	}
+
+	if (args.ESTI_DISPLAY != null)  {
+		this.ESTI_DISPLAY = args.ESTI_DISPLAY;
+	} else {
+		this.ESTI_DISPLAY = "";
+	}
+
+	if (args.PREV_IDX != null)  {
+		this.PREV_IDX = args.PREV_IDX;
+	} else {
+		this.PREV_IDX = "";
+	}
+
+	if (args.MEMCODE != null)  {
+		this.MEMCODE = args.MEMCODE;
+	} else {
+		this.MEMCODE = "";
+	}
+
+	if (args.BILL_RECEIPT != null)  {
+		this.BILL_RECEIPT = args.BILL_RECEIPT;
+	} else {
+		this.BILL_RECEIPT = "";
+	}
+
+	if (args.ESTI_PART != null)  {
+		this.ESTI_PART = args.ESTI_PART;
+	} else {
+		this.ESTI_PART = "";
+	}
+
+	if (args.MONEY != null)  {
+		this.MONEY = args.MONEY;
+	} else {
+		this.MONEY = "";
+	}
+
+	if (args.REMAIN != null)  {
+		this.REMAIN = args.REMAIN;
+	} else {
+		this.REMAIN = "";
+	}
+
+	if (args.ESTI_SUB_YN != null)  {
+		this.ESTI_SUB_YN = args.ESTI_SUB_YN;
+	} else {
+		this.ESTI_SUB_YN = "";
+	}
+
+	if (args.BILL_KEEPCODE != null)  {
+		this.BILL_KEEPCODE = args.BILL_KEEPCODE;
+	} else {
+		this.BILL_KEEPCODE = "";
+	}
+
+	if (args.MONEY_IN != null)  {
+		this.MONEY_IN = args.MONEY_IN;
+	} else {
+		this.MONEY_IN = "";
+	}
+
+	if (args.BCASH_MONEY != null)  {
+		this.BCASH_MONEY = args.BCASH_MONEY;
+	} else {
+		this.BCASH_MONEY = "";
+	}
 }
 
 function pickedSelectOnlineBCashListIndividualData (args) {
-	this.SUBJECT = args.SUBJECT;
-	this.BILL_NURIGB = args.BILL_NURIGB;
-	this.BIGO = args.BIGO;
-	this.CASH_IDX2 = args.CASH_IDX2;
-	this.GUBUN = args.GUBUN;
-	this.CASH_GB = args.CASH_GB;
-	this.BILL_NUM = args.BILL_NUM;
-	this.BCASH_IDX = args.BCASH_IDX;
-	this.BILL_DATE = args.BILL_DATE;
-	this.CASH_PLACE = args.CASH_PLACE;
-	this.ESTI_SUB_NM = args.ESTI_SUB_NM;
-	this.SUM_MONEY = args.SUM_MONEY;
-	this.BILL_INPROGRAM = args.BILL_INPROGRAM;
-	this.BILL_ETC1 = args.BILL_ETC1;
-	this.MEMO = args.MEMO;
-	this.BILL_ETC2 = args.BILL_ETC2;
-	this.BILL_ETC3 = args.BILL_ETC3;
-	this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO;
-	this.MONEY_OUT = args.MONEY_OUT;
-	this.FIRMNAME = args.FIRMNAME;
-	this.ACTION = args.ACTION;
-	this.BILL_ETC4 = args.BILL_ETC4;
-	this.CASH_ORDER = args.CASH_ORDER;
-	this.MONEY_GB = args.MONEY_GB;
-	this.EDITABLE = args.EDITABLE;
-	this.BILL_BOJOGB = args.BILL_BOJOGB;
-	this.ESTI_CODE = args.ESTI_CODE;
-	this.CRED_SEQ = args.CRED_SEQ;
-	this.ESTI_NAME = args.ESTI_NAME;
-	this.BOOK_GB = args.BOOK_GB;
-	this.BILL_IDX = args.BILL_IDX;
-	this.BILL_CANCELGB = args.BILL_CANCELGB;
-	this.BILL_GB = args.BILL_GB;
-	this.MEMO_ADD = args.MEMO_ADD;
-	this.ESTI_GB = args.ESTI_GB;
-	this.BILL_DATE0 = args.BILL_DATE0;
-	this.BILL_DATE1 = args.BILL_DATE1;
-	this.BILL_DATE4 = args.BILL_DATE4;
-	this.CASH_DATE = args.CASH_DATE;
-	this.BILL_DATE2 = args.BILL_DATE2;
-	this.PURPOSE = args.PURPOSE;
-	this.BILL_DATE3 = args.BILL_DATE3;
-	this.GRID_NURIGB = args.GRID_NURIGB;
-	this.BILL_CLSS = args.BILL_CLSS;
-	this.CASH_MEMO = args.CASH_MEMO;
-	this.CHK = args.CHK;
-	this.BILL_SUBCODE = args.BILL_SUBCODE;
-	this.BILL_NUMDETAIL = args.BILL_NUMDETAIL;
-	this.BILL_MONEY = args.BILL_MONEY;
-	this.GRID_BOJOGB = args.GRID_BOJOGB;
-	this.CONTENTS = args.CONTENTS;
-	this.BCASH_MEMO = args.BCASH_MEMO;
-	this.CASH_IDX = args.CASH_IDX;
-	this.ESTI_DISPLAY = args.ESTI_DISPLAY;
-	this.PREV_IDX = args.PREV_IDX;
-	this.MEMCODE = args.MEMCODE;
-	this.BILL_RECEIPT = args.BILL_RECEIPT;
-	this.ESTI_PART = args.ESTI_PART;
-	this.MONEY = args.MONEY;
-	this.REMAIN = args.REMAIN;
-	this.ESTI_SUB_YN = args.ESTI_SUB_YN;
-	this.BILL_KEEPCODE = args.BILL_KEEPCODE;
-	this.MONEY_IN = args.MONEY_IN;
-	this.BCASH_MONEY = args.BCASH_MONEY;
+	if (args.SUBJECT != null) {
+		this.SUBJECT = args.SUBJECT;	
+	} else {
+		this.SUBJECT = "";
+	}
+	
+	if (args.BCASH_MONEY != null) {
+		this.BCASH_MONEY = args.BCASH_MONEY;	
+	} else {
+		this.BCASH_MONEY = "";
+	}
+	
+	if (args.MONEY_IN != null) {
+		this.MONEY_IN = args.MONEY_IN;	
+	} else {
+		this.MONEY_IN = "";
+	}
+
+	if (args.BILL_KEEPCODE != null) {
+		this.BILL_KEEPCODE = args.BILL_KEEPCODE;	
+	} else {
+		this.BILL_KEEPCODE = "";
+	}
+	
+	if (args.ESTI_SUB_YN != null) {
+		this.ESTI_SUB_YN = args.ESTI_SUB_YN;	
+	} else {
+		this.ESTI_SUB_YN = "";
+	}
+	
+	if (args.REMAIN != null) {
+		this.REMAIN = args.REMAIN;	
+	} else {
+		this.REMAIN = "";
+	}
+	
+	if (args.MONEY != null) {
+		this.MONEY = args.MONEY;	
+	} else {
+		this.MONEY = "";
+	}
+	
+	if (args.ESTI_PART != null) {
+		this.ESTI_PART = args.ESTI_PART;	
+	} else {
+		this.ESTI_PART = "";
+	}
+
+	if (args.BILL_RECEIPT != null) {
+		this.BILL_RECEIPT = args.BILL_RECEIPT;	
+	} else {
+		this.BILL_RECEIPT = "";
+	}
+	
+	if (args.MEMCODE != null) {
+		this.MEMCODE = args.MEMCODE;	
+	} else {
+		this.MEMCODE = "";
+	}
+
+	if (args.PREV_IDX != null) {
+		this.PREV_IDX = args.PREV_IDX;	
+	} else {
+		this.PREV_IDX = "";
+	}
+
+	if (args.ESTI_DISPLAY != null) {
+		this.ESTI_DISPLAY = args.ESTI_DISPLAY;	
+	} else {
+		this.ESTI_DISPLAY = "";
+	}
+	
+	if (args.CASH_IDX != null) {
+		this.CASH_IDX = args.CASH_IDX;	
+	} else {
+		this.CASH_IDX = "";
+	}
+
+	if (args.BCASH_MEMO != null) {
+		this.BCASH_MEMO = args.BCASH_MEMO;	
+	} else {
+		this.BCASH_MEMO = "";
+	}
+
+	if (args.CONTENTS != null) {
+		this.CONTENTS = args.CONTENTS;	
+	} else {
+		this.CONTENTS = "";
+	}
+	
+	if (args.GRID_BOJOGB != null) {
+		this.GRID_BOJOGB = args.GRID_BOJOGB;	
+	} else {
+		this.GRID_BOJOGB = "";
+	}
+
+	if (args.BILL_MONEY != null) {
+		this.BILL_MONEY = args.BILL_MONEY;	
+	} else {
+		this.BILL_MONEY = "";
+	}
+	
+	if (args.BILL_NUMDETAIL != null) {
+		this.BILL_NUMDETAIL = args.BILL_NUMDETAIL;	
+	} else {
+		this.BILL_NUMDETAIL = "";
+	}
+	
+	if (args.BILL_SUBCODE != null) {
+		this.BILL_SUBCODE = args.BILL_SUBCODE;	
+	} else {
+		this.BILL_SUBCODE = "";
+	}
+
+	if (args.CHK != null) {
+		this.CHK = args.CHK;	
+	} else {
+		this.CHK = "";
+	}
+
+	if (args.CASH_MEMO != null) {
+		this.CASH_MEMO = args.CASH_MEMO;	
+	} else {
+		this.CASH_MEMO = "";
+	}
+	
+	if (args.BILL_CLSS != null) {
+		this.BILL_CLSS = args.BILL_CLSS;	
+	} else {
+		this.BILL_CLSS = "";
+	}
+	
+	if (args.GRID_NURIGB != null) {
+		this.GRID_NURIGB = args.GRID_NURIGB;	
+	} else {
+		this.GRID_NURIGB = "";
+	}
+	
+	if (args.BILL_DATE3 != null) {
+		this.BILL_DATE3 = args.BILL_DATE3;	
+	} else {
+		this.BILL_DATE3 = "";
+	}
+	
+	if (args.PURPOSE != null) {
+		this.PURPOSE = args.PURPOSE;	
+	} else {
+		this.PURPOSE = "";
+	}
+
+	if (args.BILL_DATE2 != null) {
+		this.BILL_DATE2 = args.BILL_DATE2;	
+	} else {
+		this.BILL_DATE2 = "";
+	}
+
+	if (args.CASH_DATE != null) {
+		this.CASH_DATE = args.CASH_DATE;	
+	} else {
+		this.CASH_DATE = "";
+	}
+	
+	if (args.BILL_DATE4 != null) {
+		this.BILL_DATE4 = args.BILL_DATE4;	
+	} else {
+		this.BILL_DATE4 = "";
+	}
+	
+	if (args.BILL_DATE1 != null) {
+		this.BILL_DATE1 = args.BILL_DATE1;	
+	} else {
+		this.BILL_DATE1 = "";
+	}
+	
+	if (args.BILL_DATE0 != null) {
+		this.BILL_DATE0 = args.BILL_DATE0;	
+	} else {
+		this.BILL_DATE0 = "";
+	}
+	
+	if (args.ESTI_GB != null) {
+		this.ESTI_GB = args.ESTI_GB;	
+	} else {
+		this.ESTI_GB = "";
+	}
+	
+	if (args.MEMO_ADD != null) {
+		this.MEMO_ADD = args.MEMO_ADD;	
+	} else {
+		this.MEMO_ADD = "";
+	}
+
+	if (args.BILL_GB != null) {
+		this.BILL_GB = args.BILL_GB;	
+	} else {
+		this.BILL_GB = "";
+	}
+	
+	if (args.BILL_CANCELGB != null) {
+		this.BILL_CANCELGB = args.BILL_CANCELGB;	
+	} else {
+		this.BILL_CANCELGB = "";
+	}
+	
+	if (args.BILL_IDX != null) {
+		this.BILL_IDX = args.BILL_IDX;	
+	} else {
+		this.BILL_IDX = "";
+	}
+	
+	if (args.BOOK_GB != null) {
+		this.BOOK_GB = args.BOOK_GB;	
+	} else {
+		this.BOOK_GB = "";
+	}
+	
+	if (args.ESTI_NAME != null) {
+		this.ESTI_NAME = args.ESTI_NAME;	
+	} else {
+		this.ESTI_NAME = "";
+	}
+
+	if (args.CRED_SEQ != null) {
+		this.CRED_SEQ = args.CRED_SEQ;	
+	} else {
+		this.CRED_SEQ = "";
+	}	
+
+	if (args.ESTI_CODE != null) {
+		this.ESTI_CODE = args.ESTI_CODE;	
+	} else {
+		this.ESTI_CODE = "";
+	}
+	
+	if (args.BILL_BOJOGB != null) {
+		this.BILL_BOJOGB = args.BILL_BOJOGB;	
+	} else {
+		this.BILL_BOJOGB = "";
+	}
+		
+	if (args.EDITABLE != null) {
+		this.EDITABLE = args.EDITABLE;	
+	} else {
+		this.EDITABLE = "";
+	}		
+
+	if (args.MONEY_GB != null) {
+		this.MONEY_GB = args.MONEY_GB;	
+	} else {
+		this.MONEY_GB = "";
+	}
+		
+	if (args.CASH_ORDER != null) {
+		this.CASH_ORDER = args.CASH_ORDER;	
+	} else {
+		this.CASH_ORDER = "";
+	}
+
+	if (args.CASH_ORDER != null) {
+		this.CASH_ORDER = args.CASH_ORDER;	
+	} else {
+		this.CASH_ORDER = "";
+	}
+		
+	if (args.BILL_ETC4 != null) {
+		this.BILL_ETC4 = args.BILL_ETC4;	
+	} else {
+		this.BILL_ETC4 = "";
+	}
+		
+	if (args.ACTION != null) {
+		this.ACTION = args.ACTION;	
+	} else {
+		this.ACTION = "";
+	}
+		
+	if (args.FIRMNAME != null) {
+		this.FIRMNAME = args.FIRMNAME;	
+	} else {
+		this.FIRMNAME = "";
+	}
+	
+	if (args.MONEY_OUT != null) {
+		this.MONEY_OUT = args.MONEY_OUT;	
+	} else {
+		this.MONEY_OUT = "";
+	}
+		
+	if (args.ORG_BCASH_MEMO != null) {
+		this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO;	
+	} else {
+		this.ORG_BCASH_MEMO = "";
+	}
+		
+	if (args.BILL_ETC3 != null) {
+		this.BILL_ETC3 = args.BILL_ETC3;	
+	} else {
+		this.BILL_ETC3 = "";
+	}
+		
+	if (args.BILL_ETC2 != null) {
+		this.BILL_ETC2 = args.BILL_ETC2;	
+	} else {
+		this.BILL_ETC2 = "";
+	}
+
+	if (args.MEMO != null) {
+		this.MEMO = args.MEMO;	
+	} else {
+		this.MEMO = "";
+	}
+		
+	if (args.BILL_ETC1 != null) {
+		this.BILL_ETC1 = args.BILL_ETC1;	
+	} else {
+		this.BILL_ETC1 = "";
+	}
+		
+	if (args.BILL_INPROGRAM != null) {
+		this.BILL_INPROGRAM = args.BILL_INPROGRAM;	
+	} else {
+		this.BILL_INPROGRAM = "";
+	}
+
+	if (args.SUM_MONEY != null) {
+		this.SUM_MONEY = args.SUM_MONEY;	
+	} else {
+		this.SUM_MONEY = "";
+	}
+		
+	if (args.ESTI_SUB_NM != null) {
+		this.ESTI_SUB_NM = args.ESTI_SUB_NM;	
+	} else {
+		this.ESTI_SUB_NM = "";
+	}
+		
+	if (args.CASH_PLACE != null) {
+		this.CASH_PLACE = args.CASH_PLACE;	
+	} else {
+		this.CASH_PLACE = "";
+	}
+
+	if (args.BILL_DATE != null) {
+		this.BILL_DATE = args.BILL_DATE;	
+	} else {
+		this.BILL_DATE = "";
+	}
+		
+	if (args.BCASH_IDX != null) {
+		this.BCASH_IDX = args.BCASH_IDX;	
+	} else {
+		this.BCASH_IDX = "";
+	}
+		
+	if (args.BILL_NUM != null) {
+		this.BILL_NUM = args.BILL_NUM;	
+	} else {
+		this.BILL_NUM = "";
+	}
+		
+	if (args.CASH_GB != null) {
+		this.CASH_GB = args.CASH_GB;	
+	} else {
+		this.CASH_GB = "";
+	}
+		
+	if (args.GUBUN != null) {
+		this.GUBUN = args.GUBUN;	
+	} else {
+		this.GUBUN = "";
+	}
+
+	if (args.CASH_IDX2 != null) {
+		this.CASH_IDX2 = args.CASH_IDX2;	
+	} else {
+		this.CASH_IDX2 = "";
+	}
+		
+	if (args.BIGO != null) {
+		this.BIGO = args.BIGO;	
+	} else {
+		this.BIGO = "";
+	}
+		
+	if (args.BILL_NURIGB != null) {
+		this.BILL_NURIGB = args.BILL_NURIGB;	
+	} else {
+		this.BILL_NURIGB = "";
+	}
+
 }
 
 var selectOnlineBCashList_URL = Backend.BASE_URL + Backend.selectOnlineBCashList_URL;

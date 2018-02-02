@@ -233,23 +233,108 @@ var listDetailNotes = Observable();
 
 function listDetailNote (args, index) {
 	this.INDEX = index;
-	this.CASH_IDX2 = args.CASH_IDX2;
-	this.CASH_GB=args.CASH_GB;
-	this.CASH_IDX= args.CASH_IDX;
-	this.BCASH_MEMO = args.BCASH_MEMO;
-	this.ESTI_CODE = args.ESTI_CODE
-	this.CASH_DATE = args.CASH_DATE
-	this.ESTI_NAME = args.ESTI_NAME
-	this.BILL_CLSS = args.BILL_CLSS
-	this.SUM_MONEY = args.SUM_MONEY
-	this.BILL_RECEIPT = args.BILL_RECEIPT
-	this.MONEY = args.MONEY
-	this.ESTI_SUB_YN = args.ESTI_SUB_YN
-	this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO
-	this.ACTION = args.ACTION
-	this.BILL_SUBCODE = args.BILL_SUBCODE
-	this.BILL_IDX = args.BILL_IDX
-	this.BCASH_BILL_SEQ = args.BCASH_BILL_SEQ
+
+	if (args.CASH_IDX2!=null) {
+		this.CASH_IDX2 = args.CASH_IDX2;
+	} else {
+		this.CASH_IDX2 = "";	
+	}
+	
+	if (args.CASH_IDX2!=null) {
+		this.CASH_GB=args.CASH_GB;
+	} else {
+		this.CASH_IDX2 = "";	
+	}
+
+	if (args.CASH_IDX!=null) {
+		this.CASH_IDX= args.CASH_IDX;
+	} else {
+		this.CASH_IDX = "";	
+	}
+
+	if (args.BCASH_MEMO!=null) {
+		this.BCASH_MEMO = args.BCASH_MEMO;
+	} else {
+		this.BCASH_MEMO = "";	
+	}
+
+	if (args.ESTI_CODE!=null) {
+		this.ESTI_CODE = args.ESTI_CODE;
+	} else {
+		this.ESTI_CODE = "";	
+	}
+
+	
+	if (args.CASH_DATE!=null) {
+		this.CASH_DATE = args.CASH_DATE;
+	} else {
+		this.CASH_DATE = "";	
+	}
+	if (args.ESTI_NAME!=null) {
+		this.ESTI_NAME = args.ESTI_NAME;
+	} else {
+		this.ESTI_NAME = "";	
+	}
+
+	if (args.BILL_CLSS!=null) {
+		this.BILL_CLSS = args.BILL_CLSS;
+	} else {
+		this.BILL_CLSS = "";	
+	}
+
+	if (args.SUM_MONEY!=null) {
+		this.SUM_MONEY = args.SUM_MONEY;
+	} else {
+		this.SUM_MONEY = "";	
+	}
+
+	if (args.BILL_RECEIPT!=null) {
+		this.BILL_RECEIPT = args.BILL_RECEIPT;
+	} else {
+		this.BILL_RECEIPT = "";	
+	}
+
+	if (args.MONEY!=null) {
+		this.MONEY = args.MONEY;
+	} else {
+		this.MONEY = "";	
+	}
+
+	if (args.ESTI_SUB_YN!=null) {
+		this.ESTI_SUB_YN = args.ESTI_SUB_YN;
+	} else {
+		this.ESTI_SUB_YN = "";	
+	}
+
+	if (args.ORG_BCASH_MEMO!=null) {
+		this.ORG_BCASH_MEMO = args.ORG_BCASH_MEMO;
+	} else {
+		this.ORG_BCASH_MEMO = "";	
+	}
+
+	if (args.ACTION!=null) {
+		this.ACTION = args.ACTION;
+	} else {
+		this.ACTION = "";	
+	}
+
+	if (args.BILL_SUBCODE!=null) {
+		this.BILL_SUBCODE = args.BILL_SUBCODE;
+	} else {
+		this.BILL_SUBCODE = "";	
+	}
+
+	if (args.BILL_IDX!=null) {
+		this.BILL_IDX = args.BILL_IDX;
+	} else {
+		this.BILL_IDX = "";	
+	}
+
+	if (args.BCASH_BILL_SEQ!=null) {
+		this.BCASH_BILL_SEQ = args.BCASH_BILL_SEQ;
+	} else {
+		this.BCASH_BILL_SEQ = "";	
+	}
 }
 
 function selectedDetailNote(args) {

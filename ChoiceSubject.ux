@@ -80,13 +80,49 @@
 					this.type = "4"
 				}
 			}
-			this.text = " " + subject.M_DISPLAY_NAME;
-			this.name = subject.M_DISPLAY_NAME2;
-			this.ESTI_CODE = subject.ESTI_CODE;
-			this.ESTI_GB = subject.ESTI_GB;
-			this.ESTI_SUBCODE = subject.ESTI_SUBCODE;
-			this.ESTI_SUB_YN = subject.ESTI_SUB_YN;
-			this.ESTI_NAME = subject.M_DISPLAY_NAME2;
+			
+			if (subject.M_DISPLAY_NAME !+null) {
+				this.text = " " + subject.M_DISPLAY_NAME;	
+			} else {
+				this.text = "";	
+			}
+			
+			if (subject.M_DISPLAY_NAME2 !+null) {
+				this.name = subject.M_DISPLAY_NAME2;
+			} else {
+				this.name = "";
+			}
+
+			if (subject.ESTI_CODE !+null) {
+				this.ESTI_CODE = subject.ESTI_CODE;
+			} else {
+				this.ESTI_CODE = "";
+			}
+
+			if (subject.ESTI_GB !+null) {
+				this.ESTI_GB = subject.ESTI_GB;
+			} else {
+				this.ESTI_GB = "";
+			}
+
+			if (subject.ESTI_SUBCODE !+null) {	
+				this.ESTI_SUBCODE = subject.ESTI_SUBCODE;
+			} else {
+				this.ESTI_SUBCODE = "";
+			}
+
+			if (subject.ESTI_SUB_YN !+null) {
+				this.ESTI_SUB_YN = subject.ESTI_SUB_YN;
+			 } else {
+			 	this.ESTI_SUB_YN = "";
+			 }
+
+
+			if (subject.M_DISPLAY_NAME2 !+null) {
+				this.ESTI_NAME = subject.M_DISPLAY_NAME2;
+			} else {
+				this.ESTI_NAME = "";
+			}
 			console.log("add" + subject.DISPLAY_NAME);
 		}
 

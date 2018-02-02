@@ -179,17 +179,68 @@ var sentMessages = Observable();
 var REGID = JSON.parse(Backend.dsParam).GVMEMID;
 
 function sentMessage (args, index) {
+
 	this.INDEX = index
-	this.R_COUNT = args.R_COUNT;
-	this.REPLY_DEPTH = args.REPLY_DEPTH;
-	this.REGDATE = args.REGDATE;
-	this.WRITER_NM = args.WRITER_NM;
-	this.BOD_COM_YN = args.BOD_COM_YN;
-	this.CHK = args.CHK;
-	this.COMM_SEQ = args.COMM_SEQ;
-	this.WRITER_ORG = args.WRITER_ORG;
-	this.BOD_FORM_CLSS = args.BOD_FORM_CLSS;
-	this.TITLE = args.TITLE;
+
+	if (args.TITLE !=null) {
+		this.TITLE = args.TITLE;	
+	}else {
+		this.TITLE = "";
+	}
+	
+	if (args.BOD_FORM_CLSS !=null) {
+		this.BOD_FORM_CLSS = args.BOD_FORM_CLSS;	
+	}else {
+		this.BOD_FORM_CLSS = "";
+	}
+
+	if (args.WRITER_ORG !=null) {
+		this.WRITER_ORG = args.WRITER_ORG;	
+	}else {
+		this.WRITER_ORG = "";
+	}
+
+	if (args.COMM_SEQ !=null) {
+		this.COMM_SEQ = args.COMM_SEQ;	
+	}else {
+		this.COMM_SEQ = "";
+	}
+
+	if (args.CHK !=null) {
+		this.CHK = args.CHK;	
+	}else {
+		this.CHK = "";
+	}
+
+	if (args.BOD_COM_YN !=null) {
+		this.BOD_COM_YN = args.BOD_COM_YN;	
+	}else {
+		this.BOD_COM_YN = "";
+	}
+
+	if (args.WRITER_NM !=null) {
+		this.WRITER_NM = args.WRITER_NM;	
+	}else {
+		this.WRITER_NM = "";
+	}
+
+	if (args.REGDATE !=null) {
+		this.REGDATE = args.REGDATE;	
+	}else {
+		this.REGDATE = "";
+	}
+
+	if (args.REPLY_DEPTH !=null) {
+		this.REPLY_DEPTH = args.REPLY_DEPTH;	
+	}else {
+		this.REPLY_DEPTH = "";
+	}
+
+	if (args.R_COUNT !=null) {
+		this.R_COUNT = args.R_COUNT;	
+	}else {
+		this.R_COUNT = "";
+	}
 }
 
 function getSentMessageList(srch_Type, srch_Text) {

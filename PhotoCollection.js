@@ -503,12 +503,6 @@ function getPhotoList () {
 			var isSuccess = message.MiResultMsg;
 			console.log("message : " + message.MiResultMsg); 
 
-			
-
-
-			
-
-
 			tempList1 = JSON.parse(response._bodyInit);
 
 			console.log("tempList1 : " + JSON.stringify(tempList1));
@@ -525,6 +519,12 @@ function getPhotoList () {
 
 			if (isSuccess =="success") {
 				console.log("wjifjwoejfoijo");
+
+				if (photoListFromServer.length ==0) {
+					photoCollectionLoadingCircleOn.value = false;
+				}
+
+
 				for (var i = 0; i <photoListFromServer.length ; i++) {
 					var dsParam = Backend.dsParam;
 					var dsSearch = '{"ATCHMNFL_IDX":"'+photoListFromServer[i]+'"}';
@@ -548,21 +548,24 @@ function getPhotoList () {
 					}
 				}
 				
+
+
+
 			} else {
 				console.log("isSuccess is failed");
+				photoCollectionLoadingCircleOn.value = false;
 			}
 			
             return response.json();
         }).then(function(jsonData) {
             // var data = jsonData.results[0];
-            
 			// console.log("Reg Succeeded[ios]: " + data.registration_token);
 			// maintext.value = maintext.value + "/n" + data.registration_token;
         }).catch(function(err) {
-            
+            photoCollectionLoadingCircleOn.value = false;
         });
 
-
+		photoCollectionLoadingCircleOn.value = false;	
 
 
 }
