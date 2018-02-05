@@ -488,7 +488,8 @@
 
 				<Rectangle Width="100%" Height="100%" Color="#FFF" ColumnSpan="3">
 					<Stroke Width="1" Color="#ccc" />
-					<Text Value="{selectedData}" Alignment="CenterLeft" />
+					<!-- <Text Value="{selectedData}" Alignment="CenterLeft" /> -->
+					<Text Value="{selectedTypeStringValue}" Alignment="CenterLeft" />
 					<Clicked>
 						<Callback Handler="{pickerUp}" />
 					</Clicked>

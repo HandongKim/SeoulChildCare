@@ -51,6 +51,13 @@
 			pageCount.value = 1;
 		}
 
+		function confirmButtonAction() {
+			alert.layer.value = "Background";
+			getQnAList();
+			// router.goBack();
+		}
+
+
 
 		var pageCount = Observable(1);
 		var totalPage = Observable();
@@ -690,6 +697,14 @@
 			console.log("파일 생성 완료!");
 		}
 
+		var alert = {
+			title: Observable(),
+			message: Observable(),
+			type: Observable("Check"),
+			layer: Observable("Background")
+		};
+
+
 		function sendData(){
 			console.log("sendData was called");
 			if(qnaDetailValue.value.commSeq.value==null || qnaDetailValue.value.commSeq.value==""){
@@ -757,6 +772,8 @@
 			        }).then(function(response) {
 						var responseData = JSON.stringify(response);
 						console.log("responseData : "+ JSON.stringify(responseData));
+						alert.message.value = "수정했습니다.";
+						alert.layer.value = "Overlay";
 			            return response.json();
 			        }).then(function(jsonData) {
 			            // var data = jsonData.results[0];
@@ -814,6 +831,10 @@
 			        }).then(function(response) {
 						var responseData = JSON.stringify(response);
 						console.log("responseData : "+ JSON.stringify(responseData));
+
+						alert.message.value = "등록했습니다.";
+						alert.layer.value = "Overlay";
+
 			            return response.json();
 			        }).then(function(jsonData) {
 
@@ -831,7 +852,7 @@
 			type, selectedType, pickerOn, pickerOn2, pickerUp, pickerDown, getQnAList ,qnas, 
 			selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, test,
 			searchContent,getClickListValue, getDetailQnA, qnaDetailValue, pickerUp2, pickerDown2,
-			qnaFileValue, qnaIsCorrect , sendData,detailDataClear, warnningText,  warnningOn, pickerUp2, type2, selectedType2
+			qnaFileValue, qnaIsCorrect , sendData,detailDataClear, warnningText,  warnningOn, pickerUp2, type2, selectedType2, confirmButtonAction, alert
 		};
 	</JavaScript>
 	<Panel ux:Name="page6BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
@@ -860,6 +881,41 @@
 
 		<MyPicker Data="{type2}" Selected="{selectedType2}" />
 	</DockPanel>
+
+
+
+
+<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{alert.layer}">
+	<Stroke Width="1" Color="Black" />
+	<StackPanel>
+		<Panel>
+			<Text Value="{alert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+
+			<Image File="Images/alert_top.png" Alignment="TopCenter" />
+		</Panel>
+
+		<Panel Margin="{margin}*5/7">
+			<Text Value="{alert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+		</Panel>
+
+		<Panel Margin="{margin}">
+			<BlueButton>
+				<Text Value="확인" Alignment="Center" Color="White" />
+
+				<Clicked>
+					<!-- <Callback Handler="{getListDetailNote}" />
+					<Callback Handler="{viewWillAppear}" /> -->
+					<Toggle Target="applyQuestion" />
+					<Callback Handler="{confirmButtonAction}" />
+
+				</Clicked>
+			</BlueButton>
+		</Panel>
+	</StackPanel>
+</Rectangle>
+
+
+
 
 
 

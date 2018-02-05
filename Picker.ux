@@ -6,6 +6,7 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 
+		var Backend = require('Backend.js');
 		var isScrolling = Observable(false);
 		var stopScrolling = Observable(false);
 		var endPosition = Observable();
@@ -22,6 +23,14 @@
 			endPosition.value = Math.round((position.value-10)/50) * 50;
 
 			// console.log("333333333333");
+		}
+
+		function initialize () {
+			position.value = 0;
+			// console.log("222222222222");
+			isScrolling.value = true;
+			stopScrolling.value = false;
+			endPosition.value = Math.round((position.value-10)/50) * 50;
 		}
 
 		function stopScroll() {
@@ -46,9 +55,14 @@
 
 		module.exports = {
 			position, scrollFunction, stopScroll, isScrolling, scrolling, endPosition, stopScrolling,
-			datas, scrollPosition,
+			datas, scrollPosition, initialize
 		};
 	</JavaScript> 
+
+	<WhileActive>
+		<Callback Handler="{initialize}"/>
+	</WhileActive>
+
 
 	<Rectangle  Width="100%" Height="30" Alignment="Center">
 		<Stroke Width="1" Color="#aaa" />

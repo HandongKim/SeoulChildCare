@@ -106,6 +106,11 @@ var selectedPhotoCollectionPictureListFromDetailNote = Observable();
 var yearAndMonthFromPhotoCollection = Observable("");
 
 
+
+var selectedTypeStringValueFromBackend = Observable();
+
+
+
 //NoteMangae에서 DetailNote로 넘기는 파람 값
 var noteManageParamValuesForDetailNote = {
 	index:Observable(),
@@ -231,5 +236,5 @@ module.exports = {
 	getMobileRciptList_URL,mImgView_URL, deleteMapngReceipt_URL,
 	getEstiSearchLoad_URL, AndroidLicenseKey, iOSLicenseKey, offDocTransList_URL, 
 	selectBusiReceiveAdminList_URL, selectBusiSendAdminList_URL, chosenSubject, yearAndMonthFromPhotoCollection, isItFromNoteManage,
-	searchBusiReceiveAdmDtl_URL, searchBusisendAdmDtl_URL, saveBusiReceiveAdmin_URL
+	searchBusiReceiveAdmDtl_URL, searchBusisendAdmDtl_URL, saveBusiReceiveAdmin_URL, selectedTypeStringValueFromBackend
 };

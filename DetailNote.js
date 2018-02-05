@@ -10,6 +10,7 @@ var Uploader = require("Uploader");
 
 var connectingPanelLayout = Observable("Background");
 var enableClick = Observable("LocalBoundsAndChildren");
+// var Picker = require('Picker.js');
 
 // var ValueFactory = require('ValueFactory');
 
@@ -745,6 +746,10 @@ function pickFromList(args) {
 
 }
 
+var selectedTypeStringValue = Observable();
+
+
+
 function initialDataSetting () {
 	moneyValue.clear();
 	initBackendSubject();
@@ -795,23 +800,23 @@ function initialDataSetting () {
 
 
 	if(selectedDetailNoteVariable.BILL_CLSS == "10") {
-		selectedData.value = "카드결제";
+		selectedTypeStringValue.value = "카드결제";
 	} else if (selectedDetailNoteVariable.BILL_CLSS == "20") {
-		selectedData.value = "아이행복카드";
+		selectedTypeStringValue.value = "아이행복카드";
 	} else if (selectedDetailNoteVariable.BILL_CLSS == "30") {
-		selectedData.value = "계좌이체";
+		selectedTypeStringValue.value = "계좌이체";
 	} else if (selectedDetailNoteVariable.BILL_CLSS == "40") {
-		selectedData.value = "자동이체";
+		selectedTypeStringValue.value = "자동이체";
 	} else if (selectedDetailNoteVariable.BILL_CLSS == "50") {
-		selectedData.value = "지로";
+		selectedTypeStringValue.value = "지로";
 	} else if (selectedDetailNoteVariable.BILL_CLSS == "60") {
-		selectedData.value = "현금결제";
+		selectedTypeStringValue.value = "현금결제";
 	} else if (selectedDetailNoteVariable.BILL_CLSS == "70") {
-		selectedData.value = "기타";
+		selectedTypeStringValue.value = "기타";
 	} else if (selectedDetailNoteVariable.BILL_CLSS == "") {
-		selectedData.value = "결제방법"
+		selectedTypeStringValue.value = "결제방법"
 	} else if (selectedDetailNoteVariable.BILL_CLSS == null) {
-		selectedData.value = "결제방법"
+		selectedTypeStringValue.value = "결제방법"
 	}
 
 	
@@ -859,7 +864,10 @@ function pickerUp() {
 	// pickerData.add("현금결제");
 	// pickerData.add("기타");
 	stPos.value = 0;
-	console.log("stPos : " + stPos);
+	console.log("stPos : " + stPos.value);
+
+
+	// Picker.setEndPostionValue(0);
 
 
 	selectedData.value = "결제방법";
@@ -889,6 +897,8 @@ function pickerDown() {
 		selected_BILL_CLSS.value = null
 	}
 
+
+	selectedTypeStringValue.value = selectedData.value;
 
 	pickerOn.value = false;
 }
@@ -2141,5 +2151,5 @@ function focusLost () {
 
 				router.push("ShowFile", infoJSON);
 			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, 
-			getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn, testMethod, saveOrEdit, focusLost
+			getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn, testMethod, saveOrEdit, focusLost, selectedTypeStringValue
 		};
