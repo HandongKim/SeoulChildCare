@@ -11,7 +11,7 @@ var corSelected = Observable(false);
 var onPanel = Observable(false);
 var mSignedData = null;
 
-var licenseKey = "ikdt8CleK1HVv3Qa0temFA==";
+// var licenseKey = "ikdt8CleK1HVv3Qa0temFA==";
 // var licenseKey = "zfUVW8JVY6SCgx9TLS9xNQ==";
 
 function friSelect() {
@@ -149,11 +149,8 @@ function getLicenseInfo () {
 
 
 function popUpExportPanel() {
-
-
 	onExportPanel.value = true;
 	exportCert();
-
 }
 
 

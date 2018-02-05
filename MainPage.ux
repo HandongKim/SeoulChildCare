@@ -1,6 +1,5 @@
 <Page ux:Class="MainPage">
 	<Router ux:Dependency="router"/>
-
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var MainPageAlertWithConfirm = {

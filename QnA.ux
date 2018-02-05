@@ -83,7 +83,6 @@
 			//detail값 초기화
 			qnaDetailValue.clear();
 
-
 			if(qnaDetailValue.value!=null){
 
 				console.log("qnaDetailValue.value!=null");
@@ -710,13 +709,12 @@
 		function modifySned(){
 			console.log("modifySned function Call ");
 			var dsParam = Backend.dsParam;
-			var dsDetail = '{"REGDATE":"'+JSON.stringify(qnaDetailValue.value.regDate.value)+'","AREA":'+JSON.stringify(qnaDetailValue.value.area.value)+',"CONT":'+JSON.stringify(qnaDetailValue.value.cont.value)+',"COMM_SEQ":"'+JSON.stringify(qnaDetailValue.value.commSeq.value)+'","REPLY_REF":"'+JSON.stringify(qnaDetailValue.value.replyRef.value)+'","REGDATE1":'+JSON.stringify(qnaDetailValue.value.regDate1.value)+',"INQ_ADM_CNT":"'+JSON.stringify(qnaDetailValue.value.inqAdmCnt.value)+'","REGID":'+JSON.stringify(qnaDetailValue.value.regId.value)+',"SITE_CLSS_SND":'+JSON.stringify(qnaDetailValue.value.siteClssSnd.value)+',"QA_REPLY_YN":'+JSON.stringify(qnaDetailValue.value.qaReplyYn.value)+',"INQ_USR_CNT":"'+JSON.stringify(qnaDetailValue.value.inqUsrCnt.value)+'","REPLY_DEPTH":"'+JSON.stringify(qnaDetailValue.value.replyDepth.value)+'","WRITER_NM":'+JSON.stringify(qnaDetailValue.value.writerNm.value)+',"WRITE_HOST":"'+JSON.stringify(qnaDetailValue.value.writeHost.value)+'","REGDATE2":'+JSON.stringify(qnaDetailValue.value.regDate2.value)+',"BOD_COM_YN":'+JSON.stringify(qnaDetailValue.value.bodComYn.value)+',"WRITER_ORG":'+JSON.stringify(qnaDetailValue.value.writerOrg.value)+',"BOD_FORM_CLSS":'+JSON.stringify(qnaDetailValue.value.bodFormClss.value)+',"REQ_YN":'+JSON.stringify(qnaDetailValue.value.reqYn.value)+',"TITLE":'+JSON.stringify(qnaDetailValue.value.title.value)+',"REPLY_SORTKEY":'+JSON.stringify(qnaDetailValue.value.replySortkey.value)+'}';
+			var dsDetail = '{"REGDATE":"'+JSON.stringify(qnaDetailValue.value.regDate.value)+'","AREA":'+JSON.stringify(qnaDetailValue.value.area.value)+',"CONT":'+JSON.stringify(qnaDetailValue.value.cont.value)+',"COMM_SEQ":"'+JSON.stringify(qnaDetailValue.value.commSeq.value)+'","REPLY_REF":"'+JSON.stringify(qnaDetailValue.value.replyRef.value)+'","REGDATE1":'+JSON.stringify(qnaDetailValue.value.regDate1.value)+',"INQ_ADM_CNT":"'+JSON.stringify(qnaDetailValue.value.inqAdmCnt.value)+'","REGID":'+JSON.stringify(qnaDetailValue.value.regId.value)+',"SITE_CLSS_SND":'+JSON.stringify(qnaDetailValue.value.siteClssSnd.value)+',"QA_REPLY_YN":'+JSON.stringify(qnaDetailValue.value.qaReplyYn.value)+',"INQ_USR_CNT":"'+JSON.stringify(qnaDetailValue.value.inqUsrCnt.value)+'","REPLY_DEPTH":"'+JSON.stringify(qnaDetailValue.value.replyDepth.value)+'","WRITER_NM":'+JSON.stringify(qnaDetailValue.value.writerNm.value)+',"WRITE_HOST":"'+qnaDetailValue.value.writeHost.value+'","REGDATE2":'+JSON.stringify(qnaDetailValue.value.regDate2.value)+',"BOD_COM_YN":'+JSON.stringify(qnaDetailValue.value.bodComYn.value)+',"WRITER_ORG":'+JSON.stringify(qnaDetailValue.value.writerOrg.value)+',"BOD_FORM_CLSS":'+JSON.stringify(qnaDetailValue.value.bodFormClss.value)+',"REQ_YN":'+JSON.stringify(qnaDetailValue.value.reqYn.value)+',"TITLE":'+JSON.stringify(qnaDetailValue.value.title.value)+',"REPLY_SORTKEY":'+JSON.stringify(qnaDetailValue.value.replySortkey.value)+'}';
 
 			console.log("update dsDetal : " + dsDetail);
 			//첨부파일 수정필요
 			var dsFileList = '{}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
-
 			fetch(qnaUserUpdateUrl, {
 					method: 'POST',
 					headers: {
@@ -876,10 +874,8 @@
 
 				<Panel Width="80%" Alignment="CenterRight">
 					<!-- <Text Value="전체" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}*2, 0" /> -->
-					<Text Value="비공개" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}*2, 0" />
+					<Text Value="{selectedType2}" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}*2, 0" />
 					<Image File="Images/bg_select2.png" Margin="{margin}" />
-
-
 					<Clicked>
 						<Callback Handler="{pickerUp2}" />
 					</Clicked>
@@ -900,7 +896,7 @@
 			</Rectangle>
 		</Grid>
 
-		<Grid Color="#ccc" CellSpacing="1" Rows="Auto">
+		<Grid Color="#ccc" CellSpacing="1" Rows="1.3*, 6*, 1.3*">
 			<Panel Color="White">
 				<TextBox Value="{qnaDetailValue.title}" Margin="{margin}" PlaceholderText="제목을 입력하세요" />
 			</Panel>
@@ -908,37 +904,38 @@
 				<TextBox Value="{qnaDetailValue.cont}" Margin="{margin}" PlaceholderText="내용을 입력하세요" Width="100%" MaxWidth="100%" TextWrapping="Wrap" />
 			</Panel>
 
-			<Panel Dock="Bottom" Width="100%" Color="#5079DB" Height="{margin}*14">
-			<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5" Rows="1*, 2.5*, 1*">
-				<Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" />
-				<Text Value="업로드 이미지 없음" Color="White" FontSize="{margin}*0.8" Alignment="CenterRight" />
-				<Rectangle Width="100%" Color="White" ColumnSpan="2">
-					<StackPanel>
-						<Each Items="{qnaFileValue}">
-								<WrapPanel>
-									<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
-									<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-									<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-								</WrapPanel>
-							</Each>
-					</StackPanel>
-				</Rectangle>
-				<GrayButton2>
-					<Text Value="취소" Color="White" Alignment="Center" />
-					<Clicked>
-						<Callback Handler="{selectedTypes}" />	
-						<Callback Handler="{pickerDown}" />
-						<Toggle Target="applyQuestion" />
-					</Clicked>
-				</GrayButton2>
-				<OrangeButton>
-					<Text Value="저장" Color="White" Alignment="Center" />
-					<Clicked>
-						<Callback Handler="{sendData}" />
-					</Clicked>
-				</OrangeButton>
-			</Grid>
-		</Panel>
+			<!-- <Panel Dock="Bottom" Width="100%" Color="#5079DB" Height="{margin}*5"> -->
+			<Panel Dock="Bottom" Width="100%" Color="#5079DB">
+				<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5" Rows="Auto">
+					<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" />
+					<Text Value="업로드 이미지 없음" Color="White" FontSize="{margin}*0.8" Alignment="CenterRight" />
+					<Rectangle Width="100%" Color="White" ColumnSpan="2">
+						<StackPanel>
+							<Each Items="{qnaFileValue}">
+									<WrapPanel>
+										<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+										<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+										<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									</WrapPanel>
+								</Each>
+						</StackPanel>
+					</Rectangle> -->
+					<GrayButton2>
+						<Text Value="취소" Color="White" Alignment="Center" />
+						<Clicked>
+							<Callback Handler="{selectedTypes}" />	
+							<Callback Handler="{pickerDown}" />
+							<Toggle Target="applyQuestion" />
+						</Clicked>
+					</GrayButton2>
+					<OrangeButton>
+						<Text Value="저장" Color="White" Alignment="Center" />
+						<Clicked>
+							<Callback Handler="{sendData}" />
+						</Clicked>
+					</OrangeButton>
+				</Grid>
+			</Panel>
 		</Grid>
 
 		
@@ -1015,7 +1012,7 @@
 						</StackPanel>
 					</Rectangle>
 					<GrayButton2>
-						<Text Value="취소" Alignment="Center" Color="White" />
+						<Text Value="삭제" Alignment="Center" Color="White" />
 						<Clicked>
 							<Callback Handler="{selectedTypes}" />	
 							<Callback Handler="{pickerDown}" />

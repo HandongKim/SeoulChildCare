@@ -26,15 +26,9 @@ var fromDate = {
 function receiveFromPickerUp() {
 	receiveFromPickerPanelOn.value = true;
 }
+
 function receiveFromPickerDown() {
-	
-
 	receiveFromPickerPanelOn.value = false;
-
-
-
-
-
 }
 
 var receiveToPickerPanelOn = Observable(false);
