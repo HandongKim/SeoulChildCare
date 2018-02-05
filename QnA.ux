@@ -747,12 +747,21 @@
 			var SITE_CLSS_SND = JSON.parse(Backend.dsParam).GVORGCLSS;
 			var WRITER_NM     = JSON.parse(Backend.dsParam).GVMEMNAME;
 			var WRITER_ORG    = JSON.parse(Backend.dsParam).GVAREANAME;
+
+			console.log("WRITER_ORG  : " + WRITER_ORG);
+
+
 			var WRITE_HOST    = FileDownload.getIpAddress();
 			var AREA          = JSON.parse(Backend.dsParam).GVAREACODE;
 			var REGID         = JSON.parse(Backend.dsParam).GVMEMID;
 			var OPEN_YN       = "N";
 
 			var dsParam = Backend.dsParam;
+
+			console.log("dsParam : " + dsParam);
+
+
+
 			var dsDetail = '{"CONT":"'+qnaDetailValue.value.cont.value
 			+'","TITLE":"'+qnaDetailValue.value.title.value
 			+'","SITE_CLSS_SND":"'+SITE_CLSS_SND+'","WRITER_NM":"'+WRITER_NM

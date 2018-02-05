@@ -803,7 +803,7 @@ function connectToServer() {
 			// alert.message.value = "비밀번호를 입력하세요.";
 			// alert.type.value = "Check";
 			// alert.layer.value = "Overlay";
-
+			console.log("Login dsParma : " + JSON.stringify(dsParam));
 
 
         	Backend.dsParam = JSON.stringify(dsParam);
