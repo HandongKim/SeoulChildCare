@@ -709,7 +709,40 @@
 		function modifySned(){
 			console.log("modifySned function Call ");
 			var dsParam = Backend.dsParam;
-			var dsDetail = '{"REGDATE":"'+JSON.stringify(qnaDetailValue.value.regDate.value)+'","AREA":'+JSON.stringify(qnaDetailValue.value.area.value)+',"CONT":'+JSON.stringify(qnaDetailValue.value.cont.value)+',"COMM_SEQ":"'+JSON.stringify(qnaDetailValue.value.commSeq.value)+'","REPLY_REF":"'+JSON.stringify(qnaDetailValue.value.replyRef.value)+'","REGDATE1":'+JSON.stringify(qnaDetailValue.value.regDate1.value)+',"INQ_ADM_CNT":"'+JSON.stringify(qnaDetailValue.value.inqAdmCnt.value)+'","REGID":'+JSON.stringify(qnaDetailValue.value.regId.value)+',"SITE_CLSS_SND":'+JSON.stringify(qnaDetailValue.value.siteClssSnd.value)+',"QA_REPLY_YN":'+JSON.stringify(qnaDetailValue.value.qaReplyYn.value)+',"INQ_USR_CNT":"'+JSON.stringify(qnaDetailValue.value.inqUsrCnt.value)+'","REPLY_DEPTH":"'+JSON.stringify(qnaDetailValue.value.replyDepth.value)+'","WRITER_NM":'+JSON.stringify(qnaDetailValue.value.writerNm.value)+',"WRITE_HOST":"'+qnaDetailValue.value.writeHost.value+'","REGDATE2":'+JSON.stringify(qnaDetailValue.value.regDate2.value)+',"BOD_COM_YN":'+JSON.stringify(qnaDetailValue.value.bodComYn.value)+',"WRITER_ORG":'+JSON.stringify(qnaDetailValue.value.writerOrg.value)+',"BOD_FORM_CLSS":'+JSON.stringify(qnaDetailValue.value.bodFormClss.value)+',"REQ_YN":'+JSON.stringify(qnaDetailValue.value.reqYn.value)+',"TITLE":'+JSON.stringify(qnaDetailValue.value.title.value)+',"REPLY_SORTKEY":'+JSON.stringify(qnaDetailValue.value.replySortkey.value)+'}';
+
+			var OPEN_YN = "";
+			if (selectedType2.value=="비공개") {
+				OPEN_YN = "N";
+			} else {
+				OPEN_YN = "Y";
+			}
+
+
+
+
+			var dsDetail = '{"REGDATE":"'+JSON.stringify(qnaDetailValue.value.regDate.value)
+							+'","AREA":'+JSON.stringify(qnaDetailValue.value.area.value)
+							+',"CONT":'+JSON.stringify(qnaDetailValue.value.cont.value)
+							+',"COMM_SEQ":"'+JSON.stringify(qnaDetailValue.value.commSeq.value)
+							+'","REPLY_REF":"'+JSON.stringify(qnaDetailValue.value.replyRef.value)
+							+'","REGDATE1":'+JSON.stringify(qnaDetailValue.value.regDate1.value)
+							+',"INQ_ADM_CNT":"'+JSON.stringify(qnaDetailValue.value.inqAdmCnt.value)
+							+'","REGID":'+JSON.stringify(qnaDetailValue.value.regId.value)
+							+',"SITE_CLSS_SND":'+JSON.stringify(qnaDetailValue.value.siteClssSnd.value)
+							+',"QA_REPLY_YN":'+JSON.stringify(qnaDetailValue.value.qaReplyYn.value)
+							+',"INQ_USR_CNT":"'+JSON.stringify(qnaDetailValue.value.inqUsrCnt.value)
+							+'","REPLY_DEPTH":"'+JSON.stringify(qnaDetailValue.value.replyDepth.value)
+							+'","WRITER_NM":'+JSON.stringify(qnaDetailValue.value.writerNm.value)
+							+',"WRITE_HOST":"'+qnaDetailValue.value.writeHost.value
+							+'","REGDATE2":'+JSON.stringify(qnaDetailValue.value.regDate2.value)
+							+',"BOD_COM_YN":'+JSON.stringify(qnaDetailValue.value.bodComYn.value)
+							+',"WRITER_ORG":'+JSON.stringify(qnaDetailValue.value.writerOrg.value)
+							+',"BOD_FORM_CLSS":'+JSON.stringify(qnaDetailValue.value.bodFormClss.value)
+							+',"REQ_YN":'+JSON.stringify(qnaDetailValue.value.reqYn.value)
+							+',"TITLE":'+JSON.stringify(qnaDetailValue.value.title.value)
+							+',"REPLY_SORTKEY":'+JSON.stringify(qnaDetailValue.value.replySortkey.value)
+							+',"OPEN_YN":"'+OPEN_YN
+							+'"}';
 
 			console.log("update dsDetal : " + dsDetail);
 			//첨부파일 수정필요
@@ -929,7 +962,7 @@
 						</Clicked>
 					</GrayButton2>
 					<OrangeButton>
-						<Text Value="저장" Color="White" Alignment="Center" />
+						<Text Value="등록" Color="White" Alignment="Center" />
 						<Clicked>
 							<Callback Handler="{sendData}" />
 						</Clicked>
@@ -1021,7 +1054,7 @@
 					</GrayButton2>
 					<WhileTrue Value="{qnaIsCorrect}">
 						<OrangeButton>
-							<Text Value="저장" Alignment="Center" Color="White" />
+							<Text Value="수정" Alignment="Center" Color="White" />
 							<Clicked>
 								<Toggle Target="applyQuestion" />
 								<!-- 상세정보 수정화면 가기 -->

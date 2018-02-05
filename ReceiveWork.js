@@ -187,7 +187,6 @@ function receivedMessage (args, index) {
 	} else {
 		this.TITLE = "";
 	}
-	
 }
 
 var INFO_CDHD_NO = JSON.parse(Backend.dsParam).GVMEMID;
@@ -463,42 +462,126 @@ function goToDetailReceiveWork (args) {
 }
 
 var replyTitle = Observable();
+var replyCont = Observable();
 
 function setTheReplyTitle () {
 	replyTitle.value = "[답변]" + detailReceivedWorks._values[0].TITLE;
 }
 
 
-function replyReceiveWork()
-{
+function replyReceiveWork() {
+	var saveBusiReceiveAdmin_URL = Backend.BASE_URL + Backend.saveBusiReceiveAdmin_URL;
+	var SITE_CLSS_SND ="";
+	var TITLE = ""; 
+	var CONT = "";
+	var COMM_SEQ = "";
+	var AREA = "";
+
+	//수신자 정보
+	var RECEIVE_NM = "";
+	var RECEIVE_ORG = "";
+
+
+	if (JSON.parse(dsParam).GVORGCLSS != null) {
+		SITE_CLSS_SND = JSON.parse(dsParam).GVORGCLSS;
+	} else {
+		SITE_CLSS_SND = "";
+	}
+		
+	if (replyTitle.value !=null || replyTitle.value != "") {
+		TITLE = replyTitle.value;	
+	} else {
+		TITLE = "";
+	}
 	
-	// SITE_CLSS_SND = JSON.parse(Backend.dsParam).GVORGCLSS;
-	// TITLE
-	// CONT", ta_cont.Text);                                   //내용
-	// REPLY_REF",ds_FvCommList.GetColumn(0,"COMM_SEQ"));     //답변대상 COMM_SEQ
-	// REPLY_DEPTH","1");                                     //질문 답변인지여부 0:질문 1:답변
-	// REPLY_SORTKEY",ds_FvCommList.GetColumn(0,"COMM_SEQ")); //답변대상 COMM_SEQ +0 * 40
-	// WRITE_HOST",fn_GetIp());                          //로컬 IP
-	// AREA",gvAREACODE);                              //지원기관코드
-	// BOD_FORM_CLSS",ds_FvCommList.GetColumn(0,"BOD_FORM_CLSS")); //업무연락구분
-	// BOD_COM_YN",ds_FvCommList.GetColumn(0,"BOD_COM_YN"));
-	// REGID",gvMEMID);
-	// //수신자데이타
-	// INFO_CDHD_NO",ds_FvCommList.GetColumn(0,"REGID"));     //수신자ID
-	// INFO_OBJ_CTGO",ds_FvCommList.GetColumn(0,"SITE_CLSS_SND"));    //수신자 권한
-	// RECEIVE_NM",ds_FvCommList.GetColumn(0,"WRITER_NM"));       //수신자 이름
-	// RECEIVE_ORG",ds_FvCommList.GetColumn(0,"WRITER_ORG"));      //수신자 소속
+	if (replyCont.value !=null || replyTitle.value!="") {
+		CONT = replyCont.value;
+	} else {
+		CONT = "";
+	}
+		
+	// if (detailReceivedWorkVariable.COMM_SEQ !=null) {
+	// 	COMM_SEQ = detailReceivedWorkVariable.COMM_SEQ;
+	// } else {
+	// 	COMM_SEQ = "";
+	// }
+
+	if (JSON.parse(dsParam).GVAREACODE != null) {
+		AREA = JSON.parse(dsParam).GVAREACODE;
+	} else {
+		AREA = "";
+	}
+
+	if (detailReceivedWorkVariable.WRITER_NM != null) {
+		RECEIVE_NM = detailReceivedWorkVariable.WRITER_NM;
+	} else {
+		RECEIVE_NM = "";
+	}
+
+	if (detailReceivedWorkVariable.WRITER_ORG != null) {
+		RECEIVE_ORG = detailReceivedWorkVariable.WRITER_ORG;
+	} else {
+		RECEIVE_ORG = "";
+	}
+
+	var REPLY_REF = detailReceivedWorkVariable.COMM_SEQ;
 
 
 
+
+// NOT DONE YET
+// 	var REPLY_DEPTH","1");                                     //질문 답변인지여부 0:질문 1:답변
+// 	var REPLY_SORTKEY",ds_FvCommList.GetColumn(0,"COMM_SEQ")); //답변대상 COMM_SEQ +0 * 40
+// 	var WRITE_HOST = "";
+		
+// 	var BOD_FORM_CLSS",ds_FvCommList.GetColumn(0,"BOD_FORM_CLSS")); //업무연락구분
+// 	var BOD_COM_YN",ds_FvCommList.GetColumn(0,"BOD_COM_YN"));
+// 	var REGID",gvMEMID);
+// //수신자데이타
+// 	var INFO_CDHD_NO",ds_FvCommList.GetColumn(0,"REGID"));     //수신자ID
+// 	var INFO_OBJ_CTGO",ds_FvCommList.GetColumn(0,"SITE_CLSS_SND"));    //수신자 권한
 	
-	var dsSearch = '{"commClss":"'+commClss+'","srchType":"'+srchType+'","srchText":"'+srchText+'","INFO_CDHD_NO":"'+INFO_CDHD_NO+'"}';
-	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+// NOT DONE YET
+
+		// SITE_CLSS_SND", gvORGCLSS);                  //답변자 ORGCLSS
+		// TITLE", gfn_Edit2Html(edt_Title));                                //제목
+		// CONT", ta_cont.Text);                                   //내용
+		// REPLY_REF",ds_FvCommList.GetColumn(0,"COMM_SEQ"));     //답변대상 COMM_SEQ
+
+		// REPLY_REF",ds_FvCommList.GetColumn(0,"reSeq"));     //답변대상 COMM_SEQ
+
+		// REPLY_DEPTH","1");                                     //질문 답변인지여부 0:질문 1:답변
+		// REPLY_SORTKEY",ds_FvCommList.GetColumn(0,"COMM_SEQ")); //답변대상 COMM_SEQ +0 * 40
+		// WRITE_HOST",fn_GetIp());                          //로컬 IP
+		// AREA",gvAREACODE);                              //지원기관코드
+		// BOD_FORM_CLSS",ds_FvCommList.GetColumn(0,"BOD_FORM_CLSS")); //업무연락구분
+		// BOD_COM_YN",ds_FvCommList.GetColumn(0,"BOD_COM_YN"));
+		// REGID",gvMEMID);
+		//수신자데이타
+		// INFO_CDHD_NO",ds_FvCommList.GetColumn(0,"REGID"));     //수신자ID
+		// INFO_OBJ_CTGO",ds_FvCommList.GetColumn(0,"SITE_CLSS_SND"));    //수신자 권한
+		// RECEIVE_NM",ds_FvCommList.GetColumn(0,"WRITER_NM"));       //수신자 이름
+		// RECEIVE_ORG",ds_FvCommList.GetColumn(0,"WRITER_ORG"));      //수신자 소속
+
+
+
+
+
+
+
+	var ds_comm_list = '{"commClss":"'+commClss+'","srchType":"'+srchType+'","srchText":"'+srchText+'","INFO_CDHD_NO":"'+INFO_CDHD_NO+'"}';
+
+
+
+
+
+
+	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_comm_list": '+dsSearch+', "reSeq":"'+COMM_SEQ+'"}');
 	var selectBusiReceiveAdminList_URL = Backend.BASE_URL + Backend.selectBusiReceiveAdminList_URL;
 
 	receiveWorks.clear();
 
-	fetch(selectBusiReceiveAdminList_URL, {
+	fetch(saveBusiReceiveAdmin_URL, {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"
@@ -535,5 +618,5 @@ module.exports = {
 	fromDate, receiveFromPickerPanelOn, receiveFromPickerUp, receiveFromPickerDown,
 	toDate, receiveToPickerPanelOn, receiveToPickerUp, receiveToPickerDown, searchContent,
 	receiveWorks, receiveworkDetail, initReceiveList, goToDetailReceiveWork, setTheReplyTitle,
-	searchText, detailReceivedWorks, detailReceivedWorkVariable, replyReceiveWork, replyTitle
+	searchText, detailReceivedWorks, detailReceivedWorkVariable, replyReceiveWork, replyTitle, replyCont
 };

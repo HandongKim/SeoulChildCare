@@ -54,7 +54,7 @@
 				<TextBox Value="{replyTitle}" Margin="{margin}" PlaceholderText="제목을 입력하세요" />
 			</Panel>
 			<Panel Color="White">
-				<TextBox Value="나중에 지워야 하는 부분" Margin="{margin}" PlaceholderText="내용을 입력하세요" Width="100%" MaxWidth="100%" TextWrapping="Wrap" />
+				<TextBox Value="{replyCont}" Margin="{margin}" PlaceholderText="내용을 입력하세요" Width="100%" MaxWidth="100%" TextWrapping="Wrap" />
 			</Panel>
 
 			<Panel Dock="Bottom" Width="100%" Color="#5079DB" Height="{margin}*14">
