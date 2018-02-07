@@ -858,7 +858,7 @@ function pickerUp() {
 	// Picker.endPosition.value = Math.round((0-10)/50) * 50;
 	console.log("selectedData.value : " + selectedData.value);
 	// pickerData.clear();
-	selectedData.clear();
+	// selectedData.clear();
 	// pickerData.add("");
 	// pickerData.add("카드결제");
 	// pickerData.add("아이행복카드");
@@ -874,11 +874,12 @@ function pickerUp() {
 	// Picker.setEndPostionValue(0);
 
 
-	selectedData.value = "";
+	selectedData.value = "결제방법";
 	pickerOn.value = true;
 }
 
 var selected_BILL_CLSS = Observable();
+var selected_ESTI_CODE = null;
 
 function pickerDown() {
 	
@@ -887,7 +888,7 @@ function pickerDown() {
 	// console.log("selectedDetailNoteVariable.ESTI_CODE : " + selectedDetailNoteVariable.ESTI_CODE.substring(0,3));
 	// console.log("selectedDetailNoteVariable.BILL_CLSS : " + selectedDetailNoteVariable.BILL_CLSS);
 		
-	var selected_ESTI_CODE = null;
+	
 
 	if (Backend.subject.ESTI_CODE.value !=null) {
 		selected_ESTI_CODE = Backend.subject.ESTI_CODE.value;
@@ -897,30 +898,24 @@ function pickerDown() {
 
 	console.log("selected_ESTI_CODE : " + selected_ESTI_CODE);
 	console.log("selected_ESTI_CODE : " + selected_ESTI_CODE.substring(0,3));
-	
 	var selectable = false;
-
 	console.log("selectedData : " + selectedData.value);
-	console.log("111111111111111111111111111111111111111111111");
 	if(selectedData.value == "카드결제") {
-		console.log("2222222222222222222222222222222222222222222");
 		if (selected_ESTI_CODE !="2010401" && selected_ESTI_CODE.substring(0,3) == "201") {
-			console.log("33333333333333333333333333333333333");
 			if (selected_ESTI_CODE == "2010101" || selected_ESTI_CODE == "2010201") {
-				console.log("44444444444444444");
 				selected_BILL_CLSS.value = "10";
 				alert.message.value="법정부담금 납부에 한하여 '카드결제' 선택이 가능합니다";
 				alert.layer.value="Overlay";
 				selectable = true;
 			} else {
-				console.log("555555555555555555");
 				alert.message.value="인건비는 결제방법을 '카드결제'로 사용할 수 없습니다";
 				alert.layer.value="Overlay";
 				selectable = false;
 			}
+		} else {
+			selected_BILL_CLSS.value = "10";
+			selectable = true;
 		}
-
-
 
 	} else if (selectedData.value == "아이행복카드") {
 		selected_BILL_CLSS.value = "20";
@@ -954,7 +949,7 @@ function pickerDown() {
 		selected_BILL_CLSS.value = null;
 
 		if (selectedDetailNoteVariable.BILL_CLSS !=null) {
-
+			console.log("selectedDetailNoteVariable.BILL_CLSS : " + selectedDetailNoteVariable.BILL_CLSS);
 			if(selectedDetailNoteVariable.BILL_CLSS == "10") {
 				selectedData.value = "카드결제";
 			} else if (selectedDetailNoteVariable.BILL_CLSS == "20") {
@@ -973,6 +968,7 @@ function pickerDown() {
 				selectedData.value = "결제방법";
 			}
 		} else {
+			console.log("!@#$%^&*()");
 			selectedData.value = "결제방법";	
 		}
 		
@@ -1726,10 +1722,20 @@ function deleteData () {
 		var cameFromChoiceSubject = false;
 
 		function goChoiceSubject () {
+			var BILL_CLSStoSend = "";
+			if (selected_BILL_CLSS.value == null) {
+				BILL_CLSStoSend = selectedDetailNoteVariable.BILL_CLSS;
+			} else {
+				BILL_CLSStoSend = selected_BILL_CLSS.value;
+			}
+
+			console.log("BILL_CLSStoSend : " + BILL_CLSStoSend);
+
 			var infoJSON = {
-					CASH_GB:selectedDetailNoteVariable.CASH_GB,
-					CASH_DATE:selectedDetailNoteVariable.CASH_DATE
-				}
+				CASH_GB:selectedDetailNoteVariable.CASH_GB,
+				CASH_DATE:selectedDetailNoteVariable.CASH_DATE,
+				BILL_CLSS:BILL_CLSStoSend
+			}
 			router.push("ChoiceSubject", infoJSON);
 			cameFromChoiceSubject = true;
 		}
@@ -1831,12 +1837,46 @@ function deleteData () {
 					console.log("now type : " + notes._values[tempIndex].type);
 					console.log("ESTI_CODE Changed : " + x.substr(0,1));
 					console.log("reverse state : " + subType.reverse.value);
+
+
+
+
+					console.log("==========================================================");
+					console.log(" x : " + x);
+					console.log(" x.substr(0,3) : " + x.substr(0,3));
+					console.log("==========================================================");
+
+
+
+
+
+
+
+
 				} catch (err){
 					console.log(err);
 				} finally {
 
 				}
 			}
+
+			
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
 		});
 
 		//가격이 바뀌었을 때 타야되는 로직

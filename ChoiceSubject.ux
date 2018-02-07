@@ -10,11 +10,13 @@
 		var incomeTF = Observable(true);
 		var CASH_GB;
 		var CASH_DATE;
+		var BILL_CLSS;
 		this.Parameter.onValueChanged(null,function(x) {
 			if (x == null) {
 			}else {
 				CASH_GB = Observable(x.CASH_GB);	
 				CASH_DATE = Observable(x.CASH_DATE);
+				BILL_CLSS = Observable(x.BILL_CLSS);
 			}
 		});
 
@@ -292,6 +294,18 @@
 				if (( arg.data.ESTI_SUBCODE == "" || arg.data.ESTI_SUBCODE == null) && arg.data.ESTI_SUB_YN == "Y") {
 					//
 				} else {
+					console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+					console.log("arg.data.ESTI_CODE : "  + arg.data.ESTI_CODE);
+					console.log("arg.data.ESTI_CODE.substring(0,3) : "  + arg.data.ESTI_CODE.substring(0,3));
+					console.log("BILL_CLSS : "  + BILL_CLSS.value);
+					console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
+					if (arg.data.ESTI_CODE !="2010401" && arg.data.ESTI_CODE.substring(0,3)=="201" && BILL_CLSS =="10") {
+						// console.log("This is like a shit");
+					}
+
+
+
 
 					if (arg.data.type == 1) {
 						Backend.subject.color.value = "#4C9DFF";
@@ -319,12 +333,6 @@
 					console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
 					console.log("======================== ************************************************");
 
-					console.log("======================== ************************************************");
-					console.log("arg.data.BILL_CLSS : " + arg.data.BILL_CLSS);
-					console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
-					console.log("======================== ************************************************");
-
-
 					Backend.chosenSubject.isChoice = true;
 					Backend.chosenSubject.name = arg.data.name;
 					Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
@@ -350,9 +358,6 @@
 					choiceSubjectAlertWithConfirm.layer.value = "Overlay";
 					Backend.isItFromNoteManage.value = false;
 				}
-
-
-
 			}	
 		}
 
