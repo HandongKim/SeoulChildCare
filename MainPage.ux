@@ -16,7 +16,7 @@
 				if (route[0] == "MainPage") {
 					console.log("Currnet Page is MainPage and count is : " + count);
 					count++;
-					console.log("Currnet Page is MainPage and count is (After increase ): " + count);
+					console.log("Currnet Page is MainPage and count is (After increase): " + count);
 					if (count >1) {
 						MainPageAlertWithConfirm.message.value="종료하시겠습니까?";
 						MainPageAlertWithConfirm.layer.value="Overlay";			
