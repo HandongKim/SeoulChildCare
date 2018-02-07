@@ -46,9 +46,6 @@
 	</Circle>
 </Panel>
 
-
-
-	
 <StackPanel ux:Class="Note2" Width="100%" Color="White">
 		<Clicked>
 			<Callback Handler="{pickFromList}" />

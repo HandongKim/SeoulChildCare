@@ -7,19 +7,11 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
-
 		var type = Observable("제목", "내용");
 		var selectedType = Observable("제목");
-
-
 		var type2 = Observable("비공개", "공개");
 		var selectedType2 = Observable("비공개");
-
-
-
 		var FileDownload = require('FileDownloadUX');
-
-
 
 		pickerOn = Observable(false);
 		pickerOn2= Observable(false);
@@ -41,7 +33,6 @@
 			pickerOn2.value = false;
 		}
 
-
 		function selectedTypes(){
 			selectedType.value = "제목";
 			searchText.clear();
@@ -57,13 +48,10 @@
 			// router.goBack();
 		}
 
-
-
 		var pageCount = Observable(1);
 		var totalPage = Observable();
 		var searchText = Observable();
 		var globalSearch ;
-
 		var qnas = Observable();
 		var qnaDetailValue = Observable(); 
 		var qnaFileValue = Observable();
@@ -74,12 +62,9 @@
 		var qnaListDtlUrl = Backend.BASE_URL + Backend.qnaListDtl_URL;
 		var insertQnaCommListUrl = Backend.BASE_URL + Backend.insertQnaCommList_URL;
 		var qnaUserUpdateUrl = Backend.BASE_URL + Backend.qnaUserUpdate_URL;
-
 		var AREA = JSON.parse(Backend.dsParam).GVAREACODE;
 
-
 		var warnningText = Observable("* '공개'로 선택 시 질문하시는내용이 모든 어린이집에 공개됩니다.");
-
 		var warnningOn = Observable(false);
 
 		function detailDataClear(){
@@ -476,11 +461,20 @@
 		//http://192.168.10.210 내부
 		// 수정 페이지 호출 
 		function getDetailQnA(qnaData){
+			var combo="";
+			if(selectedType.value=="제목"){
+				combo = "head";
+			}else if (selectedType.value=="내용"){
+				combo = "main";
+			}
+
+
+
 			console.log("getDetailQnA was called");
 			console.log("qnaData : "+qnaData);
 			console.log("DetailValue function Call ");
 			var dsParam = Backend.dsParam;
-			var dsSearch = '{"combo":"head","commClss":"Q","commSeq":"'+JSON.stringify(qnaData.commSeq)+'","sch_txt":""}';
+			var dsSearch = '{"combo":"'+combo+'","commClss":"Q","commSeq":"'+JSON.stringify(qnaData.commSeq)+'","sch_txt":""}';
 		
 			console.log("dsSearch : " + dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');

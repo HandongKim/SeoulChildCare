@@ -47,7 +47,7 @@ function goMainPage() {
 			var isPasswordCorrect = checkThePassword(certPw.value);
 			// var isPasswordCorrect = checkThePassword("1q2w3e4r!@");
 			//테스토 용
-			isPasswordCorrect = true;
+			// isPasswordCorrect = true;
 			if(isPasswordCorrect == true) {
 				alert.layer.value="Background";
 				var temp = connectToServer();
@@ -444,7 +444,7 @@ function setLicense () {
 
 function getLogicSignedData () {
 	var value = certPw.value;
-	value = "1q2w3e4r!@";
+	// value = "1q2w3e4r!@";
 	mSignedData = UniSign.getLogicSignedData(value, certificateIndexValue);
 	return mSignedData;
 }

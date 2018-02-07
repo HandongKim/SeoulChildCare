@@ -59,7 +59,6 @@ var selectOnlineBCashListDatas = Observable();
 function selectOnlineBCashListIndividualData (args, index) {
 	this.INDEX = index;
 
-
 	if (args.SUBJECT != null)  {
 		this.SUBJECT = args.SUBJECT;	
 	} else {

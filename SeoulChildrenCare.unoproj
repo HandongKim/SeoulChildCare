@@ -27,9 +27,9 @@
     "fuse_modules/bolav/fuse-homescreen/homescreen_include.unoproj"
   ],
   "Icon": "./Images/icon-512-2.png",
-  "Versions": "1.0.2",
-  "VersionCode": "102",
-  "VersionName": "1.0.2",
+  "Versions": "1.0.3",
+  "VersionCode": "103",
+  "VersionName": "1.0.3",
   "Android": {
     "VersionCode": "$(VersionCode)",
     "VersionName": "$(VersionName)",

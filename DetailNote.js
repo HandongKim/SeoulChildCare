@@ -942,6 +942,7 @@ for (var i = 0 ; i < 31 ; i++) {
 
 
 var datePickerOn = Observable(false);
+
 function datePickerUp() {
 	datePickerOn.value = true;
 }
@@ -1188,13 +1189,17 @@ function saveData() {
 		// console.log("BILL_IDX : " + BILL_IDX);
 		// console.log("moneyValue.value : " + moneyValue.value);
 
+	console.log("tempMoneyValue : " + tempMoneyValue);
+	console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
+
 	if (tempMoneyValue != selectedDetailNoteVariable.MONEY) {
 
-		console.log("tempMoneyValue : " + tempMoneyValue);
-		console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
+		console.log("1111111111111111111 tempMoneyValue : " + tempMoneyValue);
+		console.log("2222222222222222222 selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
 
 		if (ACTION =="I") {
-			BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString();
+			// BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString();
+			BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		} else if (ACTION == "U") {
 			BCASH_MEMO = ORG_BCASH_MEMO;
 		}
@@ -1205,6 +1210,10 @@ function saveData() {
 	}else {
 
 	}
+
+	console.log("ORG_BCASH_MEMO : " + ORG_BCASH_MEMO);
+	console.log("BCASH_MEMO.MONEY : " + BCASH_MEMO);
+
 
 
 
@@ -1637,7 +1646,8 @@ function deleteData () {
 
 		function goChoiceSubject () {
 			var infoJSON = {
-					CASH_GB:selectedDetailNoteVariable.CASH_GB
+					CASH_GB:selectedDetailNoteVariable.CASH_GB,
+					CASH_DATE:selectedDetailNoteVariable.CASH_DATE
 				}
 			router.push("ChoiceSubject", infoJSON);
 			cameFromChoiceSubject = true;
@@ -2126,30 +2136,33 @@ function focusLost () {
 		}
 	}
 }
-		//2018.01.16 기존 소스 끝
-		module.exports = {
-			detailText, showText, uploadOn, tryUpload, cancelUpload,
-			pickerOn, selectedData, pickerData, pickerUp, pickerDown,
-			subType, notes, stPos,
-			choiceSubjectPanelOn, choiceSubjectPanelUp, choiceSubjectPanelDown,
-			year, years, month, months, day, days,
-			datePickerOn, datePickerUp, datePickerDown,
-			goPhotoCollection: function() {
-				router.push("PhotoCollection", {type: "upload"});
-				uploadOn.value = false;
-			},
-			goChoiceSubject,
-			getListDetailNote,pickFromList, moneyValue,viewWillAppear, saveData,  deleteData, selectedMemo,
 
-			goShowFile: function() {
-				console.log("goShowFile : goShowFile");
-				console.log("selectedDetailNoteVariable : " + selectedDetailNoteVariable.BILL_IDX);
-				var infoJSON = {
-					BILL_IDX:selectedDetailNoteVariable.BILL_IDX
-				}
+//2018.01.16 기존 소스 끝
+module.exports = {
+	detailText, showText, uploadOn, tryUpload, cancelUpload,
+	pickerOn, selectedData, pickerData, pickerUp, pickerDown,
+	subType, notes, stPos,
+	choiceSubjectPanelOn, choiceSubjectPanelUp, choiceSubjectPanelDown,
+	year, years, month, months, day, days,
+	datePickerOn, datePickerUp, datePickerDown,
+	goPhotoCollection: function() {
+		router.push("PhotoCollection", {type: "upload"});
+		uploadOn.value = false;
+	},
+	goChoiceSubject,
+	getListDetailNote,pickFromList, moneyValue,viewWillAppear, saveData,  deleteData, selectedMemo,
 
+	goShowFile: function() {
+		console.log("goShowFile : goShowFile");
+		console.log("selectedDetailNoteVariable : " + selectedDetailNoteVariable.BILL_IDX);
+		var infoJSON = {
+			BILL_IDX:selectedDetailNoteVariable.BILL_IDX
+		}
+		router.push("ShowFile", infoJSON);
+	}, 
 
-				router.push("ShowFile", infoJSON);
-			}, alert, alertWithConfirm, logOut, isReadOnly, takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, 
-			getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn, testMethod, saveOrEdit, focusLost, selectedTypeStringValue
-		};
+	alert, alertWithConfirm, logOut, isReadOnly, 
+	takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, 
+	getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn, 
+	testMethod, saveOrEdit, focusLost, selectedTypeStringValue
+};

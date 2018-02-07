@@ -1,0 +1,99 @@
+<Panel ux:Class="MyDatePicker" Width="100%" Alignment="TopCenter">
+	<object ux:Property="Data" />
+	<string ux:Property="Selected" />
+	<int ux:Property="StPos" />
+
+	<JavaScript>
+		var Observable = require('FuseJS/Observable');
+
+		var Backend = require('Backend.js');
+		var isScrolling = Observable(false);
+		var stopScrolling = Observable(false);
+		var endPosition = Observable();
+		var position = Observable(0);
+		var scrollPosition = Observable(50);
+		var selecting = Observable();
+		
+		function scrollFunction(arg) {
+			// console.log("11111111111");
+			position.value = arg.value[1];
+			// console.log("222222222222");
+			isScrolling.value = true;
+			stopScrolling.value = false;
+			endPosition.value = Math.round((position.value-10)/50) * 50;
+
+			// console.log("333333333333");
+		}
+
+		function initialize () {
+			position.value = 0;
+			// console.log("222222222222");
+			isScrolling.value = true;
+			stopScrolling.value = false;
+			endPosition.value = Math.round((position.value-10)/50) * 50;
+		}
+
+		function stopScroll() {
+			isScrolling.value = false;
+			stopScrolling.value = true;
+		}
+
+		function scrolling(arg) {
+			//console.log(arg.data.index);
+		}
+
+		var srcData = this.Data.inner();
+
+		var i = 1;
+		var datas = srcData.map(function(data) {
+			console.log("")
+			return {
+				data: data,
+				index: i++
+			}
+		});
+
+		module.exports = {
+			position, scrollFunction, stopScroll, isScrolling, scrolling, endPosition, stopScrolling,
+			datas, scrollPosition, initialize
+		};
+	</JavaScript> 
+
+	<!-- <WhileActive>
+		<Callback Handler="{initialize}"/>
+	</WhileActive> -->
+
+
+	<Rectangle  Width="100%" Height="30" Alignment="Center">
+		<Stroke Width="1" Color="#aaa" />
+		<PointAttractor ux:Name="centerAttract" Radius="10" Strength="10" />
+	</Rectangle>
+	<ScrollView ux:Name="myScroll" ScrollPosition="{Property StPos}" ScrollPositionChanged="{scrollFunction}">
+		<WhileTrue Value="{isScrolling}">
+			<Callback Handler="{stopScroll}" Delay="0.05" />
+		</WhileTrue>
+
+		<WhileTrue Value="{stopScrolling}">
+			<ScrollTo Target="myScroll" Position="{endPosition}"  Delay="0.05"/>
+		</WhileTrue>
+		<StackPanel Width="100%" ItemSpacing="20" Margin="0,60,0,0">
+			<Selection Value="{Property Selected}" MaxCount="1" MinCount="1" />
+			<Each Items="{datas}">
+				<Rectangle Width="100%" Height="30">
+					<Selectable Value="{data}" />
+					<Text ux:Name="sText" Value="{data}" Alignment="Center" Color="#ddd" HitTestMode="None">
+						<WhileVisibleInScrollView>
+							<Change sText.Color="#000" Duration="0.5" />
+							<Scale Factor="1.2" />
+						</WhileVisibleInScrollView>
+						<EnteredForceField ForceField="centerAttract">
+							<Callback Handler="{scrolling}" />
+							<ToggleSelection Delay="0.1" />
+						</EnteredForceField>
+						<Draggable />
+					</Text>
+				</Rectangle>
+			</Each>
+		</StackPanel>
+	</ScrollView>
+</Panel>
