@@ -10,6 +10,9 @@ var Uploader = require("Uploader");
 
 var connectingPanelLayout = Observable("Background");
 var enableClick = Observable("LocalBoundsAndChildren");
+
+// var Picker = require('Picker.js');
+
 // var Picker = require('Picker.js');
 
 // var ValueFactory = require('ValueFactory');
@@ -852,6 +855,7 @@ var pickerData = Observable("", "카드결제", "아이행복카드", "계좌이
 var stPos = Observable(0);
 
 function pickerUp() {
+	// Picker.endPosition.value = Math.round((0-10)/50) * 50;
 	console.log("selectedData.value : " + selectedData.value);
 	// pickerData.clear();
 	selectedData.clear();
@@ -870,37 +874,114 @@ function pickerUp() {
 	// Picker.setEndPostionValue(0);
 
 
-	selectedData.value = "결제방법";
+	selectedData.value = "";
 	pickerOn.value = true;
 }
 
 var selected_BILL_CLSS = Observable();
 
 function pickerDown() {
-	console.log("selectedData : " + selectedData.value);
+	
+	console.log("Payment type is selected");
+	// console.log("selectedDetailNoteVariable.ESTI_CODE : " + selectedDetailNoteVariable.ESTI_CODE);
+	// console.log("selectedDetailNoteVariable.ESTI_CODE : " + selectedDetailNoteVariable.ESTI_CODE.substring(0,3));
+	// console.log("selectedDetailNoteVariable.BILL_CLSS : " + selectedDetailNoteVariable.BILL_CLSS);
+		
+	var selected_ESTI_CODE = null;
 
+	if (Backend.subject.ESTI_CODE.value !=null) {
+		selected_ESTI_CODE = Backend.subject.ESTI_CODE.value;
+	} else {
+		selected_ESTI_CODE = selectedDetailNoteVariable.ESTI_CODE;
+	}
+
+	console.log("selected_ESTI_CODE : " + selected_ESTI_CODE);
+	console.log("selected_ESTI_CODE : " + selected_ESTI_CODE.substring(0,3));
+	
+	var selectable = false;
+
+	console.log("selectedData : " + selectedData.value);
+	console.log("111111111111111111111111111111111111111111111");
 	if(selectedData.value == "카드결제") {
-		selected_BILL_CLSS.value = "10";
+		console.log("2222222222222222222222222222222222222222222");
+		if (selected_ESTI_CODE !="2010401" && selected_ESTI_CODE.substring(0,3) == "201") {
+			console.log("33333333333333333333333333333333333");
+			if (selected_ESTI_CODE == "2010101" || selected_ESTI_CODE == "2010201") {
+				console.log("44444444444444444");
+				selected_BILL_CLSS.value = "10";
+				alert.message.value="법정부담금 납부에 한하여 '카드결제' 선택이 가능합니다";
+				alert.layer.value="Overlay";
+				selectable = true;
+			} else {
+				console.log("555555555555555555");
+				alert.message.value="인건비는 결제방법을 '카드결제'로 사용할 수 없습니다";
+				alert.layer.value="Overlay";
+				selectable = false;
+			}
+		}
+
+
+
 	} else if (selectedData.value == "아이행복카드") {
 		selected_BILL_CLSS.value = "20";
+		selectable = true;
 	} else if (selectedData.value == "계좌이체") {
 		selected_BILL_CLSS.value = "30";
+		selectable = true;
 	} else if (selectedData.value == "자동이체") {
 		selected_BILL_CLSS.value = "40";
+		selectable = true;
 	} else if (selectedData.value == "지로") {
 		selected_BILL_CLSS.value = "50";
+		selectable = true;
 	} else if (selectedData.value == "현금결제") {
 		selected_BILL_CLSS.value = "60";
+		selectable = true;
 	} else if (selectedData.value == "기타") {
 		selected_BILL_CLSS.value = "70";
+		selectable = true;
 	} else if (selectedData.value = "결제방법") {
 		selected_BILL_CLSS.value = null
+
 	}
 
 
-	selectedTypeStringValue.value = selectedData.value;
+	if (selectable == true) {
+		selectedTypeStringValue.value = selectedData.value;
+		pickerOn.value = false;	
+	} else {
+		pickerOn.value = false;
+		selected_BILL_CLSS.value = null;
 
-	pickerOn.value = false;
+		if (selectedDetailNoteVariable.BILL_CLSS !=null) {
+
+			if(selectedDetailNoteVariable.BILL_CLSS == "10") {
+				selectedData.value = "카드결제";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "20") {
+				selectedData.value = "아이행복카드";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "30") {
+				selectedData.value = "계좌이체";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "40") {
+				selectedData.value = "자동이체";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "50") {
+				selectedData.value = "지로";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "60") {
+				selectedData.value = "현금결제";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "70") {
+				selectedData.value = "기타";
+			} else if (selectedDetailNoteVariable.BILL_CLSS = "") {
+				selectedData.value = "결제방법";
+			}
+		} else {
+			selectedData.value = "결제방법";	
+		}
+		
+		
+
+
+		selectedTypeStringValue.value = selectedData.value;
+	}
+	
 }
 
 var subType = {

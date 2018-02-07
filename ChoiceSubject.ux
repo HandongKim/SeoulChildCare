@@ -180,14 +180,11 @@
 				this.ESTI_DISPLAY = "";	
 			}
 
-
-
 			if (args.ESTI_NAME!=null) {
 			this.ESTI_NAME = args.ESTI_NAME;
 			} else {
 				this.ESTI_NAME = "";	
 			}
-
 
 			if (args.M_DISPLAY_NAME2!=null) {
 			this.M_DISPLAY_NAME2 = args.M_DISPLAY_NAME2;
@@ -195,15 +192,11 @@
 				this.M_DISPLAY_NAME2 = "";	
 			}
 
-
-
-
 			if (args.MEMCODE!=null) {
 			this.MEMCODE = args.MEMCODE;
 			} else {
 				this.MEMCODE = "";	
 			}
-
 
 			if (args.M_DISPLAY_NAME!=null) {
 			this.M_DISPLAY_NAME = args.M_DISPLAY_NAME;
@@ -211,15 +204,11 @@
 				this.M_DISPLAY_NAME = "";	
 			}
 
-
-
 			if (args.MEMO!=null) {
 			this.MEMO = args.MEMO;
 			} else {
 				this.MEMO = "";	
 			}
-
-
 
 			if (args.SORT_GUBUN!=null) {
 			this.SORT_GUBUN = args.SORT_GUBUN;
@@ -227,17 +216,11 @@
 				this.SORT_GUBUN = "";	
 			}
 
-
-
-
 			if (args.ESTI_PART!=null) {
 			this.ESTI_PART = args.ESTI_PART;
 			} else {
 				this.ESTI_PART = "";	
 			}
-
-
-
 
 			if (args.ESTI_SUBCODE!=null) {
 			this.ESTI_SUBCODE = args.ESTI_SUBCODE;
@@ -300,9 +283,6 @@
 			console.log("compareDate : " + compareDate.toDateString());
 
 			if (arg.data.ESTI_CODE == "2020201") {
-
-				
-
 				console.log(" '업무추진비' 계정과목은 적요 내용 입력 방식에 따라 모바일 화면에서는 등록/수정할 수 없습니다. PC화면에서 직접 등록/수정하셔야 합니다.");
 				alert.title.value = "";
 				alert.message.value = "'업무추진비' 계정과목은 적요 내용 입력 방식에 따라 모바일 화면에서는 등록/수정할 수 없습니다. PC화면에서 직접 등록/수정하셔야 합니다.";
@@ -338,6 +318,12 @@
 					console.log("arg.data.ESTI_NAME : " + arg.data.ESTI_NAME);
 					console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
 					console.log("======================== ************************************************");
+
+					console.log("======================== ************************************************");
+					console.log("arg.data.BILL_CLSS : " + arg.data.BILL_CLSS);
+					console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
+					console.log("======================== ************************************************");
+
 
 					Backend.chosenSubject.isChoice = true;
 					Backend.chosenSubject.name = arg.data.name;

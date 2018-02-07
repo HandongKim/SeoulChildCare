@@ -489,6 +489,8 @@
 					<Text Value="{selectedTypeStringValue}" Alignment="CenterLeft" />
 					<Clicked>
 						<Callback Handler="{pickerUp}" />
+						<Callback Handler="{initializeForPicker}" />
+
 					</Clicked>
 				</Rectangle>
 

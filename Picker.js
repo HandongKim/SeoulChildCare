@@ -1,5 +1,6 @@
-var Observable = require('FuseJS/Observable');
+		var Observable = require('FuseJS/Observable');
 
+		var Backend = require('Backend.js');
 		var isScrolling = Observable(false);
 		var stopScrolling = Observable(false);
 		var endPosition = Observable();
@@ -9,24 +10,23 @@ var Observable = require('FuseJS/Observable');
 		
 		function scrollFunction(arg) {
 			// console.log("11111111111");
-			console.log("scrollFunction arg : " + JSON.stringify(arg));
 			position.value = arg.value[1];
 			// console.log("222222222222");
 			isScrolling.value = true;
 			stopScrolling.value = false;
 			endPosition.value = Math.round((position.value-10)/50) * 50;
-			console.log("position.value : "  + position.value);
-			console.log("endPosition.value : "  + endPosition.value);
+
 			// console.log("333333333333");
 		}
 
-		function setEndPostionValue (postionValue) {
-			console.log("IS IT called???");
-			endPosition.value = postionValue;
-			position.value = postionValue;
+		function initializeForPicker () {
+			console.log("initializeinitializeinitializeinitializeinitializeinitializeinitializeinitializeinitializeinitializeinitialize");
+			position.value = 0;
+			// console.log("222222222222");
+			isScrolling.value = true;
+			stopScrolling.value = false;
+			endPosition.value = Math.round((position.value-10)/50) * 50;
 		}
-
-
 
 		function stopScroll() {
 			isScrolling.value = false;
@@ -50,5 +50,5 @@ var Observable = require('FuseJS/Observable');
 
 		module.exports = {
 			position, scrollFunction, stopScroll, isScrolling, scrolling, endPosition, stopScrolling,
-			datas, scrollPosition,setEndPostionValue
+			datas, scrollPosition, initializeForPicker
 		};
