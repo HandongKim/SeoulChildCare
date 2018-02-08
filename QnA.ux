@@ -30,6 +30,12 @@
 		}
 
 		function pickerDown2() {
+			if (selectedType2.value =="비공개") {
+				console.log("PRIVATE");	
+			} else {
+				console.log("PUBLIC");
+			}
+			
 			pickerOn2.value = false;
 		}
 
@@ -804,7 +810,6 @@
 			var REGID         = JSON.parse(Backend.dsParam).GVMEMID;
 			var OPEN_YN = "";
 
-			
 			if (selectedType2.value=="비공개") {
 				OPEN_YN = "N";
 			} else {
