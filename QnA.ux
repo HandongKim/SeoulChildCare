@@ -7,7 +7,7 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
-		var type = Observable("제목", "내용", "어린이집");
+		var type = Observable("제목", "내용", "작성자");
 		var selectedType = Observable("제목");
 		var type2 = Observable("비공개", "공개");
 		var selectedType2 = Observable("비공개");
@@ -166,6 +166,8 @@
 				combo = "head";
 			}else if (selectedType.value=="내용"){
 				combo = "main";
+			} else if (selectedType.value=="작성자") {
+				combo = "writer";
 			}
 
 			if(searchText.value==null){
@@ -359,14 +361,8 @@
 			} else {
 				openY = "N";
 			}
-			
-
-
-
 
 			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","page":"1","sch_txt":"","sCombo":"head", "openY":"'+openY+'"}';
-
-
 
 			globalSearch = JSON.parse(dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
@@ -433,6 +429,8 @@
 				sCombo = "head";
 			}else if (selectedType.value=="내용"){
 				sCombo = "main";
+			}else if (selectedType.value=="작성자"){
+				sCombo = "writer";
 			}
 
 			if(searchText.value==null){
@@ -495,6 +493,8 @@
 				combo = "head";
 			}else if (selectedType.value=="내용"){
 				combo = "main";
+			}else if (selectedType.value=="작성자"){
+				combo = "writer";
 			}
 
 
@@ -1320,36 +1320,6 @@
 						<Text Value="내 글" FontSize="{margin}*0.9" Color="White" Alignment="CenterLeft" />
 					</Grid>
 				</Rectangle>
-<!-- 				
-
-				<Rectangle Width="60%" BoxSizing="FillAspect" Aspect="1.5" CornerRadius="3" Color="#3477BE" Alignment="CenterLeft">
-					<Text Value="검색" Alignment="Center" Color="White">
-						<Clicked>
-							<Callback Handler="{searchContent}" />
-						</Clicked>
-					</Text>
-				</Rectangle>
-
-
-				<Grid ColumnCount="2" Columns="1*, 1*" CellSpacing="{margin}/2" Width="100%">
-					<Panel Alignment="Left">
-						<Clicked>
-							<Callback Handler="{checkClick}" />
-							<Callback Handler="{unRegisteredChecked}" />
-						</Clicked>
-
-						<Image ux:Name="fm_checked" File="Images/fm_checked.png" Opacity="0" />
-						<Image ux:Name="fm_check" File="Images/fm_check.png" />
-
-						<WhileTrue Value="{unReg}">
-							<Change fm_checked.Opacity="1" />
-							<Change fm_check.Opacity="0" />
-							
-						</WhileTrue>
-					</Panel>
-					<Text Value="내 글" FontSize="{margin}*0.9" Color="White" Alignment="Center" />
-				</Grid> -->
-
 			</Grid>
 		</Panel>
 
