@@ -583,11 +583,6 @@ function getListDetailNote () {
         });
 }
 
-
-
-
-
-
 var selectedTemp;
 var selectedMemo = Observable();
 var selectedMoney = Observable();
@@ -702,6 +697,8 @@ function pickFromList(args) {
 	}
 
 
+	selectedTypeStringValue.value = selectedData.value;
+
 	console.log("selectedDetailNoteVariable.BILL_IDX : " + selectedDetailNoteVariable.BILL_IDX);
 
 	if (selectedDetailNoteVariable.BILL_IDX != "") {
@@ -759,6 +756,30 @@ var selectedTypeStringValue = Observable();
 
 
 function initialDataSetting () {
+
+	var indexValue =0;
+	var format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
+	console.log("Backend.dataFromNoteManageToDetailNote.BILL_IDX.value : " + Backend.dataFromNoteManageToDetailNote.BILL_IDX.value);
+	
+	if (Backend.dataFromNoteManageToDetailNote.BILL_IDX.value.match(format)) {
+		console.log("Backend.dataFromNoteManageToDetailNote.BILL_IDX.value contains certain character");
+	} else {
+		console.log("Backend.dataFromNoteManageToDetailNote.BILL_IDX.value does not contain certain character");
+	}
+
+	for (var i = 0; i < listDetailNotes.length; i++) {
+		console.log("listDetailNotes.values[" +i + "].BILL_IDX : " + listDetailNotes._values[i].BILL_IDX);
+		if (Backend.dataFromNoteManageToDetailNote.BILL_IDX.value == listDetailNotes._values[i].BILL_IDX || Backend.dataFromNoteManageToDetailNote.BILL_IDX.value.match(format)) {
+			indexValue = i;
+		}
+	}
+
+	console.log("indexValue : " + indexValue);
+
+	
+
+
 	moneyValue.clear();
 	initBackendSubject();
 	// subType.isChoice.clear();
@@ -768,15 +789,15 @@ function initialDataSetting () {
 	tempIndex = 0;
 	selectedData.value = "결제방법";
 	// console.log("args.data.index : " + args.data.index);
-	console.log("initialDataSetting listDetailNotes" + JSON.stringify(listDetailNotes._values[0]));
-	subType.reverse.value=notes._values[0].reverse;
+	console.log("initialDataSetting listDetailNotes" + JSON.stringify(listDetailNotes._values[indexValue]));
+	subType.reverse.value=notes._values[indexValue].reverse;
 	selected_BILL_CLSS.clear();
 
 
 
 
 	//서버에 쓰일 데이터.
-	selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[0]);
+	selectedDetailNoteVariable = new selectedDetailNote(listDetailNotes._values[indexValue]);
 	console.log("BILL_IDX VALUE IS  : " + selectedDetailNoteVariable.BILL_IDX );
 	var selectedYear = selectedDetailNoteVariable.CASH_DATE.substr(0,4);
 	var selectedMonth = selectedDetailNoteVariable.CASH_DATE.substr(4,2);
@@ -800,7 +821,7 @@ function initialDataSetting () {
 	month.value = selectedMonth;
 	day.value = selectedDay;
 	
-	moneyValue.value = notes._values[0].money;
+	moneyValue.value = notes._values[indexValue].money;
 
 	console.log("initialDataSetting selectedDetailNoteVariable.BILL_CLSS : " + selectedDetailNoteVariable.BILL_CLSS);
 
@@ -839,15 +860,15 @@ function initialDataSetting () {
 	}
 
 	
-	console.log("notes._values[args.data.index] : " + JSON.stringify(notes._values[0]));
-	console.log("notes._values[args.data.index].color : " + notes._values[0].color);
-	console.log("notes._values[args.data.index].type : " + notes._values[0].type);
-	console.log("notes._values[args.data.index].text : " + notes._values[0].text);
+	console.log("notes._values["+indexValue+"] : " + JSON.stringify(notes._values[indexValue]));
+	console.log("notes._values["+indexValue+"].color : " + notes._values[indexValue].color);
+	console.log("notes._values["+indexValue+"].type : " + notes._values[indexValue].type);
+	console.log("notes._values["+indexValue+"].text : " + notes._values[indexValue].text);
 
 	Backend.subject.isChoice.value = true;
-	Backend.subject.name.value = notes._values[0].name;
-	Backend.subject.color.value = notes._values[0].subTypeColor;
-	Backend.subject.type.value = notes._values[0].subType;
+	Backend.subject.name.value = notes._values[indexValue].name;
+	Backend.subject.color.value = notes._values[indexValue].subTypeColor;
+	Backend.subject.type.value = notes._values[indexValue].subType;
 
 	cameFromChoiceSubject = false;
 }
@@ -1022,7 +1043,7 @@ function pickerDown() {
 				selectedData.value = "결제방법";
 			}
 		}
-		
+
 		selectedTypeStringValue.value = selectedData.value;
 	}
 	
@@ -1317,24 +1338,33 @@ function saveData() {
 	console.log("tempMoneyValue : " + tempMoneyValue);
 	console.log("selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
 
-	if (tempMoneyValue != selectedDetailNoteVariable.MONEY) {
+	// if (tempMoneyValue != selectedDetailNoteVariable.MONEY) {
 
-		console.log("1111111111111111111 tempMoneyValue : " + tempMoneyValue);
-		console.log("2222222222222222222 selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
+	// 	console.log("1111111111111111111 tempMoneyValue : " + tempMoneyValue);
+	// 	console.log("2222222222222222222 selectedDetailNoteVariable.MONEY : " + selectedDetailNoteVariable.MONEY);
 
-		if (ACTION =="I") {
-			// BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString();
-			BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		} else if (ACTION == "U") {
-			BCASH_MEMO = ORG_BCASH_MEMO;
-		}
+		
 		
 
 
 
-	}else {
+	// }else {
 
+	// }
+
+
+	if (ACTION =="I") {
+			// BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString();
+		// BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		BCASH_MEMO = ORG_BCASH_MEMO;
+
+	} else if (ACTION == "U") {
+		BCASH_MEMO = ORG_BCASH_MEMO;
 	}
+
+
+
+
 
 	console.log("ORG_BCASH_MEMO : " + ORG_BCASH_MEMO);
 	console.log("BCASH_MEMO.MONEY : " + BCASH_MEMO);
@@ -1362,7 +1392,8 @@ function saveData() {
 		+'","BILL_GB":"'+BILL_GB
 		+'","ESTI_SUBCODE":"'+ESTI_SUBCODE
 		+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ
-		+'", "BCASH_MONEY":"'+BCASH_MONEY
+		+'","BCASH_MONEY":"'+BCASH_MONEY
+		+'","MEMO_ADD":"'+selectedMemo.value
 		+'"}';	
 
 	} else if (ACTION =="U") {
