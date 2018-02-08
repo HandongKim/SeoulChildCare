@@ -342,7 +342,7 @@
 
 
 
-			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","page":"1","sch_txt":"","sCombo":"head"}';
+			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","page":"1","sch_txt":"","sCombo":"head", "openY":"N"}';
 			globalSearch = JSON.parse(dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			qnas.clear();
@@ -802,7 +802,14 @@
 			var WRITE_HOST    = FileDownload.getIpAddress();
 			var AREA          = JSON.parse(Backend.dsParam).GVAREACODE;
 			var REGID         = JSON.parse(Backend.dsParam).GVMEMID;
-			var OPEN_YN       = "N";
+			var OPEN_YN = "";
+
+			
+			if (selectedType2.value=="비공개") {
+				OPEN_YN = "N";
+			} else {
+				OPEN_YN = "Y";
+			}
 
 			var dsParam = Backend.dsParam;
 
