@@ -728,6 +728,13 @@
 		};
 
 
+		var simpleAlert = {
+			title: Observable(),
+			message: Observable(),
+			type: Observable("Check"),
+			layer: Observable("Background")
+		};
+
 		function sendData(){
 			console.log("sendData was called");
 			if(qnaDetailValue.value.commSeq.value==null || qnaDetailValue.value.commSeq.value==""){
@@ -786,7 +793,14 @@
 			//첨부파일 수정필요
 			var dsFileList = '{}';
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
-			fetch(qnaUserUpdateUrl, {
+
+
+			var validationCheck = false;
+			
+			validationCheck = validationCheckApproved();
+
+			if (validationCheck == true ) {
+				fetch(qnaUserUpdateUrl, {
 					method: 'POST',
 					headers: {
 						"Content-type": "application/json"
@@ -802,11 +816,44 @@
 			            // var data = jsonData.results[0];
 			        }).catch(function(err) {
 
-			        });
+				});
+			} else {
+
+			}
+			
 		}
 
 		function validationCheckApproved () {
-			return false;
+			var validated = false;
+			var titleValidate = false;
+			var contentValidate = false;
+
+			if (qnaDetailValue.value.cont.value == null || qnaDetailValue.value.cont.value =="") {
+				console.log("validationCheckApproved cont nil");
+				contentValidate = false;
+				simpleAlert.message.value = "내용을 입력해주세요";
+				simpleAlert.layer.value = "Overlay";
+			} else  {
+				contentValidate = true;
+			}
+
+			if (qnaDetailValue.value.title.value == null || qnaDetailValue.value.title.value == "") {
+				console.log("validationCheckApproved title nil");
+				titleValidate = false;
+				simpleAlert.message.value = "제목을 입력해주세요";
+				simpleAlert.layer.value = "Overlay";
+			} else {
+				titleValidate = true;
+			}
+
+
+			if ((titleValidate == true) && (contentValidate == true )) {
+				validated = true;
+			} else {
+				validated = false;
+			}
+
+			return validated;
 		}
 
 
@@ -856,30 +903,35 @@
 			var jsonParam = JSON.parse('{"ds_qna_dtl":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
 
 			var validationCheck = false;
+			
 			validationCheck = validationCheckApproved();
 
 
+			if (validationCheck == true) {
+				fetch(insertQnaCommListUrl, {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify(jsonParam)
+		        }).then(function(response) {
+					var responseData = JSON.stringify(response);
+					console.log("responseData : "+ JSON.stringify(responseData));
 
+					alert.message.value = "등록했습니다.";
+					alert.layer.value = "Overlay";
 
-			fetch(insertQnaCommListUrl, {
-					method: 'POST',
-					headers: {
-						"Content-type": "application/json"
-					},
-					body: JSON.stringify(jsonParam)
-			        }).then(function(response) {
-						var responseData = JSON.stringify(response);
-						console.log("responseData : "+ JSON.stringify(responseData));
+		            return response.json();
+		        }).then(function(jsonData) {
 
-						alert.message.value = "등록했습니다.";
-						alert.layer.value = "Overlay";
+		        }).catch(function(err) {
 
-			            return response.json();
-			        }).then(function(jsonData) {
+		        });
+			} else {
 
-			        }).catch(function(err) {
+			}
 
-			        });
+			
 		}
 
 		function test () {
@@ -892,7 +944,7 @@
 			selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, test,
 			searchContent,getClickListValue, getDetailQnA, qnaDetailValue, pickerUp2, pickerDown2,
 			qnaFileValue, qnaIsCorrect , sendData,detailDataClear, warnningText,  warnningOn, 
-			pickerUp2, type2, selectedType2, confirmButtonAction, alert, unReg, checkClick, unRegisteredChecked
+			pickerUp2, type2, selectedType2, confirmButtonAction, alert, unReg, checkClick, unRegisteredChecked, simpleAlert
 		};
 	</JavaScript>
 	<Panel ux:Name="page6BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
@@ -923,7 +975,7 @@
 	</DockPanel>
 
 
-
+<Alert ux:Name="detailNoteAlert" Title="{simpleAlert.title}" MainText="{simpleAlert.message}" Type="{simpleAlert.type}" Layer="{simpleAlert.layer}" />
 
 <Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{alert.layer}">
 	<Stroke Width="1" Color="Black" />
@@ -960,7 +1012,7 @@
 
 
 	<!-- 새로 등록 정보 -->
-	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
+	<DockPanel Width="100%" X="100%" Color="White">
 		<Panel Dock="Top">
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
 				<Image File="Images/btn_pre.png" Alignment="Left">
@@ -1026,7 +1078,7 @@
 		</Grid>
 
 		<Grid Color="#ccc" CellSpacing="1" Rows="1.3*, 6*, 1.3*">
-			<Panel Color="White">
+			<Panel Color="White" Height="{margin}*4.5">
 				<TextBox Value="{qnaDetailValue.title}" Margin="{margin}" PlaceholderText="제목을 입력하세요" />
 			</Panel>
 			<Panel Color="White">
