@@ -7,7 +7,7 @@
 	<JavaScript>
 		var Observable = require('FuseJS/Observable');
 		var Backend = require('Backend.js');
-		var type = Observable("제목", "내용");
+		var type = Observable("제목", "내용", "어린이집");
 		var selectedType = Observable("제목");
 		var type2 = Observable("비공개", "공개");
 		var selectedType2 = Observable("비공개");

@@ -773,8 +773,25 @@ function pickFromList(args) {
 	console.log("notes._values[args.data.index].type : " + notes._values[args.data.index].type);
 	console.log("notes._values[args.data.index].text : " + notes._values[args.data.index].text);
 
-	Backend.subject.isChoice.value = true;
-	Backend.subject.name.value = notes._values[args.data.index].name;
+	// Backend.subject.isChoice.value = true;
+	// Backend.subject.name.value = notes._values[args.data.index].name;
+
+
+	if (notes._values[args.data.index].name == "" || notes._values[args.data.index].name == null) {
+		Backend.subject.name.value ="계정과목 선택";
+		Backend.subject.isChoice.value = false;
+	} else {
+		Backend.subject.name.value = notes._values[args.data.index].name;
+		Backend.subject.isChoice.value = true;
+	}
+
+
+
+
+
+
+
+	
 	Backend.subject.color.value = notes._values[args.data.index].subTypeColor;
 	Backend.subject.type.value = notes._values[args.data.index].subType;
 
@@ -890,7 +907,19 @@ function initialDataSetting () {
 	console.log("notes._values["+indexValue+"].text : " + notes._values[indexValue].text);
 
 	Backend.subject.isChoice.value = true;
-	Backend.subject.name.value = notes._values[indexValue].name;
+
+	if (notes._values[indexValue].name == "" || notes._values[indexValue].name == null) {
+		Backend.subject.name.value ="계정과목 선택";
+		Backend.subject.isChoice.value = false;
+	} else {
+		Backend.subject.name.value = notes._values[indexValue].name;
+		Backend.subject.isChoice.value = true;
+	}
+
+	
+
+
+
 	Backend.subject.color.value = notes._values[indexValue].subTypeColor;
 	Backend.subject.type.value = notes._values[indexValue].subType;
 
