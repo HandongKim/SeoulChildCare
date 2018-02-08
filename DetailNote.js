@@ -339,6 +339,18 @@ function listDetailNote (args, index) {
 	} else {
 		this.BCASH_BILL_SEQ = "";	
 	}
+
+	if (args.MEMO!=null) {
+		this.MEMO = args.MEMO;
+	} else {
+		this.MEMO = "";	
+	}
+
+	if (args.BILL_NUMDETAIL!=null) {
+		this.BILL_NUMDETAIL = args.BILL_NUMDETAIL;
+	} else {
+		this.BILL_NUMDETAIL = "";	
+	}
 }
 
 function selectedDetailNote(args) {
@@ -445,6 +457,18 @@ function selectedDetailNote(args) {
 	} else {
 		this.BILL_CLSS="";
 	}	
+
+	if (args.MEMO!=null) {
+		this.MEMO = args.MEMO;
+	} else {
+		this.MEMO = "";	
+	}
+
+	if (args.BILL_NUMDETAIL!=null) {
+		this.BILL_NUMDETAIL = args.BILL_NUMDETAIL;
+	} else {
+		this.BILL_NUMDETAIL = "";	
+	}
 }
 
 
@@ -728,8 +752,13 @@ function pickFromList(args) {
 	if (selectedDetailNoteVariable.ACTION == "I") {
 		selectedMemo.value = "";
 	} else if (selectedDetailNoteVariable.ACTION == "U") {
-		selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;		
+		selectedMemo.value = selectedDetailNoteVariable.MEMO;		
 	}
+
+	console.log("initialDataSetting selectedMemo.value : " + selectedMemo.value);
+	console.log("selectedDetailNoteVariable.MEMO : " + selectedDetailNoteVariable.MEMO);
+
+
 
 	selectedMoney.value = Backend.dataFromNoteManageToDetailNote.BCASH_MONEY;
 
@@ -761,13 +790,6 @@ function initialDataSetting () {
 	var format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
 	console.log("Backend.dataFromNoteManageToDetailNote.BILL_IDX.value : " + Backend.dataFromNoteManageToDetailNote.BILL_IDX.value);
-	
-	if (Backend.dataFromNoteManageToDetailNote.BILL_IDX.value.match(format)) {
-		console.log("Backend.dataFromNoteManageToDetailNote.BILL_IDX.value contains certain character");
-	} else {
-		console.log("Backend.dataFromNoteManageToDetailNote.BILL_IDX.value does not contain certain character");
-	}
-
 	for (var i = 0; i < listDetailNotes.length; i++) {
 		console.log("listDetailNotes.values[" +i + "].BILL_IDX : " + listDetailNotes._values[i].BILL_IDX);
 		if (Backend.dataFromNoteManageToDetailNote.BILL_IDX.value == listDetailNotes._values[i].BILL_IDX || Backend.dataFromNoteManageToDetailNote.BILL_IDX.value.match(format)) {
@@ -808,9 +830,12 @@ function initialDataSetting () {
 	if (selectedDetailNoteVariable.ACTION == "I") {
 		selectedMemo.value = "";
 	} else if (selectedDetailNoteVariable.ACTION == "U") {
-		selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;		
+		selectedMemo.value = selectedDetailNoteVariable.MEMO;		
 	}
 
+
+	console.log("initialDataSetting selectedMemo.value : " + selectedMemo.value);
+	console.log("selectedDetailNoteVariable.MEMO : " + selectedDetailNoteVariable.MEMO);
 	// selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
 	
 
@@ -859,7 +884,6 @@ function initialDataSetting () {
 		selectedTypeStringValue.value = "결제방법"
 	}
 
-	
 	console.log("notes._values["+indexValue+"] : " + JSON.stringify(notes._values[indexValue]));
 	console.log("notes._values["+indexValue+"].color : " + notes._values[indexValue].color);
 	console.log("notes._values["+indexValue+"].type : " + notes._values[indexValue].type);
@@ -872,8 +896,6 @@ function initialDataSetting () {
 
 	cameFromChoiceSubject = false;
 }
-		
-
 
 var uploadOn = Observable(false);
 
@@ -1289,7 +1311,7 @@ function saveData() {
 	
 	
 	
-
+	var BILL_NUMDETAIL = selectedDetailNoteVariable.BILL_NUMDETAIL;
 
 
 	var BILL_RECEIPT =selectedDetailNoteVariable.BILL_RECEIPT;
@@ -1355,8 +1377,8 @@ function saveData() {
 
 	if (ACTION =="I") {
 			// BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString();
-		// BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		BCASH_MEMO = ORG_BCASH_MEMO;
+		BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
+		// BCASH_MEMO = ORG_BCASH_MEMO;
 
 	} else if (ACTION == "U") {
 		BCASH_MEMO = ORG_BCASH_MEMO;
@@ -1415,6 +1437,8 @@ function saveData() {
 		+'","ESTI_NAME":"'+ESTI_NAME
 		+'","BILL_GB":"'+BILL_GB
 		+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ
+		+'","BILL_NUMDETAIL":"'+BILL_NUMDETAIL
+		+'","MEMO":"'+selectedMemo.value
 		+'"}';	
 	}
 
