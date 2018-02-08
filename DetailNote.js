@@ -728,7 +728,12 @@ function pickFromList(args) {
 
 	yearAndMonth = selectedYear + selectedMonth;
 
-	selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
+	if (selectedDetailNoteVariable.ACTION == "I") {
+		selectedMemo.value = "";
+	} else if (selectedDetailNoteVariable.ACTION == "U") {
+		selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;		
+	}
+
 	selectedMoney.value = Backend.dataFromNoteManageToDetailNote.BCASH_MONEY;
 
 	year.value =selectedYear;
@@ -777,7 +782,18 @@ function initialDataSetting () {
 	var selectedMonth = selectedDetailNoteVariable.CASH_DATE.substr(4,2);
 	var selectedDay = selectedDetailNoteVariable.CASH_DATE.substr(6,2);
 
-	selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
+	
+
+	if (selectedDetailNoteVariable.ACTION == "I") {
+		selectedMemo.value = "";
+	} else if (selectedDetailNoteVariable.ACTION == "U") {
+		selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;		
+	}
+
+	// selectedMemo.value = selectedDetailNoteVariable.BCASH_MEMO;
+	
+
+
 	selectedMoney.value = Backend.dataFromNoteManageToDetailNote.BCASH_MONEY;
 
 	year.value =selectedYear;
@@ -945,36 +961,68 @@ function pickerDown() {
 		selectedTypeStringValue.value = selectedData.value;
 		pickerOn.value = false;	
 	} else {
+		console.log("111111111111111111111111");
 		pickerOn.value = false;
 		selected_BILL_CLSS.value = null;
 
-		if (selectedDetailNoteVariable.BILL_CLSS !=null) {
+		if (selectedDetailNoteVariable.BILL_CLSS !="") {
+			console.log("2222222222222222222222222222");
 			console.log("selectedDetailNoteVariable.BILL_CLSS : " + selectedDetailNoteVariable.BILL_CLSS);
 			if(selectedDetailNoteVariable.BILL_CLSS == "10") {
-				selectedData.value = "카드결제";
+				console.log("1");
+				// selectedData.value = "카드결제";
+				selectedData.value = "결제방법";
 			} else if (selectedDetailNoteVariable.BILL_CLSS == "20") {
+				console.log("2");
 				selectedData.value = "아이행복카드";
 			} else if (selectedDetailNoteVariable.BILL_CLSS == "30") {
+				console.log("3");
 				selectedData.value = "계좌이체";
 			} else if (selectedDetailNoteVariable.BILL_CLSS == "40") {
+				console.log("4");
 				selectedData.value = "자동이체";
 			} else if (selectedDetailNoteVariable.BILL_CLSS == "50") {
+				console.log("5");
 				selectedData.value = "지로";
 			} else if (selectedDetailNoteVariable.BILL_CLSS == "60") {
+				console.log("6");
 				selectedData.value = "현금결제";
 			} else if (selectedDetailNoteVariable.BILL_CLSS == "70") {
+				console.log("7");
 				selectedData.value = "기타";
-			} else if (selectedDetailNoteVariable.BILL_CLSS = "") {
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "") {
+				console.log("8");
 				selectedData.value = "결제방법";
 			}
 		} else {
-			console.log("!@#$%^&*()");
-			selectedData.value = "결제방법";	
+			console.log("33333333333333333333333333");
+			if(selectedDetailNoteVariable.BILL_CLSS == "10") {
+				console.log("1");
+				selectedData.value = "카드결제";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "20") {
+				console.log("2");
+				selectedData.value = "아이행복카드";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "30") {
+				console.log("3");
+				selectedData.value = "계좌이체";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "40") {
+				console.log("4");
+				selectedData.value = "자동이체";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "50") {
+				console.log("5");
+				selectedData.value = "지로";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "60") {
+				console.log("6");
+				selectedData.value = "현금결제";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "70") {
+				console.log("7");
+				selectedData.value = "기타";
+			} else if (selectedDetailNoteVariable.BILL_CLSS == "") {
+				console.log("8");
+				selectedData.value = "결제방법";
+			}
 		}
 		
-		
-
-
 		selectedTypeStringValue.value = selectedData.value;
 	}
 	
