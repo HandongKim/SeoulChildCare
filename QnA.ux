@@ -12,6 +12,16 @@
 		var type2 = Observable("비공개", "공개");
 		var selectedType2 = Observable("비공개");
 		var FileDownload = require('FileDownloadUX');
+		var unReg = Observable(true);
+
+		function checkClick() {
+			unReg.value = !unReg.value
+		}
+
+		function unRegisteredChecked () {
+			getQnAList();
+		}
+
 
 		pickerOn = Observable(false);
 		pickerOn2= Observable(false);
@@ -342,16 +352,29 @@
 
 			// var AREA = "11110";
 			var commClss = "Q";
+			var openY = "Y";
+
+			if (unReg.value == true) {
+				openY = "Y";
+			} else {
+				openY = "N";
+			}
 			
-			
 
 
 
 
-			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","page":"1","sch_txt":"","sCombo":"head", "openY":"N"}';
+			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","page":"1","sch_txt":"","sCombo":"head", "openY":"'+openY+'"}';
+
+
+
 			globalSearch = JSON.parse(dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 			qnas.clear();
+
+			console.log ("QnA jsonParam : " + JSON.stringify(jsonParam));
+
+
 
 			fetch(qnaListUrl, {
 					method: 'POST',
@@ -868,7 +891,8 @@
 			type, selectedType, pickerOn, pickerOn2, pickerUp, pickerDown, getQnAList ,qnas, 
 			selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, test,
 			searchContent,getClickListValue, getDetailQnA, qnaDetailValue, pickerUp2, pickerDown2,
-			qnaFileValue, qnaIsCorrect , sendData,detailDataClear, warnningText,  warnningOn, pickerUp2, type2, selectedType2, confirmButtonAction, alert
+			qnaFileValue, qnaIsCorrect , sendData,detailDataClear, warnningText,  warnningOn, 
+			pickerUp2, type2, selectedType2, confirmButtonAction, alert, unReg, checkClick, unRegisteredChecked
 		};
 	</JavaScript>
 	<Panel ux:Name="page6BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
@@ -1251,7 +1275,7 @@
 		
 
 		<Panel Color="#5771AA" Height="{margin}*4" Dock="Top">
-			<Grid ColumnCount="3" Columns="2*, 5*, 3*" Margin="{margin}" Width="100%" CellSpacing="{margin}/2">
+			<Grid ColumnCount="4" Columns="2*, 4*, 2*, 2*" Margin="{margin}" Width="100%" CellSpacing="{margin}/2">
 				<Rectangle Width="100%" Height="100%" Color="#FFF">
 					<Stroke Width="2" Color="#888" />
 					<Clicked>
@@ -1262,7 +1286,42 @@
 
 					<Image File="Images/ico_select.png" Width="20" Height="10" Alignment="CenterRight" Margin="5" />
 				</Rectangle>
-				<TextBox Height="100%" Width="100%" Background="White" Value="{searchText}" />
+				
+				<Rectangle Width="100%" Height="100%" Color="#FFF">
+					<Stroke Width="2" Color="#888" />
+					<TextBox Height="100%" Width="100%" Background="White" Value="{searchText}" />
+				</Rectangle>
+
+				<Rectangle Width="100%" Height="100%" Color="#3477BE" Alignment="CenterLeft">
+					<Text Value="검색" Alignment="Center" Color="White">
+						<Clicked>
+							<Callback Handler="{searchContent}" />
+						</Clicked>
+					</Text>
+
+				</Rectangle>
+				<Rectangle Width="100%" Height="100%">
+					<Grid ColumnCount="2" Columns="1*, 1*" CellSpacing="{margin}/2" Width="100%">
+						<Panel Alignment="Left">
+							<Clicked>
+								<Callback Handler="{checkClick}" />
+								<Callback Handler="{unRegisteredChecked}" />
+							</Clicked>
+
+							<Image ux:Name="fm_checked" File="Images/fm_checked.png" Opacity="0" />
+							<Image ux:Name="fm_check" File="Images/fm_check.png" />
+
+							<WhileTrue Value="{unReg}">
+								<Change fm_checked.Opacity="1" />
+								<Change fm_check.Opacity="0" />
+								
+							</WhileTrue>
+						</Panel>
+						<Text Value="내 글" FontSize="{margin}*0.9" Color="White" Alignment="CenterLeft" />
+					</Grid>
+				</Rectangle>
+<!-- 				
+
 				<Rectangle Width="60%" BoxSizing="FillAspect" Aspect="1.5" CornerRadius="3" Color="#3477BE" Alignment="CenterLeft">
 					<Text Value="검색" Alignment="Center" Color="White">
 						<Clicked>
@@ -1270,6 +1329,27 @@
 						</Clicked>
 					</Text>
 				</Rectangle>
+
+
+				<Grid ColumnCount="2" Columns="1*, 1*" CellSpacing="{margin}/2" Width="100%">
+					<Panel Alignment="Left">
+						<Clicked>
+							<Callback Handler="{checkClick}" />
+							<Callback Handler="{unRegisteredChecked}" />
+						</Clicked>
+
+						<Image ux:Name="fm_checked" File="Images/fm_checked.png" Opacity="0" />
+						<Image ux:Name="fm_check" File="Images/fm_check.png" />
+
+						<WhileTrue Value="{unReg}">
+							<Change fm_checked.Opacity="1" />
+							<Change fm_check.Opacity="0" />
+							
+						</WhileTrue>
+					</Panel>
+					<Text Value="내 글" FontSize="{margin}*0.9" Color="White" Alignment="Center" />
+				</Grid> -->
+
 			</Grid>
 		</Panel>
 
