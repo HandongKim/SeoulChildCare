@@ -275,10 +275,64 @@
 			searchTheSubjectList("32");
 		}
 
+		function selectSubjectPopUp (arg, text) {
+			if (arg.data.type == 1) {
+				Backend.subject.color.value = "#4C9DFF";
+				Backend.subject.type.value = "목";
+			} else if (arg.data.type == 2) {
+				Backend.subject.color.value = "#8BBDFF";
+				Backend.subject.type.value = "세목";
+			} else if (arg.data.type == 3) {
+				Backend.subject.color.value = "#FF4200";
+				Backend.subject.type.value = "목";
+			} else if (arg.data.type == 4) {
+				Backend.subject.color.value = "#FFBA85";
+				Backend.subject.type.value = "세목";
+			}
+			
+			Backend.subject.isChoice.value = true;
+			Backend.subject.name.value = arg.data.name;
+			Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
+			Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
+			Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
+			Backend.subject.ESTI_NAME.value = arg.data.ESTI_NAME;
+
+			console.log("======================== ************************************************");
+			console.log("arg.data.ESTI_NAME : " + arg.data.ESTI_NAME);
+			console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
+			console.log("======================== ************************************************");
+
+			Backend.chosenSubject.isChoice = true;
+			Backend.chosenSubject.name = arg.data.name;
+			Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
+			Backend.chosenSubject.ESTI_GB = arg.data.ESTI_GB;
+			Backend.chosenSubject.ESTI_SUBCODE = arg.data.ESTI_SUBCODE;	
+
+			console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
+			console.log("Backend.subject.name.value : " + Backend.subject.name.value);
+			console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
+			console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
+
+			var infoJSON = {
+				choicesubject_ischoice:Backend.subject.isChoice.value,
+				choicesubject_name:Backend.subject.name.value,
+				choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
+				choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
+			}
+
+			var str = JSON.stringify(infoJSON);
+			ValueFactory.setInfoJson(str);
+
+			choiceSubjectAlertWithConfirm.message.value = text;
+			choiceSubjectAlertWithConfirm.layer.value = "Overlay";
+			Backend.isItFromNoteManage.value = false;
+		}
+
+
 		function selectSubject(arg) {
 			// console.log(arg.data.text);
 			console.log("selectSubject : " + JSON.stringify(arg));
-
+			var text = "";
 			console.log("CASH_DATECASH_DATECASH_DATECASH_DATECASH_DATE =====> "  + CASH_DATE.value);
 			var cash_date_in_string = CASH_DATE.value
 			var compareDate = new Date('2018-01-01');
@@ -300,63 +354,204 @@
 					console.log("BILL_CLSS : "  + BILL_CLSS.value);
 					console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-					if (arg.data.ESTI_CODE !="2010401" && arg.data.ESTI_CODE.substring(0,3)=="201" && BILL_CLSS =="10") {
-						// console.log("This is like a shit");
+					if (arg.data.ESTI_CODE !="2010401" && arg.data.ESTI_CODE.substring(0,3)=="201" && BILL_CLSS.value =="10") {
+						console.log("1111111111111111111111111111111111111");
+						if (arg.data.ESTI_CODE =="2010101" || arg.data.ESTI_CODE == "2010201") {
+							console.log("222222222222222222222222222222222222222222222");
+							// if (arg.data.type == 1) {
+							// 	Backend.subject.color.value = "#4C9DFF";
+							// 	Backend.subject.type.value = "목";
+							// } else if (arg.data.type == 2) {
+							// 	Backend.subject.color.value = "#8BBDFF";
+							// 	Backend.subject.type.value = "세목";
+							// } else if (arg.data.type == 3) {
+							// 	Backend.subject.color.value = "#FF4200";
+							// 	Backend.subject.type.value = "목";
+							// } else if (arg.data.type == 4) {
+							// 	Backend.subject.color.value = "#FFBA85";
+							// 	Backend.subject.type.value = "세목";
+							// }
+							
+							// Backend.subject.isChoice.value = true;
+							// Backend.subject.name.value = arg.data.name;
+							// Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
+							// Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
+							// Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
+							// Backend.subject.ESTI_NAME.value = arg.data.ESTI_NAME;
+
+							// console.log("======================== ************************************************");
+							// console.log("arg.data.ESTI_NAME : " + arg.data.ESTI_NAME);
+							// console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
+							// console.log("======================== ************************************************");
+
+							// Backend.chosenSubject.isChoice = true;
+							// Backend.chosenSubject.name = arg.data.name;
+							// Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
+							// Backend.chosenSubject.ESTI_GB = arg.data.ESTI_GB;
+							// Backend.chosenSubject.ESTI_SUBCODE = arg.data.ESTI_SUBCODE;	
+
+							// console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
+							// console.log("Backend.subject.name.value : " + Backend.subject.name.value);
+							// console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
+							// console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
+
+							// var infoJSON = {
+							// 	choicesubject_ischoice:Backend.subject.isChoice.value,
+							// 	choicesubject_name:Backend.subject.name.value,
+							// 	choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
+							// 	choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
+							// }
+
+							// var str = JSON.stringify(infoJSON);
+							// ValueFactory.setInfoJson(str);
+
+							// choiceSubjectAlertWithConfirm.message.value = "법정부담금 납부에 한하여 '카드결제' 선택이 가능합니다.";
+							// choiceSubjectAlertWithConfirm.layer.value = "Overlay";
+							// Backend.isItFromNoteManage.value = false;
+							text = "법정부담금 납부에 한하여 '카드결제' 선택이 가능합니다.";
+							selectSubjectPopUp(arg, text);
+
+
+						} else {
+							// console.log("33333333333333333333333333333333333333");
+							// console.log("Wages can't be paid by credit card");
+
+							alert.message.value = "인건비는 결제방법을 '카드결제'로 사용할 수 없습니다";
+							alert.type.value = "Check";
+							alert.layer.value = "Overlay";
+						}
+					} else {
+						console.log("444444444444444444444444444444444444444");
+						console.log("This is not applicable for anything above");
+
+						// if (arg.data.type == 1) {
+						// 	Backend.subject.color.value = "#4C9DFF";
+						// 	Backend.subject.type.value = "목";
+						// } else if (arg.data.type == 2) {
+						// 	Backend.subject.color.value = "#8BBDFF";
+						// 	Backend.subject.type.value = "세목";
+						// } else if (arg.data.type == 3) {
+						// 	Backend.subject.color.value = "#FF4200";
+						// 	Backend.subject.type.value = "목";
+						// } else if (arg.data.type == 4) {
+						// 	Backend.subject.color.value = "#FFBA85";
+						// 	Backend.subject.type.value = "세목";
+						// }
+						
+						// Backend.subject.isChoice.value = true;
+						// Backend.subject.name.value = arg.data.name;
+						// Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
+						// Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
+						// Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
+						// Backend.subject.ESTI_NAME.value = arg.data.ESTI_NAME;
+
+						// console.log("======================== ************************************************");
+						// console.log("arg.data.ESTI_NAME : " + arg.data.ESTI_NAME);
+						// console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
+						// console.log("======================== ************************************************");
+
+						// Backend.chosenSubject.isChoice = true;
+						// Backend.chosenSubject.name = arg.data.name;
+						// Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
+						// Backend.chosenSubject.ESTI_GB = arg.data.ESTI_GB;
+						// Backend.chosenSubject.ESTI_SUBCODE = arg.data.ESTI_SUBCODE;	
+
+						// console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
+						// console.log("Backend.subject.name.value : " + Backend.subject.name.value);
+						// console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
+						// console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
+
+						// var infoJSON = {
+						// 	choicesubject_ischoice:Backend.subject.isChoice.value,
+						// 	choicesubject_name:Backend.subject.name.value,
+						// 	choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
+						// 	choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
+						// }
+
+						// var str = JSON.stringify(infoJSON);
+						// ValueFactory.setInfoJson(str);
+
+						// choiceSubjectAlertWithConfirm.message.value = "선택 되었습니다.";
+						// choiceSubjectAlertWithConfirm.layer.value = "Overlay";
+						// Backend.isItFromNoteManage.value = false;
+						text = "선택 되었습니다.";
+						selectSubjectPopUp(arg, text);
+
 					}
 
 
 
-
-					if (arg.data.type == 1) {
-						Backend.subject.color.value = "#4C9DFF";
-						Backend.subject.type.value = "목";
-					} else if (arg.data.type == 2) {
-						Backend.subject.color.value = "#8BBDFF";
-						Backend.subject.type.value = "세목";
-					} else if (arg.data.type == 3) {
-						Backend.subject.color.value = "#FF4200";
-						Backend.subject.type.value = "목";
-					} else if (arg.data.type == 4) {
-						Backend.subject.color.value = "#FFBA85";
-						Backend.subject.type.value = "세목";
-					}
 					
-					Backend.subject.isChoice.value = true;
-					Backend.subject.name.value = arg.data.name;
-					Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
-					Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
-					Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
-					Backend.subject.ESTI_NAME.value = arg.data.ESTI_NAME;
 
-					console.log("======================== ************************************************");
-					console.log("arg.data.ESTI_NAME : " + arg.data.ESTI_NAME);
-					console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
-					console.log("======================== ************************************************");
 
-					Backend.chosenSubject.isChoice = true;
-					Backend.chosenSubject.name = arg.data.name;
-					Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
-					Backend.chosenSubject.ESTI_GB = arg.data.ESTI_GB;
-					Backend.chosenSubject.ESTI_SUBCODE = arg.data.ESTI_SUBCODE;	
 
-					console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
-					console.log("Backend.subject.name.value : " + Backend.subject.name.value);
-					console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
-					console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
 
-					var infoJSON = {
-						choicesubject_ischoice:Backend.subject.isChoice.value,
-						choicesubject_name:Backend.subject.name.value,
-						choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
-						choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
-					}
 
-					var str = JSON.stringify(infoJSON);
-					ValueFactory.setInfoJson(str);
 
-					choiceSubjectAlertWithConfirm.message.value = "선택 되었습니다.";
-					choiceSubjectAlertWithConfirm.layer.value = "Overlay";
-					Backend.isItFromNoteManage.value = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					// if (arg.data.type == 1) {
+					// 	Backend.subject.color.value = "#4C9DFF";
+					// 	Backend.subject.type.value = "목";
+					// } else if (arg.data.type == 2) {
+					// 	Backend.subject.color.value = "#8BBDFF";
+					// 	Backend.subject.type.value = "세목";
+					// } else if (arg.data.type == 3) {
+					// 	Backend.subject.color.value = "#FF4200";
+					// 	Backend.subject.type.value = "목";
+					// } else if (arg.data.type == 4) {
+					// 	Backend.subject.color.value = "#FFBA85";
+					// 	Backend.subject.type.value = "세목";
+					// }
+					
+					// Backend.subject.isChoice.value = true;
+					// Backend.subject.name.value = arg.data.name;
+					// Backend.subject.ESTI_CODE.value = arg.data.ESTI_CODE;
+					// Backend.subject.ESTI_GB.value = arg.data.ESTI_GB;
+					// Backend.subject.ESTI_SUBCODE.value = arg.data.ESTI_SUBCODE;
+					// Backend.subject.ESTI_NAME.value = arg.data.ESTI_NAME;
+
+					// console.log("======================== ************************************************");
+					// console.log("arg.data.ESTI_NAME : " + arg.data.ESTI_NAME);
+					// console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_NAME.value);
+					// console.log("======================== ************************************************");
+
+					// Backend.chosenSubject.isChoice = true;
+					// Backend.chosenSubject.name = arg.data.name;
+					// Backend.chosenSubject.ESTI_CODE = arg.data.ESTI_CODE;
+					// Backend.chosenSubject.ESTI_GB = arg.data.ESTI_GB;
+					// Backend.chosenSubject.ESTI_SUBCODE = arg.data.ESTI_SUBCODE;	
+
+					// console.log("Backend.subject.isChoice.value : " + Backend.subject.isChoice.value);
+					// console.log("Backend.subject.name.value : " + Backend.subject.name.value);
+					// console.log("Backend.subject.ESTI_CODE.value : " + Backend.subject.ESTI_CODE.value);
+					// console.log("Backend.subject.ESTI_SUBCODE.value : " + Backend.subject.ESTI_SUBCODE.value);
+
+					// var infoJSON = {
+					// 	choicesubject_ischoice:Backend.subject.isChoice.value,
+					// 	choicesubject_name:Backend.subject.name.value,
+					// 	choicesubject_esti_code:Backend.subject.ESTI_CODE.value,
+					// 	choicesubject_esti_subcode : Backend.subject.ESTI_SUBCODE.value
+					// }
+
+					// var str = JSON.stringify(infoJSON);
+					// ValueFactory.setInfoJson(str);
+
+					// choiceSubjectAlertWithConfirm.message.value = "선택 되었습니다.";
+					// choiceSubjectAlertWithConfirm.layer.value = "Overlay";
+					// Backend.isItFromNoteManage.value = false;
 				}
 			}	
 		}

@@ -8,9 +8,15 @@
 				type: Observable("Check"),
 				layer: Observable("Background")
 		};
-
+		
 		var count = 0;
+		
+		function initCount () {
+			count = 0;
+		}
+
 		function closeApp () {
+
 			router.getRoute(function(route) {
 				console.log("goBackToPrevious From " + route[0]);
 				if (route[0] == "MainPage") {
@@ -19,12 +25,12 @@
 					console.log("Currnet Page is MainPage and count is (After increase): " + count);
 					if (count >1) {
 						MainPageAlertWithConfirm.message.value="종료하시겠습니까?";
-						MainPageAlertWithConfirm.layer.value="Overlay";			
+						MainPageAlertWithConfirm.layer.value="Overlay";
 						count = 0;
 					} else {
 
 					}
-				} 
+				}
 			});		
 		}
 
@@ -33,9 +39,13 @@
 		}
 
 		module.exports = {
-			MainPageAlertWithConfirmCancel, closeApp, MainPageAlertWithConfirm
+			MainPageAlertWithConfirmCancel, closeApp, MainPageAlertWithConfirm, initCount
 		};
 	</JavaScript>
+
+	<WhileActive>
+		<Callback Handler="{initCount}" />
+	</WhileActive>
 
 	<DockPanel>
 		<Panel Dock="Top" Width="100%" BoxSizing="FillAspect" Aspect="2.4" />

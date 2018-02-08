@@ -776,6 +776,12 @@
 			        });
 		}
 
+		function validationCheckApproved () {
+			return false;
+		}
+
+
+
 		function registerSend(){
 			console.log("registerSend function Call ");
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
@@ -814,7 +820,11 @@
 			var dsFileList = '{}';
 			var jsonParam = JSON.parse('{"ds_qna_dtl":'+dsParam+',"ds_qna_update": '+dsDetail+',"ds_filelist":""}');
 
-			
+			var validationCheck = false;
+			validationCheck = validationCheckApproved();
+
+
+
 
 			fetch(insertQnaCommListUrl, {
 					method: 'POST',
