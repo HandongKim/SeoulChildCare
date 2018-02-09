@@ -64,6 +64,13 @@
 			// router.goBack();
 		}
 
+		function deleteAlertButtonAction() {
+			deleteAlert.layer.value = "Background";
+			getQnAList();
+			// router.goBack();
+		}
+
+
 		var pageCount = Observable(1);
 		var totalPage = Observable();
 		var searchText = Observable();
@@ -743,6 +750,14 @@
 			layer: Observable("Background")
 		};
 
+		var deleteAlert = {
+			title: Observable(),
+			message: Observable(),
+			type: Observable("Check"),
+			layer: Observable("Background")
+		}
+
+
 		function sendData(){
 			console.log("sendData was called");
 			if(qnaDetailValue.value.commSeq.value==null || qnaDetailValue.value.commSeq.value==""){
@@ -972,7 +987,8 @@
 
 
 
-
+			// deleteAlert.message.value = "삭제 되었습니다.";
+			// deleteAlert.layer.value = "Overlay";
 
 			fetch(qnaListDel_URL, {
 				method: 'POST',
@@ -984,8 +1000,8 @@
 					var responseData = JSON.stringify(response);
 					console.log("responseData : "+ JSON.stringify(responseData));
 
-					simpleAlert.message.value = "삭제했씁니다.";
-					simpleAlert.layer.value = "Overlay";
+					deleteAlert.message.value = "삭제 되었습니다.";
+					deleteAlert.layer.value = "Overlay";
 
 		            return response.json();
 		        }).then(function(jsonData) {
@@ -1004,7 +1020,8 @@
 			selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, test,
 			searchContent,getClickListValue, getDetailQnA, qnaDetailValue, pickerUp2, pickerDown2,
 			qnaFileValue, qnaIsCorrect , sendData,detailDataClear, warnningText,  warnningOn, 
-			pickerUp2, type2, selectedType2, confirmButtonAction, alert, unReg, checkClick, unRegisteredChecked, simpleAlert,qnaListDel
+			pickerUp2, type2, selectedType2, confirmButtonAction, alert, unReg, 
+			checkClick, unRegisteredChecked, simpleAlert,qnaListDel, deleteAlert, deleteAlertButtonAction
 		};
 	</JavaScript>
 	<Panel ux:Name="page6BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
@@ -1065,6 +1082,34 @@
 </Rectangle>
 
 
+<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{deleteAlert.layer}">
+	<Stroke Width="1" Color="Black" />
+	<StackPanel>
+		<Panel>
+			<Text Value="{deleteAlert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+
+			<Image File="Images/alert_top.png" Alignment="TopCenter" />
+		</Panel>
+
+		<Panel Margin="{margin}*5/7">
+			<Text Value="{deleteAlert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+		</Panel>
+
+		<Panel Margin="{margin}">
+			<BlueButton>
+				<Text Value="확인" Alignment="Center" Color="White" />
+
+				<Clicked>
+					<!-- <Callback Handler="{getListDetailNote}" />
+					<Callback Handler="{viewWillAppear}" /> -->
+					<Toggle Target="showQuestion" />
+					<Callback Handler="{deleteAlertButtonAction}" />
+
+				</Clicked>
+			</BlueButton>
+		</Panel>
+	</StackPanel>
+</Rectangle>
 
 
 
