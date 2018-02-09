@@ -471,15 +471,26 @@ function setTheReplyTitle () {
 
 function replyReceiveWork() {
 	var saveBusiReceiveAdmin_URL = Backend.BASE_URL + Backend.saveBusiReceiveAdmin_URL;
+
 	var SITE_CLSS_SND ="";
 	var TITLE = ""; 
 	var CONT = "";
-	var COMM_SEQ = "";
+	var REPLY_REF = "";
+	var REPLY_DEPTH = "";
+	
+	var REPLY_SORTKEY = "";
 	var AREA = "";
-
-	//수신자 정보
+	var WRITE_HOST = "";
+	var BOD_FORM_CLSS = "";
+	var BOD_COM_YN = "";
+	var REGID = "";
+	var INFO_CDHD_NO = "";
+	var INFO_OBJ_CTGO = "";
 	var RECEIVE_NM = "";
 	var RECEIVE_ORG = "";
+
+
+	var COMM_SEQ = "";
 
 
 	if (JSON.parse(dsParam).GVORGCLSS != null) {
@@ -494,17 +505,26 @@ function replyReceiveWork() {
 		TITLE = "";
 	}
 	
-	if (replyCont.value !=null || replyTitle.value!="") {
+	if (replyCont.value !=null || replyCont.value !="") {
+		console.log("replyCont.value : " + replyCont.value);
 		CONT = replyCont.value;
 	} else {
 		CONT = "";
 	}
-		
-	// if (detailReceivedWorkVariable.COMM_SEQ !=null) {
-	// 	COMM_SEQ = detailReceivedWorkVariable.COMM_SEQ;
-	// } else {
-	// 	COMM_SEQ = "";
-	// }
+
+	if (detailReceivedWorkVariable.COMM_SEQ !=null) {
+		REPLY_REF = detailReceivedWorkVariable.COMM_SEQ;
+	} else {
+		REPLY_REF = "";
+	}
+
+	REPLY_DEPTH = "1";
+
+	if (detailReceivedWorkVariable.COMM_SEQ !=null) {
+		REPLY_SORTKEY = parseInt(detailReceivedWorkVariable.COMM_SEQ) *40;
+	} else {
+		REPLY_SORTKEY = "";
+	}
 
 	if (JSON.parse(dsParam).GVAREACODE != null) {
 		AREA = JSON.parse(dsParam).GVAREACODE;
@@ -512,6 +532,46 @@ function replyReceiveWork() {
 		AREA = "";
 	}
 
+
+	if (detailReceivedWorkVariable.BOD_FORM_CLSS !=null) {
+		BOD_FORM_CLSS = parseInt(detailReceivedWorkVariable.BOD_FORM_CLSS) *40;
+	} else {
+		BOD_FORM_CLSS = "";
+	}
+
+
+	if (detailReceivedWorkVariable.BOD_COM_YN !=null) {
+		BOD_COM_YN = parseInt(detailReceivedWorkVariable.BOD_COM_YN) *40;
+	} else {
+		BOD_COM_YN = "";
+	}
+
+
+
+
+
+
+
+
+
+	if (JSON.parse(dsParam).GVMEMID != null) {
+		REGID = JSON.parse(dsParam).GVMEMID;
+	} else {
+		REGID = "";
+	}
+
+	if (detailReceivedWorkVariable.REGID !=null) {
+		INFO_CDHD_NO = parseInt(detailReceivedWorkVariable.REGID) *40;
+	} else {
+		INFO_CDHD_NO = "";
+	}
+
+
+	if (detailReceivedWorkVariable.SITE_CLSS_SND !=null) {
+		INFO_OBJ_CTGO = parseInt(detailReceivedWorkVariable.SITE_CLSS_SND) *40;
+	} else {
+		INFO_OBJ_CTGO = "";
+	}
 	if (detailReceivedWorkVariable.WRITER_NM != null) {
 		RECEIVE_NM = detailReceivedWorkVariable.WRITER_NM;
 	} else {
@@ -524,7 +584,11 @@ function replyReceiveWork() {
 		RECEIVE_ORG = "";
 	}
 
-	var REPLY_REF = detailReceivedWorkVariable.COMM_SEQ;
+	if (detailReceivedWorkVariable.COMM_SEQ !=null) {
+		COMM_SEQ = detailReceivedWorkVariable.COMM_SEQ;
+	} else {
+		COMM_SEQ = "";
+	}
 
 
 
@@ -564,22 +628,42 @@ function replyReceiveWork() {
 		// RECEIVE_ORG",ds_FvCommList.GetColumn(0,"WRITER_ORG"));      //수신자 소속
 
 
+	
 
 
 
 
-
-	var ds_comm_list = '{"commClss":"'+commClss+'","srchType":"'+srchType+'","srchText":"'+srchText+'","INFO_CDHD_NO":"'+INFO_CDHD_NO+'"}';
-
+	
 
 
+	var ds_comm_list ='{"SITE_CLSS_SND":"' + SITE_CLSS_SND 
+		+'","TITLE":"'+TITLE
+		+'","CONT":"'+CONT
+		+'","REPLY_REF":"'+REPLY_REF
+		+'","REPLY_DEPTH":"'+REPLY_DEPTH
+		+'","REPLY_SORTKEY":"'+REPLY_SORTKEY
+		+'","WRITE_HOST":"'+WRITE_HOST
+		+'","AREA":"'+AREA
+		+'","BOD_FORM_CLSS":"'+BOD_FORM_CLSS
+		+'","BOD_COM_YN":"'+BOD_COM_YN
+		+'","REGID":"'+REGID
+		+'","INFO_CDHD_NO":"'+INFO_CDHD_NO
+		+'","INFO_OBJ_CTGO":"'+INFO_OBJ_CTGO
+		+'","RECEIVE_NM":"'+RECEIVE_NM
+		+'","RECEIVE_ORG":"'+RECEIVE_ORG
+		+'"}';	
 
 
 
-	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_comm_list": '+dsSearch+', "reSeq":"'+COMM_SEQ+'"}');
+
+	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_comm_list": '+ds_comm_list+', "reSeq":"'+COMM_SEQ+'"}');
+
+
+	console.log("jsonParam : " + JSON.stringify(jsonParam));
+
 	var selectBusiReceiveAdminList_URL = Backend.BASE_URL + Backend.selectBusiReceiveAdminList_URL;
 
-	receiveWorks.clear();
+	
 
 	fetch(saveBusiReceiveAdmin_URL, {
 		method: 'POST',
@@ -588,12 +672,8 @@ function replyReceiveWork() {
 		},
 		body: JSON.stringify(jsonParam)
         }).then(function(response) {
-			var bodyInit = JSON.parse(response._bodyInit);
-			var messageList = bodyInit.ds_CommList[1];
-			for (var i = 0; i < messageList.length; i++) {
-				receiveWorks.add(new receivedMessage(messageList[i], i)); 
-			}
-			console.log("receiveMessages : " + JSON.stringify(receiveWorks));
+			console.log(JSON.stringify(response));
+			
             return response.json();
         }).then(function(jsonData) {
         
