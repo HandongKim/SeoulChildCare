@@ -936,6 +936,38 @@
 			console.log("test");
 		}
 
+		function qnaListDel () {
+			var qnaListDel_URL = Backend.BASE_URL + Backend.qnaListDel_URL;
+			var COMM_CLSS = "";
+			var COMM_SEQ = "";
+			var FILE_SEQ = "";
+
+			
+
+			fetch(qnaListDel_URL, {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify(jsonParam)
+		        }).then(function(response) {
+					var responseData = JSON.stringify(response);
+					console.log("responseData : "+ JSON.stringify(responseData));
+
+					alert.message.value = "등록했습니다.";
+					alert.layer.value = "Overlay";
+
+		            return response.json();
+		        }).then(function(jsonData) {
+
+		        }).catch(function(err) {
+
+		        });
+
+
+		}
+ 
+
 
 		module.exports = {
 			type, selectedType, pickerOn, pickerOn2, pickerUp, pickerDown, getQnAList ,qnas, 
