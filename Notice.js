@@ -436,30 +436,38 @@ function noticeDetailList(detail){
 //fileList null Check
 function noticeFileList(fileList){
 
+	console.log("fileList.FILE_STORE_DIR : " + fileList.FILE_STORE_DIR);
 	if(fileList.FILE_STORE_DIR!=null){
 		this.fileStoreDir = fileList.FILE_STORE_DIR;
 	}else{
 		this.fileStoreDir = "";
 	}
 
+	console.log("fileList.COMM_CLSS : " + fileList.COMM_CLSS);
 	if(fileList.COMM_CLSS!=null){
 		this.commClss = fileList.COMM_CLSS;
 	}else{
 		this.commClss = "";
 	}
 
+	console.log("fileList.COMM_SEQ : " + fileList.COMM_SEQ);
 	if(fileList.COMM_SEQ!=null){
 		this.commSeq = fileList.COMM_SEQ;
 	}else{
 		this.commSeq = "";
 	}
 
+	console.log("fileList.FILE_NM : " + fileList.FILE_NM);
 	if(fileList.FILE_NM!=null){
 		this.hasFile = true;
 		this.fileNm = fileList.FILE_NM;
 	}else{
+		this.hasFile = false;
 		this.fileNm = "";
 	}
+
+	console.log("this.hasFile : " + this.hasFile);
+	console.log("this.fileNm : " + this.fileNm);
 
 	if(fileList.FILE_BLOB!=null){
 		this.fileBlob = fileList.FILE_BLOB;
@@ -553,6 +561,8 @@ function getNoticeDetailValue(noticeData){
 	console.log("dsSearch : " + dsSearch);
 	var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
 
+	noticeFiles.clear();
+
 	fetch(noticeUserMipDetailListUrl, {
 			method: 'POST',
 			headers: {
@@ -581,15 +591,25 @@ function getNoticeDetailValue(noticeData){
 					noticeDetail.add(new noticeDetailList(responseDetail[i]));
 				}
 
-				console.log("noticeDetail? : " + JSON.stringify(noticeDetail.value));
+				console.log("noticeDetail : " + JSON.stringify(noticeDetail.value));
 
-				noticeFiles.clear();
+
+				// noticeFiles = Observable();
 
 				var responseFileList = responseBody.ds_filelist[1];
+
 				console.log(JSON.stringify(responseFileList));
+
+				if (responseFileList.length == 0) {
+					noticeFiles.add(new noticeFileList(responseFileList[0]));
+				} else {
 					for(var i = 0; i< responseFileList.length; i++){
 						noticeFiles.add(new noticeFileList(responseFileList[i]));
-					}
+					}	
+				}
+
+
+				
 				console.log("noticeFiles.value : "  + JSON.stringify(noticeFiles.value));
 
 	            return response.json();

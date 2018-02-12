@@ -105,10 +105,12 @@
 			this.eduSeq = eduDetailList.EDUSEQ;
 			this.sinDateM = eduDetailList.SINDATE_M;
 			this.placeMap = eduDetailList.PLACE_MAP;
-
 		}
 
 		//null Check
+
+		var cancelButtonAvailAble = Observable(false);
+
 		function eduIntoList(eduIntoList){
 
 			if(eduIntoList.NAME!=null){
@@ -155,8 +157,10 @@
 
 			if(eduIntoList.SEQ!=null){
 				this.seq = eduIntoList.SEQ;
+				cancelButtonAvailAble.value = true;
 			}else{
 				this.seq = "";
+				cancelButtonAvailAble.value = false;
 			}
 
 			if(eduIntoList.SEOUL_YN!=null){
@@ -228,12 +232,38 @@
 			getDetailEdu(eduSeq);
 		}
 
+		// var applicantName = Observable();
+		// var applicant_GVINSNAME = Observable();
+		// var applicant_GVAREANAME = Observable();
+
+		var hp1 = Observable();
+		var hp2 = Observable();
+		var hp3 = Observable();
+		var tel1 = Observable();
+		var tel2 = Observable();
+		var tel3 = Observable();
+		var email1 = Observable();
+		var email2 = Observable();
+		
+
+		var applyEdu = {
+			title: Observable(),
+			message: Observable(),
+			type: Observable("Check"),
+			layer: Observable("Background")
+		};
+
+
+
 		function getDetailEdu(eduSeq){
 			//교육신청 리스트에서 교육 클릭시 실행되고나서 실행되는 함수
 			console.log("getEducationMain function Call ");
 			// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 			var dsSearch = '{"eduyear":"'+selectedType.value+'","eduseq":"'+eduSeq+'"}';
 			var jsonParam = JSON.parse('{"dsParam":'+Backend.dsParam+',"dsSearch": '+dsSearch+'}');
+
+			cancelButtonAvailAble.value = false;
+
 			eduDetail.clear();
 			eduDetailInfo.clear();
 			var expiredOrNot = "";
@@ -241,7 +271,19 @@
 			hp1.clear();
 			hp2.clear();
 			hp3.clear();
-			applicantName.clear();
+			tel1.clear();
+			tel2.clear();
+			tel3.clear();
+			email1.clear();
+			email2.clear();
+			// applicantName.clear();
+
+			// applicantName.value = JSON.parse(Backend.dsParam).GVMEMNAME;
+			// applicant_GVINSNAME.value = JSON.parse(Backend.dsParam).GVINSNAME;
+			// applicant_GVAREANAME.value = JSON.parse(Backend.dsParam).GVAREANAME;
+
+
+
 			fetch(eduApplyUrl, {
 					method: 'POST',
 					headers: {
@@ -336,10 +378,7 @@
 
 		}
 		
-		var applicantName = Observable();
-		var hp1 = Observable();
-		var hp2 = Observable();
-		var hp3 = Observable();
+	
 
 
 		function applyEducation() {
@@ -365,13 +404,13 @@
 			var SINDATE_M = eduDetail._values[0].sinDateM;
 
 
-
+			console.log(eduDetailInfo._values[0].seq);
 			// ds_info
 			var SEQ = null;
-			if (eduDetailInfo._values[0].eduSeq == null) {
+			if (eduDetailInfo._values[0].seq == null) {
 				SEQ = "";
 			} else {
-				SEQ = eduDetailInfo._values[0].eduSeq;
+				SEQ = eduDetailInfo._values[0].seq;
 			}
 			
 
@@ -384,12 +423,41 @@
 			var AREA_NAME = eduDetailInfo._values[0].areaName;
 			var OFF_NM = eduDetailInfo._values[0].offNm;
 			var SEOUL_YN = eduDetailInfo._values[0].seoulYn;
-			var NAME = applicantName.value;
+			var NAME = eduDetailInfo._values[0].name;
 			var FLAG = "I";
 
 			var HP1 = hp1.value;
 			var HP2 = hp2.value;
 			var HP3 = hp3.value;
+
+			var TEL1 = tel1.value;
+			var TEL2 = tel2.value;
+			var TEL3 = tel3.value;
+
+			var EMAIL1 = email1.value;
+			var EMAIL2 = email2.value;
+
+
+			if (cancelButtonAvailAble.value == true) {
+				FLAG = "C";
+				HP1 = "";
+				HP2 = "";
+				HP3 = "";
+
+				TEL1 = "";
+				TEL2 = "";
+				TEL3 = "";
+				
+				EMAIL1 = "";
+				EMAIL2 = "";
+			} else {
+				FLAG = "I";
+			}
+
+
+
+
+			
 
 
 
@@ -419,7 +487,7 @@
 			+ '"eduseq":"'+EDUSEQ+'"' 
 			+ '}';
 
-console.log("dsSearch : " + dsSearch);
+	console.log("dsSearch : " + dsSearch);
 
 	
 
@@ -431,8 +499,6 @@ console.log("dsSearch : " + dsSearch);
 			+ '"STATE":"'+STATE+ '",'
 			+ '"SINDATE_M":"'+SINDATE_M+'"' 
 			+ '}';
-
-
 
 	var ds_info = '{' 
 	+ '"SEQ":"'+SEQ+ '",' 
@@ -447,7 +513,12 @@ console.log("dsSearch : " + dsSearch);
 	+ '"FLAG":"'+FLAG+'",'
 	+ '"HP1":"'+HP1+ '",'
 	+ '"HP2":"'+HP2+'",'
-	+ '"HP3":"'+HP3+'"' 
+	+ '"HP3":"'+HP3+'",' 
+	+ '"TEL1":"'+TEL1+'",' 
+	+ '"TEL2":"'+TEL2+'",' 
+	+ '"TEL3":"'+TEL3+'",' 
+	+ '"EMAIL1":"'+EMAIL1+'",' 
+	+ '"EMAIL2":"'+EMAIL2+'"' 
 	+ '}';
 
 	console.log("ds_info : " + ds_info);	
@@ -475,7 +546,14 @@ console.log("dsSearch : " + dsSearch);
 		body: JSON.stringify(jsonParam)
 	}).then(function (response) {
 		console.log("response : " + JSON.stringify(response));
+		var responsHeader = response._bodyInit;
+		console.log("responsHeader : " + responsHeader);
+		var returnMsg = JSON.parse(responsHeader).returnMsg;
+		console.log("returnMsg : " + returnMsg);
+		applyEdu.message.value = returnMsg;
+		applyEdu.layer.value="Overlay";
 		return response.json();
+
 	}).then(function(jsonData) {
 
 	}).catch(function(err) {
@@ -485,12 +563,23 @@ console.log("dsSearch : " + dsSearch);
 
 }
 
+	function applyConfirmButtonClicked() {
+		applyEdu.layer.value="Background";
+		// router.goBack();
+	}
+
+
+
+ 
 
 
 
 
 		module.exports = {
-			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap, applyEducation, applicantName, hp1, hp2, hp3, applicableOrNot
+			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap, applyEducation, hp1, hp2, hp3, applicableOrNot, tel1, tel2, tel3, email1, email2, applyEdu, applyConfirmButtonClicked, cancelButtonAvailAble
+
+
+
 		};
 	</JavaScript>
 
@@ -501,6 +590,32 @@ console.log("dsSearch : " + dsSearch);
 	<WhileTrue Value="{pickerOn}">
 		<Change page5PickerPanel.Y="0" Duration=".2" />
 	</WhileTrue>
+
+
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{applyEdu.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{applyEdu.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{applyEdu.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
+			<Panel Margin="{margin}">
+				<BlueButton>
+					<Text Value="확인" Alignment="Center" Color="White" />
+					<Clicked>
+						<Callback Handler="{applyConfirmButtonClicked}" />
+						<Toggle Target="detailApplyEdu" />
+					</Clicked>
+				</BlueButton>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
+
+
+
 	<!-- 상세 페이지 구성 상세 데이터 수정 필요-->
 	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
 		<Panel Dock="Top">
@@ -616,7 +731,7 @@ console.log("dsSearch : " + dsSearch);
 							<Text Value="교통안내" FontSize="{margin}*0.9" Alignment="Center" TextWrapping="Wrap" />
 						</Panel>
 						<Panel Width="100%" Height="100%" Color="White">
-							<Text Value="{eduDetail.traffic}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" />
+							<Text Value="{eduDetail.traffic}" FontSize="{margin}*0.9" Alignment="CenterLeft" TextWrapping="Wrap" Margin="5" />
 						</Panel>
 					</Grid>
 				</Panel>
@@ -633,46 +748,169 @@ console.log("dsSearch : " + dsSearch);
 					</Grid>
 				</Panel> -->
 
-				<!-- 어떤 데이터 넘어와야 하는지? 화면 구성 알아서 수정 필요 -->
-			<WhileTrue Value="{applicableOrNot}">
+				<WrapPanel Margin="{margin}" Alignment="CenterLeft" Dock="Top">
+					<!-- <Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" /> -->
+					<Text Value="신청자 정보" FontSize="{margin}*1.2" Color="Black" />
+				</WrapPanel>
+
+				<Rectangle Width="100%" Height="1" Color="#3E66C5" />
+
+				<Rectangle Width="100%" Height="2" Color="White" />
+
+				
 				<Panel Color="#CCC">
-					<Grid ColumnCount="2" Columns="1*, 3.5*" Rows="Auto" CellSpacing="1" Margin="0,2,0,1">
-						<Panel Width="100%" Height="{margin}*3" Color="#eee">
-							<Text Value="수강자명" FontSize="{margin}*0.9" Alignment="Center" />
+					<Grid ColumnCount="2" Columns="1*, 3.5*" CellSpacing="1" Margin="0,1,0,1">
+						<Panel Width="100%" MinHeight="{margin}*3" Height="100%" Color="#eee">
+							<Text Value="어린이집명" FontSize="{margin}*0.9" Alignment="Center" TextWrapping="Wrap" />
 						</Panel>
 						<Panel Width="100%" Height="100%" Color="White">
-							<TextBox Value="{applicantName}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" Width="85%" />
+							<Text Value="{eduDetailInfo.insName}" FontSize="{margin}*0.9" Alignment="CenterLeft" TextWrapping="Wrap" Margin="5" />
 						</Panel>
-
-						<Panel Width="100%" Height="{margin}*3" Color="#eee">
-							<Text Value="직책" FontSize="{margin}*0.9" Alignment="Center" />
-						</Panel>
-						<Panel Width="100%" Height="100%" Color="White">
-							<TextBox Value="" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" Width="85%" />
-						</Panel>
-
-						<Panel Width="100%" Height="{margin}*3" Color="#eee">
-							<Text Value="연락처" FontSize="{margin}*0.9" Alignment="Center" />
+					</Grid>
+				</Panel>
+				<Panel Color="#CCC">
+					<Grid ColumnCount="2" Columns="1*, 3.5*" CellSpacing="1" Margin="0,1,0,1">
+						<Panel Width="100%" MinHeight="{margin}*3" Height="100%" Color="#eee">
+							<Text Value="지역(구)" FontSize="{margin}*0.9" Alignment="Center" TextWrapping="Wrap" />
 						</Panel>
 						<Panel Width="100%" Height="100%" Color="White">
-							<WrapPanel Width="100%" Alignment="Center">
-								<TextBox Value="{hp1}" FontSize="{margin}*0.9" MaxLength="3" Alignment="CenterLeft" Margin="5,5,0,5" Width="{margin}*4" InputHint="Number"/>
-								<Text Value="-" Alignment="Center" Margin="1" />
-								<TextBox Value="{hp2}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5" Width="{margin}*5" InputHint="Number"/>
-								<Text Value="-" Alignment="Center" Margin="1" />
-								<TextBox Value="{hp3}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5,5,5" Width="{margin}*5" InputHint="Number"/>
-							</WrapPanel>
+							<Text Value="{eduDetailInfo.areaName}" FontSize="{margin}*0.9" Alignment="CenterLeft" TextWrapping="Wrap" Margin="5" />
 						</Panel>
 					</Grid>
 				</Panel>
 
-				<Rectangle Width="100%" Height="{margin}*3" Color="#1A387B" CornerRadius="5">
-					<Text Value="신청하기" Color="White" Alignment="Center" />
-					<Clicked>
-						<Callback Handler="{applyEducation}" />
-					</Clicked>
-				</Rectangle>
-			</WhileTrue>
+				<Panel Color="#CCC">
+					<Grid ColumnCount="2" Columns="1*, 3.5*" CellSpacing="1" Margin="0,1,0,1">
+						<Panel Width="100%" MinHeight="{margin}*3" Height="100%" Color="#eee">
+							<Text Value="유형" FontSize="{margin}*0.9" Alignment="Center" TextWrapping="Wrap" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<Text Value="{eduDetailInfo.codeName}" FontSize="{margin}*0.9" Alignment="CenterLeft" TextWrapping="Wrap" Margin="5" />
+						</Panel>
+					</Grid>
+				</Panel>
+
+				<Panel Color="#CCC">
+					<Grid ColumnCount="2" Columns="1*, 3.5*" CellSpacing="1" Margin="0,1,0,1">
+						<Panel Width="100%" MinHeight="{margin}*3" Height="100%" Color="#eee">
+							<Text Value="서울형여부" FontSize="{margin}*0.9" Alignment="Center" TextWrapping="Wrap" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<Text Value="{eduDetailInfo.seoulYn}" FontSize="{margin}*0.9" Alignment="CenterLeft" TextWrapping="Wrap" Margin="5" />
+						</Panel>
+					</Grid>
+				</Panel>
+
+				<!-- 자 -->
+
+				<Panel Color="#CCC">
+					<Grid ColumnCount="2" Columns="1*, 3.5*" CellSpacing="1" Margin="0,1,0,1">
+						<Panel Width="100%" MinHeight="{margin}*3" Height="100%" Color="#eee">
+							<Text Value="신청자명" FontSize="{margin}*0.9" Alignment="Center" TextWrapping="Wrap" />
+						</Panel>
+						<Panel Width="100%" Height="100%" Color="White">
+							<Text Value="{eduDetailInfo.name}" FontSize="{margin}*0.9" Alignment="CenterLeft" TextWrapping="Wrap" Margin="5" />
+						</Panel>
+					</Grid>
+				</Panel>
+
+
+				<WhileTrue Value="{cancelButtonAvailAble}">
+					<Rectangle Width="100%" Height="5" Color="White" />
+					<Rectangle Width="100%" Height="{margin}*3" Color="#1A387B" CornerRadius="5">
+						<Text Value="신청취소" Color="White" Alignment="Center" />
+						<Clicked>
+							<Callback Handler="{applyEducation}" />
+						</Clicked>
+					</Rectangle>
+				</WhileTrue>
+
+
+				<!-- 어떤 데이터 넘어와야 하는지? 화면 구성 알아서 수정 필요 -->
+				<WhileTrue Value="{applicableOrNot}">
+					<Panel Color="#CCC">
+						<Grid ColumnCount="2" Columns="1*, 3.5*" Rows="Auto" CellSpacing="1" Margin="0,2,0,1">
+							<!-- <Panel Width="100%" Height="{margin}*3" Color="#eee">
+								<Text Value="수강자명" FontSize="{margin}*0.9" Alignment="Center" />
+							</Panel>
+							<Panel Width="100%" Height="100%" Color="White">
+								<TextBox Value="{applicantName}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" Width="85%" />
+							</Panel> -->
+
+							<!-- <Panel Width="100%" Height="{margin}*3" Color="#eee">
+								<Text Value="직책" FontSize="{margin}*0.9" Alignment="Center" />
+							</Panel>
+							<Panel Width="100%" Height="100%" Color="White">
+								<TextBox Value="" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5" Width="85%" />
+							</Panel> -->
+
+							<Panel Width="100%" Height="{margin}*3" Color="#eee">
+								<Text Value="연락처" FontSize="{margin}*0.9" Alignment="Center" />
+							</Panel>
+							<Panel Width="100%" Height="100%" Color="White">
+								<WrapPanel Width="100%" Alignment="Center">
+									<TextBox Value="{tel1}" FontSize="{margin}*0.9" MaxLength="3" Alignment="CenterLeft" Margin="5,5,0,5" Width="{margin}*4" InputHint="Number"/>
+									<Text Value="-" Alignment="Center" Margin="1" />
+									<TextBox Value="{tel2}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5" Width="{margin}*5" InputHint="Number"/>
+									<Text Value="-" Alignment="Center" Margin="1" />
+									<TextBox Value="{tel3}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5,5,5" Width="{margin}*5" InputHint="Number"/>
+								</WrapPanel>
+							</Panel>
+
+
+							<Panel Width="100%" Height="{margin}*3" Color="#eee">
+								<Text Value="휴대폰" FontSize="{margin}*0.9" Alignment="Center" />
+							</Panel>
+							<Panel Width="100%" Height="100%" Color="White">
+								<WrapPanel Width="100%" Alignment="Center">
+									<TextBox Value="{hp1}" FontSize="{margin}*0.9" MaxLength="3" Alignment="CenterLeft" Margin="5,5,0,5" Width="{margin}*4" InputHint="Number"/>
+									<Text Value="-" Alignment="Center" Margin="1" />
+									<TextBox Value="{hp2}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5" Width="{margin}*5" InputHint="Number"/>
+									<Text Value="-" Alignment="Center" Margin="1" />
+									<TextBox Value="{hp3}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5,5,5" Width="{margin}*5" InputHint="Number"/>
+								</WrapPanel>
+							</Panel>
+
+							<!-- <Panel Width="100%" Height="{margin}*3" Color="#eee">
+								<Text Value="연락처" FontSize="{margin}*0.9" Alignment="Center" />
+							</Panel>
+							<Panel Width="100%" Height="100%" Color="White">
+								<WrapPanel Width="100%" Alignment="Center">
+									<TextBox Value="{hp1}" FontSize="{margin}*0.9" MaxLength="3" Alignment="CenterLeft" Margin="5,5,0,5" Width="{margin}*4" InputHint="Number"/>
+									<Text Value="-" Alignment="Center" Margin="1" />
+									<TextBox Value="{hp2}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5" Width="{margin}*5" InputHint="Number"/>
+									<Text Value="-" Alignment="Center" Margin="1" />
+									<TextBox Value="{hp3}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5,5,5" Width="{margin}*5" InputHint="Number"/>
+								</WrapPanel>
+							</Panel> -->
+
+							<Panel Width="100%" Height="{margin}*3" Color="#eee">
+								<Text Value="이메일" FontSize="{margin}*0.9" Alignment="Center" />
+							</Panel>
+							<Panel Width="100%" Height="100%" Color="White">
+								<WrapPanel Width="100%" Alignment="Center">
+									<TextBox Value="{email1}" FontSize="{margin}*0.9" Alignment="CenterLeft" Margin="5,5,0,5" Width="{margin}*8"/>
+									<Text Value="@" Alignment="Center" Margin="1" />
+									<TextBox Value="{email2}" FontSize="{margin}*0.9"  Alignment="CenterLeft" Margin="0,5" Width="{margin}*8" />
+									<!-- <Text Value="-" Alignment="Center" Margin="1" />
+									<TextBox Value="{hp3}" FontSize="{margin}*0.9" MaxLength="4" Alignment="CenterLeft" Margin="0,5,5,5" Width="{margin}*5" InputHint="Number"/> -->
+								</WrapPanel>
+							</Panel>
+						</Grid>
+					</Panel>
+
+					<Rectangle Width="100%" Height="{margin}*3" Color="#1A387B" CornerRadius="5">
+						<Text Value="신청하기" Color="White" Alignment="Center" />
+						<Clicked>
+							<Callback Handler="{applyEducation}" />
+						</Clicked>
+					</Rectangle>
+				</WhileTrue>
+
+
+
+
+
 
 			</StackPanel>
 		</ScrollView>

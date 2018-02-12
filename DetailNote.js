@@ -778,7 +778,7 @@ function pickFromList(args) {
 
 
 	if (notes._values[args.data.index].name == "" || notes._values[args.data.index].name == null) {
-		Backend.subject.name.value ="계정과목 선택";
+		Backend.subject.name.value ="계정과목";
 		Backend.subject.isChoice.value = false;
 	} else {
 		Backend.subject.name.value = notes._values[args.data.index].name;
@@ -909,7 +909,7 @@ function initialDataSetting () {
 	Backend.subject.isChoice.value = true;
 
 	if (notes._values[indexValue].name == "" || notes._values[indexValue].name == null) {
-		Backend.subject.name.value ="계정과목 선택";
+		Backend.subject.name.value ="계정과목";
 		Backend.subject.isChoice.value = false;
 	} else {
 		Backend.subject.name.value = notes._values[indexValue].name;

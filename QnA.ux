@@ -911,12 +911,11 @@
 
 			console.log("dsParam : " + dsParam);
 
-
-
 			var dsDetail = '{"CONT":"'+qnaDetailValue.value.cont.value
 			+'","TITLE":"'+qnaDetailValue.value.title.value
 			+'","SITE_CLSS_SND":"'+SITE_CLSS_SND+'","WRITER_NM":"'+WRITER_NM
-			+'","WRITER_ORG":"'+WRITER_ORG+'","WRITE_HOST":"","AREA":"'+AREA+'","REGID":"'+REGID+'","OPEN_YN":"'+OPEN_YN+'"}';
+			+'","WRITER_ORG":"'+WRITER_ORG+'","WRITE_HOST":"","AREA":"'+AREA
+			+'","REGID":"'+REGID+'","OPEN_YN":"'+OPEN_YN+'"}';
 
 			console.log("dsDetail : " + dsDetail);
 
@@ -939,7 +938,7 @@
 					var responseData = JSON.stringify(response);
 					console.log("responseData : "+ JSON.stringify(responseData));
 
-					alert.message.value = "등록했습니다.";
+					alert.message.value = "등록되었습니다.";
 					alert.layer.value = "Overlay";
 
 		            return response.json();
@@ -1270,7 +1269,8 @@
 			<Rectangle Width="100%" Height="1" Color="#3E66C5" />
 		</Grid>
 
-		<Grid Color="#ccc" CellSpacing="1" Rows="Auto">
+		<!-- <Grid Color="#ccc" CellSpacing="1" Rows="Auto"> -->
+		<Grid Color="#ccc" CellSpacing="1" Rows="1.3*, 6*, 1.3*">
 			<Panel Color="White" Width="100%" Height="100%">
 				<StackPanel Margin="{margin}">
 					<Text Value="{qnaDetailValue.title}" FontSize="{margin}*1.2" Color="Black" TextWrapping="Wrap" />
@@ -1279,12 +1279,18 @@
 				</StackPanel>
 			</Panel>
 			<Panel Color="White">
-				<Text Value="{qnaDetailValue.cont}" Margin="{margin}" />
+				<ScrollView>
+					<StackPanel>
+						<Text Value="{qnaDetailValue.cont}" Margin="{margin}" TextWrapping="Wrap" />
+					</StackPanel>
+				</ScrollView>
 			</Panel>
 
+
+			<WhileFalse Value="{qnaIsCorrect}">
 			<Panel Width="100%" Color="#5079DB">
-				<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5" Rows="Auto">
-					<Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+				<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
+					<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
 					<Rectangle Width="100%" Color="White" ColumnSpan="2" >
 						<StackPanel>
 							<Each Items="{qnaFileValue}">
@@ -1295,7 +1301,7 @@
 									</WrapPanel>
 								</Each>
 						</StackPanel>
-					</Rectangle>
+					</Rectangle> -->
 					<GrayButton2>
 						<Text Value="삭제" Alignment="Center" Color="White" />
 						<Clicked>
@@ -1306,17 +1312,64 @@
 
 						</Clicked>
 					</GrayButton2>
-					<WhileTrue Value="{qnaIsCorrect}">
+					<!-- 상세정보 수정화면 가기 -->
+					
+						<!-- <OrangeButton>
+							<Text Value="수정" Alignment="Center" Color="White" />
+							<Clicked>
+								<Toggle Target="applyQuestion" />
+								
+							</Clicked>
+						</OrangeButton> -->
+					
+				</Grid>
+			</Panel>
+			</WhileFalse>
+
+			<WhileTrue Value="{qnaIsCorrect}">
+			<Panel Width="100%" Color="#5079DB">
+				<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5">
+					<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+					<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+						<StackPanel>
+							<Each Items="{qnaFileValue}">
+									<WrapPanel>
+										<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+										<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+										<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									</WrapPanel>
+								</Each>
+						</StackPanel>
+					</Rectangle> -->
+					<GrayButton2>
+						<Text Value="삭제" Alignment="Center" Color="White" />
+						<Clicked>
+							<!-- <Callback Handler="{selectedTypes}" />	
+							<Callback Handler="{pickerDown}" />
+							<Toggle Target="showQuestion" /> -->
+							<Callback Handler="{qnaListDel}" />
+
+						</Clicked>
+					</GrayButton2>
+					<!-- 상세정보 수정화면 가기 -->
+					
 						<OrangeButton>
 							<Text Value="수정" Alignment="Center" Color="White" />
 							<Clicked>
 								<Toggle Target="applyQuestion" />
-								<!-- 상세정보 수정화면 가기 -->
+								
 							</Clicked>
 						</OrangeButton>
-					</WhileTrue>
+					
 				</Grid>
 			</Panel>
+
+			</WhileTrue>
+
+
+
+
+
 		</Grid>
 
 		<WhileTrue ux:Name="showQuestion">
@@ -1456,7 +1509,6 @@
 							<Callback Handler="{searchContent}" />
 						</Clicked>
 					</Text>
-
 				</Rectangle>
 				<Rectangle Width="100%" Height="100%">
 					<Grid ColumnCount="2" Columns="1*, 1*" CellSpacing="{margin}/2" Width="100%">
