@@ -15,6 +15,51 @@
 		<Change bgPanel.ZOffset="1.2" />
 	</WhileTrue>
 
+
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{LoginAlertConfirm.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{LoginAlertConfirm.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{LoginAlertConfirm.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
+			<Panel Margin="{margin}">
+				<BlueButton>
+					<Text Value="확인" Alignment="Center" Color="White" />
+					<Clicked>
+						<Callback Handler="{goToMainPage}" />
+					</Clicked>
+				</BlueButton>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
+
+
+
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{LoginAlertConfirmFail.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{LoginAlertConfirmFail.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{LoginAlertConfirmFail.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
+			<Panel Margin="{margin}">
+				<BlueButton>
+					<Text Value="확인" Alignment="Center" Color="White" />
+					<Clicked>
+						<Callback Handler="{LoginAlertConfirmFailClicked}" />
+					</Clicked>
+				</BlueButton>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
+
 	<!-- 비밀번호 변경시 보여지는 패널 -->
 	<StackPanel ux:Name="changePwPanel" Width="100%" Y="-100%" Color="White" Alignment="TopCenter" ZOffset="1.3">
 		<Rectangle Width="100%" Color="#527BD8" BoxSizing="FillAspect" Aspect="6">
@@ -413,89 +458,73 @@
 	</DockPanel>
 
 
-<OnBackButton >
-	<Callback Handler="{checkTheLastPageLoginPage}" />
-</OnBackButton>
+	<OnBackButton>
+		<Callback Handler="{checkTheLastPageLoginPage}" />
+	</OnBackButton>
 
-<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{LoginAlertWithConfirm.layer}">
-	<Stroke Width="1" Color="Black" />
-	<StackPanel>
-		<Panel>
-			<Text Value="{LoginAlertWithConfirm.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{LoginAlertExitConfirm.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{LoginAlertExitConfirm.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
 
-			<Image File="Images/alert_top.png" Alignment="TopCenter" />
-		</Panel>
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
 
-		<Panel Margin="{margin}*5/7">
-			<Text Value="{LoginAlertWithConfirm.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
-		</Panel>
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{LoginAlertExitConfirm.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
 
-		<Panel Margin="{margin}">
-			<Grid ColumnCount="2" CellSpacing="5">
-				<BlueButton>
-					<Text Value="확인" Alignment="Center" Color="White" />
-					<Clicked>
-						<HomeScreen Type="Finish" />
-					</Clicked>
-				</BlueButton>
+			<Panel Margin="{margin}">
+				<Grid ColumnCount="2" CellSpacing="5">
+					<BlueButton>
+						<Text Value="확인" Alignment="Center" Color="White" />
+						<Clicked>
+							<HomeScreen Type="Finish" />
+						</Clicked>
+					</BlueButton>
 
-				<GrayButton>
-					<Text Value="취소" Alignment="Center" Color="White" />
-					<Clicked>
-						<Callback Handler="{LoginAlertWithConfirmCancel}" />
-					</Clicked>
-				</GrayButton>			
-			</Grid>
-		</Panel>
-	</StackPanel>
-</Rectangle>
+					<GrayButton>
+						<Text Value="취소" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{LoginAlertExitConfirmCancel}" />
+						</Clicked>
+					</GrayButton>			
+				</Grid>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
 
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{removeCertConfirmationAlert.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{removeCertConfirmationAlert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
 
-<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{removeCertConfirmationAlert.layer}">
-	<Stroke Width="1" Color="Black" />
-	<StackPanel>
-		<Panel>
-			<Text Value="{removeCertConfirmationAlert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
 
-			<Image File="Images/alert_top.png" Alignment="TopCenter" />
-		</Panel>
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{removeCertConfirmationAlert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
 
-		<Panel Margin="{margin}*5/7">
-			<Text Value="{removeCertConfirmationAlert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
-		</Panel>
+			<Panel Margin="{margin}">
+				<Grid ColumnCount="2" CellSpacing="5">
+					<BlueButton>
+						<Text Value="확인" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{removeCertificate}" />
+						</Clicked>
+					</BlueButton>
 
-		<Panel Margin="{margin}">
-			<Grid ColumnCount="2" CellSpacing="5">
-				<BlueButton>
-					<Text Value="확인" Alignment="Center" Color="White" />
-					<Clicked>
-						<Callback Handler="{removeCertificate}" />
-					</Clicked>
-				</BlueButton>
-
-				<GrayButton>
-					<Text Value="취소" Alignment="Center" Color="White" />
-					<Clicked>
-						<Callback Handler="{removeCertConfirmationAlertCancel}" />
-					</Clicked>
-				</GrayButton>			
-			</Grid>
-		</Panel>
-	</StackPanel>
-</Rectangle>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+					<GrayButton>
+						<Text Value="취소" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{removeCertConfirmationAlertCancel}" />
+						</Clicked>
+					</GrayButton>			
+				</Grid>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
 </Page>

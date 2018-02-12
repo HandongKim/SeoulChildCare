@@ -1024,6 +1024,11 @@
 			checkClick, unRegisteredChecked, simpleAlert,qnaListDel, deleteAlert, deleteAlertButtonAction
 		};
 	</JavaScript>
+
+	<OnBackButton>
+
+	</OnBackButton>
+
 	<Panel ux:Name="page6BgPanel" Width="100%" Height="100%" Color="#ccc8" ZOffset="-1">
 		<Clicked><Callback /></Clicked>
 	</Panel>
@@ -1050,25 +1055,21 @@
 
 		<MyPicker Data="{type2}" Selected="{selectedType2}" />
 	</DockPanel>
-<Alert ux:Name="detailNoteAlert" Title="{simpleAlert.title}" MainText="{simpleAlert.message}" Type="{simpleAlert.type}" Layer="{simpleAlert.layer}" />
+	<Alert ux:Name="detailNoteAlert" Title="{simpleAlert.title}" MainText="{simpleAlert.message}" Type="{simpleAlert.type}" Layer="{simpleAlert.layer}" />
 
-<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{alert.layer}">
-	<Stroke Width="1" Color="Black" />
-	<StackPanel>
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{alert.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
 		<Panel>
 			<Text Value="{alert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
-
 			<Image File="Images/alert_top.png" Alignment="TopCenter" />
 		</Panel>
-
 		<Panel Margin="{margin}*5/7">
 			<Text Value="{alert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
 		</Panel>
-
 		<Panel Margin="{margin}">
 			<BlueButton>
 				<Text Value="확인" Alignment="Center" Color="White" />
-
 				<Clicked>
 					<!-- <Callback Handler="{getListDetailNote}" />
 					<Callback Handler="{viewWillAppear}" /> -->

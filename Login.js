@@ -771,6 +771,7 @@ function changePassword () {
 var staticDsParam = null;
 var staticDsSearch = null;
 var staticParamStringValue = "";
+var isConnected = Observable(false);
 
 function connectToServer() {
 	getLogicSignedData();
@@ -784,30 +785,48 @@ function connectToServer() {
 		method: 'POST',
 		headers: {
 			"Content-type": "application/json"
-	},
+		},
 		body: JSON.stringify({
 			"SIGNGB":"1",
 			"signedText":mSignedData
-	})
+		})
 	}).then(function(response) {
-		console.log("response.resultCode :"  + response.resultCode);
+		console.log("response : " + JSON.stringify(response));
 		var responseHeaders = JSON.parse(response._bodyInit);
-        var dsParam = responseHeaders.dsParam;
-        var reulstCode = responseHeaders.resultCode;
+		var resultCode = responseHeaders.resultCode;
+        var resultMsg = responseHeaders.resultMsg;
 
-        if(reulstCode == "000") {
-			// alert.title.value = "비밀번호 입력";
-			// alert.message.value = "비밀번호를 입력하세요.";
-			// alert.type.value = "Check";
-			// alert.layer.value = "Overlay";
+
+
+        var dsParam = null;
+        var GVMEMNAME = null;
+       	console.log("GVMEMNAME : " +GVMEMNAME);
+        
+        console.log("resultCode : " + JSON.stringify(resultCode));
+        console.log("resultMsg : " + JSON.stringify(resultMsg));
+
+        if(resultCode == "000") {
+			
+        	dsParam = responseHeaders.dsParam;
+        	GVMEMNAME = dsParam.GVMEMNAME;
+
+			LoginAlertConfirm.message.value = GVMEMNAME + "님 환영합니다";
+			LoginAlertConfirm.type.value = "Check";
+			LoginAlertConfirm.layer.value = "Overlay";
 			console.log("Login dsParma : " + JSON.stringify(dsParam));
 
 
         	Backend.dsParam = JSON.stringify(dsParam);
-			router.goto("MainPage");
-        } 
+        	
+			// router.goto("MainPage");
+        } else {
+			LoginAlertConfirmFail.message.value = resultMsg;
+			LoginAlertConfirmFail.type.value = "Check";
+			LoginAlertConfirmFail.layer.value = "Overlay";
+			
+        }	
 
-		console.log("isConnected : " + isConnected);
+		console.log("isConnected : " + isConnected.value);
 		var responseData = JSON.stringify(response);
 		return response.json();
 	}).then(function(jsonData) {
@@ -820,34 +839,49 @@ function connectToServer() {
 }
 
 
+function goToMainPage() {
+	console.log("goToMainPage was called");
+	router.goto("MainPage");
+	LoginAlertConfirm.layer.value="Background";
+}
+
+function LoginAlertConfirmFailClicked () {
+	LoginAlertConfirmFail.layer.value="Background";	
+}
+
 function checkTheLastPageLoginPage() {
-
-	console.log("이것도 돌아가나??");
-
-	// router.getRoute(function(route) {
-	// 		console.log("goBackToPrevious From " + route[0]);
-	// 		if (route[0] == "Login") {
-	// 			// exitOnBackButton.value = true;
-	// 		} else if (route[0] == "MainPage") {
-	// 			// exitOnBackButton.value = true;
-	// 		} 
-	// 	});
-	LoginAlertWithConfirm.message.value="종료하시겠습니까?";
-	LoginAlertWithConfirm.layer.value="Overlay";
+	LoginAlertExitConfirm.message.value="종료하시겠습니까?";
+	LoginAlertExitConfirm.layer.value="Overlay";
 
 }
 
-function LoginAlertWithConfirmCancel () {
-	LoginAlertWithConfirm.layer.value="Background";
+function LoginAlertExitConfirmCancel () {
+	LoginAlertExitConfirm.layer.value="Background";
 }
 
 
-var LoginAlertWithConfirm = {
+var LoginAlertExitConfirm = {
 	title: Observable(),
 	message: Observable(),
 	type: Observable("Check"),
 	layer: Observable("Background")
 };
+
+
+var LoginAlertConfirm = {
+	title: Observable(),
+	message: Observable(),
+	type: Observable("Check"),
+	layer: Observable("Background")
+};
+
+var LoginAlertConfirmFail = {
+	title: Observable(),
+	message: Observable(),
+	type: Observable("Check"),
+	layer: Observable("Background")
+};
+
 
 
 
@@ -870,7 +904,6 @@ function removeCertConfirmationAlertShow () {
 
 
 
-
 module.exports = {
 	goMainPage, goMainPage2, getLicenseInfo,
 	corSelected, friSelect, corSelect,
@@ -889,5 +922,7 @@ module.exports = {
 	onFindCenter, findCenterUp, findCenterDown, removeCertConfirmationAlert,
 	firstNum, secondNum, thirdNum, countDownSeconds, countDownMinutes,
 	importCert, getList, data, chooseCertificate, removeCertificate,changePassword, 
-	alert, setLicense, checkTheLastPageLoginPage, LoginAlertWithConfirm, LoginAlertWithConfirmCancel
+	alert, setLicense, checkTheLastPageLoginPage, LoginAlertExitConfirm, 
+	LoginAlertExitConfirmCancel, LoginAlertConfirm, 
+	goToMainPage, isConnected, LoginAlertConfirmFail, LoginAlertConfirmFailClicked
 };
