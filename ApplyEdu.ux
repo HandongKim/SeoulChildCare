@@ -532,11 +532,9 @@
 	console.log("20180130 : JSON.stringify()" + JSON.stringify(jsonParam));
 	var url = Backend.BASE_URL + Backend.eduapplyproc_URL;
 
-
-
-		console.log("=========================== 2018.01.04===========================");
-		console.log("getBillCashInputLoad URL : " + url);
-		console.log("=========================== 2018.01.04===========================");
+	console.log("=========================== 2018.01.04===========================");
+	console.log("getBillCashInputLoad URL : " + url);
+	console.log("=========================== 2018.01.04===========================");
 
 	fetch(url, {
 		method: 'POST',
@@ -613,8 +611,6 @@
 			</Panel>
 		</StackPanel>
 	</Rectangle>
-
-
 
 	<!-- 상세 페이지 구성 상세 데이터 수정 필요-->
 	<DockPanel Width="100%" Height="100%" X="100%" Color="White">

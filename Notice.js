@@ -482,7 +482,7 @@ function noticeFileList(fileList){
 	}
 
 	if(fileList.FILE_SIZE!=null){
-		this.fileSize = fileList.FILE_SIZE;
+		this.fileSize = fileList.FILE_SIZE.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}else{
 		this.fileSize = "";
 	}
@@ -495,6 +495,8 @@ function noticeFileList(fileList){
 	console.log("파일 생성 완료!");
 }
 
+var fileAvailable = Observable(false);
+
 //http://www.aseoul.co.kr 외부
 //http://192.168.10.210 내부
 //세부사항 첨부파일 호출 
@@ -504,6 +506,7 @@ function getNoticeDetailValue(noticeData){
 	console.log("DetailValue function Call ");
 	// var dsParam = '{"GVAREACODE":"11110","GVBOOKGB":"01","GVESTIYEAR" :"2017","GVMEMCODE" :"SEOUL000000000000121","GVMEMID":"9999990","GVORGCLSS":"5","GVUSERCLSS" :"3"}';
 
+	fileAvailable.value = false;
 
 	var commClss = "";
 	var commSeq = "";
@@ -602,15 +605,16 @@ function getNoticeDetailValue(noticeData){
 
 				if (responseFileList.length == 0) {
 					noticeFiles.add(new noticeFileList(responseFileList[0]));
+					fileAvailable.value = false;
 				} else {
 					for(var i = 0; i< responseFileList.length; i++){
 						noticeFiles.add(new noticeFileList(responseFileList[i]));
 					}	
+					fileAvailable.value = true;
 				}
 
-
-				
-				console.log("noticeFiles.value : "  + JSON.stringify(noticeFiles.value));
+				console.log("noticeFiles.value : "  + JSON.stringify(noticeFiles._values));
+				console.log("fileAvailable.value :  " + fileAvailable.value);
 
 	            return response.json();
 	        }).then(function(jsonData) {
@@ -619,8 +623,6 @@ function getNoticeDetailValue(noticeData){
 
 	        });
 }
-
-
 
 function downloadFile(args) {
 	console.log("downloadFile was clicked");
@@ -646,5 +648,5 @@ function downloadFile(args) {
 module.exports = {
 	type, selectedType, pickerOn, pickerUp, 
 	pickerDown, getNoticeListValue, notices, noticeDetail, noticeFiles,getClickListValue, pageCount, totalPage, 
-	nextPage,searchText, searchContent, selectedTypes, pageCountInit,downloadFile
+	nextPage,searchText, searchContent, selectedTypes, pageCountInit,downloadFile, fileAvailable
 };

@@ -82,15 +82,16 @@
 
 		<Panel Dock="Bottom" Color="#5079DB">
 			<StackPanel Margin="{margin}" ItemSpacing="6">
-				<WhileTrue Value="{noticeFiles.hasFile}">
+				<!-- <WhileTrue Value="{noticeFiles.hasFile}"> -->
+				<WhileTrue Value="{fileAvailable}">
 					<Text Value="파일첨부" Color="White" Alignment="CenterLeft" />
 					<Rectangle Width="100%" Color="White">
 						<StackPanel Margin="{margin}">
 							<Each Items="{noticeFiles}">
 								<WrapPanel>
 									<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
-									<Text Value="{noticeFiles.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-									<Text Value="{noticeFiles.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Text Value="{fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+									<Text Value=" {fileSize} kb" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
 									<Clicked>
 										<Callback Handler="{downloadFile}" />
 									</Clicked>

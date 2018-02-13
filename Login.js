@@ -781,60 +781,97 @@ function connectToServer() {
 
 	var responseValue = null;
 
-	fetch(url, {
-		method: 'POST',
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify({
-			"SIGNGB":"1",
-			"signedText":mSignedData
-		})
-	}).then(function(response) {
-		console.log("response : " + JSON.stringify(response));
-		var responseHeaders = JSON.parse(response._bodyInit);
-		var resultCode = responseHeaders.resultCode;
-        var resultMsg = responseHeaders.resultMsg;
+	const FETCH_TIMEOUT = 3000;
+	let didTimeOut = false;
+
+	new Promise(function (resolve, reject) {
+		const timeout = setTimeout(function () {
+			didTimeOut = true;
+			reject(new Error('Request time out'));
+		}, FETCH_TIMEOUT);
+
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({
+				"SIGNGB":"1",
+				"signedText":mSignedData
+			})
+		}).then(function(response) {
+
+
+			clearTimeout(timeout);
+
+			if (!didTimeOut) {
+				console.log("fetch good");
+				resolve(response);
+			}
+
+			console.log("response : " + JSON.stringify(response));
+			var responseHeaders = JSON.parse(response._bodyInit);
+			var resultCode = responseHeaders.resultCode;
+	        var resultMsg = responseHeaders.resultMsg;
 
 
 
-        var dsParam = null;
-        var GVMEMNAME = null;
-       	console.log("GVMEMNAME : " +GVMEMNAME);
+	        var dsParam = null;
+	        var GVMEMNAME = null;
+	       	console.log("GVMEMNAME : " +GVMEMNAME);
+	        
+	        console.log("resultCode : " + JSON.stringify(resultCode));
+	        console.log("resultMsg : " + JSON.stringify(resultMsg));
+
+	        if(resultCode == "000") {
+				
+	        	dsParam = responseHeaders.dsParam;
+	        	GVMEMNAME = dsParam.GVMEMNAME;
+
+				LoginAlertConfirm.message.value = GVMEMNAME + "님 환영합니다";
+				LoginAlertConfirm.type.value = "Check";
+				LoginAlertConfirm.layer.value = "Overlay";
+				console.log("Login dsParma : " + JSON.stringify(dsParam));
+
+	        	Backend.dsParam = JSON.stringify(dsParam);
+	        	
+				// router.goto("MainPage");
+	        } else {
+				LoginAlertConfirmFail.message.value = resultMsg;
+				LoginAlertConfirmFail.type.value = "Check";
+				LoginAlertConfirmFail.layer.value = "Overlay";
+				
+	        }	
+
+			console.log("isConnected : " + isConnected.value);
+			var responseData = JSON.stringify(response);
+			return response.json();
+		}).then(function(jsonData) {
+
+		}).catch(function(err) {
+			 console.log('fetch failed! ', err);
         
-        console.log("resultCode : " + JSON.stringify(resultCode));
-        console.log("resultMsg : " + JSON.stringify(resultMsg));
+        	// Rejection already happened with setTimeout
+        	if(didTimeOut) return;
+        	// Reject with error
+        	reject(err);
 
-        if(resultCode == "000") {
-			
-        	dsParam = responseHeaders.dsParam;
-        	GVMEMNAME = dsParam.GVMEMNAME;
-
-			LoginAlertConfirm.message.value = GVMEMNAME + "님 환영합니다";
-			LoginAlertConfirm.type.value = "Check";
-			LoginAlertConfirm.layer.value = "Overlay";
-			console.log("Login dsParma : " + JSON.stringify(dsParam));
-
-
-        	Backend.dsParam = JSON.stringify(dsParam);
-        	
-			// router.goto("MainPage");
-        } else {
-			LoginAlertConfirmFail.message.value = resultMsg;
+        	LoginAlertConfirmFail.message.value = "접속이 불가능 합니다.";
 			LoginAlertConfirmFail.type.value = "Check";
 			LoginAlertConfirmFail.layer.value = "Overlay";
-			
-        }	
 
-		console.log("isConnected : " + isConnected.value);
-		var responseData = JSON.stringify(response);
-		return response.json();
-	}).then(function(jsonData) {
+		});
 
-	}).catch(function(err) {
-
-	});
-        
+	}).then(function () {
+		console.log("good promise no time out");
+	}).catch(function (err) {
+		console.log("promise error : "  + err);
+		
+		LoginAlertConfirmFail.message.value = "접속이 불가능 합니다.";
+		LoginAlertConfirmFail.type.value = "Check";
+		LoginAlertConfirmFail.layer.value = "Overlay";
+		
+	})
        
 }
 

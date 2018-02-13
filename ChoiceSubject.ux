@@ -8,9 +8,11 @@
 		var Backend = require('Backend.js');
 		var ValueFactory = require('ValueFactory');
 		var incomeTF = Observable(true);
+
 		var CASH_GB;
 		var CASH_DATE;
 		var BILL_CLSS;
+		
 		this.Parameter.onValueChanged(null,function(x) {
 			if (x == null) {
 			}else {
