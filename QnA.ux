@@ -1141,8 +1141,11 @@
 
 
 
-
+	
 	<!-- 새로 등록 정보 -->
+
+
+
 	<DockPanel Width="100%" X="100%" Color="White">
 		<Panel Dock="Top">
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
@@ -1259,6 +1262,8 @@
 	</DockPanel>
 
 	<!--상세보기 문의하기 화면  -->
+	
+
 	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
 		<Panel Dock="Top">
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
@@ -1298,103 +1303,27 @@
 			<Rectangle Width="100%" Height="1" Color="#3E66C5" />
 		</Grid>
 
-		<!-- <Grid Color="#ccc" CellSpacing="1" Rows="Auto"> -->
-		<Grid Color="#ccc" CellSpacing="1" Rows="1.3*, 6*, 1.3*">
-			<Panel Color="White" Width="100%" Height="100%">
-				<StackPanel Margin="{margin}">
-					<Text Value="{qnaDetailValue.title}" FontSize="{margin}*1.2" Color="Black" TextWrapping="Wrap" />
-					<Text Value="{qnaDetailValue.writerNm}" FontSize="{margin}*1.2" Color="#4395D6" />
-					<Text Value="{qnaDetailValue.regDate1} {qnaDetailValue.regDate2}"  Color="#888" />
-				</StackPanel>
-			</Panel>
-			<Panel Color="White">
-				<ScrollView>
-					<StackPanel>
-						<Text Value="{qnaDetailValue.cont}" Margin="{margin}" TextWrapping="Wrap" />
+		<WhileTrue Value="{isFileAvailable}">
+			<!-- <Grid Color="#ccc" CellSpacing="1" Rows="Auto"> -->
+			<Grid Color="#ccc" CellSpacing="1" Rows="1.3*, 6*, 1.3*">
+				<Panel Color="White" Width="100%" Height="100%">
+					<StackPanel Margin="{margin}">
+						<Text Value="{qnaDetailValue.title}" FontSize="{margin}*1.2" Color="Black" TextWrapping="Wrap" />
+						<Text Value="{qnaDetailValue.writerNm}" FontSize="{margin}*1.2" Color="#4395D6" />
+						<Text Value="{qnaDetailValue.regDate1} {qnaDetailValue.regDate2}"  Color="#888" />
 					</StackPanel>
-				</ScrollView>
-			</Panel>
-
-
-			<WhileFalse Value="{qnaIsCorrect}">
-			<Panel Width="100%" Color="#5079DB">
-				<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
-					<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
-					<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+				</Panel>
+				<Panel Color="White">
+					<ScrollView>
 						<StackPanel>
-							<Each Items="{qnaFileValue}">
-									<WrapPanel>
-										<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
-										<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-										<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-									</WrapPanel>
-								</Each>
+							<Text Value="{qnaDetailValue.cont}" Margin="{margin}" TextWrapping="Wrap" />
 						</StackPanel>
-					</Rectangle> -->
-					<GrayButton2>
-						<Text Value="삭제" Alignment="Center" Color="White" />
-						<Clicked>
-							<!-- <Callback Handler="{selectedTypes}" />	
-							<Callback Handler="{pickerDown}" />
-							<Toggle Target="showQuestion" /> -->
-							<Callback Handler="{qnaListDel}" />
+					</ScrollView>
+				</Panel>
 
-						</Clicked>
-					</GrayButton2>
-					<!-- 상세정보 수정화면 가기 -->
-					
-						<!-- <OrangeButton>
-							<Text Value="수정" Alignment="Center" Color="White" />
-							<Clicked>
-								<Toggle Target="applyQuestion" />
-								
-							</Clicked>
-						</OrangeButton> -->
-					
-				</Grid>
-			</Panel>
-			</WhileFalse>
 
-			<WhileTrue Value="{qnaIsCorrect}">
-			<Panel Width="100%" Color="#5079DB">
-				<WhileFalse Value="{isQuestionAnswered}">
-					<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5">
-						<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
-						<Rectangle Width="100%" Color="White" ColumnSpan="2" >
-							<StackPanel>
-								<Each Items="{qnaFileValue}">
-										<WrapPanel>
-											<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
-											<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-											<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-										</WrapPanel>
-									</Each>
-							</StackPanel>
-						</Rectangle> -->
-						<GrayButton2>
-							<Text Value="삭제" Alignment="Center" Color="White" />
-							<Clicked>
-								<!-- <Callback Handler="{selectedTypes}" />	
-								<Callback Handler="{pickerDown}" />
-								<Toggle Target="showQuestion" /> -->
-								<Callback Handler="{qnaListDel}" />
-
-							</Clicked>
-						</GrayButton2>
-						<!-- 상세정보 수정화면 가기 -->
-						
-							<OrangeButton>
-								<Text Value="수정" Alignment="Center" Color="White" />
-								<Clicked>
-									<Toggle Target="applyQuestion" />
-									
-								</Clicked>
-							</OrangeButton>
-						
-					</Grid>
-				</WhileFalse>
-					
-				<WhileTrue Value="{isQuestionAnswered}"> 
+				<WhileFalse Value="{qnaIsCorrect}">
+				<Panel Width="100%" Color="#5079DB">
 					<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
 						<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
 						<Rectangle Width="100%" Color="White" ColumnSpan="2" >
@@ -1420,33 +1349,242 @@
 						</GrayButton2>
 						<!-- 상세정보 수정화면 가기 -->
 						
-						<!-- <OrangeButton>
-							<Text Value="수정" Alignment="Center" Color="White" />
-							<Clicked>
-								<Toggle Target="applyQuestion" />
-								
-							</Clicked>
-						</OrangeButton> -->
+							<!-- <OrangeButton>
+								<Text Value="수정" Alignment="Center" Color="White" />
+								<Clicked>
+									<Toggle Target="applyQuestion" />
+									
+								</Clicked>
+							</OrangeButton> -->
 						
 					</Grid>
+				</Panel>
+				</WhileFalse>
+
+				<WhileTrue Value="{qnaIsCorrect}">
+				<Panel Width="100%" Color="#5079DB">
+					<WhileFalse Value="{isQuestionAnswered}">
+						<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5">
+							<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+							<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+								<StackPanel>
+									<Each Items="{qnaFileValue}">
+											<WrapPanel>
+												<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+												<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+												<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+											</WrapPanel>
+										</Each>
+								</StackPanel>
+							</Rectangle> -->
+							<GrayButton2>
+								<Text Value="삭제" Alignment="Center" Color="White" />
+								<Clicked>
+									<!-- <Callback Handler="{selectedTypes}" />	
+									<Callback Handler="{pickerDown}" />
+									<Toggle Target="showQuestion" /> -->
+									<Callback Handler="{qnaListDel}" />
+
+								</Clicked>
+							</GrayButton2>
+							<!-- 상세정보 수정화면 가기 -->
+							
+								<OrangeButton>
+									<Text Value="수정" Alignment="Center" Color="White" />
+									<Clicked>
+										<Toggle Target="applyQuestion" />
+										
+									</Clicked>
+								</OrangeButton>
+							
+						</Grid>
+					</WhileFalse>
+						
+					<WhileTrue Value="{isQuestionAnswered}"> 
+						<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
+							<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+							<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+								<StackPanel>
+									<Each Items="{qnaFileValue}">
+											<WrapPanel>
+												<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+												<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+												<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+											</WrapPanel>
+										</Each>
+								</StackPanel>
+							</Rectangle> -->
+							<GrayButton2>
+								<Text Value="삭제" Alignment="Center" Color="White" />
+								<Clicked>
+									<!-- <Callback Handler="{selectedTypes}" />	
+									<Callback Handler="{pickerDown}" />
+									<Toggle Target="showQuestion" /> -->
+									<Callback Handler="{qnaListDel}" />
+
+								</Clicked>
+							</GrayButton2>
+							<!-- 상세정보 수정화면 가기 -->
+							
+							<!-- <OrangeButton>
+								<Text Value="수정" Alignment="Center" Color="White" />
+								<Clicked>
+									<Toggle Target="applyQuestion" />
+									
+								</Clicked>
+							</OrangeButton> -->
+						</Grid>
+					</WhileTrue>
+				</Panel>
 				</WhileTrue>
+			</Grid>
+		</WhileTrue>
+
+		<WhileFalse Value="{isFileAvailable}">
+			<!-- <Grid Color="#ccc" CellSpacing="1" Rows="Auto"> -->
+			<Grid Color="#ccc" CellSpacing="1" Rows="1.3*, 6*, 1.3*">
+				<Panel Color="White" Width="100%" Height="100%">
+					<StackPanel Margin="{margin}">
+						<Text Value="{qnaDetailValue.title}" FontSize="{margin}*1.2" Color="Black" TextWrapping="Wrap" />
+						<Text Value="{qnaDetailValue.writerNm}" FontSize="{margin}*1.2" Color="#4395D6" />
+						<Text Value="{qnaDetailValue.regDate1} {qnaDetailValue.regDate2}"  Color="#888" />
+					</StackPanel>
+				</Panel>
+				<Panel Color="White">
+					<ScrollView>
+						<StackPanel>
+							<Text Value="{qnaDetailValue.cont}" Margin="{margin}" TextWrapping="Wrap" />
+						</StackPanel>
+					</ScrollView>
+				</Panel>
 
 
+				<WhileFalse Value="{qnaIsCorrect}">
+				<Panel Width="100%" Color="#5079DB">
+					<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
+						<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+						<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+							<StackPanel>
+								<Each Items="{qnaFileValue}">
+										<WrapPanel>
+											<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+											<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+											<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+										</WrapPanel>
+									</Each>
+							</StackPanel>
+						</Rectangle> -->
+						<GrayButton2>
+							<Text Value="삭제" Alignment="Center" Color="White" />
+							<Clicked>
+								<!-- <Callback Handler="{selectedTypes}" />	
+								<Callback Handler="{pickerDown}" />
+								<Toggle Target="showQuestion" /> -->
+								<Callback Handler="{qnaListDel}" />
 
-			</Panel>
+							</Clicked>
+						</GrayButton2>
+						<!-- 상세정보 수정화면 가기 -->
+						
+							<!-- <OrangeButton>
+								<Text Value="수정" Alignment="Center" Color="White" />
+								<Clicked>
+									<Toggle Target="applyQuestion" />
+									
+								</Clicked>
+							</OrangeButton> -->
+						
+					</Grid>
+				</Panel>
+				</WhileFalse>
 
-			</WhileTrue>
+				<WhileTrue Value="{qnaIsCorrect}">
+				<Panel Width="100%" Color="#5079DB">
+					<WhileFalse Value="{isQuestionAnswered}">
+						<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5">
+							<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+							<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+								<StackPanel>
+									<Each Items="{qnaFileValue}">
+											<WrapPanel>
+												<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+												<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+												<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+											</WrapPanel>
+										</Each>
+								</StackPanel>
+							</Rectangle> -->
+							<GrayButton2>
+								<Text Value="삭제" Alignment="Center" Color="White" />
+								<Clicked>
+									<!-- <Callback Handler="{selectedTypes}" />	
+									<Callback Handler="{pickerDown}" />
+									<Toggle Target="showQuestion" /> -->
+									<Callback Handler="{qnaListDel}" />
 
+								</Clicked>
+							</GrayButton2>
+							<!-- 상세정보 수정화면 가기 -->
+							
+								<OrangeButton>
+									<Text Value="수정" Alignment="Center" Color="White" />
+									<Clicked>
+										<Toggle Target="applyQuestion" />
+										
+									</Clicked>
+								</OrangeButton>
+							
+						</Grid>
+					</WhileFalse>
+						
+					<WhileTrue Value="{isQuestionAnswered}"> 
+						<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
+							<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+							<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+								<StackPanel>
+									<Each Items="{qnaFileValue}">
+											<WrapPanel>
+												<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+												<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+												<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+											</WrapPanel>
+										</Each>
+								</StackPanel>
+							</Rectangle> -->
+							<GrayButton2>
+								<Text Value="삭제" Alignment="Center" Color="White" />
+								<Clicked>
+									<!-- <Callback Handler="{selectedTypes}" />	
+									<Callback Handler="{pickerDown}" />
+									<Toggle Target="showQuestion" /> -->
+									<Callback Handler="{qnaListDel}" />
 
+								</Clicked>
+							</GrayButton2>
+							<!-- 상세정보 수정화면 가기 -->
+							
+							<!-- <OrangeButton>
+								<Text Value="수정" Alignment="Center" Color="White" />
+								<Clicked>
+									<Toggle Target="applyQuestion" />
+									
+								</Clicked>
+							</OrangeButton> -->
+						</Grid>
+					</WhileTrue>
+				</Panel>
+				</WhileTrue>
+			</Grid>
 
-
-
-		</Grid>
+		</WhileFalse>
 
 		<WhileTrue ux:Name="showQuestion">
 			<Move X="-1" RelativeTo="Size" />
 		</WhileTrue>
 	</DockPanel>
+
+	
+
 
 	
 
