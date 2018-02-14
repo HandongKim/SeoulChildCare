@@ -499,6 +499,8 @@
 			getDetailQnA(qnaData);
 		}
 
+		var isMine = Observable(false);
+
 		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
 		// 수정 페이지 호출 
