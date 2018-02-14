@@ -998,7 +998,7 @@
 							</Panel>
 						</Grid>
 					</Panel>
-
+					<Rectangle Width="100%" Height="5" Color="White" />
 					<Rectangle Width="100%" Height="{margin}*3" Color="#1A387B" CornerRadius="5">
 						<Text Value="신청하기" Color="White" Alignment="Center" />
 						<Clicked>
