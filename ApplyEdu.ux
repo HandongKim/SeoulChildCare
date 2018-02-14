@@ -181,6 +181,17 @@
 			edus.clear();
 			type.clear();
 			
+			hp1.clear();
+			hp2.clear();
+			hp3.clear();
+
+			tel1.clear();
+			tel2.clear();
+			tel3.clear();
+
+			email1.clear();
+			email2.clear();
+
 
 			console.log("educationMainUrl : " + educationMainUrl);
 
@@ -253,6 +264,12 @@
 			layer: Observable("Background")
 		};
 
+		var confirm = {
+			title: Observable(),
+			message: Observable(),
+			type: Observable("Check"),
+			layer: Observable("Background")
+		};
 
 
 		function getDetailEdu(eduSeq){
@@ -276,6 +293,18 @@
 			tel3.clear();
 			email1.clear();
 			email2.clear();
+
+			hp1.value = "";
+			hp2.value = "";
+			hp3.value = "";
+
+			tel1.value = "";
+			tel2.value = "";
+			tel3.value = "";
+
+			email1.value = "";
+			email2.value = "";
+
 			// applicantName.clear();
 
 			// applicantName.value = JSON.parse(Backend.dsParam).GVMEMNAME;
@@ -378,7 +407,19 @@
 
 		}
 		
-	
+		function validationCheck () {
+
+			var validateCheck = false;
+
+			if ((hp1.value == "" || hp1.value == null) || (hp2.value == "" || hp2.value == null) || (hp3.value == "" || hp3.value == null) || (tel1.value == "" || tel1.value == null) || (tel2.value == "" || tel2.value == null) || (tel3.value == "" || tel3.value == null) || (email1.value == "" || email1.value == null ) || (email2.value == "" || email2.value == null )) {
+				validateCheck = false;
+			} else {
+				validateCheck = true;
+			}
+
+			return validateCheck;
+
+		}
 
 
 		function applyEducation() {
@@ -536,27 +577,61 @@
 	console.log("getBillCashInputLoad URL : " + url);
 	console.log("=========================== 2018.01.04===========================");
 
-	fetch(url, {
-		method: 'POST',
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify(jsonParam)
-	}).then(function (response) {
-		console.log("response : " + JSON.stringify(response));
-		var responsHeader = response._bodyInit;
-		console.log("responsHeader : " + responsHeader);
-		var returnMsg = JSON.parse(responsHeader).returnMsg;
-		console.log("returnMsg : " + returnMsg);
-		applyEdu.message.value = returnMsg;
-		applyEdu.layer.value="Overlay";
-		return response.json();
+	var validateCheck = validationCheck ();
 
-	}).then(function(jsonData) {
+	if (FLAG == "I") {
 
-	}).catch(function(err) {
-		console.log("ERROR : " + err.message);
-	});
+		if (validateCheck == true) {
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify(jsonParam)
+			}).then(function (response) {
+				console.log("response : " + JSON.stringify(response));
+				var responsHeader = response._bodyInit;
+				console.log("responsHeader : " + responsHeader);
+				var returnMsg = JSON.parse(responsHeader).returnMsg;
+				console.log("returnMsg : " + returnMsg);
+				applyEdu.message.value = returnMsg;
+				applyEdu.layer.value="Overlay";
+				return response.json();
+
+			}).then(function(jsonData) {
+
+			}).catch(function(err) {
+				console.log("ERROR : " + err.message);
+			});
+		} else {
+			confirm.message.value="신청자정보를 입력하신 후 신청하실 수 있습니다.";
+			confirm.layer.value="Overlay";
+		}
+			
+	} else {
+		fetch(url, {
+				method: 'POST',
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify(jsonParam)
+			}).then(function (response) {
+				console.log("response : " + JSON.stringify(response));
+				var responsHeader = response._bodyInit;
+				console.log("responsHeader : " + responsHeader);
+				var returnMsg = JSON.parse(responsHeader).returnMsg;
+				console.log("returnMsg : " + returnMsg);
+				applyEdu.message.value = returnMsg;
+				applyEdu.layer.value="Overlay";
+				return response.json();
+
+			}).then(function(jsonData) {
+
+			}).catch(function(err) {
+				console.log("ERROR : " + err.message);
+			});
+	}
+
 
 
 }
@@ -566,7 +641,10 @@
 		// router.goBack();
 	}
 
-
+	function ConfirmButtonClicked() {
+		confirm.layer.value="Background";
+		// router.goBack();
+	}
 
  
 
@@ -574,7 +652,7 @@
 
 
 		module.exports = {
-			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap, applyEducation, hp1, hp2, hp3, applicableOrNot, tel1, tel2, tel3, email1, email2, applyEdu, applyConfirmButtonClicked, cancelButtonAvailAble
+			type, selectedType, pickerOn, pickerUp, pickerDown, getEducationMain, edus, eduList, clickEducation, getDetailEdu, eduDetail, eduDetailInfo, searchContent, showMap, applyEducation, hp1, hp2, hp3, applicableOrNot, tel1, tel2, tel3, email1, email2, applyEdu, applyConfirmButtonClicked, cancelButtonAvailAble,confirm, ConfirmButtonClicked
 
 
 
@@ -611,6 +689,32 @@
 			</Panel>
 		</StackPanel>
 	</Rectangle>
+
+
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{confirm.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{confirm.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{confirm.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
+			<Panel Margin="{margin}">
+				<BlueButton>
+					<Text Value="확인" Alignment="Center" Color="White" />
+					<Clicked>
+						<Callback Handler="{ConfirmButtonClicked}" />
+					</Clicked>
+				</BlueButton>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
+
+
+
+
 
 	<!-- 상세 페이지 구성 상세 데이터 수정 필요-->
 	<DockPanel Width="100%" Height="100%" X="100%" Color="White">

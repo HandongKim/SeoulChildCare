@@ -78,7 +78,7 @@
 		var qnas = Observable();
 		var qnaDetailValue = Observable(); 
 		var qnaFileValue = Observable();
-		var qnaIsCorrect = Observable();
+		var isQuestion = Observable();
 
 		//Url List
 		var qnaListUrl = Backend.BASE_URL + Backend.qnaList_URL;
@@ -558,14 +558,19 @@
 						console.log("=============================");
 						var correct = qnaDetailValue.value.replyDepth;
 						console.log("correct : "+ correct);
+						// 질의응답 리스트에서 선택한게 질문인지 답변인지 체크
+						// true이면 질문, false이면 답변
+
 						if(correct.value == 0){
-							qnaIsCorrect.value = true;
+							//질문
+							isQuestion.value = true;
 						}else{
-							qnaIsCorrect.value = false;
+							//답변
+							isQuestion.value = false;
 						}
-						console.log("=============================");
-						console.log("qnaIsCorrect : "+qnaIsCorrect.value);
-						console.log("=============================");
+						// console.log("=============================");
+						// console.log("isQuestion : "+isQuestion.value);
+						// console.log("=============================");
 
 						// console.log("qnaDetailValue : " + JSON.stringify(qnaDetailValue));
 
@@ -585,11 +590,20 @@
 
 
 						console.log("qnaFiles.length : " + qnaFiles.length);
-							for(var i = 0; i< qnaFiles.length; i++){
-								qnaFileValue.add(new qnaDetailFile(qnaFiles[i]));
-							}
+						for(var i = 0; i< qnaFiles.length; i++){
+							qnaFileValue.add(new qnaDetailFile(qnaFiles[i]));
+						}
 						console.log("qnaFileValue : " +  JSON.stringify(qnaFileValue));
 						console.log("qnaFileValue._values : " +  JSON.stringify(qnaFileValue._values));
+
+
+						console.log("=============================");
+						console.log("isQuestion : "+isQuestion.value);
+						console.log("isFileAvailable : "+isFileAvailable.value);
+						console.log("isQuestionAnswered : " + isQuestionAnswered.value);
+						console.log("=============================");
+
+
 
 						
 			            return response.json();
@@ -784,6 +798,38 @@
 			layer: Observable("Background")
 		}
 
+		var deleteAlertWithConfirmAndCancel = {
+			title: Observable(),
+			message: Observable(),
+			type: Observable("Check"),
+			layer: Observable("Background")
+		}
+
+		var cancelAlertWithConfirmAndCancel = {
+			title: Observable(),
+			message: Observable(),
+			type: Observable("Check"),
+			layer: Observable("Background")
+		}
+
+
+		function deleteAlertWithConfirmAndCancelCalled () {
+			deleteAlertWithConfirmAndCancel.message.value="삭제하시겠습니까?";
+			deleteAlertWithConfirmAndCancel.layer.value="Overlay";
+		}
+
+		function deleteAlertWithConfirmAndCancelCalledOff () {
+			deleteAlertWithConfirmAndCancel.layer.value="Background";
+		}
+
+		function cancelAlertWithConfirmAndCancelCalled () {
+			cancelAlertWithConfirmAndCancel.message.value="취소하시겠습니까?";
+			cancelAlertWithConfirmAndCancel.layer.value="Overlay";
+		}
+
+		function cancelAlertWithConfirmAndCancelCalledOff () {
+			cancelAlertWithConfirmAndCancel.layer.value="Background";
+		}
 
 		function sendData(){
 			console.log("sendData was called");
@@ -965,7 +1011,7 @@
 					var responseData = JSON.stringify(response);
 					console.log("responseData : "+ JSON.stringify(responseData));
 
-					alert.message.value = "등록되었습니다.";
+					alert.message.value = "수정되었습니다.";
 					alert.layer.value = "Overlay";
 
 		            return response.json();
@@ -1045,10 +1091,12 @@
 			type, selectedType, pickerOn, pickerOn2, pickerUp, pickerDown, getQnAList ,qnas, 
 			selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, test,
 			searchContent,getClickListValue, getDetailQnA, qnaDetailValue, pickerUp2, pickerDown2,
-			qnaFileValue, qnaIsCorrect , sendData,detailDataClear, warnningText,  warnningOn, 
+			qnaFileValue, isQuestion , sendData,detailDataClear, warnningText,  warnningOn, 
 			pickerUp2, type2, selectedType2, confirmButtonAction, alert, unReg, 
 			checkClick, unRegisteredChecked, simpleAlert,qnaListDel, deleteAlert, deleteAlertButtonAction,
-			isQuestionAnswered, isFileAvailable
+			isQuestionAnswered, isFileAvailable, deleteAlertWithConfirmAndCancel, 
+			deleteAlertWithConfirmAndCancelCalled, deleteAlertWithConfirmAndCancelCalledOff,
+			cancelAlertWithConfirmAndCancel, cancelAlertWithConfirmAndCancelCalled, cancelAlertWithConfirmAndCancelCalledOff
 		};
 	</JavaScript>
 
@@ -1087,65 +1135,128 @@
 	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{alert.layer}">
 		<Stroke Width="1" Color="Black" />
 		<StackPanel>
-		<Panel>
-			<Text Value="{alert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
-			<Image File="Images/alert_top.png" Alignment="TopCenter" />
-		</Panel>
-		<Panel Margin="{margin}*5/7">
-			<Text Value="{alert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
-		</Panel>
-		<Panel Margin="{margin}">
-			<BlueButton>
-				<Text Value="확인" Alignment="Center" Color="White" />
-				<Clicked>
-					<!-- <Callback Handler="{getListDetailNote}" />
-					<Callback Handler="{viewWillAppear}" /> -->
-					<Toggle Target="applyQuestion" />
-					<Callback Handler="{confirmButtonAction}" />
+			<Panel>
+				<Text Value="{alert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{alert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
+			<Panel Margin="{margin}">
+				<BlueButton>
+					<Text Value="확인" Alignment="Center" Color="White" />
+					<Clicked>
+						<!-- <Callback Handler="{getListDetailNote}" />
+						<Callback Handler="{viewWillAppear}" /> -->
+						<Toggle Target="applyQuestion" />
+						<Callback Handler="{confirmButtonAction}" />
 
-				</Clicked>
-			</BlueButton>
-		</Panel>
-	</StackPanel>
-</Rectangle>
+					</Clicked>
+				</BlueButton>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
 
-
-<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{deleteAlert.layer}">
-	<Stroke Width="1" Color="Black" />
-	<StackPanel>
-		<Panel>
-			<Text Value="{deleteAlert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
-
-			<Image File="Images/alert_top.png" Alignment="TopCenter" />
-		</Panel>
-
-		<Panel Margin="{margin}*5/7">
-			<Text Value="{deleteAlert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
-		</Panel>
-
-		<Panel Margin="{margin}">
-			<BlueButton>
-				<Text Value="확인" Alignment="Center" Color="White" />
-
-				<Clicked>
-					<!-- <Callback Handler="{getListDetailNote}" />
-					<Callback Handler="{viewWillAppear}" /> -->
-					<Toggle Target="showQuestion" />
-					<Callback Handler="{deleteAlertButtonAction}" />
-
-				</Clicked>
-			</BlueButton>
-		</Panel>
-	</StackPanel>
-</Rectangle>
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{deleteAlert.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{deleteAlert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{deleteAlert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
+			<Panel Margin="{margin}">
+				<BlueButton>
+					<Text Value="확인" Alignment="Center" Color="White" />
+					<Clicked>
+						<!-- <Callback Handler="{getListDetailNote}" />
+						<Callback Handler="{viewWillAppear}" /> -->
+						<Toggle Target="showQuestion" />
+						<Callback Handler="{deleteAlertButtonAction}" />
+					</Clicked>
+				</BlueButton>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
 
 
 
+
+
+
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{deleteAlertWithConfirmAndCancel.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{deleteAlertWithConfirmAndCancel.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
+
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{deleteAlertWithConfirmAndCancel.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
+
+			<Panel Margin="{margin}">
+				<Grid ColumnCount="2" CellSpacing="5">
+					<BlueButton>
+						<Text Value="확인" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{qnaListDel}" />
+						</Clicked>
+					</BlueButton>
+
+					<GrayButton>
+						<Text Value="취소" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{deleteAlertWithConfirmAndCancelCalledOff}" />
+						</Clicked>
+					</GrayButton>			
+				</Grid>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
+
+
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{cancelAlertWithConfirmAndCancel.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{cancelAlertWithConfirmAndCancel.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
+
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{cancelAlertWithConfirmAndCancel.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
+
+			<Panel Margin="{margin}">
+				<Grid ColumnCount="2" CellSpacing="5">
+					<BlueButton>
+						<Text Value="확인" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{selectedTypes}" />	
+							<Callback Handler="{pickerDown}" />
+							<Callback Handler="{cancelAlertWithConfirmAndCancelCalledOff}" />
+							<Toggle Target="applyQuestion" />
+						</Clicked>
+					</BlueButton>
+
+					<GrayButton>
+						<Text Value="취소" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{cancelAlertWithConfirmAndCancelCalledOff}" />
+						</Clicked>
+					</GrayButton>			
+				</Grid>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
 	
 	<!-- 새로 등록 정보 -->
-
-
-
 	<DockPanel Width="100%" X="100%" Color="White">
 		<Panel Dock="Top">
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
@@ -1239,9 +1350,10 @@
 					<GrayButton2>
 						<Text Value="취소" Color="White" Alignment="Center" />
 						<Clicked>
-							<Callback Handler="{selectedTypes}" />	
+							<!-- <Callback Handler="{selectedTypes}" />	
 							<Callback Handler="{pickerDown}" />
-							<Toggle Target="applyQuestion" />
+							<Toggle Target="applyQuestion" /> -->
+							<Callback Handler="{cancelAlertWithConfirmAndCancelCalled}" />
 						</Clicked>
 					</GrayButton2>
 					<OrangeButton>
@@ -1262,8 +1374,6 @@
 	</DockPanel>
 
 	<!--상세보기 문의하기 화면  -->
-	
-
 	<DockPanel Width="100%" Height="100%" X="100%" Color="White">
 		<Panel Dock="Top">
 			<Grid ColumnCount="3" Columns="1*, 7*, 1*" Margin="{margin}">
@@ -1294,14 +1404,27 @@
 			</Rectangle>
 		</Panel>
 
-		<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
-			<WrapPanel Margin="{margin}" Alignment="CenterLeft">
-				<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
-				<Text Value="질의응답(질문보기)" FontSize="{margin}*1.2" Color="Black" />
-			</WrapPanel>
+		<WhileTrue Value="{isQuestion}">
+			<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
+				<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+					<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+					<Text Value="질의응답(질문보기)" FontSize="{margin}*1.2" Color="Black" />
+				</WrapPanel>
 
-			<Rectangle Width="100%" Height="1" Color="#3E66C5" />
-		</Grid>
+				<Rectangle Width="100%" Height="1" Color="#3E66C5" />
+			</Grid>
+		</WhileTrue>
+
+		<WhileFalse Value="{isQuestion}">
+			<Grid ColumnCount="1" Rows="Auto" Dock="Top" Color="#FFF">
+				<WrapPanel Margin="{margin}" Alignment="CenterLeft">
+					<Circle Width="{margin}/2" Height="{margin}/2" Color="Black" Alignment="Center" Y="-10%" Margin="0, 0, {margin}/2, 0" />
+					<Text Value="질의응답(답변보기)" FontSize="{margin}*1.2" Color="Black" />
+				</WrapPanel>
+
+				<Rectangle Width="100%" Height="1" Color="#3E66C5" />
+			</Grid>
+		</WhileFalse>
 
 		<WhileTrue Value="{isFileAvailable}">
 			<Grid Color="#ccc" CellSpacing="1" Rows="Auto">
@@ -1321,50 +1444,9 @@
 					</ScrollView>
 				</Panel>
 
-
-				<WhileFalse Value="{qnaIsCorrect}">
-				<Panel Width="100%" Color="#5079DB">
-					<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5" Rows="Auto">
-						<Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
-						<Rectangle Width="100%" Color="White" ColumnSpan="2" >
-							<StackPanel>
-								<Each Items="{qnaFileValue}">
-										<WrapPanel>
-											<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
-											<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-											<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-										</WrapPanel>
-									</Each>
-							</StackPanel>
-						</Rectangle>
-						<GrayButton2>
-							<Text Value="삭제" Alignment="Center" Color="White" />
-							<Clicked>
-								<!-- <Callback Handler="{selectedTypes}" />	
-								<Callback Handler="{pickerDown}" />
-								<Toggle Target="showQuestion" /> -->
-								<Callback Handler="{qnaListDel}" />
-
-							</Clicked>
-						</GrayButton2>
-						<!-- 상세정보 수정화면 가기 -->
-						
-							<!-- <OrangeButton>
-								<Text Value="수정" Alignment="Center" Color="White" />
-								<Clicked>
-									<Toggle Target="applyQuestion" />
-									
-								</Clicked>
-							</OrangeButton> -->
-						
-					</Grid>
-				</Panel>
-				</WhileFalse>
-
-				<WhileTrue Value="{qnaIsCorrect}">
-				<Panel Width="100%" Color="#5079DB">
-					<WhileFalse Value="{isQuestionAnswered}">
-						<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5" Rows="Auto">
+				<WhileFalse Value="{isQuestion}">
+					<Panel Width="100%" Color="#5079DB">
+						<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5" Rows="Auto">
 							<Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
 							<Rectangle Width="100%" Color="White" ColumnSpan="2" >
 								<StackPanel>
@@ -1377,65 +1459,106 @@
 										</Each>
 								</StackPanel>
 							</Rectangle>
+
 							<GrayButton2>
 								<Text Value="삭제" Alignment="Center" Color="White" />
 								<Clicked>
 									<!-- <Callback Handler="{selectedTypes}" />	
 									<Callback Handler="{pickerDown}" />
 									<Toggle Target="showQuestion" /> -->
-									<Callback Handler="{qnaListDel}" />
+									<Callback Handler="{deleteAlertWithConfirmAndCancelCalled}" />
 
 								</Clicked>
 							</GrayButton2>
 							<!-- 상세정보 수정화면 가기 -->
 							
-								<OrangeButton>
+								<!-- <OrangeButton>
 									<Text Value="수정" Alignment="Center" Color="White" />
 									<Clicked>
 										<Toggle Target="applyQuestion" />
 										
 									</Clicked>
-								</OrangeButton>
+								</OrangeButton> -->
 							
 						</Grid>
-					</WhileFalse>
-						
-					<WhileTrue Value="{isQuestionAnswered}"> 
-						<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
-							<Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
-							<Rectangle Width="100%" Color="White" ColumnSpan="2" >
-								<StackPanel>
-									<Each Items="{qnaFileValue}">
-											<WrapPanel>
-												<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
-												<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-												<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-											</WrapPanel>
-										</Each>
-								</StackPanel>
-							</Rectangle>
-							<GrayButton2>
-								<Text Value="삭제" Alignment="Center" Color="White" />
-								<Clicked>
-									<!-- <Callback Handler="{selectedTypes}" />	
-									<Callback Handler="{pickerDown}" />
-									<Toggle Target="showQuestion" /> -->
-									<Callback Handler="{qnaListDel}" />
+					</Panel>
+				</WhileFalse>
 
-								</Clicked>
-							</GrayButton2>
-							<!-- 상세정보 수정화면 가기 -->
-							
-							<!-- <OrangeButton>
-								<Text Value="수정" Alignment="Center" Color="White" />
-								<Clicked>
-									<Toggle Target="applyQuestion" />
-									
-								</Clicked>
-							</OrangeButton> -->
-						</Grid>
-					</WhileTrue>
-				</Panel>
+				<WhileTrue Value="{isQuestion}">
+					<Panel Width="100%" Color="#5079DB">
+						<WhileFalse Value="{isQuestionAnswered}">
+							<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5" Rows="Auto">
+								<Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+								<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+									<StackPanel>
+										<Each Items="{qnaFileValue}">
+												<WrapPanel>
+													<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+													<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+													<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+												</WrapPanel>
+											</Each>
+									</StackPanel>
+								</Rectangle>
+								<GrayButton2>
+									<Text Value="삭제" Alignment="Center" Color="White" />
+									<Clicked>
+										<!-- <Callback Handler="{selectedTypes}" />	
+										<Callback Handler="{pickerDown}" />
+										<Toggle Target="showQuestion" /> -->
+										<Callback Handler="{deleteAlertWithConfirmAndCancelCalled}" />
+
+									</Clicked>
+								</GrayButton2>
+								<!-- 상세정보 수정화면 가기 -->
+								
+									<OrangeButton>
+										<Text Value="수정" Alignment="Center" Color="White" />
+										<Clicked>
+											<Toggle Target="applyQuestion" />
+											
+										</Clicked>
+									</OrangeButton>
+								
+							</Grid>
+						</WhileFalse>
+						
+						<WhileTrue Value="{isQuestionAnswered}"> 
+							<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
+								<Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+								<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+									<StackPanel>
+										<Each Items="{qnaFileValue}">
+												<WrapPanel>
+													<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+													<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+													<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+												</WrapPanel>
+											</Each>
+									</StackPanel>
+								</Rectangle>
+								<GrayButton2>
+									<Text Value="삭제" Alignment="Center" Color="White" />
+									<Clicked>
+										<!-- <Callback Handler="{selectedTypes}" />	
+										<Callback Handler="{pickerDown}" />
+										<Toggle Target="showQuestion" /> -->
+										<Callback Handler="{deleteAlertWithConfirmAndCancelCalled}" />
+
+									</Clicked>
+								</GrayButton2>
+								<!-- 상세정보 수정화면 가기 -->
+								
+								<!-- <OrangeButton>
+									<Text Value="수정" Alignment="Center" Color="White" />
+									<Clicked>
+										<Toggle Target="applyQuestion" />
+										
+									</Clicked>
+								</OrangeButton> -->
+							</Grid>
+						</WhileTrue>
+					</Panel>
 				</WhileTrue>
 			</Grid>
 		</WhileTrue>
@@ -1459,86 +1582,8 @@
 					</ScrollView>
 				</Panel>
 
-
-				<WhileFalse Value="{qnaIsCorrect}">
-				<Panel Width="100%" Color="#5079DB">
-					<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
-						<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
-						<Rectangle Width="100%" Color="White" ColumnSpan="2" >
-							<StackPanel>
-								<Each Items="{qnaFileValue}">
-										<WrapPanel>
-											<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
-											<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-											<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-										</WrapPanel>
-									</Each>
-							</StackPanel>
-						</Rectangle> -->
-						<GrayButton2>
-							<Text Value="삭제" Alignment="Center" Color="White" />
-							<Clicked>
-								<!-- <Callback Handler="{selectedTypes}" />	
-								<Callback Handler="{pickerDown}" />
-								<Toggle Target="showQuestion" /> -->
-								<Callback Handler="{qnaListDel}" />
-
-							</Clicked>
-						</GrayButton2>
-						<!-- 상세정보 수정화면 가기 -->
-						
-							<!-- <OrangeButton>
-								<Text Value="수정" Alignment="Center" Color="White" />
-								<Clicked>
-									<Toggle Target="applyQuestion" />
-									
-								</Clicked>
-							</OrangeButton> -->
-						
-					</Grid>
-				</Panel>
-				</WhileFalse>
-
-				<WhileTrue Value="{qnaIsCorrect}">
-				<Panel Width="100%" Color="#5079DB">
-					<WhileFalse Value="{isQuestionAnswered}">
-						<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5">
-							<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
-							<Rectangle Width="100%" Color="White" ColumnSpan="2" >
-								<StackPanel>
-									<Each Items="{qnaFileValue}">
-											<WrapPanel>
-												<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
-												<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-												<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
-											</WrapPanel>
-										</Each>
-								</StackPanel>
-							</Rectangle> -->
-							<GrayButton2>
-								<Text Value="삭제" Alignment="Center" Color="White" />
-								<Clicked>
-									<!-- <Callback Handler="{selectedTypes}" />	
-									<Callback Handler="{pickerDown}" />
-									<Toggle Target="showQuestion" /> -->
-									<Callback Handler="{qnaListDel}" />
-
-								</Clicked>
-							</GrayButton2>
-							<!-- 상세정보 수정화면 가기 -->
-							
-								<OrangeButton>
-									<Text Value="수정" Alignment="Center" Color="White" />
-									<Clicked>
-										<Toggle Target="applyQuestion" />
-										
-									</Clicked>
-								</OrangeButton>
-							
-						</Grid>
-					</WhileFalse>
-						
-					<WhileTrue Value="{isQuestionAnswered}"> 
+				<WhileFalse Value="{isQuestion}">
+					<Panel Width="100%" Color="#5079DB">
 						<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
 							<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
 							<Rectangle Width="100%" Color="White" ColumnSpan="2" >
@@ -1552,42 +1597,111 @@
 										</Each>
 								</StackPanel>
 							</Rectangle> -->
-							<GrayButton2>
+							<!-- <GrayButton2>
 								<Text Value="삭제" Alignment="Center" Color="White" />
 								<Clicked>
-									<!-- <Callback Handler="{selectedTypes}" />	
+									<Callback Handler="{selectedTypes}" />	
 									<Callback Handler="{pickerDown}" />
-									<Toggle Target="showQuestion" /> -->
+									<Toggle Target="showQuestion" />
 									<Callback Handler="{qnaListDel}" />
 
 								</Clicked>
-							</GrayButton2>
+							</GrayButton2> -->
 							<!-- 상세정보 수정화면 가기 -->
 							
-							<!-- <OrangeButton>
-								<Text Value="수정" Alignment="Center" Color="White" />
+							<OrangeButton>
+								<Text Value="목록" Alignment="Center" Color="White" />
 								<Clicked>
-									<Toggle Target="applyQuestion" />
-									
+									<Toggle Target="showQuestion" />
 								</Clicked>
-							</OrangeButton> -->
+							</OrangeButton>
 						</Grid>
-					</WhileTrue>
-				</Panel>
+					</Panel>
+				</WhileFalse>
+
+				<WhileTrue Value="{isQuestion}">
+					<Panel Width="100%" Color="#5079DB">
+						<WhileFalse Value="{isQuestionAnswered}">
+							<Grid ColumnCount="2" Margin="{margin}" CellSpacing="5">
+								<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+								<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+									<StackPanel>
+										<Each Items="{qnaFileValue}">
+												<WrapPanel>
+													<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+													<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+													<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+												</WrapPanel>
+											</Each>
+									</StackPanel>
+								</Rectangle> -->
+								<GrayButton2>
+									<Text Value="삭제" Alignment="Center" Color="White" />
+									<Clicked>
+										<!-- <Callback Handler="{selectedTypes}" />	
+										<Callback Handler="{pickerDown}" />
+										<Toggle Target="showQuestion" /> -->
+										<Callback Handler="{deleteAlertWithConfirmAndCancelCalled}" />
+
+									</Clicked>
+								</GrayButton2>
+								<!-- 상세정보 수정화면 가기 -->
+								
+									<OrangeButton>
+										<Text Value="수정" Alignment="Center" Color="White" />
+										<Clicked>
+											<Toggle Target="applyQuestion" />
+											
+										</Clicked>
+									</OrangeButton>
+								
+							</Grid>
+						</WhileFalse>
+						
+						<WhileTrue Value="{isQuestionAnswered}"> 
+							<Grid ColumnCount="1" Margin="{margin}" CellSpacing="5">
+								<!-- <Text Value="파일첨부" Color="White" FontSize="{margin}*0.8" Alignment="CenterLeft" ColumnSpan="2" />
+								<Rectangle Width="100%" Color="White" ColumnSpan="2" >
+									<StackPanel>
+										<Each Items="{qnaFileValue}">
+												<WrapPanel>
+													<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
+													<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+													<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+												</WrapPanel>
+											</Each>
+									</StackPanel>
+								</Rectangle>
+								<GrayButton2>
+									<Text Value="삭제" Alignment="Center" Color="White" />
+									<Clicked>
+										<Callback Handler="{selectedTypes}" />	
+										<Callback Handler="{pickerDown}" />
+										<Toggle Target="showQuestion" />
+										<Callback Handler="{qnaListDel}" />
+
+									</Clicked>
+								</GrayButton2>
+								상세정보 수정화면 가기 -->
+								
+								<OrangeButton>
+									<Text Value="목록" Alignment="Center" Color="White" />
+									<Clicked>
+										<Toggle Target="showQuestion" />
+										
+									</Clicked>
+								</OrangeButton>
+							</Grid>
+						</WhileTrue>
+					</Panel>
 				</WhileTrue>
 			</Grid>
-
 		</WhileFalse>
 
 		<WhileTrue ux:Name="showQuestion">
 			<Move X="-1" RelativeTo="Size" />
 		</WhileTrue>
 	</DockPanel>
-
-	
-
-
-	
 
 	<DockPanel ux:Name="page5PickerPanel" Width="100%" Height="30%" Color="White" Alignment="Bottom" Y="100%">
 		<Panel Dock="Top" Width="100%" Height="25%">

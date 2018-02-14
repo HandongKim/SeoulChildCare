@@ -823,7 +823,7 @@ function sendPictureWithParamter(yearAndMonth)
 
 		if (JSON.parse(response).MiResultMsg == "success") {
 			photoCollectionLoadingCircleOn.value=false;
-			photoCollectionAlertWithConfirm.message.value="사진이 업로드 됐습니다.";
+			photoCollectionAlertWithConfirm.message.value="업로드가 완료되었습니다.";
 			photoCollectionAlertWithConfirm.layer.value="Overlay";
 		}
 	});

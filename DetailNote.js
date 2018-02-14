@@ -1204,8 +1204,7 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
  	var isBillClssChecked = false;
  	var isEstiCodeChecked = false;
 
-
- 	if (tempMoneyValue == null) {
+ 	if (tempMoneyValue == null || tempMoneyValue == "") {
 		console.log("money empty");
 		alert.title.value = "금액 입력";
 		alert.message.value = "금액을 입력하세요.";
@@ -1220,8 +1219,8 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
 
 	if (BILL_CLSS == null || BILL_CLSS == "") {
 		console.log("doesn't select card");
-		alert.title.value = "결제 수단";
-		alert.message.value = "결제 수단을 선택해주세요.";
+		// alert.title.value = "결제";
+		alert.message.value = "결제방법을 선택해주세요.";
 		alert.type.value = "Check";
 		alert.layer.value = "Overlay";
 		// break;
@@ -1234,7 +1233,7 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
 
 	if ((ESTI_CODE == null) || (ESTI_CODE == "")) {
 		console.log("doesn't select subject");
-		alert.title.value = "계정과목";
+		// alert.title.value = "계정과목";
 		alert.message.value = "계정과목을 입력해주세요.";
 		alert.type.value = "Check";
 		alert.layer.value = "Overlay";
@@ -1406,7 +1405,16 @@ function saveData() {
 
 	if (ACTION =="I") {
 			// BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString();
-		BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
+		
+		
+		if (parseInt(tempMoneyValue) == parseInt(MONEY) ) {
+			BCASH_MEMO = ORG_BCASH_MEMO;
+		} else {
+			BCASH_MEMO = ORG_BCASH_MEMO + "중 " + tempMoneyValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";	
+		}
+		
+		
+
 		// BCASH_MEMO = ORG_BCASH_MEMO;
 
 	} else if (ACTION == "U") {
