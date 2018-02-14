@@ -207,7 +207,7 @@
 			</Grid>
 
 			<Panel Color="#5771AA">
-				<Grid ColumnCount="3" Columns="5*, 5*, 3*" Margin="{margin}, {margin}*6/7" CellSpacing="3">
+				<Grid ColumnCount="3" Columns="5*, 5*, 3*" Margin="{margin}, {margin}*6/7" CellSpacing="10">
 					<Panel>
 						<Text Value="{year}년 {month}월" Color="Black" FontSize="{margin}" Alignment="CenterLeft" Margin="{margin}, 0" />
 						<Image File="Images/bg_select.png" />
@@ -227,7 +227,7 @@
 						</Image>
 					</Grid> -->
 
-					<Grid ColumnCount="2" Columns="1*, 1*" CellSpacing="3">
+					<Grid ColumnCount="2" Columns="1*, 1*" CellSpacing="10">
 						<Rectangle Width="100%" Height="100%" Color="#FFF">
 							<Stroke Width="2" Color="#5771AA" />
 							<Clicked><Callback Handler="{pickerUp2}" /></Clicked>

@@ -937,8 +937,10 @@ function note(arg, noteIndex) {
 		if (arg.ESTI_CODE != null) {
 			if (arg.ESTI_CODE.substr(0,1) == 1) {
 				this.subTypeColor = "#8BBDFF";
+				this.typeColor = "#4C9DFF";
 			} else {
 				this.subTypeColor = "#FFBA85";
+				this.typeColor = "#FF4200";
 			}	
 		}
 

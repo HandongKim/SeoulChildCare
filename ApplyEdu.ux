@@ -36,6 +36,12 @@
 				this.eduSeq = "";
 			}
 
+			if (eduList.EDUDATETIME !=null) {
+				this.EDUDATETIME = eduList.EDUDATETIME;
+			} else {
+				this.EDUDATETIME = "";
+			}
+
 			if(eduList.CHK_ID!=null){
 				this.chkId = eduList.CHK_ID;
 			}else{
@@ -205,9 +211,10 @@
 						var responseData = JSON.stringify(response);
 						// console.log("responseData : "+ JSON.stringify(responseData));
 						var responseBody = JSON.parse(response._bodyInit);
-						// console.log("==========================================================");
-						// console.log("responseBody : "+ JSON.stringify(responseBody));
-						// console.log("==========================================================");
+						console.log("==========================================================");
+						console.log("responseBody : "+ JSON.stringify(responseBody));
+						console.log("==========================================================");
+						console.log("responseBody.ds_edulist : " + JSON.stringify(responseBody.ds_edulist));
 						
 						var eduYearList = responseBody.ds_eduyearlist[0];
 						console.log("eduYearList : "+ JSON.stringify(eduYearList));
@@ -1036,17 +1043,17 @@
 	<!-- 메인페이지 데이터 구성 -->
 	<StackPanel ux:InnerClass="edus" Width="100%" Color="White">
 		<Grid Alignment="Center" ColumnCount="2" Columns="7*, 2*" Margin="{margin}" Width="100%" >
-			<Grid ColumnCount="1" RowCount="2" Rows="Auto" CellSpacing="3">
+			<Grid RowCount="2" Rows="Auto" CellSpacing="3">
 				<WrapPanel Alignment="CenterLeft" Width="100%">
 					<WhileTrue Value="{fired}">
 						<Rectangle CornerRadius="100" Color="#f80" Alignment="Center">
 							<Text Value="마감" FontSize="{margin}*0.8" Color="White" Margin="5, 3, 5, 1" Alignment="Center" />
 						</Rectangle>
 					</WhileTrue>
-					<Text Value=" 신청기간 : {sinDateM}" FontSize="{margin}*0.8" Alignment="Center" />
+					<Text Value="신청기간 : {sinDateM}" FontSize="{margin}*0.8" Alignment="Center" />
+					<Text Value="교육일자 : {EDUDATETIME}" FontSize="{margin}*0.8" TextWrapping="Wrap" />
 				</WrapPanel>
-
-				<Text Value="{content}" TextWrapping="Wrap" Alignment="CenterLeft" />
+				<Text Value="교육내용 : {content}" TextWrapping="Wrap" FontSize="{margin}*0.8" />
 			</Grid>
 
 			<Grid ColumnCount="1" RowCount="2">

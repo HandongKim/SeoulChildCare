@@ -165,8 +165,10 @@ function note(arg, noteIndex) {
 	if (arg.ESTI_CODE != null) {
 		if (arg.ESTI_CODE.substr(0,1) == 1) {
 			this.subTypeColor = "#8BBDFF";
+			this.typeColor = "#4C9DFF";
 		} else {
 			this.subTypeColor = "#FFBA85";
+			this.typeColor = "#FF4200";
 		}	
 	}
 
@@ -1817,8 +1819,13 @@ function deleteData () {
 
 		   	if (MiResultMsg == "success") {
 		   		console.log("수정완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		   		alertWithConfirm.message.value = "삭제 되었습니다.";
-				alertWithConfirm.layer.value = "Overlay";
+		   		// alertWithConfirm.message.value = "삭제 되었습니다.";
+				// alertWithConfirm.layer.value = "Overlay";
+				
+				// redueNumberConfirmAlertCalled();
+
+				router.goBack();
+
 		   	} else {	   		
 		   			alert.title.value = "";
 					alert.message.value = "삭제가 되지않았습니다.";
@@ -2398,6 +2405,110 @@ function focusLost () {
 	}
 }
 
+var deleteConfirmAlert = {
+	message: Observable(),
+	layer: Observable("Background")
+}
+
+function deleteConfirmAlertCalled () {
+	deleteConfirmAlert.message.value = "삭제하시겠습니까?";
+	deleteConfirmAlert.layer.value = "Overlay";
+}
+
+function deleteConfirmAlertCalledOff () {
+	deleteConfirmAlert.layer.value = "Background";
+}
+
+
+
+
+
+var redueNumberConfirmAlert = {
+	message: Observable(),
+	layer: Observable("Background")
+}
+
+function redueNumberConfirmAlertCalled () {
+
+	var getBillNumChangeCnt_URL = Backend.BASE_URL + Backend.getBillNumChangeCnt_URL;
+
+	console.log("BILL_NUMDETAIL : " + selectedDetailNoteVariable.BILL_NUMDETAIL);
+
+	var dsSearch = '{"DELETE_BILL_NUMDETAIL":'+selectedDetailNoteVariable.BILL_NUMDETAIL+'}';
+    // console.log("CASH_IDX : " + CASH_IDX);
+    // console.log("SEARCH_BILL_IDX : " + BILL_IDX);
+	// // console.log(" dsSearch : " + dsSearch);
+    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+    console.log("jsonParam : " + JSON.stringify(jsonParam));
+	fetch(getBillNumChangeCnt_URL, {
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+	}).then(function(response) {
+		console.log("response response : " + JSON.stringify(response));
+		var billNumChangeCnt = response._bodyInit;
+		billNumChangeCnt = billNumChangeCnt.billNumChangeCnt;
+
+		if (parseInt(billNumChangeCnt) > 0) {
+			redueNumberConfirmAlert.message.value = "삭제할 전표의 증빙번호 " +selectedDetailNoteVariable.BILL_NUMDETAIL+"보다 큰 증빙번호를 1씩 감소시킵니다. \n - 증빙번호 변경 대상수 " + billNumChangeCnt+"개";
+			redueNumberConfirmAlert.layer.value = "Overlay";	
+		} else {
+
+		}
+		
+        return response.json();
+    }).then(function(jsonData) {
+        var data = jsonData.results[0];
+        // console.log("data : " + jsonData.results[0]);
+		// console.log("Reg Succeeded[ios]: " + data.registration_token);
+		// maintext.value = maintext.value + "/n" + data.registration_token;
+    }).catch(function(err) {
+        // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+	});
+}
+
+function redueNumberConfirmAlertCalledOff () {
+	redueNumberConfirmAlert.layer.value = "Background";
+}
+
+
+function reduceReceiptIndexNumber () {
+
+	var updateBillNumChange_URL = Backend.BASE_URL + Backend.updateBillNumChange_URL;
+
+	var dsSearch = '{"DELETE_BILL_NUMDETAIL":'+selectedDetailNoteVariable.BILL_NUMDETAIL+'}';
+    var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
+
+	fetch(updateBillNumChange_URL, {
+		method: 'POST',
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify(jsonParam)
+	}).then(function(response) {
+		var billNumChangeCnt = response._bodyInit;
+		billNumChangeCnt = billNumChangeCnt.billNumChangeCnt;
+
+		if (parseInt(billNumChangeCnt) > 0) {
+			redueNumberConfirmAlert.message.value = "삭제할 전표의 증빙번호 " +selectedDetailNoteVariable.BILL_NUMDETAIL+"보다 큰 증빙번호를 1씩 감소시킵니다. \n - 증빙번호 변경 대상수 " + billNumChangeCnt+"개";
+			redueNumberConfirmAlert.layer.value = "Overlay";	
+		}
+		
+	    return response.json();
+	}).then(function(jsonData) {
+	    var data = jsonData.results[0];
+	    // console.log("data : " + jsonData.results[0]);
+		// console.log("Reg Succeeded[ios]: " + data.registration_token);
+		// maintext.value = maintext.value + "/n" + data.registration_token;
+	}).catch(function(err) {
+	    // console.log("Reg Succeeded[ios] Error!! : " + err.message);
+	});
+}
+
+
+
 //2018.01.16 기존 소스 끝
 module.exports = {
 	detailText, showText, uploadOn, tryUpload, cancelUpload,
@@ -2425,5 +2536,7 @@ module.exports = {
 	alert, alertWithConfirm, logOut, isReadOnly, 
 	takedPictureWithParamterDetailNote, takePictureWithParameterDetailNote, 
 	getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn, 
-	testMethod, saveOrEdit, focusLost, selectedTypeStringValue
+	testMethod, saveOrEdit, focusLost, selectedTypeStringValue,
+	deleteConfirmAlert, deleteConfirmAlertCalled, deleteConfirmAlertCalledOff,
+	redueNumberConfirmAlert, redueNumberConfirmAlertCalled, redueNumberConfirmAlertCalledOff, reduceReceiptIndexNumber
 };

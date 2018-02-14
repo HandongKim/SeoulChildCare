@@ -369,6 +369,8 @@
 			var commClss = "Q";
 			var openY = "Y";
 
+			searchText.value = "";
+
 			if (unReg.value == true) {
 				openY = "Y";
 			} else {
@@ -927,7 +929,7 @@
 			if (qnaDetailValue.value.cont.value == null || qnaDetailValue.value.cont.value =="") {
 				console.log("validationCheckApproved cont nil");
 				contentValidate = false;
-				simpleAlert.message.value = "내용을 입력해주세요";
+				simpleAlert.message.value = "내용을 입력해주세요.";
 				simpleAlert.layer.value = "Overlay";
 			} else  {
 				contentValidate = true;
@@ -936,7 +938,7 @@
 			if (qnaDetailValue.value.title.value == null || qnaDetailValue.value.title.value == "") {
 				console.log("validationCheckApproved title nil");
 				titleValidate = false;
-				simpleAlert.message.value = "제목을 입력해주세요";
+				simpleAlert.message.value = "제목을 입력해주세요.";
 				simpleAlert.layer.value = "Overlay";
 			} else {
 				titleValidate = true;

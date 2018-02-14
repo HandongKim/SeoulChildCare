@@ -11,6 +11,101 @@
 
 	<Alert ux:Name="detailNoteAlert" Title="{alert.title}" MainText="{alert.message}" Type="{alert.type}" Layer="{alert.layer}" />
 
+	<!-- 전표삭제 여부 확인 -->
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{deleteConfirmAlert.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{deleteConfirmAlert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
+
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{deleteConfirmAlert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
+
+			<Panel Margin="{margin}">
+				<Grid ColumnCount="2" CellSpacing="5">
+					<BlueButton>
+						<Text Value="확인" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{deleteConfirmAlertCalledOff}" />
+							<Callback Handler="{deleteData}" />
+						</Clicked>
+					</BlueButton>
+
+					<GrayButton>
+						<Text Value="취소" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{deleteConfirmAlertCalledOff}" />
+						</Clicked>
+					</GrayButton>			
+				</Grid>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
+
+	<!-- 증빙번호 줄일줄 말까 여부 확인 -->
+	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{redueNumberConfirmAlert.layer}">
+		<Stroke Width="1" Color="Black" />
+		<StackPanel>
+			<Panel>
+				<Text Value="{redueNumberConfirmAlert.title}" Alignment="CenterLeft" Margin="{margin}*4/3, {margin}/3" FontSize="{margin}" Color="White" />
+
+				<Image File="Images/alert_top.png" Alignment="TopCenter" />
+			</Panel>
+
+			<Panel Margin="{margin}*5/7">
+				<Text Value="{redueNumberConfirmAlert.message}" Alignment="Center" FontSize="{margin}" Color="#333" TextWrapping="Wrap" />
+			</Panel>
+
+			<Panel Margin="{margin}">
+				<Grid ColumnCount="2" CellSpacing="5">
+					<BlueButton>
+						<Text Value="확인" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{redueNumberConfirmAlertCalledOff}" />
+							<Callback Handler="{reduceReceiptIndexNumber}" />
+							<Callback Handler="{goBackToPrevious}" />
+						</Clicked>
+					</BlueButton>
+
+					<GrayButton>
+						<Text Value="취소" Alignment="Center" Color="White" />
+						<Clicked>
+							<Callback Handler="{redueNumberConfirmAlertCalledOff}" />
+							<Callback Handler="{goBackToPrevious}" />
+						</Clicked>
+					</GrayButton>
+				</Grid>
+			</Panel>
+		</StackPanel>
+	</Rectangle>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- 2018.01.16 기존 소스 시작 -->
 	<WhileTrue Value="{pickerOn}">
@@ -511,7 +606,7 @@
 					<BlackButton>
 						<Text Value="삭제" Alignment="Center" Color="White" />
 						<Clicked>
-							<Callback Handler="{deleteData}" />
+							<Callback Handler="{deleteConfirmAlertCalled}" />
 						</Clicked>
 					</BlackButton>
 				</Grid>

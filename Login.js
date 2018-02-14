@@ -830,7 +830,7 @@ function connectToServer() {
 	        	GVMEMNAME = dsParam.GVMEMNAME;
 	        	GVINSNAME = dsParam.GVINSNAME;
 
-				LoginAlertConfirm.message.value = GVINSNAME + " " + GVMEMNAME + "님 환영합니다";
+				LoginAlertConfirm.message.value = GVINSNAME + " " + GVMEMNAME + "님 환영합니다.";
 				LoginAlertConfirm.type.value = "Check";
 				LoginAlertConfirm.layer.value = "Overlay";
 				console.log("Login dsParma : " + JSON.stringify(dsParam));

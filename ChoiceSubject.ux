@@ -380,7 +380,7 @@
 							text = "법정부담금 납부에 한하여 '카드결제' 선택이 가능합니다.";
 							selectSubjectPopUp(arg, text);
 						} else {
-							alert.message.value = "인건비는 결제방법을 '카드결제'로 사용할 수 없습니다";
+							alert.message.value = "인건비는 결제방법을 '카드결제'로 사용할 수 없습니다.";
 							alert.type.value = "Check";
 							alert.layer.value = "Overlay";
 						}
