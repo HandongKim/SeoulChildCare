@@ -237,14 +237,10 @@ namespace Fuse.UniSign
 				if (uniqueInfo == null)
 					throw new Error("Third argument to generateCertNum be a string");
 
-
-
-
 				var session = _sessionManager.GetSession(handle);
 				var dir = direction == "Import" ? TransDirection.Import : TransDirection.Export;
 
 				debug_log("2017.11.30 direction : " + dir);
-
 
 				var promise = new Promise<string>();
 
@@ -259,9 +255,16 @@ namespace Fuse.UniSign
 		
 		Future<bool> IsPCConnected(object[] args)
 		{
-			if (args.Length != 1)
-				throw new Error("isPCConnected expects 1 argument");
 			
+			debug_log("2018 02 20 IsPCConnected log");
+			if (args.Length != 1){
+				throw new Error("isPCConnected expects 1 argument");
+			} else {
+				debug_log("args.Length : " + args.Length);
+			}
+			
+			debug_log("args : " + args);
+
 			var handle = Marshal.ToInt(args[0]);
 			
 			var session = _sessionManager.GetSession(handle);
@@ -385,10 +388,6 @@ namespace Fuse.UniSign
 	        new ExportCertClosure(session, promise, androidSavePath, certIndex);
 	        return promise;
 	    }
-
-
-
-
 
 		Fuse.Scripting.Object ConvertCert(Context context, Cert cert)
 	    {

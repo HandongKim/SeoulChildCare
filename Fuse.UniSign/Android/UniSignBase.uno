@@ -29,16 +29,40 @@ namespace Fuse.UniSign.Android
 	extern(ANDROID) public abstract class UniSignBase { }
 
 	[ForeignInclude(Language.Java, 
-		"com.crosscert.android.core.CertToolkitMgr", 
-		"com.crosscert.android.core.CertListMgr", 
-		"com.crosscert.android.core.CertUtil", 
+		"com.crosscert.android.core.CertToolkitMgr",
+		"com.crosscert.android.core.CertListMgr",
+		"com.crosscert.android.core.CertUtil",
+		"com.crosscert.android.core.Cert",
 		"java.util.ArrayList", 
 		"java.util.Collection", 
 		"android.content.Intent", 
 		"android.content.res.AssetManager",
 		"java.io.File",
 		"android.os.SystemClock",
-		"android.os.Environment")]
+		"android.os.Environment",
+		"android.os.Handler",
+		"android.os.CountDownTimer",
+		"android.os.Message",
+		"android.os.CountDownTimer",
+		"android.os.Bundle",
+		"android.telephony.TelephonyManager",
+		"com.crosscert.androidustk"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		)]
 	extern(ANDROID) public class ToolkitMgr : UniSignBase
 	{
 
@@ -124,6 +148,7 @@ namespace Fuse.UniSign.Android
 		static bool TransIsPCConnected(Java.Object handle)
 		@{
 			debug_log("Getting is pc connected");
+			debug_log("############## 2018 02 20 ##############");
 			boolean ret = ((CertToolkitMgr)handle).transIsPCConnected();
 			debug_log("Trans pc connected is: " + ret);
 			return ret;
@@ -321,14 +346,25 @@ namespace Fuse.UniSign.Android
     		return ret;
 		@}
 
-
 		public static bool exportCertificate(Java.Object certificate) {
+			debug_log("Uno exportCertificate was called ");
 			return ExportCertificate(certificate);
 		}
 
 		[Foreign(Language.Java)]
-		static bool ExportCertificate(Java.Object certificate) 
+		static bool ExportCertificate(Java.Object certificate)
 		@{
+			System.out.println("ExportCertificate is called for Android 1111111");
+
+			Cert cert = (com.crosscert.android.core.Cert)certificate;
+
+			boolean exportSuccess = CertToolkitMgr.getInstance().transExportCert(androidustk.USC_ALG_SYMM_SEED, cert.getBSignCert(), cert.getBSignPriKey(), cert.getBKMCert(), cert.getBKMPriKey());
+
+
+			System.out.println("exportSuccess : " + exportSuccess);			
+
+
+
 			return false;
 		@}
 
@@ -367,10 +403,6 @@ namespace Fuse.UniSign.Android
 			}
 
 		@}
-
-
-
-
 
 		public static string getLogicSignedData(string password, Java.Object certificate) {
 			return GetLogicSignedData(password, certificate);

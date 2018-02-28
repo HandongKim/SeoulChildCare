@@ -185,7 +185,7 @@ function exportCert () {
 			console.log("We got pc is connected (export): " + result);
 
 			if (result === true) {
-
+				console.log("2018-02-20 log start");
 				console.log("exportCert is ready for start: " + certificateIndexValue);
 
 				UniSign.exportCert(session, certificateIndexValue).then(result => {

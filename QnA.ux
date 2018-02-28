@@ -367,17 +367,17 @@
 
 			// var AREA = "11110";
 			var commClss = "Q";
-			var openY = "Y";
+			var openN = "Y";
 
 			searchText.value = "";
 
 			if (unReg.value == true) {
-				openY = "Y";
+				openN = "Y";
 			} else {
-				openY = "N";
+				openN = "N";
 			}
 
-			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","page":"1","sch_txt":"","sCombo":"head", "openY":"'+openY+'"}';
+			var dsSearch = '{"AREA":"'+AREA+'","commClss":"'+commClss+'","page":"1","sch_txt":"","sCombo":"head", "openN":"'+openN+'"}';
 
 			globalSearch = JSON.parse(dsSearch);
 			var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
@@ -499,7 +499,9 @@
 			getDetailQnA(qnaData);
 		}
 
-		var isMine = Observable(false);
+		var isMyQuestion = Observable(false);
+
+
 
 		//http://www.aseoul.co.kr 외부
 		//http://192.168.10.210 내부
@@ -514,9 +516,12 @@
 				combo = "writer";
 			}
 
-
+			isMyQuestion.value = false;
 			isQuestionAnswered.value = false;
 			isFileAvailable.value = false;
+
+
+
 
 
 
@@ -526,6 +531,14 @@
 			} else {
 				isQuestionAnswered.value = false;
 			}
+
+			
+			
+			var LOGGED_IN_WRITER_NM     = JSON.parse(Backend.dsParam).GVMEMNAME;
+			var LOGGED_IN_WRITER_ORG    = JSON.parse(Backend.dsParam).GVAREANAME;
+
+
+
 
 
 			console.log("getDetailQnA was called");
@@ -561,6 +574,21 @@
 
 						console.log("=============================");
 						var correct = qnaDetailValue.value.replyDepth;
+						var questioner = qnaDetailValue.value.writerNm.value;
+
+						console.log("questioner : " + questioner);
+						console.log("LOGGED_IN_WRITER_NM : " + LOGGED_IN_WRITER_NM);
+
+						if (questioner == LOGGED_IN_WRITER_NM) {
+							console.log("questioner is equal to LOGGED_IN_WRITER_NM");
+							isMyQuestion.value =  true;
+						} else {
+							console.log("questioner is not equal to LOGGED_IN_WRITER_NM");
+							isMyQuestion.value = false;
+						}
+
+
+
 						console.log("correct : "+ correct);
 						// 질의응답 리스트에서 선택한게 질문인지 답변인지 체크
 						// true이면 질문, false이면 답변
@@ -862,9 +890,6 @@
 				OPEN_YN = "Y";
 			}
 
-
-
-
 			var dsDetail = '{"REGDATE":"'+JSON.stringify(qnaDetailValue.value.regDate.value)
 							+'","AREA":'+JSON.stringify(qnaDetailValue.value.area.value)
 							+',"CONT":'+JSON.stringify(qnaDetailValue.value.cont.value)
@@ -909,7 +934,7 @@
 			        }).then(function(response) {
 						var responseData = JSON.stringify(response);
 						console.log("responseData : "+ JSON.stringify(responseData));
-						alert.message.value = "수정했습니다.";
+						alert.message.value = "수정되었습니다.";
 						alert.layer.value = "Overlay";
 			            return response.json();
 			        }).then(function(jsonData) {
@@ -1015,7 +1040,7 @@
 					var responseData = JSON.stringify(response);
 					console.log("responseData : "+ JSON.stringify(responseData));
 
-					alert.message.value = "수정되었습니다.";
+					alert.message.value = "등록되었습니다.";
 					alert.layer.value = "Overlay";
 
 		            return response.json();
@@ -1089,7 +1114,17 @@
 
 		}
  
+		var isItModifyVariable = Observable(true);
 
+		function isItModifyTrue() {
+			isItModifyVariable.value = true;
+			console.log("isItModifyVariable.value : " + isItModifyVariable.value);
+		}
+
+		function isItModifyFalse() {
+			isItModifyVariable.value = false;
+			console.log("isItModifyVariable.value : " + isItModifyVariable.value);
+		}
 
 		module.exports = {
 			type, selectedType, pickerOn, pickerOn2, pickerUp, pickerDown, getQnAList ,qnas, 
@@ -1100,7 +1135,8 @@
 			checkClick, unRegisteredChecked, simpleAlert,qnaListDel, deleteAlert, deleteAlertButtonAction,
 			isQuestionAnswered, isFileAvailable, deleteAlertWithConfirmAndCancel, 
 			deleteAlertWithConfirmAndCancelCalled, deleteAlertWithConfirmAndCancelCalledOff,
-			cancelAlertWithConfirmAndCancel, cancelAlertWithConfirmAndCancelCalled, cancelAlertWithConfirmAndCancelCalledOff
+			cancelAlertWithConfirmAndCancel, cancelAlertWithConfirmAndCancelCalled, cancelAlertWithConfirmAndCancelCalledOff,
+			isItModifyTrue, isItModifyFalse, isItModifyVariable, isMyQuestion
 		};
 	</JavaScript>
 
@@ -1360,12 +1396,26 @@
 							<Callback Handler="{cancelAlertWithConfirmAndCancelCalled}" />
 						</Clicked>
 					</GrayButton2>
-					<OrangeButton>
-						<Text Value="등록" Color="White" Alignment="Center" />
-						<Clicked>
-							<Callback Handler="{sendData}" />
-						</Clicked>
-					</OrangeButton>
+
+					<WhileTrue Value="{isItModifyVariable}">
+						<OrangeButton>
+							<Text Value="수정" Color="White" Alignment="Center" />
+							<Clicked>
+								<Callback Handler="{sendData}" />
+							</Clicked>
+						</OrangeButton>
+					</WhileTrue>
+
+					<WhileFalse Value="{isItModifyVariable}">
+						<OrangeButton>
+							<Text Value="등록" Color="White" Alignment="Center" />
+							<Clicked>
+								<Callback Handler="{sendData}" />
+							</Clicked>
+						</OrangeButton>
+					</WhileFalse>
+
+
 				</Grid>
 			</Panel>
 		</Grid>
@@ -1520,7 +1570,8 @@
 										<Text Value="수정" Alignment="Center" Color="White" />
 										<Clicked>
 											<Toggle Target="applyQuestion" />
-											
+											<!-- <Callback Handler="{isItModifyTrue}" /> -->
+											<Callback Handler="{isItModifyTrue}" />
 										</Clicked>
 									</OrangeButton>
 								
@@ -1655,9 +1706,9 @@
 										<Text Value="수정" Alignment="Center" Color="White" />
 										<Clicked>
 											<Toggle Target="applyQuestion" />
-											
+											<Callback Handler="{isItModifyTrue}" />
 										</Clicked>
-									</OrangeButton>
+								</OrangeButton>
 								
 							</Grid>
 						</WhileFalse>
@@ -1806,6 +1857,7 @@
 					<Callback Handler="{detailDataClear}" />
 					<Callback Handler="{selectedTypes}" />	
 					<Callback Handler="{pickerDown}" />
+					<Callback Handler="{isItModifyFalse}" />
 					<Toggle Target="applyQuestion" />
 				</Clicked>
 				<Text Value="문의하기" Color="White" FontSize="{margin}" Alignment="Center"/>

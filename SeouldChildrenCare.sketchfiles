@@ -1,0 +1,5 @@
+[
+  "MySketchFile.sketch", //Inside the app folder
+  "Assets/MySketchFile.sketch", //Relative to the App folder
+  "/Users/Me/SomeFolder/MySketchFolder/MySketchFile.sketch" //Absolute file path
+]

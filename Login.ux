@@ -37,8 +37,6 @@
 		</StackPanel>
 	</Rectangle>
 
-
-
 	<Rectangle Width="{margin}*23" Alignment="Center" Color="White" Layer="{LoginAlertConfirmFail.layer}">
 		<Stroke Width="1" Color="Black" />
 		<StackPanel>

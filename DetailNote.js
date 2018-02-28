@@ -353,6 +353,22 @@ function listDetailNote (args, index) {
 	} else {
 		this.BILL_NUMDETAIL = "";	
 	}
+
+
+	if (args.FIX_NUMGB!=null) {
+		this.FIX_NUMGB = args.FIX_NUMGB;
+	} else {
+		this.FIX_NUMGB = "";	
+	}
+
+
+	if (args.BILL_ESTIGB!=null) {
+		this.BILL_ESTIGB = args.BILL_ESTIGB;
+	} else {
+		this.BILL_ESTIGB = "";	
+	}
+
+
 }
 
 function selectedDetailNote(args) {
@@ -471,6 +487,22 @@ function selectedDetailNote(args) {
 	} else {
 		this.BILL_NUMDETAIL = "";	
 	}
+
+
+	if (args.FIX_NUMGB!=null) {
+		this.FIX_NUMGB = args.FIX_NUMGB;
+	} else {
+		this.FIX_NUMGB = "";	
+	}
+
+
+	if (args.BILL_ESTIGB!=null) {
+		this.BILL_ESTIGB = args.BILL_ESTIGB;
+	} else {
+		this.BILL_ESTIGB = "";	
+	}
+
+
 }
 
 
@@ -977,7 +1009,7 @@ function pickerDown() {
 	// console.log("selectedDetailNoteVariable.ESTI_CODE : " + selectedDetailNoteVariable.ESTI_CODE);
 	// console.log("selectedDetailNoteVariable.ESTI_CODE : " + selectedDetailNoteVariable.ESTI_CODE.substring(0,3));
 	// console.log("selectedDetailNoteVariable.BILL_CLSS : " + selectedDetailNoteVariable.BILL_CLSS);
-		
+	selectedDetailNoteVariable.BILL_ESTIGB
 	
 
 	if (Backend.subject.ESTI_CODE.value !=null) {
@@ -1008,8 +1040,31 @@ function pickerDown() {
 		}
 
 	} else if (selectedData.value == "아이행복카드") {
-		selected_BILL_CLSS.value = "20";
-		selectable = true;
+		console.log("2018 02 28 111111111111111111");
+		if (selected_ESTI_CODE.substring(0,1) == "1") {
+			console.log("2018 02 28 2222222222222222222");
+			selected_BILL_CLSS.value = "20";
+			selectable = true;
+		} else if (selected_ESTI_CODE.substring(0,1) == "2") {
+			console.log("2018 02 28 33333333333333333");
+			if (selected_ESTI_CODE == "2020101" || selected_ESTI_CODE == "2060202") {
+				console.log("2018 02 28 44444444444444444");
+				selected_BILL_CLSS.value = "20";
+				selectable = true;	
+			} else {
+				console.log("2018 02 28 55555555555555");
+				alert.message.value="결제방법을 '아이행복카드'로 사용할 수 없습니다";
+				alert.layer.value="Overlay";
+				selectable = false;
+			}
+		} else {
+			selected_BILL_CLSS.value = "20";
+			selectable = true;
+		}
+
+
+
+		
 	} else if (selectedData.value == "계좌이체") {
 		selected_BILL_CLSS.value = "30";
 		selectable = true;
@@ -1206,7 +1261,7 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
  	var isBillClssChecked = false;
  	var isEstiCodeChecked = false;
 
- 	if (tempMoneyValue == null || tempMoneyValue == "") {
+ 	if (tempMoneyValue == null || tempMoneyValue == "" || tempMoneyValue =="0" || tempMoneyValue == 0) {
 		console.log("money empty");
 		alert.title.value = "금액 입력";
 		alert.message.value = "금액을 입력하세요.";
@@ -1216,6 +1271,19 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
 	} else {
 		isMoneyChecked = true;
 	}
+
+	if (tempMoneyValue =="0" || tempMoneyValue == 0) {
+		console.log("money empty");
+		alert.title.value = "금액 입력";
+		alert.message.value = "금액을 입력하세요.";
+		alert.type.value = "Check";
+		alert.layer.value = "Overlay";
+		// break;
+	} else {
+		isMoneyChecked = true;
+	}
+
+
 
 	console.log("validateCheck BILL_CLSS" + BILL_CLSS);
 
@@ -1254,6 +1322,16 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
 var updatebCashMobileUrl;
 var GLOBAL_BILL_SUBCODE;
 
+
+function saveDataAfterCheckingTheDate () {
+
+}
+
+
+
+
+
+
 function saveData() {
 	var ACTION = selectedDetailNoteVariable.ACTION;
 	var CASH_IDX = selectedDetailNoteVariable.CASH_IDX;
@@ -1265,6 +1343,13 @@ function saveData() {
 	var BCASH_MEMO = selectedDetailNoteVariable.BCASH_MEMO;
 	var BCASH_BILL_SEQ = selectedDetailNoteVariable.BCASH_BILL_SEQ;
 	var BCASH_MONEY = selectedDetailNoteVariable.MONEY;
+
+	var CASH_PLACE = Backend.dataFromNoteManageToDetailNote.CASH_PLACE.value;
+	var BIGO = Backend.dataFromNoteManageToDetailNote.BIGO.value;
+	var BILL_BOJOGB = Backend.dataFromNoteManageToDetailNote.BILL_BOJOGB.value;
+	var BILL_NURIGB = Backend.dataFromNoteManageToDetailNote.BILL_NURIGB.value;
+
+
 
 	console.log("ACTION : "  + ACTION);
 	console.log("CASH_IDX : "  + CASH_IDX);
@@ -1454,7 +1539,14 @@ function saveData() {
 		+'","ESTI_SUBCODE":"'+ESTI_SUBCODE
 		+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ
 		+'","BCASH_MONEY":"'+BCASH_MONEY
-		+'","MEMO_ADD":"'+selectedMemo.value
+		+'","CASH_PLACE":'+CASH_PLACE
+		+',"BILL_BOJOGB":'+BILL_BOJOGB
+		+',"BILL_NURIGB":'+BILL_NURIGB
+
+
+		+',"BIGO":'+BIGO
+		+',"MEMO_ADD":"'+selectedMemo.value
+
 		+'"}';	
 
 	} else if (ACTION =="U") {
@@ -1477,7 +1569,11 @@ function saveData() {
 		+'","BILL_GB":"'+BILL_GB
 		+'","BCASH_BILL_SEQ":"'+BCASH_BILL_SEQ
 		+'","BILL_NUMDETAIL":"'+BILL_NUMDETAIL
-		+'","MEMO":"'+selectedMemo.value
+		+'","CASH_PLACE":'+CASH_PLACE
+		+',"BILL_BOJOGB":'+BILL_BOJOGB
+		+',"BILL_NURIGB":'+BILL_NURIGB
+		+',"BIGO":'+BIGO
+		+',"MEMO":"'+selectedMemo.value
 		+'"}';	
 	}
 
@@ -1580,8 +1676,6 @@ function saveData() {
 		} else {
 			var temp = '{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}';
 			console.log(temp);
-
-
 			jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+'}');
 		}
 	
@@ -1638,7 +1732,6 @@ function saveData() {
 
 			   	if (MiResultMsg == "success") {
 			   		console.log("수정완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			   		
 			   		if (ACTION == "I") {
 			   			alertWithConfirm.message.value = "저장 되었습니다.";
 			   		} else if (ACTION =="U") {
@@ -1662,7 +1755,6 @@ function saveData() {
 			   }).catch(function(err) {
 			});
 		}
-
 }
 
 
@@ -1819,12 +1911,12 @@ function deleteData () {
 
 		   	if (MiResultMsg == "success") {
 		   		console.log("수정완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		   		// alertWithConfirm.message.value = "삭제 되었습니다.";
-				// alertWithConfirm.layer.value = "Overlay";
+		   		alertWithConfirmDelete.message.value = "삭제 되었습니다.";
+				alertWithConfirmDelete.layer.value = "Overlay";
 				
-				// redueNumberConfirmAlertCalled();
+				// reduceNumberConfirmAlertCalled();
 
-				router.goBack();
+				// router.goBack();
 
 		   	} else {	   		
 		   			alert.title.value = "";
@@ -2410,6 +2502,12 @@ var deleteConfirmAlert = {
 	layer: Observable("Background")
 }
 
+var alertWithConfirmDelete = {
+	message: Observable(),
+	layer: Observable("Background")
+}
+
+
 function deleteConfirmAlertCalled () {
 	deleteConfirmAlert.message.value = "삭제하시겠습니까?";
 	deleteConfirmAlert.layer.value = "Overlay";
@@ -2428,18 +2526,54 @@ var redueNumberConfirmAlert = {
 	layer: Observable("Background")
 }
 
-function redueNumberConfirmAlertCalled () {
+function reduceNumberConfirmAlertCalled () {
+
+	alertWithConfirmDelete.layer.value="Background";
+
+
+	console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
 	var getBillNumChangeCnt_URL = Backend.BASE_URL + Backend.getBillNumChangeCnt_URL;
 
 	console.log("BILL_NUMDETAIL : " + selectedDetailNoteVariable.BILL_NUMDETAIL);
 
+	console.log("selectedDetailNoteVariable.BILL_ESTIGB : " + selectedDetailNoteVariable.BILL_ESTIGB);
+
 	var dsSearch = '{"DELETE_BILL_NUMDETAIL":'+selectedDetailNoteVariable.BILL_NUMDETAIL+'}';
+
+
+	if (selectedDetailNoteVariable.FIX_NUMGB == "0") {
+		dsSearch = '{' 
+				+ '"DELETE_BILL_NUMDETAIL":"'+selectedDetailNoteVariable.BILL_NUMDETAIL+ '",' 	
+				+ '"FIX_NUMGB":"'+selectedDetailNoteVariable.FIX_NUMGB+ '",' 			
+				+ '"BILL_ESTIGB":""' 
+				+ '}';
+	} else {
+		if(selectedDetailNoteVariable.BILL_ESTIGB == "32") {
+			dsSearch = '{' 
+				+ '"DELETE_BILL_NUMDETAIL2":"'+selectedDetailNoteVariable.BILL_NUMDETAIL+ '",' 		
+				+ '"FIX_NUMGB":"'+selectedDetailNoteVariable.FIX_NUMGB+ '",' 		
+				+ '"BILL_ESTIGB":"'+selectedDetailNoteVariable.BILL_ESTIGB+'"' 
+				+ '}';
+		} else if (selectedDetailNoteVariable.BILL_ESTIGB == "31"){
+			dsSearch = '{' 
+				+ '"DELETE_BILL_NUMDETAIL":"'+selectedDetailNoteVariable.BILL_NUMDETAIL+ '",' 	
+				+ '"FIX_NUMGB":"'+selectedDetailNoteVariable.FIX_NUMGB+ '",' 			
+				+ '"BILL_ESTIGB":""' 
+				+ '}';
+		}	
+	}
+	
+
+
+
+
+	
     // console.log("CASH_IDX : " + CASH_IDX);
     // console.log("SEARCH_BILL_IDX : " + BILL_IDX);
 	// // console.log(" dsSearch : " + dsSearch);
     var jsonParam = JSON.parse('{"dsParam":'+dsParam+',"dsSearch": '+dsSearch+'}');
-    console.log("jsonParam : " + JSON.stringify(jsonParam));
+    console.log("20180228 jsonParam : " + JSON.stringify(jsonParam));
 	fetch(getBillNumChangeCnt_URL, {
 		method: 'POST',
 		headers: {
@@ -2449,13 +2583,17 @@ function redueNumberConfirmAlertCalled () {
 	}).then(function(response) {
 		console.log("response response : " + JSON.stringify(response));
 		var billNumChangeCnt = response._bodyInit;
-		billNumChangeCnt = billNumChangeCnt.billNumChangeCnt;
+		console.log("11111 billNumChangeCnt : " + billNumChangeCnt);
 
-		if (parseInt(billNumChangeCnt) > 0) {
-			redueNumberConfirmAlert.message.value = "삭제할 전표의 증빙번호 " +selectedDetailNoteVariable.BILL_NUMDETAIL+"보다 큰 증빙번호를 1씩 감소시킵니다. \n - 증빙번호 변경 대상수 " + billNumChangeCnt+"개";
+		var billNumChangeCnt2 = JSON.parse(billNumChangeCnt).billNumChangeCnt;
+
+		console.log("222222 billNumChangeCnt :  " + billNumChangeCnt2);
+
+		if (parseInt(billNumChangeCnt2) > 0) {
+			redueNumberConfirmAlert.message.value = "삭제할 전표의 증빙번호 " +selectedDetailNoteVariable.BILL_NUMDETAIL+"보다 큰 증빙번호를 1씩 감소시킵니다. \n - 증빙번호 변경 대상수 " + billNumChangeCnt2+"개";
 			redueNumberConfirmAlert.layer.value = "Overlay";	
 		} else {
-
+			router.goBack();
 		}
 		
         return response.json();
@@ -2469,7 +2607,7 @@ function redueNumberConfirmAlertCalled () {
 	});
 }
 
-function redueNumberConfirmAlertCalledOff () {
+function reduceNumberConfirmAlertCalledOff () {
 	redueNumberConfirmAlert.layer.value = "Background";
 }
 
@@ -2489,13 +2627,6 @@ function reduceReceiptIndexNumber () {
 		body: JSON.stringify(jsonParam)
 	}).then(function(response) {
 		var billNumChangeCnt = response._bodyInit;
-		billNumChangeCnt = billNumChangeCnt.billNumChangeCnt;
-
-		if (parseInt(billNumChangeCnt) > 0) {
-			redueNumberConfirmAlert.message.value = "삭제할 전표의 증빙번호 " +selectedDetailNoteVariable.BILL_NUMDETAIL+"보다 큰 증빙번호를 1씩 감소시킵니다. \n - 증빙번호 변경 대상수 " + billNumChangeCnt+"개";
-			redueNumberConfirmAlert.layer.value = "Overlay";	
-		}
-		
 	    return response.json();
 	}).then(function(jsonData) {
 	    var data = jsonData.results[0];
@@ -2538,5 +2669,6 @@ module.exports = {
 	getImageWithParameterDetailNote, loadingCircle, detailNoteLoadingCircleOn, 
 	testMethod, saveOrEdit, focusLost, selectedTypeStringValue,
 	deleteConfirmAlert, deleteConfirmAlertCalled, deleteConfirmAlertCalledOff,
-	redueNumberConfirmAlert, redueNumberConfirmAlertCalled, redueNumberConfirmAlertCalledOff, reduceReceiptIndexNumber
+	redueNumberConfirmAlert, reduceNumberConfirmAlertCalled, 
+	reduceNumberConfirmAlertCalledOff, reduceReceiptIndexNumber, alertWithConfirmDelete
 };

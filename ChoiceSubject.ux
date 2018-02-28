@@ -352,47 +352,63 @@
 				console.log("compareDate is before march");
 			}
 
-			if (arg.data.ESTI_CODE == "2020201") {
-				if (compareDate < march) {
+
+			if(arg.data.ESTI_CODE.substring(0,1) == "2") {
+				if (arg.data.ESTI_CODE == "2020101" || arg.data.ESTI_CODE == "2060202") {
 					text = "선택 되었습니다.";
 					selectSubjectPopUp(arg, text);
 				} else {
-					console.log(" '업무추진비' 계정과목은 적요 내용 입력 방식에 따라 모바일 화면에서는 등록/수정할 수 없습니다. PC화면에서 직접 등록/수정하셔야 합니다.");
-					alert.title.value = "";
-					alert.message.value = "'업무추진비' 계정과목은 적요 내용 입력 방식에 따라 모바일 화면에서는 등록/수정할 수 없습니다. PC화면에서 직접 등록/수정하셔야 합니다.";
-					alert.type.value = "Check";
-					alert.layer.value = "Overlay";	
-				}
-			} else {
-				if (( arg.data.ESTI_SUBCODE == "" || arg.data.ESTI_SUBCODE == null) && arg.data.ESTI_SUB_YN == "Y") {
-					//
-				} else {
-					console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-					console.log("arg.data.ESTI_CODE : "  + arg.data.ESTI_CODE);
-					console.log("arg.data.ESTI_CODE.substring(0,3) : "  + arg.data.ESTI_CODE.substring(0,3));
-					console.log("BILL_CLSS : "  + BILL_CLSS.value);
-					console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-					if (arg.data.ESTI_CODE !="2010401" && arg.data.ESTI_CODE.substring(0,3)=="201" && BILL_CLSS.value =="10") {
-						console.log("1111111111111111111111111111111111111");
-						if (arg.data.ESTI_CODE =="2010101" || arg.data.ESTI_CODE == "2010201") {
-							console.log("222222222222222222222222222222222222222222222");
-							text = "법정부담금 납부에 한하여 '카드결제' 선택이 가능합니다.";
-							selectSubjectPopUp(arg, text);
-						} else {
-							alert.message.value = "인건비는 결제방법을 '카드결제'로 사용할 수 없습니다.";
-							alert.type.value = "Check";
-							alert.layer.value = "Overlay";
-						}
+					if(BILL_CLSS.value == "20") {
+						alert.message.value = "결제방법을 '아이행복카드'로 사용할 수 없습니다";
+						alert.type.value = "Check";
+						alert.layer.value = "Overlay";
 					} else {
-						console.log("444444444444444444444444444444444444444");
-						console.log("This is not applicable for anything above");						
 						text = "선택 되었습니다.";
 						selectSubjectPopUp(arg, text);
-
 					}
 				}
-			}	
+			} else {
+				if (arg.data.ESTI_CODE == "2020201") {
+					if (compareDate < march) {
+						text = "선택 되었습니다.";
+						selectSubjectPopUp(arg, text);
+					} else {
+						console.log(" '업무추진비' 계정과목은 적요 내용 입력 방식에 따라 모바일 화면에서는 등록/수정할 수 없습니다. PC화면에서 직접 등록/수정하셔야 합니다.");
+						alert.title.value = "";
+						alert.message.value = "'업무추진비' 계정과목은 적요 내용 입력 방식에 따라 모바일 화면에서는 등록/수정할 수 없습니다. PC화면에서 직접 등록/수정하셔야 합니다.";
+						alert.type.value = "Check";
+						alert.layer.value = "Overlay";	
+					}
+				} else {
+					if (( arg.data.ESTI_SUBCODE == "" || arg.data.ESTI_SUBCODE == null) && arg.data.ESTI_SUB_YN == "Y") {
+						//
+					} else {
+						console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+						console.log("arg.data.ESTI_CODE : "  + arg.data.ESTI_CODE);
+						console.log("arg.data.ESTI_CODE.substring(0,3) : "  + arg.data.ESTI_CODE.substring(0,3));
+						console.log("BILL_CLSS : "  + BILL_CLSS.value);
+						console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
+						if (arg.data.ESTI_CODE !="2010401" && arg.data.ESTI_CODE.substring(0,3)=="201" && BILL_CLSS.value =="10") {
+							console.log("1111111111111111111111111111111111111");
+							if (arg.data.ESTI_CODE =="2010101" || arg.data.ESTI_CODE == "2010201") {
+								console.log("222222222222222222222222222222222222222222222");
+								text = "법정부담금 납부에 한하여 '카드결제' 선택이 가능합니다.";
+								selectSubjectPopUp(arg, text);
+							} else {
+								alert.message.value = "인건비는 결제방법을 '카드결제'로 사용할 수 없습니다.";
+								alert.type.value = "Check";
+								alert.layer.value = "Overlay";
+							}
+						} else {
+							console.log("444444444444444444444444444444444444444");
+							console.log("This is not applicable for anything above");						
+							text = "선택 되었습니다.";
+							selectSubjectPopUp(arg, text);
+						}
+					}
+				}	
+			}		
 		}
 
 		var choiceSubjectAlertWithConfirm = {
