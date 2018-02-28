@@ -846,8 +846,20 @@
 
 
 		function deleteAlertWithConfirmAndCancelCalled () {
-			deleteAlertWithConfirmAndCancel.message.value="삭제하시겠습니까?";
-			deleteAlertWithConfirmAndCancel.layer.value="Overlay";
+
+
+			if (isMyQuestion.value == true) {
+				deleteAlertWithConfirmAndCancel.message.value="삭제하시겠습니까?";
+				deleteAlertWithConfirmAndCancel.layer.value="Overlay";
+			} else {
+				simpleAlert.message.value = "내 글이 아닌 글을 삭제/수정할수 없습니다.";
+				simpleAlert.layer.value = "Overlay";
+			}
+
+			
+
+
+
 		}
 
 		function deleteAlertWithConfirmAndCancelCalledOff () {
@@ -865,18 +877,24 @@
 
 		function sendData(){
 			console.log("sendData was called");
-			if(qnaDetailValue.value.commSeq.value==null || qnaDetailValue.value.commSeq.value==""){
-				console.log("commSeq 없음");
-				console.log("commSeq 없음 : " + qnaDetailValue.value.title.value );
-				console.log("commSeq 없음 : " + qnaDetailValue.value.cont.value );
-				registerSend();
-			}else{
-				console.log("commSeq 있음 : " +qnaDetailValue.value.commSeq.value);
-				console.log("commSeq 있음 : " +qnaDetailValue.value.title.value);
-				console.log("commSeq 있음 : " +qnaDetailValue.value.cont.value);
-				modifySned();
-				
+
+			if (isMyQuestion.value == true) {
+				if(qnaDetailValue.value.commSeq.value==null || qnaDetailValue.value.commSeq.value==""){
+					console.log("commSeq 없음");
+					console.log("commSeq 없음 : " + qnaDetailValue.value.title.value );
+					console.log("commSeq 없음 : " + qnaDetailValue.value.cont.value );
+					registerSend();
+				}else{
+					console.log("commSeq 있음 : " +qnaDetailValue.value.commSeq.value);
+					console.log("commSeq 있음 : " +qnaDetailValue.value.title.value);
+					console.log("commSeq 있음 : " +qnaDetailValue.value.cont.value);
+					modifySned();
+				}
+			} else {
+				simpleAlert.message.value = "내 글이 아닌 글을 삭제/수정할수 없습니다.";
+				simpleAlert.layer.value = "Overlay";
 			}
+			
 		}
 
 		function modifySned(){
@@ -1062,6 +1080,7 @@
 
 		function qnaListDel () {
 			var qnaListDel_URL = Backend.BASE_URL + Backend.qnaListDel_URL;
+			deleteAlertWithConfirmAndCancel.layer.value = "Background";
 
 			console.log("qnaDetailValue.value.commSeq.value : " + qnaDetailValue.value.commSeq.value);
 
@@ -1126,6 +1145,14 @@
 			console.log("isItModifyVariable.value : " + isItModifyVariable.value);
 		}
 
+
+		function deleteAlertOff() {
+			console.log("deleteAlertOff was called ");
+			deleteAlert.layer.value = "Background";
+			getQnAList();
+		}
+
+
 		module.exports = {
 			type, selectedType, pickerOn, pickerOn2, pickerUp, pickerDown, getQnAList ,qnas, 
 			selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, test,
@@ -1135,7 +1162,7 @@
 			checkClick, unRegisteredChecked, simpleAlert,qnaListDel, deleteAlert, deleteAlertButtonAction,
 			isQuestionAnswered, isFileAvailable, deleteAlertWithConfirmAndCancel, 
 			deleteAlertWithConfirmAndCancelCalled, deleteAlertWithConfirmAndCancelCalledOff,
-			cancelAlertWithConfirmAndCancel, cancelAlertWithConfirmAndCancelCalled, cancelAlertWithConfirmAndCancelCalledOff,
+			cancelAlertWithConfirmAndCancel, cancelAlertWithConfirmAndCancelCalled, cancelAlertWithConfirmAndCancelCalledOff, deleteAlertOff,
 			isItModifyTrue, isItModifyFalse, isItModifyVariable, isMyQuestion
 		};
 	</JavaScript>
@@ -1214,7 +1241,8 @@
 						<!-- <Callback Handler="{getListDetailNote}" />
 						<Callback Handler="{viewWillAppear}" /> -->
 						<Toggle Target="showQuestion" />
-						<Callback Handler="{deleteAlertButtonAction}" />
+						<Callback Handler="{deleteAlertOff}" />
+						<!-- <Callback Handler="{deleteAlertButtonAction}" /> -->
 					</Clicked>
 				</BlueButton>
 			</Panel>

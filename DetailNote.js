@@ -1263,7 +1263,7 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
 
  	if (tempMoneyValue == null || tempMoneyValue == "" || tempMoneyValue =="0" || tempMoneyValue == 0) {
 		console.log("money empty");
-		alert.title.value = "금액 입력";
+		
 		alert.message.value = "금액을 입력하세요.";
 		alert.type.value = "Check";
 		alert.layer.value = "Overlay";
@@ -1274,7 +1274,7 @@ function validationCheck (tempMoneyValue, BILL_CLSS, ESTI_CODE) {
 
 	if (tempMoneyValue =="0" || tempMoneyValue == 0) {
 		console.log("money empty");
-		alert.title.value = "금액 입력";
+		
 		alert.message.value = "금액을 입력하세요.";
 		alert.type.value = "Check";
 		alert.layer.value = "Overlay";
@@ -1324,15 +1324,103 @@ var GLOBAL_BILL_SUBCODE;
 
 
 function saveDataAfterCheckingTheDate () {
+	var ableToEdit = false;
+
+	var text = "";
+	console.log("CASH_DATECASH_DATECASH_DATECASH_DATECASH_DATE =====> "  + selectedDetailNoteVariable.CASH_DATE);
+	var cash_date_in_string = selectedDetailNoteVariable.CASH_DATE;
+	cash_date_in_string = cash_date_in_string.substring(0,4) + "-" + cash_date_in_string.substring(4,6) + "-" + cash_date_in_string.substring(6,8);
+	
+	var selectedDataDate = new Date(cash_date_in_string);
+	var today = new Date();
+
+	var selectedYear = selectedDataDate.getFullYear();
+	var selectedMonth = selectedDataDate.getMonth() + 1;
+
+	var currentYear = today.getFullYear();	
+	var currentMonth = today.getMonth() + 1;
+
+
+
+	// if(toNumber(substr(strToday, 4, 2)) < 6)
+ //    {
+ //        strYear = toNumber(substr(strToday, 0, 4)) - 1;
+ //    }
+ //    else
+ //    {
+ //        strYear = toNumber(substr(strToday, 0, 4));
+ //    }
+    
+ //    if(GVESTIYEAR >= strYear)
+ //   {
+ //      ReturnValue = true;
+ //   }
+ //   else
+ //   {
+ //      ReturnValue = false;
+ //   }
+
+
+
+
+
+	if (currentMonth > 5) {
+		// if (compareDate.getFullYear())
+		if(selectedYear == currentYear) {
+			if ( selectedMonth >2 ) {
+				ableToEdit = true;
+			} else {
+				ableToEdit = false;
+			}
+		} else if (currentYear > selectedYear){
+			ableToEdit = false;
+		} else {
+			ableToEdit = false;
+		}
+
+
+
+	} else {
+		if(selectedYear == currentYear) {
+			ableToEdit = true;
+		} else if (currentYear > selectedYear){
+			var difference = currentYear - selectedYear;
+			if (difference == 1) {
+				if (selectedMonth >2) {
+					ableToEdit = true;	
+				}
+			} else {
+				ableToEdit = false;	
+			}
+		} else {
+			ableToEdit = false;
+		}
+	}
+
+
+	console.log("compareDate : " + selectedDataDate.toDateString());
+	console.log("compareDate : " + today.toDateString());
+
+
+	console.log("ableToEdit : " + ableToEdit);
+
+	if (ableToEdit == true) {
+		saveData();
+	} else {
+		alert.message.value = "해당년도는 회계내역의 등록/수정/삭제가 불가합니다.";
+		alert.type.value = "Check";
+		alert.layer.value = "Overlay";
+	}
+
 
 }
 
 
 
-
-
-
 function saveData() {
+
+	// var ableToSaveData = saveDataAfterCheckingTheDate();
+
 	var ACTION = selectedDetailNoteVariable.ACTION;
 	var CASH_IDX = selectedDetailNoteVariable.CASH_IDX;
 	var CASH_DATE = selectedDetailNoteVariable.CASH_DATE;
@@ -2670,5 +2758,6 @@ module.exports = {
 	testMethod, saveOrEdit, focusLost, selectedTypeStringValue,
 	deleteConfirmAlert, deleteConfirmAlertCalled, deleteConfirmAlertCalledOff,
 	redueNumberConfirmAlert, reduceNumberConfirmAlertCalled, 
-	reduceNumberConfirmAlertCalledOff, reduceReceiptIndexNumber, alertWithConfirmDelete
+	reduceNumberConfirmAlertCalledOff, reduceReceiptIndexNumber, alertWithConfirmDelete,
+	saveDataAfterCheckingTheDate
 };

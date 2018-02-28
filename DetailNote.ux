@@ -598,7 +598,7 @@
 					<OrangeButton>
 						<Text Value="{saveOrEdit}" Alignment="Center" Color="White" />
 						<Clicked>
-							<Callback Handler="{saveData}" />
+							<Callback Handler="{saveDataAfterCheckingTheDate}" />
 						</Clicked>
 
 					</OrangeButton>
