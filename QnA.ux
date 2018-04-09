@@ -1669,12 +1669,12 @@
 									</Clicked>
 								</OrangeButton> -->
 								<OrangeButton>
-								<Text Value="목록" Alignment="Center" Color="White" />
-								<Clicked>
-									<Toggle Target="showQuestion" />
-								</Clicked>
-							</OrangeButton>
-								
+									<Text Value="목록" Alignment="Center" Color="White" />
+									<Clicked>
+										<Toggle Target="showQuestion" />
+									</Clicked>
+								</OrangeButton>
+
 							</Grid>
 						</WhileTrue>
 					</Panel>
