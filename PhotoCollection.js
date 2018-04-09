@@ -216,6 +216,7 @@ header = Observable(function () {
 
 
 function goToSelectionMode() {
+	Backend.selectedPhotoCollectionPictureListFromDetailNote.clear()
 	if (selectionMode.value === true) return;
 	selectionMode.value = true;
 	panelType.value = "selecting";
@@ -453,17 +454,31 @@ function getPhotoList () {
 
 	var tempMonth = monthTemp.toString();
 	if(monthTemp < 10) {
-
 		tempMonth = "0" +monthTemp.toString();
 	}
 
 
+	console.log("selectionMode.value : " +selectionMode.value);
 
-	if (hasBeenSearched == false) {
-		yearAndMonth = tempYear + tempMonth;
-	} else {
+	if (selectionMode.value == true) {
+		yearAndMonth = year.value.toString();
+
+		if(month.value < 10) {
+			yearAndMonth = yearAndMonth + "0" +month.value.toString();
+		} else {
+			yearAndMonth = yearAndMonth + month.value.toString()
+		}
+
+
+	} else  {
+		if (hasBeenSearched == false) {
+			yearAndMonth = tempYear + tempMonth;
+		} else {
 		//yearAndMonth = 
+		}	
 	}
+
+	
 	
 
 

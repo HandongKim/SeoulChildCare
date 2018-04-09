@@ -1564,16 +1564,16 @@
 								</StackPanel>
 							</Rectangle>
 
-							<GrayButton2>
+							<!-- <GrayButton2>
 								<Text Value="삭제" Alignment="Center" Color="White" />
 								<Clicked>
-									<!-- <Callback Handler="{selectedTypes}" />	
+									<Callback Handler="{selectedTypes}" />	
 									<Callback Handler="{pickerDown}" />
-									<Toggle Target="showQuestion" /> -->
+									<Toggle Target="showQuestion" />
 									<Callback Handler="{deleteAlertWithConfirmAndCancelCalled}" />
 
 								</Clicked>
-							</GrayButton2>
+							</GrayButton2> -->
 							<!-- 상세정보 수정화면 가기 -->
 							
 								<!-- <OrangeButton>
@@ -1583,6 +1583,13 @@
 										
 									</Clicked>
 								</OrangeButton> -->
+
+								<OrangeButton>
+									<Text Value="목록" Alignment="Center" Color="White" />
+									<Clicked>
+										<Toggle Target="showQuestion" />
+									</Clicked>
+								</OrangeButton>
 							
 						</Grid>
 					</Panel>
@@ -1642,16 +1649,16 @@
 											</Each>
 									</StackPanel>
 								</Rectangle>
-								<GrayButton2>
+								<!-- <GrayButton2>
 									<Text Value="삭제" Alignment="Center" Color="White" />
 									<Clicked>
-										<!-- <Callback Handler="{selectedTypes}" />	
+										<Callback Handler="{selectedTypes}" />	
 										<Callback Handler="{pickerDown}" />
-										<Toggle Target="showQuestion" /> -->
+										<Toggle Target="showQuestion" />
 										<Callback Handler="{deleteAlertWithConfirmAndCancelCalled}" />
 
 									</Clicked>
-								</GrayButton2>
+								</GrayButton2> -->
 								<!-- 상세정보 수정화면 가기 -->
 								
 								<!-- <OrangeButton>
@@ -1661,6 +1668,13 @@
 										
 									</Clicked>
 								</OrangeButton> -->
+								<OrangeButton>
+								<Text Value="목록" Alignment="Center" Color="White" />
+								<Clicked>
+									<Toggle Target="showQuestion" />
+								</Clicked>
+							</OrangeButton>
+								
 							</Grid>
 						</WhileTrue>
 					</Panel>
