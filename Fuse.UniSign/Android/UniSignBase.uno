@@ -47,22 +47,8 @@ namespace Fuse.UniSign.Android
 		"android.os.Bundle",
 		"android.telephony.TelephonyManager",
 		"com.crosscert.androidustk"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		)]
+	)]
+	
 	extern(ANDROID) public class ToolkitMgr : UniSignBase
 	{
 

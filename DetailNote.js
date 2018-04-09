@@ -1693,7 +1693,7 @@ function saveData() {
 	
 
 
-	Backend.selectedPhotoCollectionPictureListFromDetailNote.clear();
+	
 
 
 
@@ -1769,7 +1769,9 @@ function saveData() {
 	
 	// pictureList = JSON.parse(pictureList);
 
+	console.log("2018.04.09 log starts");
 
+	console.log(JSON.stringify(Backend.selectedPhotoCollectionPictureListFromDetailNote));
 
 
 	if (Backend.selectedPhotoCollectionPictureListFromDetailNote._values == "") {
@@ -1798,6 +1800,7 @@ function saveData() {
 		jsonParam = JSON.parse('{"dsParam":'+dsParam+',"ds_bCash": '+ds_bCash+',"ds_billAtchMapngList": '+pictureList+'}');
 	}
 
+	// Backend.selectedPhotoCollectionPictureListFromDetailNote.clear();
 
 
 		console.log("check: " + tempMoneyValue + ", " + BILL_CLSS +", " + ESTI_CODE);

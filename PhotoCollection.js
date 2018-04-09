@@ -224,6 +224,8 @@ function goToSelectionMode() {
 }
 
 function cancelSelectionMode() {
+	// Backend.selectedPhotoCollectionPictureListFromDetailNote.clear()
+
 	if (selectionMode.value === false) return;
 	selectionMode.value = false;
 	panelType.value = "upload";
@@ -246,6 +248,9 @@ activeIndex.onValueChanged(null, function(x) {
 var currentPictureIndex = Observable();
 
 function toggleSelect(args) {
+	
+
+
 	if (selectionMode.value === false) {
 		selectedMode.value = true;
 		activeIndex.value = args.data.index;

@@ -878,7 +878,9 @@
 		function sendData(){
 			console.log("sendData was called");
 
-			if (isMyQuestion.value == true) {
+			console.log("isMyQuestion.value : " + isMyQuestion.value);
+
+			
 				if(qnaDetailValue.value.commSeq.value==null || qnaDetailValue.value.commSeq.value==""){
 					console.log("commSeq 없음");
 					console.log("commSeq 없음 : " + qnaDetailValue.value.title.value );
@@ -888,13 +890,13 @@
 					console.log("commSeq 있음 : " +qnaDetailValue.value.commSeq.value);
 					console.log("commSeq 있음 : " +qnaDetailValue.value.title.value);
 					console.log("commSeq 있음 : " +qnaDetailValue.value.cont.value);
-					modifySned();
+					if (isMyQuestion.value == true) {		
+						modifySned();
+					} else {
+						simpleAlert.message.value = "내 글이 아닌 글을 삭제/수정할수 없습니다.";
+						simpleAlert.layer.value = "Overlay";
+					}
 				}
-			} else {
-				simpleAlert.message.value = "내 글이 아닌 글을 삭제/수정할수 없습니다.";
-				simpleAlert.layer.value = "Overlay";
-			}
-			
 		}
 
 		function modifySned(){
@@ -1153,6 +1155,23 @@
 		}
 
 
+		function downloadFile(args) {
+			console.log("downloadFile was clicked from QnA");
+			console.log("args : " + JSON.stringify(args));
+
+			var COMM_CLSS = args.data.commClss.value;
+			var COMM_SEQ = args.data.commSeq.value;
+			var FILE_SEQ=args.data.fileSeq.value;
+
+			console.log("COMM_CLSS : " + COMM_CLSS)
+			console.log("COMM_SEQ : " + COMM_SEQ)
+			console.log("FILE_SEQ : " + FILE_SEQ)
+			var url = Backend.BASE_URL + "/common/mobileBlobFileDown.do?";
+
+			url = url + "COMM_CLSS=" + COMM_CLSS+"&COMM_SEQ=" + COMM_SEQ + "&FILE_SEQ=" +FILE_SEQ;
+	// FileDownload.documentDownload("http://smart.knou.ac.kr/fileDownServlet?rFileName=*EB*93*B1*EB*A1*9D*EA*B3*B5*EA*B3*A0.hwp&sFileName=COMF_1801150957376e680017.hwp&filePath=/business/board/BOAD_130926103441595d0000/");
+			FileDownload.documentDownload(url);
+}
 		module.exports = {
 			type, selectedType, pickerOn, pickerOn2, pickerUp, pickerDown, getQnAList ,qnas, 
 			selectedTypes,searchText, pageCount, totalPage, nextPage, pageCountInit, test,
@@ -1163,7 +1182,7 @@
 			isQuestionAnswered, isFileAvailable, deleteAlertWithConfirmAndCancel, 
 			deleteAlertWithConfirmAndCancelCalled, deleteAlertWithConfirmAndCancelCalledOff,
 			cancelAlertWithConfirmAndCancel, cancelAlertWithConfirmAndCancelCalled, cancelAlertWithConfirmAndCancelCalledOff, deleteAlertOff,
-			isItModifyTrue, isItModifyFalse, isItModifyVariable, isMyQuestion
+			isItModifyTrue, isItModifyFalse, isItModifyVariable, isMyQuestion, downloadFile
 		};
 	</JavaScript>
 
@@ -1396,7 +1415,7 @@
 				<TextBox Value="{qnaDetailValue.title}" Margin="{margin}" PlaceholderText="제목을 입력하세요" />
 			</Panel>
 			<Panel Color="White">
-				<TextBox Value="{qnaDetailValue.cont}" Margin="{margin}" PlaceholderText="내용을 입력하세요" Width="100%" MaxWidth="100%" TextWrapping="Wrap" />
+				<TextBox Value="{qnaDetailValue.cont}" Margin="{margin}" PlaceholderText="내용을 입력하세요" Width="100%" MaxWidth="100%" TextWrapping="Wrap"/>
 			</Panel>
 
 			<!-- <Panel Dock="Bottom" Width="100%" Color="#5079DB" Height="{margin}*5"> -->
@@ -1537,6 +1556,9 @@
 												<Image File="Images/ico_down.png" Alignment="Center" Margin="{margin}/2" Width="{margin}" />
 												<Text Value="{qnaFileValue.fileNm}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
 												<Text Value="{qnaFileValue.fileSize}" FontSize="{margin}*0.7" Color="#888" Alignment="CenterLeft" TextWrapping="Wrap" />
+												<Clicked>
+													<Callback Handler="{downloadFile}" />
+												</Clicked>
 											</WrapPanel>
 										</Each>
 								</StackPanel>

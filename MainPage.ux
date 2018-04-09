@@ -16,7 +16,6 @@
 		}
 
 		function closeApp () {
-
 			router.getRoute(function(route) {
 				console.log("goBackToPrevious From " + route[0]);
 				if (route[0] == "MainPage") {
